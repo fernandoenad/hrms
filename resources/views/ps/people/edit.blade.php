@@ -265,7 +265,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <button type="submit" class="btn btn-primary float-right">
-                                        {{ __('Update Employee') }}
+                                        {{ __('Update Profile') }}
                                     </button>
                                     <a href="{{ route('ps.people.show', $person->id) }}" class="btn btn-default">
                                         {{ __('Cancel') }}

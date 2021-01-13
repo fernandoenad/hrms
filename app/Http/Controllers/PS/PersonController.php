@@ -194,8 +194,14 @@ class PersonController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
         ]);  
-
-        return redirect()->route('ps.people.show', compact('person'))->with('status', 'Profile updated!'); 
+        
+        if(isset($person->employee))
+        {
+            $employee = $person->employee;
+            return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Profile updated!');
+        }
+        else 
+            return redirect()->route('ps.people.show', compact('person'))->with('status', 'Profile updated!');
     }
 
     public function reset(Person $person)
@@ -207,7 +213,13 @@ class PersonController extends Controller
     {
         $person->user->update(['password' =>  Hash::make($person->user->username)]);
 
-        return redirect()->route('ps.people.show', compact('person'))->with('status', 'Password reset was completed!'); 
+        if(isset($person->employee))
+        {
+            $employee = $person->employee;
+            return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Password reset was completed!');
+        }
+        else 
+            return redirect()->route('ps.people.show', compact('person'))->with('status', 'Password reset was completed!');
     }
 
     public function employ(Person $person)
