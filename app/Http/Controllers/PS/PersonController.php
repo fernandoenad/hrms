@@ -55,25 +55,28 @@ class PersonController extends Controller
     {
         $sexes = Dropdown::where('type', 'sex')->get();
         $extensions = Dropdown::where('type', 'extension')->get();
+        $relations = Contact::groupBy('emergencyrelation')
+            ->select('emergencyrelation')
+            ->get();
+        $addresses = Contact::groupBy('emergencyaddress')
+            ->select('emergencyaddress')
+            ->get();
 
-        return view('ps.people.create', [
-            'sexes' => $sexes, 
-            'extensions' => $extensions,
-        ]);
+        return view('ps.people.create', compact('sexes', 'extensions', 'relations', 'addresses'));
     }
 
     public function store()
     {
         $data = request()->validate([
-            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.-Ññ]*$/'],
-            'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.-Ññ]*$/'],
-            'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.-Ññ]*$/'],
+            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
             'sex' => ['required', 'string'],
             'dob' => ['required', 'date', 'before:-15 years'],
             'image' => 'string',
             'primaryno' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', 'unique:contacts'],
-            'username' => ['required', 'string', 'min:5', 'max:255', 'regex:/^[a-zA-Z\s.-]*$/', 'unique:users'],
+            'username' => ['required', 'string', 'min:5', 'max:255', 'regex:/^[0-9a-zA-Z.-]*$/', 'unique:users'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
         ]);
 
@@ -116,31 +119,33 @@ class PersonController extends Controller
     {
         $sexes = Dropdown::where('type', 'sex')->get();
         $extensions = Dropdown::where('type', 'extension')->get();
+        $relations = Contact::groupBy('emergencyrelation')
+            ->select('emergencyrelation')
+            ->get();
+        $addresses = Contact::groupBy('emergencyaddress')
+            ->select('emergencyaddress')
+            ->get();
 
-        return view('ps.people.edit', [
-            'sexes' => $sexes, 
-            'extensions' => $extensions,
-            'person' => $person,
-        ]);
+        return view('ps.people.edit', compact('person', 'sexes', 'extensions', 'relations', 'addresses'));
     }
 
     public function update(Person $person)
     {
         $data = request()->validate([
-            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.-Ññ]*$/'],
-            'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.-Ññ]*$/'],
-            'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.-Ññ]*$/'],
+            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
             'sex' => ['required', 'string'],
             'dob' => ['required', 'date', 'before:-15 years'],
             'image' => ['nullable', 'image'],
-            'primaryno' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)],
+            'primaryno' => ['nullable', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)],
             'secondaryno' => ['nullable', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)], 
-            'emergencyperson' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z-.Ññ\s]*$/'],
-            'emergencyrelation' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z-Ññ\s]*$/'],
-            'emergencyaddress' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
-            'emergencycontact' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($person->user->id)],
+            'emergencyperson' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'emergencyrelation' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'emergencyaddress' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.,Ññ-]*$/'],
+            'emergencycontact' => ['nullable', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)],
+            'username' => ['required', 'string', 'max:255', 'regex:/^[0-9a-zA-Z.-]*$/', Rule::unique('users')->ignore($person->user->id)],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($person->user->id)],
         ]);
 

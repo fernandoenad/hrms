@@ -68,15 +68,15 @@ class Person extends Model
     }
 
     public function getFirstnameAttribute($value){
-        return ucwords(strtolower($value));
+        return ucwords(mb_strtolower($value));
     }
 
     public function getLastnameAttribute($value){
-        return ucwords(strtolower($value));
+        return ucwords(mb_strtolower($value));
     }
 
     public function getMiddlenameAttribute($value){
-        return ucwords(strtolower($value));
+        return ucwords(mb_strtolower($value));
     }
 
     public function getDobAttribute($value){
@@ -90,12 +90,12 @@ class Person extends Model
 
     public function getFullname()
     {
-        return ucwords($this->firstname). " " . mb_strtoupper($this->lastname . " " . $this->extname);
+        return ucwords(mb_strtolower($this->firstname)). " " . mb_strtoupper($this->lastname) . " " . $this->extname;
     }
 
     public function getFullnameBox()
     {
-        return ucwords($this->firstname. " " . $this->lastname . " " . $this->extname);
+        return ucwords(mb_strtolower($this->firstname. " " . $this->lastname . " " . $this->extname));
     }
 
     public function getFullnameSorted()

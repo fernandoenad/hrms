@@ -61,6 +61,26 @@
                                 <p>Employees</p>
                             </a>
                         </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ps.items') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ps.items') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tags"></i>
+                                <p>Items</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ps.users') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>User Management</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

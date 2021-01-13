@@ -25,8 +25,7 @@ class EmployeeController extends Controller
             ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')
             ->select('employees.id AS empid', 'employees.*', 'people.*')
             ->paginate(15);
-
-        
+    
         return view('ps.employees.index', compact('employees'));
     }
 
@@ -52,7 +51,16 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        return view('ps.employees.show', compact('employee'));
+        $person = $employee->person;
+
+        return view('ps.employees.show', compact('person'));
+    }
+
+    public function edit(Employee $employee)
+    {
+        $person = $employee->person;
+
+        return view('ps.employees.edit', compact('person'));
     }
 
 }

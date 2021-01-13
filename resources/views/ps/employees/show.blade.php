@@ -5,12 +5,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Employees</h1>
+                <h1 class="m-0 text-dark">Profile</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
-                    <li class="breadcrumb-item active">Employees</li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.employees') }}">Employees</a></li>
+                    <li class="breadcrumb-item active">Profile</li>
                 </ol>
             </div>
         </div>
@@ -19,8 +20,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-        @include('ps.employees._profile')
+        @include('ps.people._profile')
         </div>
+        
         <div class="col-md-6">
             @if (session('status'))
                 <div class="alert alert-success">
@@ -40,27 +42,27 @@
                         <tbody>
                             <tr>
                                 <th>Firstname</th>
-                                <td>{{ $employee->person->firstname }}</td>
+                                <td>{{ $person->firstname }}</td>
                             </tr>
                             <tr>
                                 <th>Middlename</th>
-                                <td>{{ $employee->person->middlename }}</td>
+                                <td>{{ $person->middlename }}</td>
                             </tr>
                             <tr>
                                 <th>Lastname</th>
-                                <td>{{ $employee->person->lastname }}</td>
+                                <td>{{ $person->lastname }}</td>
                             </tr>
                             <tr>
                                 <th>Ext. Name</th>
-                                <td>{{ $employee->person->extname }}</td>
+                                <td>{{ $person->extname }}</td>
                             </tr>
                             <tr>
                                 <th>Gender</th>
-                                <td>{{ $employee->person->sex }}</td>
+                                <td>{{ $person->sex }}</td>
                             </tr>
                             <tr>
                                 <th>Date of Birth</th>
-                                <td>{{ $employee->person->dob }} <small>({{ $employee->person->getAge() }})</small></td>
+                                <td>{{ $person->dob }} <small>({{ $person->getAge() }})</small></td>
                             </tr>
                         </tbody>
                     </table>
@@ -77,11 +79,11 @@
                         <tbody>
                             <tr>
                                 <th>{{ __('Primary Contact #') }}</th>
-                                <td>{{ $employee->person->contact->primaryno ?? __('') }}</td>
+                                <td>{{ $person->contact->primaryno ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Secondary Contact #') }}</th>
-                                <td>{{ $employee->person->contact->secondaryno ?? __('') }}</td>
+                                <td>{{ $person->contact->secondaryno ?? __('') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,19 +100,19 @@
                         <tbody>
                             <tr>
                                 <th>Name</th>
-                                <td>{{ $employee->person->contact->emergencyperson ?? __('')}}</td>
+                                <td>{{ $person->contact->emergencyperson ?? __('')}}</td>
                             </tr>
                             <tr>
                                 <th>Relationship</th>
-                                <td>{{ $employee->person->contact->emergencyrelation ?? __('')}}</td>
+                                <td>{{ $person->contact->emergencyrelation ?? __('')}}</td>
                             </tr>                                        
                             <tr>
                                 <th>Address</th>
-                                <td>{{ $employee->person->contact->emergencyaddress ?? __('') }}</td>
+                                <td>{{ $person->contact->emergencyaddress ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Contact #</th>
-                                <td>{{ $employee->person->contact->emergencycontact ?? __('')}}</td>
+                                <td>{{ $person->contact->emergencycontact ?? __('')}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -127,15 +129,15 @@
                         <tbody>
                             <tr>
                                 <th>E-Mail</th>
-                                <td>{{ $employee->person->user->email ?? __('') }}</td>
+                                <td>{{ $person->user->email ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Username</th>
-                                <td>{{ $employee->person->user->username ?? __('') }}</td>
+                                <td>{{ $person->user->username ?? __('') }}</td>
                             </tr>                                        
                             <tr>
                                 <th>Account creation date</th>
-                                <td>{{ $employee->person->user->created_at ?? __('') }}</td>
+                                <td>{{ $person->user->created_at ?? __('') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -152,27 +154,27 @@
                         <tbody>
                             <tr>
                                 <th>Employee Number</th>
-                                <td>{{ $employee->empno ?? __('') }}</td>
+                                <td>{{ $person->employee->empno ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Hire Date</th>
-                                <td>{{ $employee->hiredate ?? __('') }}</td>
+                                <td>{{ $person->employee->hiredate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Last Appt Date</th>
-                                <td>{{ $employee->lastapptdate ?? __('') }}</td>
+                                <td>{{ $person->employee->lastapptdate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Last NOSI Date</th>
-                                <td>{{ $employee->lastnosidate ?? __('') }}</td>
+                                <td>{{ $person->employee->lastnosidate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Retirement Date</th>
-                                <td>{{ $employee->retirementdate ?? __('') }}</td>
+                                <td>{{ $person->employee->retirementdate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Employment Status</th>
-                                <td>{{ $employee->employmentstatus ?? __('') }}</td>
+                                <td>{{ $person->employee->employmentstatus ?? __('') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -189,23 +191,23 @@
                         <tbody>
                             <tr>
                                 <th>TIN Number</th>
-                                <td>{{ $employee->tinno ?? __('') }}</td>
+                                <td>{{ $person->employee->tinno ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>GSIS BP Number</th>
-                                <td>{{ $employee->gsisbpno ?? __('') }}</td>
+                                <td>{{ $person->employee->gsisbpno ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Pag-IBIG Member ID</th>
-                                <td>{{ $employee->pagibigid ?? __('') }}</td>
+                                <td>{{ $person->employee->pagibigid ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Phil-Health Number</th>
-                                <td>{{ $employee->philhealthno ?? __('') }}</td>
+                                <td>{{ $person->employee->philhealthno ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>DBP Account Number</th>
-                                <td>{{ $employee->dbpaccountno ?? __('') }}</td>
+                                <td>{{ $person->employee->dbpaccountno ?? __('') }}</td>
                             </tr>
                         </tbody>
                     </table>    
@@ -222,33 +224,33 @@
                         <tbody>
                             <tr>
                                 <th>Plantilla Item #</th>
-                                <td>{{ $employee->item->itemno ?? __('') }}</td>
+                                <td>{{ $person->employee->item->itemno ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Creation Date</th>
-                                <td>{{ $employee->item->creationdate ?? __('') }}</td>
+                                <td>{{ $person->employee->item->creationdate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Position</th>
-                                <td>{{ $employee->item->position ?? __('') }}</td>
+                                <td>{{ $person->employee->item->position ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Type</th>
-                                <td>{{ $employee->item->employeetype ?? __('') }}</td>
+                                <td>{{ $person->employee->item->employeetype ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Appointment Date</th>
-                                <td>{{ $employee->item->appointmentdate ?? __('') }}</td>
+                                <td>{{ $person->employee->item->appointmentdate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>First Day</th>
-                                <td>{{ $employee->item->firstdaydate ?? __('') }}</td>
+                                <td>{{ $person->employee->item->firstdaydate ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Plantilla Owner</th>
                                 <td>
-                                    {{ $employee->item->station->name ?? __('') }}
-                                    ({{ $employee->item->station->code ?? __('') }})
+                                    {{ $person->employee->item->station->name ?? __('') }}
+                                    ({{ $person->employee->item->station->code ?? __('') }})
                                 </td>
                             </tr>
                         </tbody>
@@ -266,32 +268,28 @@
                         <tbody>
                             <tr>
                                 <th>Station Type</th>
-                                <td>{{ $employee->station->type ?? __('') }}</td>
-                            </tr>
-                            <tr>
-                                <th>Station Code/No</th>
-                                <td>{{ $employee->station->code ?? __('') }}</td>
+                                <td>{{ $person->employee->station->type ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Station Name</th>
                                 <td>
-                                    {{ $employee->station->name ?? __('') }}
-                                    ({{ $employee->station->code ?? __('') }})
+                                    {{ $person->employee->station->name ?? __('') }}
+                                    ({{ $person->employee->station->code ?? __('') }})
                                 </td>
                             </tr>
                             <tr>
                                 <th>Services</th>
-                                <td>{{ $employee->station->services ?? __('') }}</td>
+                                <td>{{ $person->employee->station->services ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Barangay</th>
-                                <td>{{ $employee->station->address ?? __('') }}</td>
+                                <td>{{ $person->employee->station->address ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Station Head</th>
                                 <td>
-                                    @if(isset($employee->station->person_id))
-                                        {{ $employee->station->person->getFullname() ?? __('') }}
+                                    @if(isset($person->employee->station->person_id))
+                                        {{ $person->employee->station->person->getFullname() ?? __('') }}
                                     @else 
                                         {{ __('') }}
                                     @endif
@@ -299,17 +297,17 @@
                             </tr>
                             <tr>
                                 <th>District/Office Name</th>
-                                <td>{{ $employee->station->office->name ?? __('') }}</td>
+                                <td>{{ $person->employee->station->office->name ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>Municipality</th>
-                                <td>{{ $employee->station->office->town->name ?? __('') }}</td>
+                                <td>{{ $person->employee->station->office->town->name ?? __('') }}</td>
                             </tr>
                             <tr>
                                 <th>District/Office Head</th>
                                 <td>
-                                    @if(isset($employee->station->office->person_id))
-                                        {{ $employee->station->office->person->getFullname() ?? __('')  }}
+                                    @if(isset($person->employee->station->office->person_id))
+                                        {{ $person->employee->station->office->person->getFullname() ?? __('')  }}
                                     @else 
                                         {{ __('') }}
                                     @endif
@@ -322,7 +320,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('ps.employees._tools')
+            @include('ps.people._tools')
         </div>
     </div>
 </div>

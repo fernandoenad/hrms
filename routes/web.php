@@ -5,6 +5,7 @@ use App\Http\Controllers\My\ContactController;
 use App\Http\Controllers\My\MyController;
 use App\Http\Controllers\My\ToolController;
 use App\Http\Controllers\PS\PersonController;
+use App\Http\Controllers\PS\ItemController;
 use App\Http\Controllers\PS\PSController;
 use App\Http\Controllers\PS\EmployeeController;
 use App\Http\Controllers\HomeController;
@@ -48,9 +49,16 @@ Route::get('/ps/people/{person}', [PersonController::class, 'show'])->name('ps.p
 Route::post('/ps/people', [PersonController::class, 'store'])->name('ps.people.store');
 Route::get('/ps/people', [PersonController::class, 'index'])->name('ps.people');
 
+Route::any('/ps/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('ps.employees.edit');
 Route::any('/ps/employees/search', [EmployeeController::class, 'search'])->name('ps.employees.search');
 Route::get('/ps/employees/{employee}', [EmployeeController::class, 'show'])->name('ps.employees.show');
 Route::get('/ps/employees', [EmployeeController::class, 'index'])->name('ps.employees');
+
+Route::any('/ps/items/search', [ItemController::class, 'search'])->name('ps.items.search');
+Route::any('/ps/items/create', [ItemController::class, 'create'])->name('ps.items.create');
+Route::any('/ps/items/unfilled', [ItemController::class, 'displayUnfilled'])->name('ps.items.unfilled');
+Route::any('/ps/items/{item}', [ItemController::class, 'show'])->name('ps.items.show');
+Route::get('/ps/items', [ItemController::class, 'index'])->name('ps.items');
 
 Route::get('/ps', [PSController::class, 'index'])->name('ps');
 

@@ -80,7 +80,7 @@
                                 <select id="extname" type="text" class="form-control @error('extname') is-invalid @enderror" name="extname" value="{{ old('extname') }}" autocomplete="extname">
                                     <option value="">Select</option>
                                     @foreach($extensions as $extension)
-                                        <option value="{{ $extension->details }}" @if (old('extname') || $person->extname  == $extension->details) {{ 'selected' }} @endif>{{ $extension->details }}</option>
+                                        <option value="{{ $extension->details }}" @if (old('extname') == $extension->details || $person->extname  == $extension->details) {{ 'selected' }} @endif>{{ $extension->details }}</option>
                                     @endforeach
                                 </select>
                                 @error('extname')
@@ -98,7 +98,7 @@
                                 <select id="sex" type="text" class="form-control @error('sex') is-invalid @enderror" name="sex" value="{{ old('sex') }}" autocomplete="sex">
                                     <option value="">Select</option>
                                     @foreach($sexes as $sex)
-                                        <option value="{{ $sex->details }}" @if (old('sex') || $person->sex == $sex->details) {{ 'selected' }} @endif>{{ $sex->details }}</option>
+                                        <option value="{{ $sex->details }}" @if (old('sex') == $sex->details || $person->sex == $sex->details) {{ 'selected' }} @endif>{{ $sex->details }}</option>
                                     @endforeach
                                 </select>
                                 @error('sex')
@@ -188,7 +188,12 @@
                             <label for="emergencyrelation" class="col-md-3 col-form-label text-md-right">{{ __('Relationship') }}</label>
 
                             <div class="col-md-8">
-                                <input id="emergencyrelation" type="text" class="form-control @error('emergencyrelation') is-invalid @enderror" name="emergencyrelation" value="{{ old('emergencyrelation') ?? $person->contact->emergencyrelation }}" autocomplete="emergencyrelation">
+                                <input list="emergencyrelations" id="emergencyrelation" type="text" class="form-control @error('emergencyrelation') is-invalid @enderror" name="emergencyrelation" value="{{ old('emergencyrelation') ?? $person->contact->emergencyrelation }}" autocomplete="emergencyrelation">
+                                <datalist id="emergencyrelations">
+                                    @foreach($relations as $relation)
+                                        <option value="{{ $relation->emergencyrelation }}">
+                                    @endforeach
+                                </datalist>
                                 <small><em>{{ __('Mother/Father, Husband/Wife, Sister/Brother, etc') }}</em></small>
 
                                 @error('emergencyrelation')
@@ -203,7 +208,12 @@
                             <label for="emergencyaddress" class="col-md-3 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-8">
-                                <input id="emergencyaddress" type="text" class="form-control @error('emergencyaddress') is-invalid @enderror" name="emergencyaddress" value="{{ old('emergencyaddress') ?? $person->contact->emergencyaddress }}" autocomplete="emergencyaddress">
+                                <input list="emergencyaddresses" id="emergencyaddress" type="text" class="form-control @error('emergencyaddress') is-invalid @enderror" name="emergencyaddress" value="{{ old('emergencyaddress') ?? $person->contact->emergencyaddress }}" autocomplete="emergencyaddress">
+                                <datalist id="emergencyaddresses">
+                                    @foreach($addresses as $address)
+                                        <option value="{{ $address->emergencyaddress }}">
+                                    @endforeach
+                                </datalist>
                                 <small><em>{{ __('Barangay, Town, Province') }}</em></small>
 
                                 @error('emergencyaddress')
@@ -250,6 +260,7 @@
 
                             <div class="col-md-8">
                                 <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') ?? $person->user->username }}" autocomplete="username">
+                                <small><em>{{ __('Spaces are not allowed.') }}</em></small>
 
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -267,9 +278,15 @@
                                     <button type="submit" class="btn btn-primary float-right">
                                         {{ __('Update Profile') }}
                                     </button>
+                                    @if(isset($person->employee->id))
+                                    <a href="{{ route('ps.employees.show', $person->employee->id) }}" class="btn btn-default">
+                                        {{ __('Cancel') }}
+                                    </a>
+                                    @else
                                     <a href="{{ route('ps.people.show', $person->id) }}" class="btn btn-default">
                                         {{ __('Cancel') }}
                                     </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

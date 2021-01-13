@@ -25,18 +25,18 @@
         <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <h5>{{ __('Confirm Employment')}}</h5>
+                    <h5>{{ __('Modify Employment')}}</h5>
                 </div>
 
                 <div class="card-body">
                     <p>
-                        This assigns employment.
+                        This updates employment.
                     </p>
                 </div>
 
                 <div class="card-footer">
                     <a href="#" class="btn btn-primary float-right">
-                        {{ __('Employ') }}
+                        {{ __('Modify Employment') }}
                     </button>
                     <a href="#" class="btn btn-default">
                         {{ __('Cancel') }}

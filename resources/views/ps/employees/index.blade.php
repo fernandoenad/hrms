@@ -65,7 +65,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('ps.employees._tools')
+            @include('ps.people._tools')
         </div>
     </div>
 </div>
