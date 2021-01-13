@@ -28,17 +28,17 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Position</th>
-                                    <th>Station</th>
-                                    <th>District</th>
+                                    <th width="20%">Station</th>
+                                    <th width="15%">District</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(sizeof($employees) > 0)
                                     @foreach($employees as $employee)
                                     <tr>
-                                        <td>{{ $employee->person->id ?? __('') }}</td>
+                                        <td>{{ $employee->empno ?? __('') }}</td>
                                         <td>
-                                            <a href="{{ route('ps.employees.show', $employee->id) }}">
+                                            <a href="{{ route('ps.employees.show', $employee->empid) }}">
                                                 {{ $employee->person->getFullnameSorted() ?? __('') }}
                                             </a>
                                         </td>

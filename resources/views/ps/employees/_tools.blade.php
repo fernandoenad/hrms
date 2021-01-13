@@ -34,17 +34,17 @@
                     <a href="#" class="nav-link"><b></a></b> 
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ps.people.edit', $employee->id)}}" class="nav-link"><i class="fas fa-user-edit"></i> Modify Profile</a>
+                    <a href="{{ route('ps.people.edit', $employee->person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Modify Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ps.people.edit', $employee->id)}}" class="nav-link"><i class="fas fa-edit"></i> Modify Employment</a>
+                    <a href="#" class="nav-link"><i class="fas fa-edit"></i> Modify Employment</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ps.people.reset', $employee->id)}}" class="nav-link"><i class="fas fa-user-shield"></i> Reset password</a>
+                    <a href="{{ route('ps.people.reset', $employee->person->id)}}" class="nav-link"><i class="fas fa-user-shield"></i> Reset password</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" onClick="alert('Notice: Feature not active yet.')"><i class="fas fa-user-lock"></i> Disable account</a>
-                </li>  
+                    <a href="#" class="nav-link" onClick="alert('Notice: Feature not active yet.')"><i class="fas fa-user-slash"></i> Disable account</a>
+                </li> 
             @endif
         </ul>
     </div>

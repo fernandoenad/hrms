@@ -22,7 +22,12 @@
         @include('ps.employees._profile')
         </div>
         <div class="col-md-6">
-        <div class="card card-primary">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <div class="card card-primary">
                 <div class="card-body">
                     <h4>Personal Information</h4>
                     <table class="table table-hover">

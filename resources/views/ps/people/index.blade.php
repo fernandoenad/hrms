@@ -28,6 +28,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Sex</th>
+                                    <th>Primary Contact #</th>
                                     <th>Type</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,7 @@
                                             </a>
                                         </td>
                                         <td>{{ $person->sex  ?? __('') }}</td>
+                                        <td>{{ $person->contact->primaryno  ?? __('') }}</td>
                                         <td>@if(isset($person->employee->id)) {{ 'Employee' }} @else {{ 'Applicant / Unassigned' }} @endif</td>
                                     </tr>
                                     @endforeach

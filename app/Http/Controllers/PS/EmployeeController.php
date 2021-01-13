@@ -22,7 +22,9 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::join('people', 'people.id', '=', 'person_id')
-            ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->paginate(15);
+            ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')
+            ->select('employees.id AS empid', 'employees.*', 'people.*')
+            ->paginate(15);
 
         
         return view('ps.employees.index', compact('employees'));
@@ -32,7 +34,7 @@ class EmployeeController extends Controller
     {
         $searchString = request()->get('searchString');
         
-        $employees = Employee::join('people', 'people.id', '=', 'person_id')
+        $employees = Employee::join('people', 'person_id', '=', 'people.id')
             ->where('lastname', 'like' , $searchString . '%')
             ->orWhere('firstname', 'like', $searchString . '%')
             ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
@@ -40,6 +42,7 @@ class EmployeeController extends Controller
             ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
             ->orderBy('lastname', 'asc')
             ->orderBy('firstname', 'asc')
+            ->select('employees.id AS empid', 'employees.*', 'people.*')
             ->paginate(15);
         
         $employees = $employees->appends(['searchString' => $searchString]);
