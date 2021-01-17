@@ -278,15 +278,9 @@
                                     <button type="submit" class="btn btn-primary float-right">
                                         {{ __('Update Profile') }}
                                     </button>
-                                    @if(isset($person->employee->id))
-                                    <a href="{{ route('ps.employees.show', $person->employee->id) }}" class="btn btn-default">
+                                    <a href="{{ url()->previous() }}" class="btn btn-default">
                                         {{ __('Cancel') }}
                                     </a>
-                                    @else
-                                    <a href="{{ route('ps.people.show', $person->id) }}" class="btn btn-default">
-                                        {{ __('Cancel') }}
-                                    </a>
-                                    @endif
                                 </div>
                             </div>
                         </div>

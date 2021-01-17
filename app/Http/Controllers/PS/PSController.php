@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Employee;
 use App\Models\Item;
+use App\Models\Station;
 
 class PSController extends Controller
 {
@@ -24,9 +25,30 @@ class PSController extends Controller
     {
         $people = Person::all();
         $employees = Employee::all();
-        $items = Item::all();
+        $items = Item::where('status', '=', 1);
+        
+        $stations = Station::orderBy('name', 'asc')->paginate(15);
+             
+        return view('ps.index', compact('people', 'employees', 'items', 'stations'));
+    }
 
-        return view('ps.index', compact('people', 'employees', 'items'));
+
+    public function search()
+    {
+        $searchString = request()->get('searchString');
+
+        $people = Person::all();
+        $employees = Employee::all();
+        $items = Item::where('status', '=', 1);
+
+        $stations = Station::where('name', 'like', $searchString . '%')
+            ->orWhere('code', '=', $searchString)
+            ->orderBy('name', 'asc')
+            ->paginate(15);
+
+        $stations = $stations->appends(['searchString' => $searchString]);
+
+        return view('ps.index', compact('people', 'employees', 'items', 'stations'));
     }
 
 }

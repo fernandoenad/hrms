@@ -5,24 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Station extends Model
+class Deployment extends Model
 {
     use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'type',
-        'code',
-        'name',
-        'services',
-        'office_id',
-        'address',
-        'category',
-        'person_id',
+        'station_id',
     ];
 
     /**
@@ -41,26 +33,16 @@ class Station extends Model
 
     public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsTo(Item::class);
     }
 
-    public function office()
+    public function station()
     {
-        return $this->belongsTo(Office::class);
+        return $this->belongsTo(Station::class);
     }
 
-    public function person()
+    public function employee()
     {
-        return $this->belongsTo(Person::class);
-    }
-
-    public function deployment()
-    {
-        return $this->hasOne(Deployment::class);
-    }
-
-    public function getTypeAttribute($value)
-    {
-        return ucwords(strtolower($value));
+        return $this->belongsTo(Employee::class);
     }
 }

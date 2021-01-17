@@ -93,7 +93,7 @@
                                             <th>
                                                 Details
                                                 <a href="{{ route('my.contact.edit') }}" class="btn btn-primary btn-sm float-right">
-                                                    <span class="fas fa-edit"></span>
+                                                    <span class="fas fa-file-signature"></span>
                                                     {{ __('Modify') }}
                                                 </a>
                                             </th>
@@ -213,112 +213,110 @@
                                 </table>    
                                 <br>
 
-                                <h4>Appointment Information</h4>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th width="30%">Field</th>
-                                            <th>Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>Plantilla Item #</th>
-                                            <td>{{ $person->employee->item->itemno ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Creation Date</th>
-                                            <td>{{ $person->employee->item->creationdate ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Position</th>
-                                            <td>{{ $person->employee->item->position ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Type</th>
-                                            <td>{{ $person->employee->item->employeetype ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Appointment Date</th>
-                                            <td>{{ $person->employee->item->appointmentdate ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>First Day</th>
-                                            <td>{{ $person->employee->item->firstdaydate ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Plantilla Owner</th>
-                                            <td>
-                                                {{ $person->employee->item->station->name ?? __('') }}
-                                                ({{ $person->employee->item->station->code ?? __('') }})
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br> 
+                                @if(isset($person->employee->item))
+                                    <h4>Appointment Information</h4>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="30%">Field</th>
+                                                <th>Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>Plantilla Item #</th>
+                                                <td>{{ $person->employee->item->itemno ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Creation Date</th>
+                                                <td>{{ $person->employee->item->creationdate ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Position</th>
+                                                <td>{{ $person->employee->item->position ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type</th>
+                                                <td>{{ $person->employee->item->employeetype ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Appointment Date</th>
+                                                <td>{{ $person->employee->item->appointmentdate ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>First Day</th>
+                                                <td>{{ $person->employee->item->firstdaydate ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Plantilla Owner</th>
+                                                <td>
+                                                    {{ $person->employee->item->station->name ?? __('') }}
+                                                    ({{ $person->employee->item->station->code ?? __('') }})
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Deployment</th>
+                                                <td>
+                                                    {{ $person->employee->item->deployment->station->name ?? __('') }}
+                                                    ({{ $person->employee->item->deployment->station->code ?? __('') }})
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br> 
 
-                                <h4>Station Information</h4>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th width="30%">Field</th>
-                                            <th>Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>Station Type</th>
-                                            <td>{{ $person->employee->station->type ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Station Code/No</th>
-                                            <td>{{ $person->employee->station->code ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Station Name</th>
-                                            <td>
-                                                {{ $person->employee->station->name ?? __('') }}
-                                                ({{ $person->employee->station->code ?? __('') }})
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Services</th>
-                                            <td>{{ $person->employee->station->services ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Barangay</th>
-                                            <td>{{ $person->employee->station->address ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Station Head</th>
-                                            <td>
-                                                @if(isset($person->employee->station->person_id))
-                                                    {{ $person->employee->station->person->getFullname() ?? __('') }}
-                                                @else 
-                                                    {{ __('') }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>District/Office Name</th>
-                                            <td>{{ $person->employee->station->office->name ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Municipality</th>
-                                            <td>{{ $person->employee->station->office->town->name ?? __('') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>District/Office Head</th>
-                                            <td>
-                                                @if(isset($person->employee->station->office->person_id))
-                                                    {{ $person->employee->station->office->person->getFullname() ?? __('')  }}
-                                                @else 
-                                                    {{ __('') }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <h4>Deployment Information</h4>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="30%">Field</th>
+                                                <th>Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>Station Type</th>
+                                                <td>{{ $person->employee->item->deployment->station->type ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Services</th>
+                                                <td>{{ $person->employee->item->deployment->station->services ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Barangay</th>
+                                                <td>{{ $person->employee->item->deployment->station->address ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Station Head</th>
+                                                <td>
+                                                    @if($person->employee->item->deployment->station->person_id))
+                                                        {{ $person->employee->item->deployment->station->person->getFullname() ?? __('') }}
+                                                    @else 
+                                                        {{ __('') }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>District/Office Name</th>
+                                                <td>{{ $person->employee->item->deployment->station->office->name ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Municipality</th>
+                                                <td>{{ $person->employee->item->deployment->station->office->town->name ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>District/Office Head</th>
+                                                <td>
+                                                    @if(isset($person->employee->item->deployment->station->office->person_id))
+                                                        {{ $person->employee->item->deployment->station->office->person->getFullname() ?? __('')  }}
+                                                    @else 
+                                                        {{ __('') }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                @endif
                             </div>
                         </div>
                     </div>

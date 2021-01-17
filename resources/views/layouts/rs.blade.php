@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -14,7 +15,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('ps') }}">Personnel Services</a>
+                    <a class="nav-link" href="{{ route('rs') }}">Records Section</a>
                 </li>
             </ul>
 
@@ -33,50 +34,30 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item 
-                            @if(Route::currentRouteName() == 'ps' || Route::currentRouteName() == 'ps.search') 
+                            @if(Route::currentRouteName() == 'rs' || Route::currentRouteName() == 'rs.search') 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ps') }}" class="nav-link">
+                            <a href="{{ route('rs') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li> 
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'ps.people') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'rs.employees') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ps.people') }}" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>People</p>
-                            </a>
-                        </li> 
-
-                        <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'ps.employees') !== false) 
-                                {{ __('menu-open')}}
-                            @endif">
-                            <a href="{{ route('ps.employees') }}" class="nav-link">
+                            <a href="{{ route('rs.employees') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Employees</p>
                             </a>
                         </li>
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'ps.items') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'rs.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ps.items') }}" class="nav-link">
-                                <i class="nav-icon fas fa-tags"></i>
-                                <p>Items</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'ps.users') !== false) 
-                                {{ __('menu-open')}}
-                            @endif">
-                            <a href="{{ route('ps.users') }}" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>User Management</p>
                             </a>

@@ -61,14 +61,14 @@ class Employee extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function station()
+    public function deployment()
     {
-        return $this->belongsTo(Station::class);
+        return $this->hasOne(Deployment::class);
     }
 
     public function getHiredateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format('F d, Y') : null;
+        return $value != '0000-00-00' ? Carbon::parse($value)->format('F d, Y') : null;
     }
 
     public function getLastapptdateAttribute($value)

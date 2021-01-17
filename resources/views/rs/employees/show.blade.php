@@ -1,4 +1,4 @@
-@extends('layouts.ps')
+@extends('layouts.rs')
 
 @section('content')    
 <div class="content-header">
@@ -223,7 +223,6 @@
                                     <th>Item No.</th>
                                     <td>
                                         {{ $person->employee->item->itemno ?? __('') }}
-                                        <strong><a href="{{ route('ps.items.edit', $person->employee->item->id ) }}"><i class="fas fa-edit"></i></a></strong>
                                     </td>
                                 </tr>
                                 <tr>
@@ -338,7 +337,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('ps.people._tools')
+            @include('rs.employees._tools')
         </div>
     </div>
 </div>

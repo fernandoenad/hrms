@@ -1,4 +1,4 @@
-@extends('layouts.ps')
+@extends('layouts.rs')
 
 @section('content')    
 <div class="content-header">
@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-9">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
 
@@ -29,36 +29,6 @@
                             <span class="info-box-number">
                                 <a href="{{ route('ps.employees.active') }}">
                                     {{ number_format($empl_a, 0) }}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Unassigned</span>
-                            <span class="info-box-number">
-                                <a href="{{ route('ps.employees.unassigned') }}">
-                                    {{ number_format($empl_un, 0) }}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users-slash"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Terminated</span>
-                            <span class="info-box-number">
-                                <a href="{{ route('ps.employees.terminated') }}">
-                                    {{ number_format($empl_te, 0) }}
                                 </a>
                             </span>
                         </div>
@@ -85,7 +55,7 @@
                                     <tr>
                                         <td>{{ $employee->empno ?? __('') }}</td>
                                         <td>
-                                            <a href="{{ route('ps.employees.show', $employee->empid) }}">
+                                            <a href="{{ route('rs.employees.show', $employee->empid) }}">
                                                 {{ $employee->person->getFullnameSorted() ?? __('') }}
                                             </a>
                                         </td>

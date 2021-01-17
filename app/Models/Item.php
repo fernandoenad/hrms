@@ -56,6 +56,11 @@ class Item extends Model
         return $this->belongsTo(Station::class);
     }
 
+    public function deployment()
+    {
+        return $this->hasOne(Deployment::class);
+    }
+
     public function getItemnoAttribute($value)
     {
         return strtoupper($value);
@@ -75,4 +80,10 @@ class Item extends Model
     {
         return $value ? Carbon::parse($value)->format('F d, Y') : null;
     }
+
+    public function getStatusAttribute($value)
+    {
+        return $value == 1 ? 'Active' : 'Inactive';
+    }
+
 }

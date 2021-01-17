@@ -11,8 +11,8 @@
                 {{ $person->employee->item->position }} 
                 <br>
                 <small>
-                    {{ $person->employee->station->name }} 
-                    ({{ $person->employee->station->code }})
+                    {{ $person->employee->item->deployment->station->name }} 
+                    ({{ $person->employee->item->deployment->station->code }})
                 </small>
             @else  
                 {{ __('Applicant / Unassigned') }}
@@ -21,7 +21,7 @@
         @if(isset($person->employee->item))
             <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                    <b>Employee No</b> <a class="float-right">{{ $person->employee->empno ?? __('') }}</a>
+                    <b>Empl No</b> <a class="float-right">{{ $person->employee->empno ?? __('') }}</a>
                 </li>
                 <li class="list-group-item">
                     <b>Hire Date</b> <a class="float-right">{{ $person->employee->hiredate ?? __('') }}</a>

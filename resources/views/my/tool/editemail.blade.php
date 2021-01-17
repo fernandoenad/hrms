@@ -62,7 +62,7 @@
                                             @enderror
 
                                             <br>
-                                            <a href="{{ route('my.tools') }}" class="btn btn-default">
+                                            <a href="{{ url()->previous() }}" class="btn btn-default">
                                                 {{ __('Cancel') }}
                                             </a>
                                             <button type="submit" class="btn btn-primary">

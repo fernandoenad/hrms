@@ -10,7 +10,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ps.people') }}">Person</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.people') }}">People</a></li>
                     <li class="breadcrumb-item active">New Profile</li>
                 </ol>
             </div>
@@ -185,7 +185,7 @@
                                     <button type="submit" class="btn btn-primary float-right">
                                         {{ __('Save Employee') }}
                                     </button>
-                                    <a href="{{ route('ps.people') }}" class="btn btn-default">
+                                    <a href="{{ url()->previous()}}" class="btn btn-default">
                                         {{ __('Cancel') }}
                                     </a>
                                 </div>

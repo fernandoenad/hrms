@@ -8,6 +8,9 @@ use App\Models\Person;
 use App\Models\Dropdown;
 use App\Models\User;
 use App\Models\Contact;
+use App\Models\Item;
+use App\Models\Station;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -30,7 +33,10 @@ class PersonController extends Controller
     {
         $people = Person::orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->paginate(15);
 
-        return view('ps.people.index', compact('people'));
+        $employee_c = $this->countEmployees();
+        $people_c = $this->countPeople() - $employee_c;
+
+        return view('ps.people.index', compact('people', 'employee_c', 'people_c'));
     }
 
     public function search()
@@ -48,7 +54,24 @@ class PersonController extends Controller
         
         $people = $people->appends(['searchString' => $searchString]);
         
-        return view('ps.people.index', compact('people'));
+        $employee_c = $this->countEmployees();
+        $people_c = $this->countPeople();
+
+        return view('ps.people.index', compact('people', 'employee_c', 'people_c'));
+    }
+
+    public function countPeople()
+    {
+        $people = Person::count();
+
+        return $people;
+    }
+
+    public function countEmployees()
+    {
+        $employees = Employee::count();
+            
+        return $employees;
     }
 
     public function create()
@@ -112,7 +135,13 @@ class PersonController extends Controller
 
     public function show(Person $person)
     {
-        return view('ps.people.show', compact('person'));
+        if(isset($person->employee))
+        {
+            $employee = $person->employee;
+            return redirect()->route('ps.employees.show', compact('employee')); 
+        }
+        else
+            return view('ps.people.show', compact('person')); 
     }
 
     public function edit(Person $person)
@@ -229,6 +258,54 @@ class PersonController extends Controller
 
     public function employ(Person $person)
     {
-        return view('ps.people.employ', compact('person'));
+        $items = Item::where('status', '=', 1)
+            ->whereNotIn('items.id', function($query){
+                $query->select('item_id')->from('employees');
+            })
+            ->get();
+
+        $employmentstatuses = Dropdown::where('type', 'employmentstatus')
+            ->get();
+
+        $stations = Station::select('id', 'code', 'name', 'office_id')
+            ->orderBy('code', 'asc')
+            ->get();
+           
+        if(isset($person->employee))
+        {
+            $employee = $person->employee;
+            return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Already employed!'); 
+        }
+        else
+            return view('ps.people.employ', compact('person','items', 'stations', 'employmentstatuses'));
+    }
+
+    public function employdone(Person $person)
+    {
+        $data = request()->validate([
+            'item_id' => ['required'],
+            'appointmentdate' => ['required', 'date', 'before_or_equal: today'],
+            'firstdaydate' => ['required', 'date', 'after_or_equal:'.request()->appointmentdate],            
+            'employmentstatus' => ['required'],
+        ]);
+
+        
+        $employee = $person->employee()->create([
+            'empno' => 'T-' . strtotime('now'),
+            'person_id' => $person->id,
+            'item_id' => $data['item_id'],
+            'step' => 1,
+            'lastapptdate' => $data['firstdaydate'], 
+            'hiredate' => $data['firstdaydate'], 
+            'employmentstatus' => $data['employmentstatus'],         
+        ]);
+
+        $employee->item()->update([
+            'appointmentdate' => $data['appointmentdate'],
+            'firstdaydate' => $data['firstdaydate'],     
+        ]);
+
+
+        return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employment successful!');
     }
 }

@@ -18,22 +18,39 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('ps.items') }}" class="nav-link">
-                    <i class="fas fa-tags"></i> View all 
-                    <span class="badge badge float-right">{{ number_format($items_a, 0) }}</span>
-                    
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('ps.items.unfilled') }}" class="nav-link">
-                    <i class="fas fa-box-open"></i> Unfilled items 
-                    <span class="badge badge float-right">{{ number_format($items_un, 0) }}
+                    <i class="fas fa-tags"></i> View all                    
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('ps.items.create') }}" class="nav-link">
-                    <i class="fas fa-cart-plus"></i> New entry
+                    <i class="fas fa-plus-square"></i> New entry
                 </a>
             </li>
+            @if(Route::currentRouteName() == 'ps.items.show' 
+                || Route::currentRouteName() == 'ps.items.edit'
+                || Route::currentRouteName() == 'ps.items.deactivate') 
+                <li class="nav-item">
+                    <a href="#" class="nav-link"><b></a></b> 
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('ps.items.edit', $item->id )}}" class="nav-link"><i class="fas fa-edit"></i> Modify item</a>
+                </li>
+                @if($item->status == 'Active')
+                    @if(!isset($item->employee))
+                        <li class="nav-item">
+                            <a href="{{ route('ps.items.deactivate', $item->id) }}" class="nav-link"><i class="fas fa-ban"></i> Deactivate Item</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a href="{{ route('ps.employees.edit', $item->employee->id) }}" class="nav-link"><i class="fas fa-user-tag"></i> Modify assignment</a>
+                        </li>
+                    @endif                    
+                @else
+                    <li class="nav-item">
+                        <a href="{{ route('ps.items.activate', $item->id) }}" class="nav-link"><i class="fas fa-check"></i> Activate Item</a>
+                    </li>
+                @endif           
+            @endif
         </ul>
     </div>
 </div>

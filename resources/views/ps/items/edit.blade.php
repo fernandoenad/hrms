@@ -5,13 +5,14 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">New Item</h1>
+                <h1 class="m-0 text-dark">Modify Item</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ps.items') }}">Items</a></li>
-                    <li class="breadcrumb-item active">New Item</li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.items.show', $item->id) }}">Item</a></li>
+                    <li class="breadcrumb-item active">Modify Item</li>
                 </ol>
             </div>
         </div>
@@ -27,15 +28,16 @@
             @endif
             <div class="card card-primary">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('ps.items.store') }}">
+                    <form method="POST" action="{{ route('ps.items.update', $item->id) }}">
                         @csrf
+                        @method('PATCH')
 
                         <h5>Item Information</h5>
                         <div class="form-group row">
                             <label for="itemno" class="col-md-3 col-form-label text-md-right">{{ __('Item No.') }}</label>
 
                             <div class="col-md-8">
-                                <input id="itemno" type="text" class="form-control @error('itemno') is-invalid @enderror" name="itemno" value="{{ old('itemno') }}" autocomplete="itemno">
+                                <input id="itemno" type="text" class="form-control @error('itemno') is-invalid @enderror" name="itemno" value="{{ old('itemno') ?? $item->itemno }}" autocomplete="itemno">
 
                                 @error('itemno')
                                     <span class="invalid-feedback" role="alert">
@@ -49,7 +51,7 @@
                             <label for="creationdate" class="col-md-3 col-form-label text-md-right">{{ __('Creation Date') }}</label>
 
                             <div class="col-md-8">
-                                <input id="creationdate" type="date" class="form-control @error('creationdate') is-invalid @enderror" name="creationdate" value="{{ old('creationdate') }}" autocomplete="creationdate">
+                                <input id="creationdate" type="date" class="form-control @error('creationdate') is-invalid @enderror" name="creationdate" value="{{ old('creationdate') ?? date('Y-m-d', strtotime($item->creationdate)) }}" autocomplete="creationdate">
 
                                 @error('creationdate')
                                     <span class="invalid-feedback" role="alert">
@@ -63,7 +65,7 @@
                             <label for="position" class="col-md-3 col-form-label text-md-right">{{ __('Position') }}</label>
 
                             <div class="col-md-8">
-                                <input list="positions" id="position" type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') }}" autocomplete="position">
+                                <input list="positions" id="position" type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') ?? $item->position }}" autocomplete="position">
                                 <datalist id="positions">
                                     @foreach($positions as $position)
                                         <option value="{{ $position->position }}">
@@ -85,7 +87,7 @@
                                 <select id="salarygrade" type="text" class="form-control @error('salarygrade') is-invalid @enderror" name="salarygrade" value="{{ old('salarygrade') }}" autocomplete="salarygrade">
                                     <option value="">Select</option>
                                     @for($i=1; $i<33; $i++)
-                                        <option value="{{ $i }}" @if (old('salarygrade') == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                                        <option value="{{ $i }}" @if (old('salarygrade') == $i || $item->salarygrade == $i ) {{ 'selected' }} @endif>{{ $i }}</option>
                                     @endfor
                                 </select>
 
@@ -104,7 +106,7 @@
                                 <select id="employeetype" type="text" class="form-control @error('employeetype') is-invalid @enderror" name="employeetype" value="{{ old('employeetype') }}" autocomplete="employeetype">
                                     <option value="">Select</option>
                                     @foreach($employeetypes as $employeetype)
-                                        <option value="{{ $employeetype->details }}" @if (old('employeetype') == $employeetype->details) {{ 'selected' }} @endif>{{ $employeetype->details }}</option>
+                                        <option value="{{ $employeetype->details }}" @if (old('employeetype') == $employeetype->details || $item->employeetype == $employeetype->details ) {{ 'selected' }} @endif>{{ $employeetype->details }}</option>
                                     @endforeach
                                 </select>
                                 @error('employeetype')
@@ -123,7 +125,7 @@
                                     <option value="">Select</option>
                                     <option value="0" @if (old('station_id') == 0 ) {{ 'selected' }} @endif>TBA</option>
                                     @foreach($stations as $station)
-                                        <option value="{{ $station->id }}" @if (old('station_id') == $station->id ) {{ 'selected' }} @endif>{{ $station->code }} - {{ $station->name }}, {{ $station->office->name }}</option>
+                                        <option value="{{ $station->id }}" @if (old('station_id') == $station->id  || $item->station_id == $station->id ) {{ 'selected' }} @endif>{{ $station->code }} - {{ $station->name }}, {{ $station->office->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -143,7 +145,7 @@
                                     <option value="">Select</option>
                                     <option value="0" @if (old('deployment_station_id') == 0 ) {{ 'selected' }} @endif>TBA</option>
                                     @foreach($stations as $station)
-                                        <option value="{{ $station->id }}" @if (old('deployment_station_id') == $station->id ) {{ 'selected' }} @endif>{{ $station->code }} - {{ $station->name }}, {{ $station->office->name }}</option>
+                                        <option value="{{ $station->id }}" @if (old('deployment_station_id') == $station->id || $item->deployment->station_id == $station->id ) {{ 'selected' }} @endif>{{ $station->code }} - {{ $station->name }}, {{ $station->office->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -162,9 +164,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <button type="submit" class="btn btn-primary float-right">
-                                        {{ __('Save Item') }}
+                                        {{ __('Update Item') }}
                                     </button>
-                                    <a href="{{ route('ps.items') }}" class="btn btn-default">
+                                    <a href="{{ url()->previous() }}" class="btn btn-default">
                                         {{ __('Cancel') }}
                                     </a>
                                 </div>

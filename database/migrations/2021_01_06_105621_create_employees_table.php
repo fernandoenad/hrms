@@ -16,7 +16,7 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('person_id');
-            $table->unsignedBigInteger('empno')->unique();
+            $table->string('empno')->unique();
             $table->date('hiredate');
             $table->integer('step');
             $table->date('lastapptdate');
@@ -29,12 +29,10 @@ class CreateEmployeesTable extends Migration
             $table->string('pagibigid')->nullable();
             $table->string('dbpaccountno')->nullable();
             $table->unsignedBigInteger('item_id')->unique();
-            $table->unsignedBigInteger('station_id');
             $table->timestamps();
 
             $table->index('person_id');
             $table->index('item_id');
-            $table->index('station_id');
         });
     }
 

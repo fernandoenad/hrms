@@ -19,10 +19,42 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">People</span>
+                            <span class="info-box-number">
+                                <a href="{{ route('ps.people') }}">
+                                    {{ number_format($people_c, 0)}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-tie"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Employees</span>
+                            <span class="info-box-number">
+                                <a href="{{ route('ps.employees') }}">
+                                    {{ number_format($employee_c, 0)}}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card card-outline card-primary">
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table m-0">
+                        <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -38,12 +70,7 @@
                                     <tr>
                                         <td>{{ $person->id  ?? __('') }}</td>
                                         <td>
-                                            <a href="
-                                                @if(isset($person->employee->id)) 
-                                                    {{ route('ps.employees.show', $person->employee->id) }} 
-                                                @else 
-                                                    {{ route('ps.people.show', $person->id) }} 
-                                                @endif">
+                                            <a href="{{ route('ps.people.show', $person->id) }}">
                                                 {{ $person->getFullnameSorted()  ?? __('') }}
                                             </a>
                                         </td>

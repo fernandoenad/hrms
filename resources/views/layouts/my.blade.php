@@ -64,40 +64,28 @@
                         <li class="nav-item menu-open">
                             <a href="{{ route('my') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    My Profile
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
+                                <p>My Profile</p>
                             </a>
                         </li> 
                         
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    Training Records
-                                    <span class="right badge badge-warning">In Progress</span>
-                                </p>
+                                <p>Training Records</p>
                             </a>
                         </li> 
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-file-signature"></i>
-                                <p>
-                                    Leave Application
-                                    <span class="right badge badge-warning">In Progress</span>
-                                </p>
+                                <p>Leave Application</p>
                             </a>
                         </li> 
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
-                                <p>
-                                    Requests
-                                    <span class="right badge badge-warning">In Progress</span>
-                                </p>
+                                <p>Requests</p>
                             </a>
                         </li> 
                     </ul>

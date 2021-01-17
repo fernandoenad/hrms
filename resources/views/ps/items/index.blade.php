@@ -20,16 +20,57 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-9">
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-tags"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Active</span>
+                            <span class="info-box-number">
+                                <a href="{{ route('ps.items.active') }}">
+                                    {{ number_format($items_a, 0) }}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            @endif
+
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-folder-open"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Unfilled</span>
+                            <span class="info-box-number">
+                                <a href="{{ route('ps.items.unfilled') }}">
+                                    {{ number_format($items_un, 0) }}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-folder-minus"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Deactivated</span>
+                            <span class="info-box-number">
+                                <a href="{{ route('ps.items.deactivated') }}">
+                                    {{ number_format($items_da, 0) }}
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <div class="card">
-                <div class="card-body p-0">
+                <div class="card-body p-0 card-outline card-primary">
                     <div class="table-responsive">
-                        <table class="table m-0">
+                        <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
                                     <th>Item #</th>
@@ -43,6 +84,8 @@
                                             <td>
                                                 <strong>
                                                     <a href="{{ route('ps.items.show', $item->id) }}">{{ $item->itemno }}</a>
+                                                    <br>
+                                                    @if($item->status == 'Inactive') {{ __('Deactivated') }} @endif
                                                 </strong>
                                             </td>
                                             <td>
@@ -52,7 +95,7 @@
                                                     
                                                     {{ $item->station->name }} ({{ $item->station->code }})
                                                 @else
-                                                    {{ __('Unfilled Item') }}
+                                                    {{ __('Unassigned Item') }}
                                                 @endif
                                             </td>
                                             <td>
@@ -61,11 +104,15 @@
                                                         <a href="{{ route('ps.employees.show', $item->employee->id) }}">
                                                             {{ $item->employee->person->getFullnameSorted() }}
                                                         </a>
-                                                    </strong>
-                                                    <br>
-                                                    {{ $item->employee->station->name }} ({{ $item->employee->station->code }})
+                                                    </strong>                                                   
                                                 @else
                                                     {{ __('Unfilled Item') }}
+                                                @endif
+                                                <br>
+                                                @if(isset($item->deployment->station))
+                                                    {{ $item->deployment->station->name }} ({{ $item->deployment->station->code }})
+                                                @else
+                                                    {{ __('Undeployed Item') }}
                                                 @endif
                                             </td>                                        
                                         </tr>
