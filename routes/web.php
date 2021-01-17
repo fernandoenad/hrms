@@ -12,6 +12,17 @@ use App\Http\Controllers\PS\EmployeeController;
 use App\Http\Controllers\PS\UserController;
 
 use App\Http\Controllers\RS\RSController;
+use App\Http\Controllers\RS\EmployeeController as RSEmployeeController;
+
+use App\Http\Controllers\PU\PUController;
+use App\Http\Controllers\PU\EmployeeController as PUEmployeeController;
+use App\Http\Controllers\PU\StationController;
+use App\Http\Controllers\PU\OfficeController;
+use App\Http\Controllers\PU\TownController;
+
+use App\Http\Controllers\DPSU\DPSUController;
+use App\Http\Controllers\DPSU\NotificationController;
+use App\Http\Controllers\DPSU\EmployeeController as DPSUEmployeeController;
 
 use App\Http\Controllers\HomeController;
 
@@ -95,9 +106,58 @@ Route::any('/ps/search', [PSController::class, 'search'])->name('ps.search');
 Route::get('/ps', [PSController::class, 'index'])->name('ps');
 
 
-Route::get('/rs/employees/{employee}', [App\Http\Controllers\RS\EmployeeController::class, 'show'])->name('rs.employees.show');
-Route::get('/rs/employees', [App\Http\Controllers\RS\EmployeeController::class, 'index'])->name('rs.employees');
+Route::any('/rs/employees/search', [RSEmployeeController::class, 'search'])->name('rs.employees.search');
+Route::get('/rs/employees/active', [RSEmployeeController::class, 'displayActive'])->name('rs.employees.active');
+Route::get('/rs/employees/inactive', [RSEmployeeController::class, 'displayInactive'])->name('rs.employees.inactive');
+Route::get('/rs/employees/{employee}', [RSEmployeeController::class, 'show'])->name('rs.employees.show');
+Route::get('/rs/employees', [RSEmployeeController::class, 'index'])->name('rs.employees');
 Route::get('/rs', [RSController::class, 'index'])->name('rs');
+
+
+Route::any('/pu/employees/search', [PUEmployeeController::class, 'search'])->name('pu.employees.search');
+Route::get('/pu/employees/active', [PUEmployeeController::class, 'displayActive'])->name('pu.employees.active');
+Route::get('/pu/employees/inactive', [PUEmployeeController::class, 'displayInactive'])->name('pu.employees.inactive');
+Route::get('/pu/employees/{employee}', [PUEmployeeController::class, 'show'])->name('pu.employees.show');
+Route::get('/pu/employees', [PUEmployeeController::class, 'index'])->name('pu.employees');
+
+Route::any('/pu/stations/search', [StationController::class, 'search'])->name('pu.stations.search');
+Route::get('/pu/stations/create', [StationController::class, 'create'])->name('pu.stations.create');
+Route::delete('/pu/stations/{station}', [StationController::class, 'delete'])->name('pu.stations.delete');
+Route::get('/pu/stations/{station}/edit', [StationController::class, 'edit'])->name('pu.stations.edit');
+Route::patch('/pu/stations/{station}', [StationController::class, 'update'])->name('pu.stations.update');
+Route::post('/pu/stations', [StationController::class, 'store'])->name('pu.stations.store');
+Route::get('/pu/stations', [StationController::class, 'index'])->name('pu.stations');
+
+Route::any('/pu/offices/search', [OfficeController::class, 'search'])->name('pu.offices.search');
+Route::get('/pu/offices/create', [OfficeController::class, 'create'])->name('pu.offices.create');
+Route::delete('/pu/offices/{office}', [OfficeController::class, 'delete'])->name('pu.offices.delete');
+Route::get('/pu/offices/{office}/edit', [OfficeController::class, 'edit'])->name('pu.offices.edit');
+Route::patch('/pu/offices/{office}', [OfficeController::class, 'update'])->name('pu.offices.update');
+Route::post('/pu/offices', [OfficeController::class, 'store'])->name('pu.offices.store');
+Route::get('/pu/offices', [OfficeController::class, 'index'])->name('pu.offices');
+
+Route::any('/pu/towns/search', [TownController::class, 'search'])->name('pu.towns.search');
+Route::get('/pu/towns/create', [TownController::class, 'create'])->name('pu.towns.create');
+Route::delete('/pu/towns/{town}', [TownController::class, 'delete'])->name('pu.towns.delete');
+Route::get('/pu/towns/{town}/edit', [TownController::class, 'edit'])->name('pu.towns.edit');
+Route::patch('/pu/towns/{town}', [TownController::class, 'update'])->name('pu.towns.update');
+Route::post('/pu/towns', [TownController::class, 'store'])->name('pu.towns.store');
+Route::get('/pu/towns', [TownController::class, 'index'])->name('pu.towns');
+
+Route::get('/pu/{office}', [PUController::class, 'showOffice'])->name('pu.show');
+Route::get('/pu', [PUController::class, 'index'])->name('pu');
+
+
+Route::any('/dpsu/employees/search', [DPSUEmployeeController::class, 'search'])->name('dpsu.employees.search');
+Route::get('/dpsu/employees/active', [DPSUEmployeeController::class, 'displayActive'])->name('dpsu.employees.active');
+Route::get('/dpsu/employees/inactive', [DPSUEmployeeController::class, 'displayInactive'])->name('dpsu.employees.inactive');
+Route::get('/dpsu/employees/{employee}', [DPSUEmployeeController::class, 'show'])->name('dpsu.employees.show');
+Route::any('/dpsu/nosi-notifications/search', [NotificationController::class, 'search'])->name('dpsu.nosi-notifications.search');
+Route::get('/dpsu/nosi-notifications', [NotificationController::class, 'index'])->name('dpsu.nosi-notifications');
+
+Route::get('/dpsu/employees', [DPSUEmployeeController::class, 'index'])->name('dpsu.employees');
+
+Route::get('/dpsu', [DPSUController::class, 'index'])->name('dpsu');
 
 
 Route::get('/station/{station}/employees/{employee}', [EmployeeController::class, 'show'])->name('station.employees.show');

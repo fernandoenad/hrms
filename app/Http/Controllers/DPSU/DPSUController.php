@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\RS;
+namespace App\Http\Controllers\DPSU;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employee;
 
-class RSController extends Controller
+class DPSUController extends Controller
 {
     public function __construct()
     {
@@ -21,6 +20,6 @@ class RSController extends Controller
     public function index()
     {
         
-        return view('rs.index');
+        return view('dpsu.index');
     }
 }

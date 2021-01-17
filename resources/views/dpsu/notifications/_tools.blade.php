@@ -4,7 +4,7 @@
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item active p-3">
-                <form class="form-inline" method="post" action="{{ route('pu.employees.search') }}">
+                <form class="form-inline" method="post" action="{{ route('dpsu.nosi-notifications.search') }}">
                     @csrf
                     <div class="input-group input-group-md">
                         <input id="searchString" name="searchString" class="form-control form-control-navbar @error('searchString') is-invalid @enderror" value="{{ old('searchString') ?? request()->get('searchString') }}" autocomplete="searchString" type="search" placeholder="Search employee" aria-label="Search">
@@ -17,7 +17,7 @@
                 </form>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pu.employees') }}" class="nav-link">
+                <a href="{{ route('dpsu.nosi-notifications') }}" class="nav-link">
                     <i class="fas fa-users"></i> View all
                 </a>
             </li>

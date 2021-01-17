@@ -90,7 +90,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">DPSU</span>
-                        <span class="info-box-number"><a href="dpsu" class="text-white">Access the app</a></span>
+                        <span class="info-box-number"><a href="/dpsu" class="text-white">Access the app</a></span>
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Office / District</span>
-                        <span class="info-box-number"><a href="office" class="text-white">Access the app</a></span>
+                        <span class="info-box-number"><a href="/office" onClick="alert('App in progress...'); return false;" class="text-white">Access the app</a></span>
                     </div>
                 </div>
 
@@ -108,7 +108,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Station / School</span>
-                        <span class="info-box-number"><a href="station" class="text-white">Access the app</a></span>
+                        <span class="info-box-number"><a href="/station" onClick="alert('App in progress...'); return false;" class="text-white">Access the app</a></span>
                     </div>
                 </div>
             </div>

@@ -65,7 +65,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card card-outline card-primary">
                 <div class="card-header pr-3">
                     <div class="float-right">
                         <form class="form-inline" method="post" action="{{ route('ps.search') }}">
@@ -88,8 +88,8 @@
                                 <tr>
                                     <th>Station Name (Code), District</th>
                                     <th>School Head</th>
-                                    <th>Plantilla Count</th>
-                                    <th>Warm Body Count</th>
+                                    <th class="text-right">Plantilla Count</th>
+                                    <th class="text-right">Warm Body Count</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,16 +106,16 @@
                                                 {{ $station->person->getFullnameBox() }}
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="text-right">
                                             {{ $plantilla = number_format($station->item->count(), 0) }}
                                         </td>
-                                        <td>
+                                        <td class="text-right">
                                             {{ $warmBody =  $station->join('deployments', 'stations.id', '=', 'deployments.station_id')->join('employees', 'deployments.item_id', '=', 'employees.item_id')->where('deployments.station_id', '=', $station->id)->get()->count() }}                                            
                                         </td>
                                     </tr>
                                     @endforeach
                                 @else 
-                                <tr>
+                                    <tr>
                                         <td colspan="5">{{ __('No record was found.')}}</td>
                                     </tr>
                                 @endif

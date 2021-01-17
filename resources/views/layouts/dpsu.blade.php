@@ -15,7 +15,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('rs') }}">Records Section</a>
+                    <a class="nav-link" href="{{ route('rs') }}">DPSU</a>
                 </li>
             </ul>
 
@@ -34,27 +34,37 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item 
-                            @if(Route::currentRouteName() == 'rs') 
+                            @if(Route::currentRouteName() == 'dpsu') 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('rs') }}" class="nav-link">
+                            <a href="{{ route('pu') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li> 
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'rs.employees') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'dpsu.employees') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('rs.employees') }}" class="nav-link">
+                            <a href="{{ route('dpsu.employees') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Employees</p>
                             </a>
                         </li>
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'rs.users') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'dpsu.nosi-notifications') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('dpsu.nosi-notifications') }}" class="nav-link">
+                                <i class="nav-icon fas fa-bell"></i>
+                                <p>NOSI Notifications</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'dpsu.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
                             <a href="" class="nav-link">

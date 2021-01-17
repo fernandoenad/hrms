@@ -1,4 +1,4 @@
-@extends('layouts.rs')
+@extends('layouts.dpsu')
 
 @section('content')    
 <div class="content-header">
@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('rs') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dpsu') }}">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
             </div>
@@ -19,7 +19,7 @@
 <div class="container-fluid">
     <div class="card card-primary">
         <div class="card-body">
-            <h4>Welcome to the Records Section Dashboard!</h4>
+            <h4>Welcome to the DPSU Dashboard!</h4>
         </div>
     </div>  
 @endsection

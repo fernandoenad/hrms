@@ -1,4 +1,4 @@
-@extends('layouts.rs')
+@extends('layouts.pu')
 
 @section('content')    
 <div class="content-header">
@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('rs') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('pu') }}">Home</a></li>
                     <li class="breadcrumb-item active">Employees</li>
                 </ol>
             </div>
@@ -27,7 +27,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Active</span>
                             <span class="info-box-number">
-                                <a href="{{ route('rs.employees.active') }}">
+                                <a href="{{ route('pu.employees.active') }}">
                                     {{ number_format($empl_a, 0) }}
                                 </a>
                             </span>
@@ -42,7 +42,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Inactive</span>
                             <span class="info-box-number">
-                                <a href="{{ route('rs.employees.inactive') }}">
+                                <a href="{{ route('pu.employees.inactive') }}">
                                     {{ number_format($empl_i, 0) }}
                                 </a>
                             </span>
@@ -99,7 +99,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('rs.employees._tools')
+            @include('pu.employees._tools')
         </div>
     </div>
 </div>

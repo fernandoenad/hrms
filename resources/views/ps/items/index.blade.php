@@ -67,8 +67,8 @@
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-body p-0 card-outline card-primary">
+            <div class="card card-outline card-primary">
+                <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table m-0 table-hover">
                             <thead>

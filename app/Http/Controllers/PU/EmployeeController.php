@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RS;
+namespace App\Http\Controllers\PU;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class EmployeeController extends Controller
         $empl_a = $this->employeesActiveCounter();
         $empl_i = $this->employeesInactiveCounter();
         
-        return view('rs.employees.index', compact('employees', 'empl_a', 'empl_i'));
+        return view('pu.employees.index', compact('employees', 'empl_a', 'empl_i'));
     }
     
     public function search()
@@ -53,14 +53,14 @@ class EmployeeController extends Controller
         $empl_a = $this->employeesActiveCounter();
         $empl_i = $this->employeesInactiveCounter();
 
-        return view('rs.employees.index', compact('employees', 'empl_a', 'empl_i'));
+        return view('pu.employees.index', compact('employees', 'empl_a', 'empl_i'));
     }
 
     public function show(Employee $employee)
     {
         $person = $employee->person;
 
-        return view('rs.employees.show', compact('person'));
+        return view('pu.employees.show', compact('person'));
     }
 
     public function employeesActiveCounter()
@@ -90,7 +90,7 @@ class EmployeeController extends Controller
         
         $empl_a = $this->employeesActiveCounter();
         $empl_i = $this->employeesInactiveCounter();
-        return view('rs.employees.index', compact('employees', 'empl_a', 'empl_i'));
+        return view('pu.employees.index', compact('employees', 'empl_a', 'empl_i'));
     }
 
     public function displayInactive()
@@ -104,6 +104,6 @@ class EmployeeController extends Controller
         $empl_a = $this->employeesActiveCounter();
         $empl_i = $this->employeesInactiveCounter();
 
-        return view('rs.employees.index', compact('employees', 'empl_a', 'empl_i'));
+        return view('pu.employees.index', compact('employees', 'empl_a', 'empl_i'));
     }
 }
