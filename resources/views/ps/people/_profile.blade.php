@@ -7,12 +7,12 @@
 
         <h3 class="profile-username text-center" style="font-size: 200%">{{ $person->getFullnameBox() }}</h3>
         <p class="text-muted text-center">
-            @if(isset($person->employee->item))
+            @if(isset($person->employee->item->deployment))
                 {{ $person->employee->item->position }} 
                 <br>
                 <small>
-                    {{ $person->employee->item->deployment->station->name }} 
-                    ({{ $person->employee->item->deployment->station->code }})
+                    {{ $person->employee->item->deployment->station->name ?? __('') }} 
+                    ({{ $person->employee->item->deployment->station->code ?? __('Unassigned') }})
                 </small>
             @else  
                 {{ __('Applicant / Unassigned') }}
