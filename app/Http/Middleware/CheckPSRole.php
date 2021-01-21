@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckRole
+class CheckPSRole
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->hasRole()) {
+        if (! $request->user()->hasRole('ps')) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);

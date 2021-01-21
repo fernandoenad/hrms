@@ -20,13 +20,13 @@
 <div class="container">
     <div class="row">
         <div class="error-page">
-            <h2 class="headline text-warning"> 404</h2>
+            <h2 class="headline text-danger"> 404</h2>
 
             <div class="error-content">
-                <h3><i class="fas fa-exclamation-triangle text-warning"></i> Access denied!</h3>
+                <h3><i class="fas fa-exclamation-triangle text-danger"></i> Access denied!</h3>
 
                 <p>
-                    You do not have the right credentials to access this feature.
+                    You are not authorized to access this feature.<br>
                     Meanwhile, you may <a href="{{ route('my') }} ">return to dashboard</a>
                 </p>
             </div>

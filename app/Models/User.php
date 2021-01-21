@@ -69,10 +69,12 @@ class User extends Authenticatable
         return Carbon::parse($value)->format('F d, Y');
     }
 
-    public function hasRole()
+    public function hasRole($route)
     {
 
-        if ($this->userrole()->first()) 
+        if ($this->userrole()->where('status', '=', 1)->first() &&
+            ($this->userrole()->where('route', '=', $route)->first() ||
+            $this->userrole()->where('role_id', '=', 1)->first())) 
         {
             return true;
         }
