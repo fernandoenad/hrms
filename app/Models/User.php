@@ -50,6 +50,12 @@ class User extends Authenticatable
         return $this->belongsTo(Person::class);
     }
 
+
+    public function userrole()
+    {
+        return $this->hasmany(UserRole::class);
+    }
+
     public function getNameAttribute($value){
         return ucwords($value);
     }
@@ -63,5 +69,15 @@ class User extends Authenticatable
         return Carbon::parse($value)->format('F d, Y');
     }
 
+    public function hasRole()
+    {
+
+        if ($this->userrole()->first()) 
+        {
+            return true;
+        }
+
+        return false;
+    }
     
 }

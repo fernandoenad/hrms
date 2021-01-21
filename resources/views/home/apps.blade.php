@@ -14,6 +14,12 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-body">

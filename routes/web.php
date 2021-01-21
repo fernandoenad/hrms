@@ -48,11 +48,14 @@ Route::patch('/my/tools/password', [ToolController::class, 'updatePassword'])->n
 Route::get('/my/tools/email-edit', [ToolController::class, 'editEmail'])->name('my.tools.email-edit');
 Route::patch('/my/tools/email', [ToolController::class, 'updateEmail'])->name('my.tools.email-update');
 Route::get('/my/tools', [ToolController::class, 'index'])->name('my.tools');
+
 Route::get('my/contact/edit', [ContactController::class, 'edit'])->name('my.contact.edit');
 Route::patch('my/contact', [ContactController::class, 'update'])->name('my.contact.update');
 
 Route::get('/my', [MyController::class, 'index'])->name('my');
 
+// Role Middleware
+Route::middleware(['role'])->group(function () {
 
 Route::any('/ps/people/search', [PersonController::class, 'search'])->name('ps.people.search');
 Route::get('/ps/people/create', [PersonController::class, 'create'])->name('ps.people.create');
@@ -163,5 +166,7 @@ Route::get('/dpsu', [DPSUController::class, 'index'])->name('dpsu');
 Route::get('/station/{station}/employees/{employee}', [EmployeeController::class, 'show'])->name('station.employees.show');
 Route::get('/station/{station}/employees', [EmployeeController::class, 'index'])->name('station.employees');
 Route::get('/station/{station}', [StationController::class, 'index'])->name('station');
+});
+
 
 Route::get('/help', [HomeController::class, 'help'])->name('help');
