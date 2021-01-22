@@ -1,5 +1,5 @@
 <div class="card card-info">
-    <div class="card-header">{{ __('Administrative Tools') }}</div>
+    <div class="card-header">Administrative Tools</div>
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
@@ -20,7 +20,12 @@
                     </div>
                 </form>
             </li>
-            @if(Route::currentRouteName() == 'ps.people')
+            @if(Route::currentRouteName() == 'ps.people' || 
+                Route::currentRouteName() == 'ps.people.search' ||
+                Route::currentRouteName() == 'ps.people.show' ||
+                Route::currentRouteName() == 'ps.people.create' || 
+                Route::currentRouteName() == 'ps.people.employ' ||
+                Route::currentRouteName() == 'ps.people.lookup-item')
                 <li class="nav-item">
                     <a href="{{ route('ps.people') }}" class="nav-link">
                         <i class="fas fa-users"></i> View all
@@ -43,6 +48,7 @@
                 || Route::currentRouteName() == 'ps.people.show' 
                 || Route::currentRouteName() == 'ps.people.reset'
                 || Route::currentRouteName() == 'ps.people.employ'
+                || Route::currentRouteName() == 'ps.people.lookup-item'
                 || Route::currentRouteName() == 'ps.employees.show'
                 || Route::currentRouteName() == 'ps.employees.edit'
                 || Route::currentRouteName() == 'ps.employees.confirm-delete'
@@ -60,6 +66,9 @@
                         <a href="{{ route('ps.employees.edit', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-tag"></i> Modify employment</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('ps.items.edit', $person->employee->item->id ) }}" class="nav-link"><i class="fas fa-tag"></i> &nbsp;Modify appointment</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('ps.employees.si', $person->employee->id) }}" class="nav-link"><i class="fas fa-sort-numeric-up-alt"></i> &nbsp;Increment SG-Step</a>
                     </li>
                     <li class="nav-item">
@@ -68,20 +77,17 @@
                     <li class="nav-item">
                         <a href="{{ route('ps.employees.ee', $person->employee->id) }}" class="nav-link"><i class="fas fa-stop-circle"></i>  &nbsp;End employment</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
-                    </li>
+                    
                 @else
                     @if(!isset($person->employee))
-                    <li class="nav-item">
-                        <a href="{{ route('ps.people.employ', $person->id)}}" class="nav-link"><i class="fas fa-user-tag"></i> Employ</a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{ route('ps.people.employ', $person->id)}}" class="nav-link"><i class="fas fa-user-tag"></i> Employ</a>
+                        </li>
                     @endif
-                @endif
+                @endif   
                 <li class="nav-item">
-                    <a href="{{ route('ps.people.reset', $person->id)}}" class="nav-link"><i class="fas fa-user-shield"></i> Reset password</a>
-                </li>
-                
+                    <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
+                </li>             
             @endif
         </ul>
     </div>

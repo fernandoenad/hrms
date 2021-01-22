@@ -25,11 +25,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::join('people', 'people.id', '=', 'person_id')
-            ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')
-            ->select('employees.id AS empid', 'employees.*', 'people.*')
-            ->paginate(15);
-        
+        $employees = $this->getList()->paginate(15);     
         $empl_a = $this->employeesActiveCounter();
         $empl_un = $this->employeesUnassignedCounter();
         $empl_te = $this->employeesTerminatedCounter();
@@ -40,15 +36,18 @@ class EmployeeController extends Controller
     public function search()
     {
         $searchString = request()->get('searchString');
+
+        $employees = $this->getList();
         
-        $employees = Employee::join('people', 'person_id', '=', 'people.id')
-            ->where('lastname', 'like' , $searchString . '%')
-            ->orWhere('firstname', 'like', $searchString . '%')
-            ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
-            ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
-            ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
-            ->orderBy('lastname', 'asc')
-            ->orderBy('firstname', 'asc')
+        $employees = $employees->where(function ($query) use ($searchString){
+                $query->where('lastname', 'like' , $searchString . '%')
+                    ->orWhere('firstname', 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
+                    ->orderBy('lastname', 'asc')
+                    ->orderBy('firstname', 'asc');
+            })
             ->select('employees.id AS empid', 'employees.*', 'people.*')
             ->paginate(15);
         
@@ -59,6 +58,16 @@ class EmployeeController extends Controller
         $empl_te = $this->employeesTerminatedCounter();
 
         return view('ps.employees.index', compact('employees', 'empl_a', 'empl_un', 'empl_te'));
+    }
+
+    public function getList()
+    {
+        $employees = Employee::join('people', 'people.id', '=', 'person_id')
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')
+            ->select('employees.id AS empid', 'employees.*', 'people.*');
+        
+        return $employees;
     }
 
     public function show(Employee $employee)
@@ -169,6 +178,9 @@ class EmployeeController extends Controller
             'item_id' => ['required'],
             'appointmentdate' => ['required', 'date', 'after:' . $appointmentdateLimit],
             'firstdaydate' => ['required', 'date' , 'after_or_equal:' . $firstdaydateLimit],
+        ],
+        [
+            'item_id.required' => 'The newitemno field is required.',
         ]);
         
         $employee->update(array_merge($data, [
@@ -217,7 +229,9 @@ class EmployeeController extends Controller
 
     public function employeesActiveCounter()
     {
-        $employees = Employee::where('item_id', '!=', 0)
+        $employees = $this->getList();
+
+        $employees = $employees->where('item_id', '!=', 0)
             ->where('retirementdate', '=', null)->count();
 
         return $employees;
@@ -225,7 +239,9 @@ class EmployeeController extends Controller
 
     public function employeesUnassignedCounter()
     {
-        $employees = Employee::where('item_id', '=', 0)
+        $employees = $this->getList();
+
+        $employees = $employees->where('item_id', '=', 0)
             ->where('retirementdate', '=', null)->count();
 
         return $employees;
@@ -233,7 +249,9 @@ class EmployeeController extends Controller
 
     public function employeesTerminatedCounter()
     {
-        $employees = Employee::where('item_id', '=', 0)
+        $employees = $this->getList();
+
+        $employees = $employees->where('item_id', '=', 0)
             ->where('retirementdate', '!=', null)->count();
 
         return $employees;
@@ -241,10 +259,12 @@ class EmployeeController extends Controller
 
     public function displayActive()
     {
-        $employees = Employee::join('people', 'people.id', '=', 'person_id')
-            ->where('item_id', '!=', 0)
+        $employees = $this->getList();
+
+        $employees = $employees->where('item_id', '!=', 0)
             ->where('retirementdate', '=', null)
-            ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')            
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')            
             ->select('employees.id AS empid', 'employees.*', 'people.*')
             ->paginate(15);
         
@@ -257,10 +277,12 @@ class EmployeeController extends Controller
 
     public function displayUnassigned()
     {
-        $employees = Employee::join('people', 'people.id', '=', 'person_id')
-            ->where('item_id', '=', 0)
+        $employees = $this->getList();
+
+        $employees = $employees->where('item_id', '=', 0)
             ->where('retirementdate', '=', null)
-            ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')            
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')            
             ->select('employees.id AS empid', 'employees.*', 'people.*')
             ->paginate(15);
         
@@ -273,10 +295,12 @@ class EmployeeController extends Controller
 
     public function displayTerminated()
     {
-        $employees = Employee::join('people', 'people.id', '=', 'person_id')
-            ->where('item_id', '=', 0)
+        $employees = $this->getList();
+
+        $employees = $employees->where('item_id', '=', 0)
             ->where('retirementdate', '!=', null)
-            ->orderBy('lastname', 'asc')->orderBy('firstname', 'asc')            
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')            
             ->select('employees.id AS empid', 'employees.*', 'people.*')
             ->paginate(15);
         
@@ -307,5 +331,24 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('ps.people.show', compact('person'))->with('status', 'Employment record deleted!');
+    }
+
+    public function lookupItem(Employee $employee)
+    {
+        $searchString = request()->get('searchString');
+
+        $items = Item::where('status', '=', 1)
+            ->whereNotIn('items.id', function($query){
+                $query->select('item_id')->from('employees');
+            })
+            ->where(function($query) use ($searchString) {
+                $query->where('itemno', 'like', '%' . $searchString . '%') 
+                    ->orWhere('position', 'like', $searchString . '%');
+            })       
+            ->paginate(15);
+
+        $items = $items->appends(['searchString' => $searchString]);
+
+        return view('ps.employees.lookup', compact('employee', 'items'));
     }
 }

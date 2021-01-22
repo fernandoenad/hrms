@@ -23,13 +23,12 @@ class PSController extends Controller
      */
     public function index()
     {
-        $people = Person::all();
         $employees = Employee::all();
-        $items = Item::where('status', '=', 1);
+        $items = Item::all();
         
         $stations = Station::orderBy('name', 'asc')->paginate(15);
              
-        return view('ps.index', compact('people', 'employees', 'items', 'stations'));
+        return view('ps.index', compact('employees', 'items', 'stations'));
     }
 
 

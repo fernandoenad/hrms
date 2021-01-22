@@ -48,7 +48,7 @@
                             @endif">
                             <a href="{{ route('ps.people') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>People</p>
+                                <p>Non Employees</p>
                             </a>
                         </li> 
 
@@ -59,6 +59,20 @@
                             <a href="{{ route('ps.employees') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Employees</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="" onClick="alert('Feature not yet available!'); return false;" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Service Credits</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="" onClick="alert('Feature not yet available!'); return false;" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Leaves</p>
                             </a>
                         </li>
 
@@ -78,7 +92,7 @@
                             @endif">
                             <a href="{{ route('ps.users') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
-                                <p>User Management</p>
+                                <p>Users</p>
                             </a>
                         </li>
                     </ul>

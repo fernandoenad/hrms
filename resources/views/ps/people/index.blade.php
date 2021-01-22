@@ -5,12 +5,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">People</h1>
+                <h1 class="m-0 text-dark">Non Employees</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
-                    <li class="breadcrumb-item active">People</li>
+                    <li class="breadcrumb-item active">Non Employees</li>
                 </ol>
             </div>
         </div>
@@ -20,31 +20,14 @@
     <div class="row">
         <div class="col-md-9">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">People</span>
+                            <span class="info-box-text">Non-Employees</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.people') }}">
-                                    {{ number_format($people_c, 0)}}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-tie"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Employees</span>
-                            <span class="info-box-number">
-                                <a href="{{ route('ps.employees') }}">
-                                    {{ number_format($employee_c, 0)}}
-                                </a>
+                                {{ number_format($people_count, 0)}}
                             </span>
                         </div>
                     </div>

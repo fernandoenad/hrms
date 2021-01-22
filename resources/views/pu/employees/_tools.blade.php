@@ -1,5 +1,5 @@
 <div class="card card-info">
-    <div class="card-header">{{ __('Administrative Tools') }}</div>
+    <div class="card-header">Administrative Tools</div>
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">

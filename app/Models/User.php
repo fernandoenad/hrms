@@ -71,10 +71,19 @@ class User extends Authenticatable
 
     public function hasRole($route)
     {
-
         if ($this->userrole()->where('status', '=', 1)->first() &&
             ($this->userrole()->where('route', '=', $route)->first() ||
             $this->userrole()->where('role_id', '=', 1)->first())) 
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isAdmin($route)
+    {
+        if ($this->userrole()->where('role_id', '<', 3)->first() == null) 
         {
             return true;
         }

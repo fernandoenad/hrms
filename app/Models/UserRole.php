@@ -39,4 +39,42 @@ class UserRole extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getRole($role_id)
+    {
+        switch($role_id)
+        {
+            case 1:
+                $role = "Administrator";
+                break;
+            case 2:
+                $role = "Manager";
+                break;
+            case 3:
+                $role = "User";
+                break;
+            default:
+                $role = "Invalid role";
+        }
+
+        return $role;
+    }
+
+
+    public function getStatus($status_id)
+    {
+        switch($status_id)
+        {
+            case 1:
+                $status = "Active";
+                break;
+            case 2:
+                $status = "Inactive";
+                break;
+            default:
+                $status = "Invalid role";
+        }
+
+        return $status;
+    }
 }

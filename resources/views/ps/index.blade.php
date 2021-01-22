@@ -18,22 +18,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
-            <div class="info-box">
-                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">People</span>
-                    <span class="info-box-number">
-                        <a href="{{ route('ps.people') }}">
-                            {{ number_format($people->count(), 0) }}
-                        </a>
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="info-box">
                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-tie"></i></span>
 
@@ -48,7 +33,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="info-box">
                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-sitemap"></i></span>
 

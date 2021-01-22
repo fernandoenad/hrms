@@ -27,7 +27,7 @@
         <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <h5>{{ __('Process Termination')}}</h5>
+                    <h5>Process Termination</h5>
                 </div>
 
                 <div class="card-body">

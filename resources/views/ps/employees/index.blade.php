@@ -98,10 +98,6 @@
                                     <tr>
                                         <td colspan="5">
                                             {{ __('No record was found.') }}
-                                            <br>
-                                            <a href="{{ route('ps.people') }}">
-                                                {{ __('Try searching in the people\'s tab?') }}
-                                            </a>
                                         </td>
                                     </tr>
                                 @endif

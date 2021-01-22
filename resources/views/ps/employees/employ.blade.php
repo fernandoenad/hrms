@@ -25,7 +25,7 @@
         <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <h5>{{ __('Modify Employment')}}</h5>
+                    <h5>Modify Employment</h5>
                 </div>
 
                 <div class="card-body">

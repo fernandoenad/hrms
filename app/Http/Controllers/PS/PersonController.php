@@ -31,47 +31,44 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $people = Person::orderBy('lastname', 'asc')->orderBy('firstname', 'asc')->paginate(15);
-
-        $employee_c = $this->countEmployees();
-        $people_c = $this->countPeople() - $employee_c;
-
-        return view('ps.people.index', compact('people', 'employee_c', 'people_c'));
+        $people = $this->getList();
+        $people_count = $people->count();
+        $people = $people->paginate(15);
+        
+        return view('ps.people.index', compact('people', 'people_count'));
     }
 
     public function search()
     {
         $searchString = request()->get('searchString');
         
-        $people = Person::where('lastname', 'like' , $searchString . '%')
-            ->orWhere('firstname', 'like', $searchString . '%')
-            ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
-            ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
-            ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
-            ->orderBy('lastname', 'asc')
-            ->orderBy('firstname', 'asc')
+        $people = $this->getList();
+        $people_count = $people->count();
+        $people = $people->where(function ($query) use ($searchString){
+                $query->where('lastname', 'like' , $searchString . '%')
+                    ->orWhere('firstname', 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
+                    ->orderBy('lastname', 'asc')
+                    ->orderBy('firstname', 'asc');
+            })
             ->paginate(15);
-        
-        $people = $people->appends(['searchString' => $searchString]);
-        
-        $employee_c = $this->countEmployees();
-        $people_c = $this->countPeople();
 
-        return view('ps.people.index', compact('people', 'employee_c', 'people_c'));
+        $people = $people->appends(['searchString' => $searchString]);
+
+        return view('ps.people.index', compact('people', 'people_count'));
     }
 
-    public function countPeople()
+    public function getList()
     {
-        $people = Person::count();
+        $people = Person::whereNotIn('people.id', function($query){
+            $query->select('person_id')->from('employees');
+        })
+        ->orderBy('lastname', 'asc')
+        ->orderBy('firstname', 'asc');
 
         return $people;
-    }
-
-    public function countEmployees()
-    {
-        $employees = Employee::count();
-            
-        return $employees;
     }
 
     public function create()
@@ -91,7 +88,14 @@ class PersonController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/', 
+                Rule::unique('people')
+                ->where('firstname',request()->firstname)
+                ->where('middlename', request()->middlename)
+                ->where('lastname', request()->lastname)
+                ->where('extname', request()->extname)
+                ->where('sex', request()->sex)
+                ->where('dob', request()->dob)],
             'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
@@ -101,6 +105,9 @@ class PersonController extends Controller
             'primaryno' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', 'unique:contacts'],
             'username' => ['required', 'string', 'min:5', 'max:255', 'regex:/^[0-9a-zA-Z.-]*$/', 'unique:users'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
+            ],
+            [
+            'firstname.unique' => 'Duplicate record alert! Please search up existing record using the search bar.',
         ]);
 
        
@@ -238,24 +245,6 @@ class PersonController extends Controller
             return redirect()->route('ps.people.show', compact('person'))->with('status', 'Profile updated!');
     }
 
-    public function reset(Person $person)
-    {
-        return view('ps.people.reset', compact('person'));
-    }
-
-    public function resetdone(Person $person)
-    {
-        $person->user->update(['password' =>  Hash::make($person->user->username)]);
-
-        if(isset($person->employee))
-        {
-            $employee = $person->employee;
-            return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Password reset was completed!');
-        }
-        else 
-            return redirect()->route('ps.people.show', compact('person'))->with('status', 'Password reset was completed!');
-    }
-
     public function employ(Person $person)
     {
         $items = Item::where('status', '=', 1)
@@ -305,7 +294,25 @@ class PersonController extends Controller
             'firstdaydate' => $data['firstdaydate'],     
         ]);
 
-
         return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employment successful!');
+    }
+
+    public function lookupItem(Person $person)
+    {
+        $searchString = request()->get('searchString');
+
+        $items = Item::where('status', '=', 1)
+            ->whereNotIn('items.id', function($query){
+                $query->select('item_id')->from('employees');
+            })
+            ->where(function($query) use ($searchString) {
+                $query->where('itemno', 'like', '%' . $searchString . '%') 
+                    ->orWhere('position', 'like', $searchString . '%');
+            })       
+            ->paginate(15);
+
+        $items = $items->appends(['searchString' => $searchString]);
+
+        return view('ps.people.lookup', compact('person', 'items'));
     }
 }

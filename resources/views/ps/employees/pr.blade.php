@@ -27,7 +27,7 @@
         <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <h5>{{ __('Process Increment Step')}}</h5>
+                    <h5>Process Promotion</h5>
                 </div>
 
                 <div class="card-body">
@@ -81,13 +81,15 @@
                             <label for="item_id" class="col-md-3 col-form-label text-md-right">{{ __('New Item No.') }}</label>
 
                             <div class="col-md-8">
-                                <select id="item_id" type="text" class="form-control @error('item_id') is-invalid @enderror" name="item_id" value="{{ old('item_id') }}" autocomplete="item_id">
-                                    <option value="">Select</option>
-                                        @foreach($items as $item)
-                                            <option value="{{ $item->id }}"  @if(old('item_id') == $item->id) {{ 'selected' }} @endif>{{ $item->itemno }} / {{ $item->position }}</option>
-                                        @endforeach
-                                    </select>
-                                </select>
+                                <input id="item_id" type="hidden" class="form-control @error('item_id') is-invalid @enderror" name="item_id" value="{{ old('item_id') ?? request()->id }}" autocomplete="item_id">
+                                <div class="input-group input-group-md">
+                                    <input readonly id="itemno" type="text" class="form-control @error('itemno') is-invalid @enderror" name="itemno" value="{{ old('itemno') ?? request()->name }}" autocomplete="itemno">
+                                    <div class="input-group-append">
+                                        <a href="{{ route('ps.employees.lookup-item', $person->employee->id ) }}" class="btn btn-primary float-right">
+                                            <i class="fas fa-search"></i>
+                                        </a>
+                                    </div>
+                                </div>
 
                                 @error('item_id')
                                     <span class="invalid-feedback" role="alert">
