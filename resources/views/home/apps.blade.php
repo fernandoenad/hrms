@@ -45,20 +45,20 @@
 
             <div class="col-md-3">
                 <div class="info-box mb-3 bg-primary">
-                    <span class="info-box-icon"><i class="fas fa-user"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Recruitment Services</span>
-                        <span class="info-box-number"><a href="/recruitment" onClick="alert('App in progress...'); return false;" class="text-white">Access the app</a></span>
-                    </div>
-                </div>
-
-                <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-user-tie"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Employee Login</span>
                         <span class="info-box-number"><a href="/my" class="text-white">Access the app</a></span>
+                    </div>
+                </div>
+
+                <div class="info-box mb-3 bg-primary">
+                    <span class="info-box-icon"><i class="fas fa-laptop-code"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">ICTU</span>
+                        <span class="info-box-number"><a href="/ictu" class="text-white">Access the app</a></span>
                     </div>
                 </div>
 

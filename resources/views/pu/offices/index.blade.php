@@ -39,6 +39,29 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('pu.offices.store') }}">
                             @csrf
+                            
+                            <div class="form-group row">
+                                <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('Office / District Head') }}</label>
+
+                                <div class="col-md-8">
+                                    <input id="person_id" type="hidden" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') ?? request()->id }}" autocomplete="person_id">
+                                    <div class="input-group input-group-md">
+                                        <input readonly id="office_name" type="text" class="form-control @error('office_name') is-invalid @enderror" name="office_name" value="{{ old('office_name') ?? request()->name }}" autocomplete="office_name">
+
+                                        <div class="input-group-append">
+                                            <a href="{{ route('pu.offices.lookup') }}?redirect={{ Route::currentRouteName() }}" class="btn btn-primary float-right">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    @error('person_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="form-group row">
                                 <label for="name" class="col-md-3 col-form-label text-md-right">{{ __('Office / District Name') }}</label>
@@ -73,24 +96,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('Office / District Head') }}</label>
-
-                                <div class="col-md-8">
-                                    <select id="person_id" type="text" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') }}" autocomplete="person_id">
-                                        <option value="">Select</option>
-                                        @foreach($people as $person)
-                                            <option value="{{ $person->id }}" @if(old('person_id') == $person->id) {{ 'selected'}} @endif>{{ $person->getFullnameBox() }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('person_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -158,12 +163,16 @@
                                 <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('Office / District Head') }}</label>
 
                                 <div class="col-md-8">
-                                    <select id="person_id" type="text" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') }}" autocomplete="person_id">
-                                        <option value="">Select</option>
-                                        @foreach($people as $person)
-                                            <option value="{{ $person->id }}" @if(old('person_id') == $person->id || $office->person_id ==  $person->id) {{ 'selected'}} @endif>{{ $person->getFullnameBox() }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input id="person_id" type="hidden" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') ?? request()->id ?? $office->person_id}}" autocomplete="person_id">
+                                    <div class="input-group input-group-md">
+                                        <input readonly id="office_name" type="text" class="form-control @error('office_name') is-invalid @enderror" name="office_name" value="{{ old('office_name') ?? request()->name ?? $office->person->getFullnameBox() }}" autocomplete="office_name">
+
+                                        <div class="input-group-append">
+                                            <a href="{{ route('pu.offices.lookup') }}?redirect={{ Route::currentRouteName() }}&id={{ $office->id }}" class="btn btn-primary float-right">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </div>
 
                                     @error('person_id')
                                         <span class="invalid-feedback" role="alert">
@@ -178,7 +187,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <button type="submit" class="btn btn-primary float-right">
-                                            {{ __('Save Office') }}
+                                            {{ __('Update Office') }}
                                         </button>
                                         <a href="{{ url()->previous()}}" class="btn btn-default">
                                             {{ __('Cancel') }}

@@ -24,7 +24,7 @@
 
         <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <a href="#" class="brand-link">
-                <img src="{{ url('/') }}/storage/images/logo.png" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('storage/images/logo.png') }}" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
             </a> 
@@ -57,7 +57,7 @@
                             @if(strpos(Route::currentRouteName(), 'rs.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('rs.users') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>User Management</p>
                             </a>

@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\Town;
 use App\Models\Person;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class OfficeController extends Controller
 {
@@ -25,7 +26,7 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        $offices = Office::get();
+        $offices = Office::orderBy('name', 'asc')->get();
 
         return view('pu.offices.index', compact('offices'));
     }
@@ -72,14 +73,17 @@ class OfficeController extends Controller
         $offices = Office::get(); 
 
         $data = request()->validate([
-            'name' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\.]*$/', 'unique:offices'],
+            'name' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\.\s]*$/', 'unique:offices'],
             'town_id' => ['required'],
             'person_id' => ['required'],
+        ],
+        [
+            'person_id.required' => 'The office head field is required.',
         ]);
 
-        Office::create($data);
+        $office = Office::create($data);
 
-        return redirect()->route('pu.offices', compact('offices'))->with('status', 'Office created!');
+        return redirect()->route('pu.offices.edit', compact('offices', 'office'))->with('status', 'Office created!');
 
     }
 
@@ -119,8 +123,30 @@ class OfficeController extends Controller
 
         $office->update($data);
 
-        return redirect()->route('pu.offices', compact('offices'))->with('status', 'Office updated!');
+        return redirect()->route('pu.offices.edit', compact('offices', 'office'))->with('status', 'Office updated!');
 
     }
+
+    public function lookup()
+    {
+        $searchString = request()->get('searchString');
+
+        $employees = Employee::join('people', 'employees.person_id', '=', 'people.id')
+            ->where(function ($query) use ($searchString){
+                $query->where('lastname', 'like' , $searchString . '%')
+                    ->orWhere('firstname', 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
+                    ->orderBy('lastname', 'asc')
+                    ->orderBy('firstname', 'asc');
+        })
+        ->select('employees.id AS empid', 'employees.*', 'people.*')
+        ->paginate(15);
+
+        $employees = $employees->appends(['searchString' => $searchString]);
+
+        return view('pu.offices.lookup', compact('employees'));
+    } 
 }
 

@@ -53,6 +53,9 @@ class PersonController extends Controller
                     ->orderBy('lastname', 'asc')
                     ->orderBy('firstname', 'asc');
             })
+            ->whereNotIn('people.id', function($query){
+                $query->select('person_id')->from('employees');
+            })
             ->paginate(15);
 
         $people = $people->appends(['searchString' => $searchString]);
@@ -263,7 +266,7 @@ class PersonController extends Controller
         if(isset($person->employee))
         {
             $employee = $person->employee;
-            return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Already employed!'); 
+            return redirect()->route('ps.employees.show', compact('employee'))->with('error', 'Already employed!'); 
         }
         else
             return view('ps.people.employ', compact('person','items', 'stations', 'employmentstatuses'));
@@ -294,7 +297,7 @@ class PersonController extends Controller
             'firstdaydate' => $data['firstdaydate'],     
         ]);
 
-        return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employment successful!');
+        return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employment created!');
     }
 
     public function lookupItem(Person $person)

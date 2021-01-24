@@ -41,7 +41,7 @@
 
                                     <p>
                                         This action removes access for <strong>{{ $userrole->user->username }}</strong>
-                                        from the PS portal.
+                                        from the Personnel Services portal.
                                     </p>
                                 
                                     <div class="row">

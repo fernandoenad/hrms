@@ -16,7 +16,7 @@ class CheckAccessDPSU
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->isAdmin('dpsu')) {
+        if (! $request->user()->isAdmin('dpsu')) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);

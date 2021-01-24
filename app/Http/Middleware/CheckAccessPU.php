@@ -16,7 +16,7 @@ class CheckAccessPU
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->isAdmin('pu')) {
+        if (! $request->user()->isAdmin('pu')) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);

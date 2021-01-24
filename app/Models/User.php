@@ -71,9 +71,14 @@ class User extends Authenticatable
 
     public function hasRole($route)
     {
-        if ($this->userrole()->where('status', '=', 1)->first() &&
-            ($this->userrole()->where('route', '=', $route)->first() ||
-            $this->userrole()->where('role_id', '=', 1)->first())) 
+        $result = $this->userrole()->where('status', '=', 1)
+            ->where(function ($query) use ($route){
+                $query->where('route', 'like', $route)
+                    ->orWhere('role_id', '=', 1);
+            })->first();
+        //dd($result->role_id);
+
+        if(isset($result)) 
         {
             return true;
         }
@@ -83,7 +88,15 @@ class User extends Authenticatable
 
     public function isAdmin($route)
     {
-        if ($this->userrole()->where('role_id', '<', 3)->first() == null) 
+        $result = $this->userrole()->where('status', '=', 1)
+            ->where('route', 'like', $route)
+            ->where('role_id', '<', 3)
+            ->orWhere('role_id', '=', 1)
+            ->first();
+
+        //dd($result->role_id);
+
+        if (isset($result)) 
         {
             return true;
         }

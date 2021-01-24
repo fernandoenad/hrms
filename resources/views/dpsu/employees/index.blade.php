@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-9">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
 
@@ -29,21 +29,6 @@
                             <span class="info-box-number">
                                 <a href="{{ route('dpsu.employees.active') }}">
                                     {{ number_format($empl_a, 0) }}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users-slash"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Inactive</span>
-                            <span class="info-box-number">
-                                <a href="{{ route('dpsu.employees.inactive') }}">
-                                    {{ number_format($empl_i, 0) }}
                                 </a>
                             </span>
                         </div>

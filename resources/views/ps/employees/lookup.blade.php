@@ -12,7 +12,11 @@
                     <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ps.employees') }}">Employees</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ps.employees.show', $employee->id) }}">Employee</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ps.employees.pr', $employee->id) }}">Promotion</a></li>
+                    @if(request()->redirect == 'ps.employees.re-employ')
+                        <li class="breadcrumb-item"><a href="{{ route('ps.employees.re-employ', $employee->id) }}">Re-employ</a></li>
+                    @else    
+                        <li class="breadcrumb-item"><a href="{{ route('ps.employees.pr', $employee->id) }}">Promotion</a></li>
+                    @endif
                     <li class="breadcrumb-item active">Lookup Item</li>
                 </ol>
             </div>
@@ -26,7 +30,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header pr-3">
                     <div class="float-right">
-                        <form class="form-inline" method="post" action="{{ route('ps.employees.lookup-item', $employee->id) }}">
+                        <form class="form-inline" method="post" action="{{ route('ps.employees.lookup-item', $employee->id) }}?redirect={{ request()->redirect }}">
                             @csrf
 
                             <div class="input-group input-group-md float-right">
@@ -58,7 +62,7 @@
                                         <tr>
                                             <td>
                                                 <strong>
-                                                    <a href="{{ route('ps.employees.pr', $employee->id) }}?id={{ $item->id }}&name={{ $item->itemno }}">
+                                                    <a href="{{ route(request()->redirect, $employee->id) }}?id={{ $item->id }}&name={{ $item->itemno }}">
                                                         {{ $item->itemno }}
                                                     </a>
                                                 </strong>

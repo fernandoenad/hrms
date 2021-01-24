@@ -55,7 +55,7 @@
                     <div class="float-right">
                         <form class="form-inline" method="post" action="{{ route('ps.search') }}">
                             @csrf
-                            <div class="input-group input-group-sm float-right">
+                            <div class="input-group input-group-md float-right">
                                 <input id="searchString" name="searchString" class="form-control form-control-navbar @error('searchString') is-invalid @enderror" value="{{ old('searchString') ?? request()->get('searchString') }}" autocomplete="searchString" type="search" placeholder="Search school" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">

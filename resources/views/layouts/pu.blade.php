@@ -24,7 +24,7 @@
 
         <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <a href="#" class="brand-link">
-                <img src="{{ url('/') }}/storage/images/logo.png" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('storage/images/logo.png') }}" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
             </a> 
@@ -73,7 +73,8 @@
                                             @if(Route::currentRouteName() == 'pu.stations' ||
                                                 Route::currentRouteName() == 'pu.stations.search' || 
                                                 Route::currentRouteName() == 'pu.stations.create' ||
-                                                Route::currentRouteName() == 'pu.stations.edit') 
+                                                Route::currentRouteName() == 'pu.stations.edit' ||
+                                                Route::currentRouteName() == 'pu.stations.lookup') 
                                                 {{ 'active'}}
                                             @endif">
                                             <i class="far fa-circle nav-icon"></i>
@@ -86,7 +87,8 @@
                                             @if(Route::currentRouteName() == 'pu.offices' ||
                                                 Route::currentRouteName() == 'pu.offices.search' ||
                                                 Route::currentRouteName() == 'pu.offices.create' ||
-                                                Route::currentRouteName() == 'pu.offices.edit') 
+                                                Route::currentRouteName() == 'pu.offices.edit' ||
+                                                Route::currentRouteName() == 'pu.offices.lookup') 
                                                 {{ 'active'}}
                                             @endif">
                                             <i class="far fa-circle nav-icon"></i>
@@ -99,22 +101,33 @@
                                             @if(Route::currentRouteName() == 'pu.towns' ||
                                                 Route::currentRouteName() == 'pu.towns.search' ||
                                                 Route::currentRouteName() == 'pu.towns.create' ||
-                                                Route::currentRouteName() == 'pu.towns.edit') 
+                                                Route::currentRouteName() == 'pu.towns.edit' ||
+                                                Route::currentRouteName() == 'pu.towns.lookup') 
                                                 {{ 'active'}} 
                                             @endif">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Towns</p>
                                         </a>
-                                    </li>
+                                    </li>                                 
                                 </ul>
                             </li>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'pu.items') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('pu.items') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tags"></i>
+                                <p>Items</p>
+                            </a>
                         </li>
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'pu.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('pu.users') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>User Management</p>
                             </a>

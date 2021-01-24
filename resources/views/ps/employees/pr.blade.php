@@ -85,7 +85,7 @@
                                 <div class="input-group input-group-md">
                                     <input readonly id="itemno" type="text" class="form-control @error('itemno') is-invalid @enderror" name="itemno" value="{{ old('itemno') ?? request()->name }}" autocomplete="itemno">
                                     <div class="input-group-append">
-                                        <a href="{{ route('ps.employees.lookup-item', $person->employee->id ) }}" class="btn btn-primary float-right">
+                                        <a href="{{ route('ps.employees.lookup-item', $person->employee->id ) }}?redirect={{ Route::currentRouteName() }}" class="btn btn-primary float-right">
                                             <i class="fas fa-search"></i>
                                         </a>
                                     </div>

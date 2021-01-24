@@ -16,7 +16,7 @@ class CheckAccessPS
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->isAdmin('ps')) {
+        if (! $request->user()->isAdmin('ps')) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);

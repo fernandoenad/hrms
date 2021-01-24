@@ -72,7 +72,7 @@
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Empl No.</th>
                                     <th>Name</th>
                                     <th>Position</th>
                                     <th width="20%">Station</th>

@@ -55,13 +55,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="cdlevel" class="col-md-3 col-form-label text-md-right">{{ __('CD Level') }}</label>
+                                <label for="cdlevel" class="col-md-3 col-form-label text-md-right">{{ __('Congressional District') }}</label>
 
                                 <div class="col-md-8">
                                     <select id="cdlevel" type="text" class="form-control @error('cdlevel') is-invalid @enderror" name="cdlevel" value="{{ old('cdlevel') }}" autocomplete="cdlevel">
                                         <option value="">Select</option>
                                         @foreach($cdlevels as $cdlevel)
-                                            <option value="{{ $cdlevel->details }}" @if(old('cdlevel') == $cdlevel->details) {{ 'selected'}} @endif>{{ $cdlevel->details }}</option>
+                                            <option value="{{ $cdlevel->details }}" @if(old('cdlevel') == $cdlevel->details) {{ 'selected'}} @endif>CD {{ $cdlevel->details }}</option>
                                         @endforeach
                                     </select>
 
@@ -79,7 +79,70 @@
                                     </div>
                                     <div class="col-md-8">
                                         <button type="submit" class="btn btn-primary float-right">
-                                            {{ __('Save Office') }}
+                                            {{ __('Save Town') }}
+                                        </button>
+                                        <a href="{{ url()->previous()}}" class="btn btn-default">
+                                            {{ __('Cancel') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            @endif
+
+            @if(Route::currentRouteName() == 'pu.towns.edit')
+                <div class="card card-outline card-warning">
+                    <div class="card-header">
+                        <h5>New Office / District</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('pu.towns.update', $town->id) }}">
+                            @csrf
+                            @method('PATCH')
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-3 col-form-label text-md-right">{{ __('Town Name') }}</label>
+
+                                <div class="col-md-8">
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $town->name }}" autocomplete="name">
+
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="cdlevel" class="col-md-3 col-form-label text-md-right">{{ __('Congressional District') }}</label>
+
+                                <div class="col-md-8">
+                                    <select id="cdlevel" type="text" class="form-control @error('cdlevel') is-invalid @enderror" name="cdlevel" value="{{ old('cdlevel') }}" autocomplete="cdlevel">
+                                        <option value="">Select</option>
+                                        @foreach($cdlevels as $cdlevel)
+                                            <option value="{{ $cdlevel->details }}" @if(old('cdlevel') == $cdlevel->details || $cdlevel->details == $town->cdlevel ) {{ 'selected'}} @endif>CD {{ $cdlevel->details }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('cdlevel')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <button type="submit" class="btn btn-primary float-right">
+                                            {{ __('Update Town') }}
                                         </button>
                                         <a href="{{ url()->previous()}}" class="btn btn-default">
                                             {{ __('Cancel') }}

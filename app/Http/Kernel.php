@@ -66,9 +66,11 @@ class Kernel extends HttpKernel
         'role.rs' => \App\Http\Middleware\CheckRSRole::class,
         'role.pu' => \App\Http\Middleware\CheckPURole::class,
         'role.dpsu' => \App\Http\Middleware\CheckDPSURole::class,
+        'role.ictu' => \App\Http\Middleware\CheckICTURole::class,
         'access.ps' => \App\Http\Middleware\CheckAccessPS::class,
         'access.rs' => \App\Http\Middleware\CheckAccessRS::class,
         'access.pu' => \App\Http\Middleware\CheckAccessPU::class,
         'access.dpsu' => \App\Http\Middleware\CheckAccessDPSU::class,
+        'access.ictu' => \App\Http\Middleware\CheckAccessICTU::class,
     ];
 }

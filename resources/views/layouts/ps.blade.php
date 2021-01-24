@@ -23,7 +23,7 @@
 
         <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <a href="#" class="brand-link">
-                <img src="{{ url('/') }}/storage/images/logo.png" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('storage/images/logo.png') }}" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
             </a> 
@@ -61,7 +61,7 @@
                                 <p>Employees</p>
                             </a>
                         </li>
-
+                        <!--
                         <li class="nav-item">
                             <a href="" onClick="alert('Feature not yet available!'); return false;" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -75,7 +75,7 @@
                                 <p>Leaves</p>
                             </a>
                         </li>
-
+                        -->
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ps.items') !== false) 
                                 {{ __('menu-open')}}
@@ -83,6 +83,16 @@
                             <a href="{{ route('ps.items') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tags"></i>
                                 <p>Items</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ps.reports') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ps.reports') }}" class="nav-link">
+                                <i class="nav-icon fas fa-clipboard"></i>
+                                <p>Reports</p>
                             </a>
                         </li>
 

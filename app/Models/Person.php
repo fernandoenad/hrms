@@ -102,4 +102,9 @@ class Person extends Model
     {
         return mb_strtoupper($this->lastname) . ", " .ucwords( $this->firstname . " " . $this->middlename) . " " . $this->extname;
     }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('F d, Y') : null;
+    }
 }

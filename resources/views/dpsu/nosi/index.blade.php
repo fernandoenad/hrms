@@ -27,7 +27,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Qualifiers</span>
                             <span class="info-box-number">
-                                <a href="{{ route('dpsu.employees.active') }}">
+                                <a href="#">
                                     {{ number_format($qual_count, 0) }}
                                 </a>
                             </span>
@@ -42,7 +42,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Processing</span>
                             <span class="info-box-number">
-                                <a href="{{ route('dpsu.employees.active') }}">
+                                <a href="#">
                                     {{ number_format(0, 0) }}
                                 </a>
                             </span>
@@ -57,7 +57,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Completed</span>
                             <span class="info-box-number">
-                                <a href="{{ route('dpsu.employees.inactive') }}">
+                                <a href="#">
                                     {{ number_format(0, 0) }}
                                 </a>
                             </span>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('dpsu.notifications._tools')
+            @include('dpsu.nosi._tools')
         </div>
     </div>
 </div>

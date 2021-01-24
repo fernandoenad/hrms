@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
-class NotificationController extends Controller
+class NOSINOtificationController extends Controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class NotificationController extends Controller
         $qual_count = $this->getNOSIQualifiers()->count();
         $qual_list = $this->getNOSIQualifiers()->paginate(15);
 
-        return view('dpsu.notifications.index', compact('qual_count', 'qual_list'));
+        return view('dpsu.nosi.index', compact('qual_count', 'qual_list'));
     }
 
     public function search()
@@ -34,7 +34,7 @@ class NotificationController extends Controller
         $qual_count = $this->getNOSIQualifiers()->count();
         $qual_list = $this->getNOSIQualifiersSearch($searchString);
 
-        return view('dpsu.notifications.index', compact('qual_count', 'qual_list'));
+        return view('dpsu.nosi.index', compact('qual_count', 'qual_list'));
     }
 
     public function getNOSIQualifiers()

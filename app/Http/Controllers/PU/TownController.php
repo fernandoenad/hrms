@@ -9,6 +9,7 @@ use App\Models\Station;
 use App\Models\Employee;
 use App\Models\Town;
 use App\Models\Dropdown;
+use Illuminate\Validation\Rule;
 
 class TownController extends Controller
 {
@@ -24,7 +25,7 @@ class TownController extends Controller
      */
     public function index()
     {
-        $towns = Town::get();
+        $towns = Town::orderBy('name', 'asc')->get();
 
         return view('pu.towns.index', compact('towns'));
     }
@@ -62,7 +63,7 @@ class TownController extends Controller
         return view('pu.towns.index', compact('towns', 'cdlevels'));
     }
 
-    public function store(Town $town)
+    public function store()
     {
         $towns = Town::get();
 
@@ -71,9 +72,9 @@ class TownController extends Controller
             'cdlevel' => ['required'],
         ]);
 
-        Town::create($data);
+        $town = Town::create($data);
 
-        return redirect()->route('pu.towns', compact('towns'))->with('status', 'Town created!');
+        return redirect()->route('pu.towns.edit', compact('towns', 'town'))->with('status', 'Town created!');
     }
 
     public function delete(Town $town)
@@ -83,6 +84,30 @@ class TownController extends Controller
         $town->delete();
 
         return redirect()->route('pu.towns', compact('towns'))->with('status', 'Town deleted!');
+    }
 
+    public function edit(Town $town)
+    {
+        $towns = Town::get();
+
+        $cdlevels = Dropdown::where('type', 'towncdlevel')->get();
+
+        return view('pu.towns.index', compact('towns', 'town', 'cdlevels'));
+    }
+
+    public function update(Town $town)
+    {
+        $towns = Town::get();
+
+        $cdlevels = Dropdown::where('type', 'towncdlevel')->get();
+
+        $data = request()->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s\-\.]*$/', Rule::unique('towns')->ignore($town->id)],
+            'cdlevel' => ['required'],
+        ]);
+
+        $town->update($data);
+
+        return redirect()->route('pu.towns.edit', compact('towns', 'town', 'cdlevels'))->with('status', 'Town updated!');
     }
 }

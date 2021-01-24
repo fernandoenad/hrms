@@ -69,10 +69,12 @@ class UserController extends Controller
         ],
         [
             'user_id.unique' => 'The employee already has a role.',
+            'user_id.required' => 'The employee field is required.',
             'role_id.required' => 'The role field is required.',
         ]);
 
         $userrole = UserRole::create(array_merge($data, [
+            'user_id' => $data['user_id'],
             'route' => 'ps',
             'status' => 1,
         ]));

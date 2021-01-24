@@ -59,7 +59,7 @@
                                         </td>
                                         <td>{{ $person->sex  ?? __('') }}</td>
                                         <td>{{ $person->contact->primaryno  ?? __('') }}</td>
-                                        <td>@if(isset($person->employee->id)) {{ 'Employee' }} @else {{ 'Applicant / Unassigned' }} @endif</td>
+                                        <td>@if(isset($person->employee->id)) {{ 'Employee' }} @else {{ 'Non Employee' }} @endif</td>
                                     </tr>
                                     @endforeach
                                 @else

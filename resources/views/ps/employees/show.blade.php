@@ -29,6 +29,12 @@
                     {{ session('status') }}
                 </div>
             @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="card card-primary">
                 <div class="card-body">
                     <h4>Personal Information</h4>

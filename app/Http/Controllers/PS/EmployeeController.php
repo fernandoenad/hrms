@@ -184,6 +184,7 @@ class EmployeeController extends Controller
         ]);
         
         $employee->update(array_merge($data, [
+            'item_id' => $data['item_id'],
             'lastnosidate' => $data['firstdaydate'],
             'lastapptdate' => $data['firstdaydate'],
             'step' => 1,
@@ -350,5 +351,60 @@ class EmployeeController extends Controller
         $items = $items->appends(['searchString' => $searchString]);
 
         return view('ps.employees.lookup', compact('employee', 'items'));
+    }
+
+    public function confirmReemploy(Employee $employee)
+    {
+        if($employee->item_id != 0)
+            return redirect()->route('ps.employees.show', compact('employee'))->with('error', 'Employee is currently employed.');
+
+        $items = Item::where('status', '=', 1)
+            ->whereNotIn('items.id', function($query){
+                $query->select('item_id')->from('employees');
+            })
+            ->get();
+
+        $employmentstatuses = Dropdown::where('type', 'employmentstatus')
+            ->get();
+
+        $person = $employee->person;
+
+        return view('ps.employees.reemploy', compact('person', 'items', 'employmentstatuses'));
+    }
+
+    public function processReemploy(Employee $employee)
+    {
+        if($employee->lastnosidate == null)
+            $appointmentdateLimit = date('Y-m-d', strtotime($employee->lastapptdate));
+        else
+            $appointmentdateLimit = date('Y-m-d', strtotime($employee->lastnosidate));
+
+        $firstdaydateLimit = request()->appointmentdate;
+
+        $data = request()->validate([
+            'item_id' => ['required'],
+            'employmentstatus' => ['required'],
+            'appointmentdate' => ['required', 'date', 'after:' . $appointmentdateLimit],
+            'firstdaydate' => ['required', 'date' , 'after_or_equal:' . $firstdaydateLimit],
+        ],
+        [
+            'item_id.required' => 'The newitemno field is required.',
+        ]);
+        
+        $employee->update(array_merge($data, [
+            'item_id' => $data['item_id'],
+            'employmentstatus' => $data['employmentstatus'],
+            'lastnosidate' => null,
+            'lastapptdate' => $data['firstdaydate'],
+            'retirementdate' => null,
+            'step' => 1,
+            ]));
+
+        $employee->item()->update([
+            'appointmentdate' => $data['appointmentdate'],
+            'firstdaydate' => $data['firstdaydate'],     
+        ]);
+
+        return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employee was re-employed!');
     }
 }

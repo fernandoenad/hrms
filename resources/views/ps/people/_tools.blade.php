@@ -11,7 +11,7 @@
                 @endif
                     @csrf
                     <div class="input-group input-group-md">
-                        <input id="searchString" name="searchString" class="form-control form-control-navbar @error('searchString') is-invalid @enderror" value="{{ old('searchString') ?? request()->get('searchString') }}" autocomplete="searchString" type="search" placeholder="Search..." aria-label="Search">
+                        <input id="searchString" name="searchString" class="form-control form-control-navbar @error('searchString') is-invalid @enderror" value="{{ old('searchString') ?? request()->get('searchString') }}" autocomplete="searchString" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search"></i>
@@ -54,7 +54,8 @@
                 || Route::currentRouteName() == 'ps.employees.confirm-delete'
                 || Route::currentRouteName() == 'ps.employees.si'
                 || Route::currentRouteName() == 'ps.employees.pr'
-                || Route::currentRouteName() == 'ps.employees.ee') 
+                || Route::currentRouteName() == 'ps.employees.ee'
+                || Route::currentRouteName() == 'ps.employees.re-employ') 
                 <li class="nav-item">
                     <a href="#" class="nav-link"><b></a></b> 
                 </li>
@@ -77,17 +78,23 @@
                     <li class="nav-item">
                         <a href="{{ route('ps.employees.ee', $person->employee->id) }}" class="nav-link"><i class="fas fa-stop-circle"></i>  &nbsp;End employment</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
+                    </li>                    
                 @else
                     @if(!isset($person->employee))
                         <li class="nav-item">
                             <a href="{{ route('ps.people.employ', $person->id)}}" class="nav-link"><i class="fas fa-user-tag"></i> Employ</a>
                         </li>
+                    @else
+                        <li class="nav-item">
+                            <a href="{{ route('ps.employees.re-employ', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-tag"></i> Re-employ</a>
+                        </li> 
+                        <li class="nav-item">
+                            <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
+                        </li> 
                     @endif
-                @endif   
-                <li class="nav-item">
-                    <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
-                </li>             
+                @endif              
             @endif
         </ul>
     </div>

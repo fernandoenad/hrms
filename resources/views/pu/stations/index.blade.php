@@ -41,6 +41,28 @@
                             @csrf
 
                             <div class="form-group row">
+                                <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('Station Head') }}</label>
+
+                                <div class="col-md-8">
+                                    <input id="person_id" type="hidden" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') ?? request()->id }}" autocomplete="person_id">
+                                    <div class="input-group input-group-md">
+                                        <input readonly id="person_name" type="text" class="form-control @error('person_name') is-invalid @enderror" name="person_name" value="{{ old('person_name') ?? request()->name }}" autocomplete="person_name">
+                                        <div class="input-group-append">
+                                            <a href="{{ route('pu.stations.lookup') }}?redirect={{ Route::currentRouteName() }}" class="btn btn-primary float-right">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    @error('person_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
                                 <label for="type" class="col-md-3 col-form-label text-md-right">{{ __('Type') }}</label>
 
                                 <div class="col-md-8">
@@ -156,26 +178,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('School Head') }}</label>
-
-                                <div class="col-md-8">
-                                    <select id="person_id" type="text" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') }}" autocomplete="person_id">
-                                        <option value="">Select</option>
-                                        @foreach($people as $person)
-                                            <option value="{{ $person->id }}" @if(old('person_id') == $person->id) {{ 'selected'}} @endif>{{ $person->getFullnameBox() }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('person_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
+                            </div>                           
 
                             <div class="form-group">
                                 <div class="row">
@@ -326,15 +329,18 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('School Head') }}</label>
+                                <label for="person_id" class="col-md-3 col-form-label text-md-right">{{ __('Station Head') }}</label>
 
                                 <div class="col-md-8">
-                                    <select id="person_id" type="text" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') }}" autocomplete="person_id">
-                                        <option value="">Select</option>
-                                        @foreach($people as $person)
-                                            <option value="{{ $person->id }}" @if(old('person_id') == $person->id || $station->person_id == $person->id) {{ 'selected'}} @endif>{{ $person->getFullnameBox() }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input id="person_id" type="hidden" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') ?? request()->id ?? $station->person_id }}" autocomplete="person_id">
+                                    <div class="input-group input-group-md">
+                                        <input readonly id="person_name" type="text" class="form-control @error('person_name') is-invalid @enderror" name="person_name" value="{{ old('person_name') ?? request()->name ?? $station->person->getFullnameBox() }}" autocomplete="person_name">
+                                        <div class="input-group-append">
+                                        <a href="{{ route('pu.stations.lookup') }}?redirect={{ Route::currentRouteName() }}&id={{ $station->id }}" class="btn btn-primary float-right">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </div>
+                                    </div>
 
                                     @error('person_id')
                                         <span class="invalid-feedback" role="alert">

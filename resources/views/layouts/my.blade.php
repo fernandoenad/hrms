@@ -22,13 +22,13 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ url('/') }}/storage/avatars/{{ Auth::user()->person->image }}" class="user-image img-circle elevation-2" alt="User Image">
+                        <img src="{{ asset('storage/avatars') }}/{{ Auth::user()->person->image }}" class="user-image img-circle elevation-2" alt="User Image">
                         <span class="d-none d-md-inline">{{ Auth::user()->person->getFullname() }}</span>
                     </a>
                     
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <li class="user-header bg-primary">
-                            <img src="{{ url('/') }}/storage/avatars/{{ Auth::user()->person->image }}" class="img-circle elevation-2" alt="User Image">
+                            <img src="{{ asset('storage/avatars') }}/{{ Auth::user()->person->image }}" class="img-circle elevation-2" alt="User Image">
                             <p>
                                 {{ Auth::user()->person->getFullname() }} 
                                 <small>{{ Auth::user()->getUserType() }}</small>
@@ -52,7 +52,7 @@
 
         <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <a href="#" class="brand-link">
-                <img src="{{ url('/') }}/storage/images/logo.png" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('storage/images/logo.png') }}" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
                 <span class="brand-text font-weight-light">{{ config('app.name', 'Laravel') }}</span>
             </a> 
