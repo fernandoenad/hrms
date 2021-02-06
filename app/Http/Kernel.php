@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'access.pu' => \App\Http\Middleware\CheckAccessPU::class,
         'access.dpsu' => \App\Http\Middleware\CheckAccessDPSU::class,
         'access.ictu' => \App\Http\Middleware\CheckAccessICTU::class,
+        'default.password' => \App\Http\Middleware\CheckDefaultPassword::class,
     ];
 }

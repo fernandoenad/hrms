@@ -37,7 +37,7 @@
 
                         <p>
                             This action resets the user's password to its 
-                            default value:  <b>{{ $person->user->username }}</b>
+                            default value:  <b>password</b>
                         </p>
 
                         <div class="row">

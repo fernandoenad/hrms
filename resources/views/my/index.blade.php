@@ -79,6 +79,10 @@
                                             <th>Date of Birth</th>
                                             <td>{{ $person->dob }} <small>({{ $person->getAge() }})</small></td>
                                         </tr>
+                                        <tr>
+                                            <th>Civil Status</th>
+                                            <td>{{ $person->civilstatus }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

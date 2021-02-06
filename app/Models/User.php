@@ -76,7 +76,7 @@ class User extends Authenticatable
                 $query->where('route', 'like', $route)
                     ->orWhere('role_id', '=', 1);
             })->first();
-        //dd($result->role_id);
+
 
         if(isset($result)) 
         {

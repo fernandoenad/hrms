@@ -4,7 +4,7 @@
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item active p-3">
-                @if(Route::currentRouteName() == 'ps.people' || Route::currentRouteName() == 'ps.people.search') 
+                @if(Route::currentRouteName() == 'ps.people' || Route::currentRouteName() == 'ps.people.search' || Route::currentRouteName() == 'ps.people.show') 
                     <form class="form-inline" method="post" action="{{ route('ps.people.search') }}">
                 @else
                     <form class="form-inline" method="post" action="{{ route('ps.employees.search') }}">

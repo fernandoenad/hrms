@@ -83,7 +83,7 @@ class PersonController extends Controller
 
     public function update(Person $person)
     {
-        $person->user->update(['password' =>  Hash::make($person->user->username)]);
+        $person->user->update(['password' =>  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi']);
 
         if(isset($person->employee))
         {

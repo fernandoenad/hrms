@@ -23,6 +23,7 @@ class Person extends Model
         'extname',
         'sex',
         'dob',
+        'civilstatus',
         'image',
     ];
 
@@ -55,6 +56,11 @@ class Person extends Model
     public function employee()
     {
         return $this->hasOne(Employee::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
     }
 
     public function station()

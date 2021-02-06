@@ -47,7 +47,7 @@
                             </tr>
                             <tr>
                                 <th>E-Mail</th>
-                                <td>{{ $person->user->email }}</td>
+                                <td><a href="{{ route('my.tools.email-edit') }}" title="click to update email">{{ $person->user->email }}</a></td>
                             </tr>
                             <tr>
                                 <th>Password</th>
@@ -68,7 +68,7 @@
                                             @enderror
 
                                             <br>
-                                            <a href="{{ url()->previous() }}" class="btn btn-default">
+                                            <a href="{{ route('my.tools') }}" class="btn btn-default">
                                                 {{ __('Cancel') }}
                                             </a>
                                             <button type="submit" class="btn btn-primary">

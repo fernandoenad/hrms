@@ -55,7 +55,7 @@
                                     <tr>
                                         <td>{{ $employee->empno ?? __('') }}</td>
                                         <td>
-                                            <a href="{{ route('rs.employees.show', $employee->empid) }}">
+                                            <a href="{{ route('pu.employees.show', $employee->empid) }}">
                                                 {{ $employee->person->getFullnameSorted() ?? __('') }}
                                             </a>
                                         </td>

@@ -53,7 +53,7 @@ class ToolController extends Controller
     }
 
     public function editPassword()
-    {
+    {       
         $user = Auth::user();
         $person = $user->person; 
        

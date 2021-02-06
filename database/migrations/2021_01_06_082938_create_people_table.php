@@ -21,6 +21,7 @@ class CreatePeopleTable extends Migration
             $table->string('extname')->nullable();
             $table->string('sex');
             $table->date('dob');
+            $table->string('civilstatus');
             $table->string('image');
             $table->timestamps();
         });
