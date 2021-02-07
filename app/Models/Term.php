@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Term extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'current',
-        'currentzip',
-        'permanent',
-        'permanentzip',
-        'person_id',
+        'year',
+        'status',
     ];
 
     /**
@@ -33,9 +32,4 @@ class Address extends Model
      * @var array
      */
     protected $casts = [];
-
-    public function person()
-    {
-        return $this->belongsTo(Person::class);
-    }
 }

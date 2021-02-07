@@ -53,6 +53,7 @@ class StationController extends Controller
 
         $stationtypes = Dropdown::where('type', '=', 'stationtype')->get();
         $stationcategories = Dropdown::where('type', '=', 'stationcategory')->get();
+        $fiscalcategories = Dropdown::where('type', '=', 'fiscalcategory')->get();
         $offices = Office::orderBy('name', 'asc')
             ->select('id', 'name')->get();
         $people = Person::orderBy('firstname', 'asc')
@@ -62,7 +63,7 @@ class StationController extends Controller
             ->groupBy('services')
             ->select('services')->get();
 
-        return view('pu.stations.index', compact('stations', 'stationtypes', 'stationcategories', 'offices', 'people', 'services'));
+        return view('pu.stations.index', compact('stations', 'stationtypes', 'stationcategories', 'offices', 'people', 'services', 'fiscalcategories'));
     }
 
     public function store()
@@ -72,6 +73,7 @@ class StationController extends Controller
 
         $data = request()->validate([
             'type' => ['required'],
+            'fiscalcategory' => ['required'],
             'code' => ['required', 'string', 'min:3', 'max:12', 'regex:/^[0-9]*$/', 'unique:stations'],
             'name' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\.]*$/'],
             'services' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,]*$/'],
@@ -123,6 +125,7 @@ class StationController extends Controller
 
         $stationtypes = Dropdown::where('type', '=', 'stationtype')->get();
         $stationcategories = Dropdown::where('type', '=', 'stationcategory')->get();
+        $fiscalcategories = Dropdown::where('type', '=', 'fiscalcategory')->get();
         $offices = Office::orderBy('name', 'asc')
             ->select('id', 'name')->get();
         $people = Person::orderBy('firstname', 'asc')
@@ -132,16 +135,14 @@ class StationController extends Controller
             ->groupBy('services')
             ->select('services')->get();
 
-        return view('pu.stations.index', compact('stations', 'stationtypes', 'stationcategories', 'offices', 'people', 'services', 'station'));
+        return view('pu.stations.index', compact('stations', 'stationtypes', 'stationcategories', 'offices', 'people', 'services', 'station', 'fiscalcategories'));
     }
 
     public function update(Station $station)
     {
-        $office = new Office();
-        $stations = $this->getStations($office)->paginate(50);
-
         $data = request()->validate([
             'type' => ['required'],
+            'fiscalcategory' => ['required'],
             'code' => ['required', 'string', 'min:3', 'max:12', 'regex:/^[0-9]*$/', Rule::unique('stations')->ignore($station->id)],
             'name' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\.]*$/'],
             'services' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,]*$/'],
@@ -153,7 +154,7 @@ class StationController extends Controller
 
         $station->update($data);
 
-        return redirect()->route('pu.stations.edit', compact('stations', 'station'))->with('status', 'Station updated!');
+        return redirect()->route('pu.stations.edit', compact('station'))->with('status', 'Station updated!');
     }
 
     public function lookup()

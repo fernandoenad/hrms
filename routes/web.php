@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\PasswordSecurityController;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\My\ContactController;
+use App\Http\Controllers\My\AddressController;
 use App\Http\Controllers\My\MyController;
 use App\Http\Controllers\My\ToolController;
 
@@ -40,6 +42,10 @@ use App\Http\Controllers\ICTU\EmployeeController as ICTUEmployeeController;
 use App\Http\Controllers\ICTU\UserRoleController;
 use App\Http\Controllers\ICTU\UserController as ICTUUserController;
 
+use App\Http\Controllers\RMS\RMSController;
+use App\Http\Controllers\RMS\PersonController as RMSPersonController;
+use App\Http\Controllers\RMS\ApplicationController;
+
 use App\Http\Controllers\HomeController;
 
 /*
@@ -57,12 +63,34 @@ Route::get('/', function () {
     return view('home.apps');
 });
 
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/my');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
 Auth::routes();
 
 Route::get('/my/tools/expired-password', [PasswordSecurityController::class, 'index'])->name('auth.expired-password');
 Route::post('/my/tools/reset-password', [PasswordSecurityController::class, 'resetPassword'])->name('auth.reset-password');
 
-Route::middleware(['default.password'])->group(function () {
+Route::middleware(['default.password', 'verified'])->group(function () {
+    Route::get('/rms/create/{term}', [ApplicationController::class, 'create'])->name('rms.application.create');
+    Route::get('/rms/application/{application}', [ApplicationController::class, 'show'])->name('rms.application.show');
+    Route::delete('/rms/application/{application}', [ApplicationController::class, 'destroy'])->name('rms.application.destroy');
+    Route::post('/rms/application', [ApplicationController::class, 'store'])->name('rms.application.store');
+    Route::get('/rms/application', [ApplicationController::class, 'index'])->name('rms.application');
+
     Route::get('/my/tools/password-edit', [ToolController::class, 'editPassword'])->name('my.tools.password-edit')->middleware('password.confirm');
     Route::patch('/my/tools/password', [ToolController::class, 'updatePassword'])->name('my.tools.password-update');
     Route::get('/my/tools/email-edit', [ToolController::class, 'editEmail'])->name('my.tools.email-edit')->middleware('password.confirm');
@@ -70,7 +98,10 @@ Route::middleware(['default.password'])->group(function () {
     Route::get('/my/tools', [ToolController::class, 'index'])->name('my.tools');
 
     Route::get('my/contact/edit', [ContactController::class, 'edit'])->name('my.contact.edit');
-    Route::patch('my/contact', [ContactController::class, 'update'])->name('my.contact.update');
+    Route::patch('my/contact/update', [ContactController::class, 'update'])->name('my.contact.update');
+
+    Route::get('my/address/edit', [AddressController::class, 'edit'])->name('my.address.edit');
+    Route::patch('my/address/update', [AddressController::class, 'update'])->name('my.address.update');
 
     Route::get('/my', [MyController::class, 'index'])->name('my');
 
@@ -123,10 +154,13 @@ Route::middleware(['default.password'])->group(function () {
             Route::get('/ps/employees/{employee}/confirm-delete', [EmployeeController::class, 'confirmDelete'])->name('ps.employees.confirm-delete');
             Route::delete('/ps/employees/{employee}', [EmployeeController::class, 'delete'])->name('ps.employees.delete');
             
+            Route::any('/ps/reports/schools/{fiscalcategory}/search', [ReportController::class, 'searchSchool'])->name('ps.reports.schools-search');
+            Route::get('/ps/reports/schools/{fiscalcategory}', [ReportController::class, 'fiscalcategory'])->name('ps.reports.schools');
+
             Route::get('/ps/reports/plantilla/{office}/{station}', [ReportController::class, 'plstation'])->name('ps.reports.plantilla.station');
             Route::get('/ps/reports/plantilla/{office}', [ReportController::class, 'ploffice'])->name('ps.reports.plantilla.office');
             Route::get('/ps/reports/plantilla', [ReportController::class, 'plantilla'])->name('ps.reports.plantilla');
-        
+                  
             Route::get('/ps/reports/deployment/{office}/{station}', [ReportController::class, 'destation'])->name('ps.reports.deployment.station');
             Route::get('/ps/reports/deployment/{office}', [ReportController::class, 'deoffice'])->name('ps.reports.deployment.office');
             Route::get('/ps/reports/deployment', [ReportController::class, 'deployment'])->name('ps.reports.deployment');
@@ -307,9 +341,17 @@ Route::middleware(['default.password'])->group(function () {
     });
 });
 
+
+
 Route::get('/station/{station}/employees/{employee}', [EmployeeController::class, 'show'])->name('station.employees.show');
 Route::get('/station/{station}/employees', [EmployeeController::class, 'index'])->name('station.employees');
 Route::get('/station/{station}', [StationController::class, 'index'])->name('station');
 
+Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
+Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');
+Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.account.store');
+
+Route::get('/rms/p/{page}', [RMSController::class, 'show'])->name('rms.show');
+Route::get('/rms', [RMSController::class, 'index'])->name('rms');
 
 Route::get('/help', [HomeController::class, 'help'])->name('help');

@@ -11,6 +11,7 @@ use App\Models\Contact;
 use App\Models\Item;
 use App\Models\Station;
 use App\Models\Employee;
+use App\Models\Address;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -85,7 +86,9 @@ class PersonController extends Controller
             ->select('emergencyaddress')
             ->get();
 
-        return view('ps.people.create', compact('sexes', 'extensions', 'relations', 'addresses'));
+        $civilstatuses = Dropdown::where('type', 'civilstatus')->get();
+
+        return view('ps.people.create', compact('sexes', 'extensions', 'relations', 'addresses', 'civilstatuses'));
     }
 
     public function store()
@@ -98,12 +101,14 @@ class PersonController extends Controller
                 ->where('lastname', request()->lastname)
                 ->where('extname', request()->extname)
                 ->where('sex', request()->sex)
-                ->where('dob', request()->dob)],
+                ->where('dob', request()->dob) 
+                ->where('civilstatus', request()->civilstatus)],
             'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
             'sex' => ['required', 'string'],
             'dob' => ['required', 'date', 'before:-15 years'],
+            'civilstatus' => ['required', 'string'],
             'image' => 'string',
             'primaryno' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', 'unique:contacts'],
             'username' => ['required', 'string', 'min:5', 'max:255', 'regex:/^[0-9a-zA-Z.-]*$/', 'unique:users'],
@@ -123,6 +128,7 @@ class PersonController extends Controller
             'extname' => $data['extname'],
             'sex' => $data['sex'],
             'dob' => $data['dob'],
+            'civilstatus' => $data['civilstatus'],
             'image' => $data['image'],
         ]);
         
@@ -137,9 +143,12 @@ class PersonController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['username']),
-        ]);  
+        ]); 
         
-
+        Address::create([
+            'person_id' => $person->id,
+        ]);
+        
         return redirect()->route('ps.people.show', compact('person'))->with('status', 'Profile created!'); 
     }
 
@@ -165,7 +174,18 @@ class PersonController extends Controller
             ->select('emergencyaddress')
             ->get();
 
-        return view('ps.people.edit', compact('person', 'sexes', 'extensions', 'relations', 'addresses'));
+        $civilstatuses = Dropdown::where('type', 'civilstatus')->get();
+
+        $currents = Address::groupBy('current')
+            ->orderBy('current', 'asc')
+            ->select('current')
+            ->get();
+        $permanents = Address::groupBy('permanent')
+            ->orderBy('permanent', 'asc')
+            ->select('permanent')
+            ->get();
+
+        return view('ps.people.edit', compact('person', 'sexes', 'extensions', 'relations', 'addresses', 'civilstatuses', 'currents', 'permanents'));
     }
 
     public function update(Person $person)
@@ -175,11 +195,16 @@ class PersonController extends Controller
             'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
-            'sex' => ['required', 'string'],
+            'sex' => ['required'],
             'dob' => ['required', 'date', 'before:-15 years'],
+            'civilstatus' => ['required'],
             'image' => ['nullable', 'image'],
             'primaryno' => ['nullable', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)],
             'secondaryno' => ['nullable', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($person->contact->id)], 
+            'current' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
+            'currentzip' => ['required', 'integer', 'min:1000', 'max:9999', 'regex:/^[0-9]*$/'],
+            'permanent' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
+            'permanentzip' => ['required', 'integer', 'min:1000', 'max:9999', 'regex:/^[0-9]*$/'],
             'emergencyperson' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'emergencyrelation' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'emergencyaddress' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.,Ññ-]*$/'],
@@ -209,6 +234,7 @@ class PersonController extends Controller
                 'extname' => $data['extname'],
                 'sex' => $data['sex'],
                 'dob' => $data['dob'],
+                'civilstatus' => $data['civilstatus'],
                 'image' => $image[1],
             ]);
         }
@@ -221,6 +247,7 @@ class PersonController extends Controller
                 'extname' => $data['extname'],
                 'sex' => $data['sex'],
                 'dob' => $data['dob'],
+                'civilstatus' => $data['civilstatus'],
             ]);
         }
 
@@ -231,6 +258,13 @@ class PersonController extends Controller
             'emergencyrelation' => $data['emergencyrelation'],
             'emergencyaddress' => $data['emergencyaddress'],
             'emergencycontact' => $data['emergencycontact'],
+        ]);
+
+        $person->address->update([
+            'current' => $data['current'],
+            'currentzip' => $data['currentzip'],
+            'permanent' => $data['permanent'],
+            'permanentzip' => $data['permanentzip'],
         ]);
 
         $person->user->update([

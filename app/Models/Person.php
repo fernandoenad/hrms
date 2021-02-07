@@ -68,9 +68,19 @@ class Person extends Model
         return $this->hasMany(Station::class);
     }
 
+    public function application()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     public function office()
     {
         return $this->hasMany(Office::class);
+    }
+
+    public function accountrequest()
+    {
+        return $this->hasMany(AccountRequest::class);
     }
 
     public function getFirstnameAttribute($value){

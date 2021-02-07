@@ -135,15 +135,20 @@ class ItemController extends Controller
         $stations = Station::select('id', 'code', 'name', 'office_id')
             ->orderBy('code', 'asc')
             ->get();
+        
+        $itemlevels = Dropdown::where('type', '=', 'itemlevel')
+            ->get();  
+
             
        
-        return view('ps.items.create', compact('positions', 'employeetypes', 'stations'));
+        return view('ps.items.create', compact('positions', 'employeetypes', 'stations', 'itemlevels'));
     }
 
     public function store()
     {
         $data = request()->validate([
             'itemno' => ['required', 'string', 'min:25', 'max:255', 'regex:/^[a-zA-Z0-9-]*$/', 'unique:items'],
+            'level' => ['required'],
             'creationdate' => ['required', 'date', 'before_or_equal: today'],
             'position' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
             'salarygrade' => ['required'],
@@ -172,8 +177,11 @@ class ItemController extends Controller
         $stations = Station::select('id', 'code', 'name', 'office_id')
             ->orderBy('code', 'asc')
             ->get();
+        
+        $itemlevels = Dropdown::where('type', '=', 'itemlevel')
+        ->get();  
 
-         return view('ps.items.edit', compact('item', 'positions', 'employeetypes', 'stations'));
+         return view('ps.items.edit', compact('item', 'positions', 'employeetypes', 'stations', 'itemlevels'));
     }
 
     public function update(Item $item)

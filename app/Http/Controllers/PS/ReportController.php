@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Office;
 use App\Models\Employee;
 use App\Models\Station;
+use App\Models\Item;
 
 class ReportController extends Controller
 {
@@ -22,8 +23,25 @@ class ReportController extends Controller
      */
     public function index()
     {
-             
-        return view('ps.reports.index');
+        $teachingemployees = Item::join('deployments', 'items.id', '=', 'deployments.item_id')
+            ->join('employees', 'deployments.item_id', '=', 'employees.item_id')
+            ->where('employeetype', '=', 'Teaching')
+            ->where('level', '!=', 'Non-school')
+            ->groupBy('level')
+            ->orderBy('level', 'asc')
+            ->select('level')
+            ->get();
+    
+        $nonteachingemployees = Item::join('deployments', 'items.id', '=', 'deployments.item_id')
+            ->join('employees', 'deployments.item_id', '=', 'employees.item_id')
+            ->where('employeetype', '=', 'Non-Teaching')
+            ->where('level', '!=', 'Non-school')
+            ->groupBy('level')
+            ->orderBy('level', 'asc')
+            ->select('level')
+            ->get();
+
+        return view('ps.reports.index', compact('teachingemployees', 'nonteachingemployees'));
     }
 
     public function plantilla()
@@ -135,4 +153,27 @@ class ReportController extends Controller
 
         return view('ps.reports.destation', compact('office', 'station', 'employees'));
     }    
+
+    public static function  fiscalcategory($fiscalcategory)
+    {
+        $stations = Station::where('fiscalcategory', 'like', $fiscalcategory)
+            ->orderBy('name', 'asc')
+            ->paginate(15);
+
+        return view('ps.reports.schools', compact('fiscalcategory', 'stations'));
+    }
+
+    public static function  searchSchool($fiscalcategory)
+    {
+        $str = request()->searchString;
+
+        $stations = Station::where('fiscalcategory', 'like', $fiscalcategory)
+            ->where('name', 'like', $str . '%')
+            ->orderBy('name', 'asc')
+            ->paginate(15);
+
+        return view('ps.reports.schools', compact('fiscalcategory', 'stations'));
+    }
 }
+
+

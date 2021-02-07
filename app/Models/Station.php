@@ -16,6 +16,7 @@ class Station extends Model
      */
     protected $fillable = [
         'type',
+        'fiscalcategory',
         'code',
         'name',
         'services',
@@ -58,6 +59,12 @@ class Station extends Model
     {
         return $this->hasOne(Deployment::class);
     }
+
+    public function application()
+    {
+        return $this->hasOne(Application::class);
+    }
+
 
     public function getTypeAttribute($value)
     {

@@ -45,6 +45,15 @@
 
             <div class="col-md-3">
                 <div class="info-box mb-3 bg-primary">
+                    <span class="info-box-icon"><i class="fas fa-user"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Recruitment Mgmt Sys</span>
+                        <span class="info-box-number"><a href="/rms" class="text-white">Access the app</a></span>
+                    </div>
+                </div>
+
+                <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-user-tie"></i></span>
 
                     <div class="info-box-content">
@@ -69,8 +78,10 @@
                         <span class="info-box-text">Personnel Services</span>
                         <span class="info-box-number"><a href="/ps" class="text-white">Access the app</a></span>
                     </div>
-                </div>
+                </div>                        
+            </div>
 
+            <div class="col-md-3">
                 <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-copy"></i></span>
 
@@ -78,10 +89,8 @@
                         <span class="info-box-text">Records Section</span>
                         <span class="info-box-number"><a href="/rs" class="text-white">Access the app</a></span>
                     </div>
-                </div>                           
-            </div>
+                </div>
 
-            <div class="col-md-3">
                 <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-swatchbook"></i></span>
 
@@ -100,20 +109,13 @@
                     </div>
                 </div>
 
-                <div class="info-box mb-3 bg-primary">
-                    <span class="info-box-icon"><i class="fas fa-building"></i></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text">Office / District</span>
-                        <span class="info-box-number"><a href="/office" onClick="alert('Coming soon...'); return false;" class="text-white">Access the app</a></span>
-                    </div>
-                </div>
 
                 <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-school"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Station / School</span>
+                        <span class="info-box-text">Station / Unit </span>
                         <span class="info-box-number"><a href="/station" onClick="alert('Coming soon...'); return false;" class="text-white">Access the app</a></span>
                     </div>
                 </div>

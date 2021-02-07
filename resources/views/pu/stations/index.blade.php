@@ -110,6 +110,25 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="fiscalcategory" class="col-md-3 col-form-label text-md-right">{{ __('Fiscal Category') }}</label>
+
+                                <div class="col-md-8">
+                                    <select id="fiscalcategory" type="text" class="form-control @error('fiscalcategory') is-invalid @enderror" name="fiscalcategory" value="{{ old('fiscalcategory') }}" autocomplete="fiscalcategory">
+                                        <option value="">Select</option>
+                                        @foreach($fiscalcategories as $fiscalcategory)
+                                            <option value="{{ $fiscalcategory->details }}" @if(old('fiscalcategory') == $fiscalcategory->details) {{ 'selected'}} @endif>{{ $fiscalcategory->details }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('fiscalcategory')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="services" class="col-md-3 col-form-label text-md-right">{{ __('Services') }}</label>
 
                                 <div class="col-md-8">
@@ -258,6 +277,25 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="fiscalcategory" class="col-md-3 col-form-label text-md-right">{{ __('Fiscal Category') }}</label>
+
+                                <div class="col-md-8">
+                                    <select id="fiscalcategory" type="text" class="form-control @error('fiscalcategory') is-invalid @enderror" name="fiscalcategory" value="{{ old('fiscalcategory') }}" autocomplete="fiscalcategory">
+                                        <option value="">Select</option>
+                                        @foreach($fiscalcategories as $fiscalcategory)
+                                            <option value="{{ $fiscalcategory->details }}" @if(old('fiscalcategory') == $fiscalcategory->details || $station->fiscalcategory == $fiscalcategory->details ) {{ 'selected'}} @endif>{{ $fiscalcategory->details }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('fiscalcategory')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="services" class="col-md-3 col-form-label text-md-right">{{ __('Services') }}</label>
 
                                 <div class="col-md-8">
@@ -334,7 +372,7 @@
                                 <div class="col-md-8">
                                     <input id="person_id" type="hidden" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') ?? request()->id ?? $station->person_id }}" autocomplete="person_id">
                                     <div class="input-group input-group-md">
-                                        <input readonly id="person_name" type="text" class="form-control @error('person_name') is-invalid @enderror" name="person_name" value="{{ old('person_name') ?? request()->name ?? $station->person->getFullnameBox() }}" autocomplete="person_name">
+                                        <input readonly id="person_name" type="text" class="form-control @error('person_name') is-invalid @enderror" name="person_name" value="{{ old('person_name') ?? request()->name ?? (isset($station->person) ? $station->person->getFullnameBox() : '') }}" autocomplete="person_name">
                                         <div class="input-group-append">
                                         <a href="{{ route('pu.stations.lookup') }}?redirect={{ Route::currentRouteName() }}&id={{ $station->id }}" class="btn btn-primary float-right">
                                                 <i class="fas fa-search"></i>

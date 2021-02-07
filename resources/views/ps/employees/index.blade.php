@@ -67,16 +67,35 @@
             </div>
 
             <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-th"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a href="#" class="dropdown-item">Field selection placeholder</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
                                     <th>Empl No.</th>
+                                    <th>Item No.</th>
                                     <th>Name</th>
                                     <th>Position</th>
                                     <th width="20%">Station</th>
                                     <th width="15%">District</th>
+                                    <th>Appt Date</th>
+                                    <th>Last Promo Date</th>
+                                    <th>Sex</th>
+                                    <th>DOB</th>
+                                    <th>Civil Stat</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,6 +103,7 @@
                                     @foreach($employees as $employee)
                                     <tr>
                                         <td>{{ $employee->empno ?? __('') }}</td>
+                                        <td>{{ $employee->item->itemno ?? __('') }}</td>
                                         <td>
                                             <a href="{{ route('ps.employees.show', $employee->empid) }}">
                                                 {{ $employee->person->getFullnameSorted() ?? __('') }}
@@ -92,6 +112,11 @@
                                         <td>{{ $employee->item->position ?? __('') }}</td>
                                         <td>{{ $employee->item->deployment->station->name ?? __('') }}</td>
                                         <td>{{ $employee->item->deployment->station->office->name ?? __('') }}</td>
+                                        <td>{{ $employee->hiredate ?? __('') }}</td>
+                                        <td>{{ $employee->lastapptdate ?? __('') }}</td>
+                                        <td>{{ $employee->person->sex ?? __('') }}</td>
+                                        <td>{{ $employee->person->dob ?? __('') }}</td>
+                                        <td>{{ $employee->person->civilstatus ?? __('') }}</td>
                                     </tr>
                                     @endforeach
                                 @else

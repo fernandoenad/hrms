@@ -19,7 +19,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-9">
-        <div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>

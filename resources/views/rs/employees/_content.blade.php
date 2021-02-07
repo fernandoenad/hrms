@@ -97,6 +97,27 @@
         </table>
         <br><br>
 
+        <h4>Address Information</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th width="25%">Type</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{{ __('Current') }}</th>
+                    <td>{{ $person->address->current }} ({{ $person->address->currentzip }})</td>
+                </tr>
+                <tr>
+                    <th>{{ __('Permanent') }}</th>
+                    <td>{{ $person->address->permanent }} ({{ $person->address->permanentzip }})</td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+
         <h4>Account Information</h4>
         <table class="table table-hover">
             <thead>

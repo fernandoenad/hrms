@@ -48,6 +48,25 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="level" class="col-md-3 col-form-label text-md-right">{{ __('Level') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="level" type="text" class="form-control @error('level') is-invalid @enderror" name="level" value="{{ old('level') }}" autocomplete="level">
+                                    <option value="">Select</option>
+                                    @foreach($itemlevels as $itemlevel)
+                                        <option value="{{ $itemlevel->details }}" @if(old('level') == $itemlevel->details || $itemlevel->details == $item->level) {{ 'selected' }} @endif>{{ $itemlevel->details }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('level')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="creationdate" class="col-md-3 col-form-label text-md-right">{{ __('Creation Date') }}</label>
 
                             <div class="col-md-8">

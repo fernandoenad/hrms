@@ -120,6 +120,25 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="civilstatus" class="col-md-3 col-form-label text-md-right">{{ __('Civil Status') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="civilstatus" type="text" class="form-control @error('civilstatus') is-invalid @enderror" name="civilstatus" value="{{ old('civilstatus') }}" autocomplete="civilstatus">
+                                <option value="">Select</option>
+                                    @foreach($civilstatuses as $civilstatus)
+                                        <option value="{{ $civilstatus->details }}" @if (old('civilstatus') == $civilstatus->details) {{ 'selected' }} @endif>{{ $civilstatus->details }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('civilstatus')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="primaryno" class="col-md-3 col-form-label text-md-right">{{ __('Primary Contact #') }}</label>
 
                             <div class="col-md-8">

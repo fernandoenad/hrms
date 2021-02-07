@@ -16,6 +16,7 @@ class CreateStationsTable extends Migration
         Schema::create('stations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
+            $table->string('fiscalcategory');
             $table->string('code')->unique();
             $table->string('name');
             $table->string('services');

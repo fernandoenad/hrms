@@ -124,6 +124,25 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="civilstatus" class="col-md-3 col-form-label text-md-right">{{ __('Civil Status') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="civilstatus" type="text" class="form-control @error('civilstatus') is-invalid @enderror" name="civilstatus" value="{{ old('civilstatus') }}" autocomplete="civilstatus">
+                                <option value="">Select</option>
+                                    @foreach($civilstatuses as $civilstatus)
+                                        <option value="{{ $civilstatus->details }}" @if (old('civilstatus') == $civilstatus->details || $person->civilstatus == $civilstatus->details) {{ 'selected' }} @endif>{{ $civilstatus->details }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('civilstatus')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="dob" class="col-md-3 col-form-label text-md-right">{{ __('Image') }}</label>
 
                             <div class="col-md-8">
@@ -161,6 +180,75 @@
                                 <input id="secondaryno" type="text" class="form-control @error('secondaryno') is-invalid @enderror" name="secondaryno" value="{{ old('secondaryno') ?? $person->contact->secondaryno }}" autocomplete="secondaryno">
                                 <small><em>{{ __('09xxxxxxxxx') }}</em></small>
                                 @error('secondaryno')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h5>Address Information</h5>
+                        <div class="form-group row">
+                            <label for="current" class="col-md-3 col-form-label text-md-right">{{ __('Current Addr') }}</label>
+
+                            <div class="col-md-8">
+                                <input list="currents" id="current" type="text" class="form-control @error('current') is-invalid @enderror" name="current" value="{{ old('current') ?? $person->address->current }}" autocomplete="current">
+                                <datalist id="currents">
+                                    @foreach($currents as $current)
+                                        <option value="{{ $current->current ?? '' }}">
+                                    @endforeach
+                                </datalist>
+                                <small><em>{{ __('Barangay, Town, Province') }}</em></small>
+
+                                @error('current')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="currentzip" class="col-md-3 col-form-label text-md-right">{{ __('Curr Addr Zip') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="currentzip" type="text" class="form-control @error('currentzip') is-invalid @enderror" name="currentzip" value="{{ old('currentzip') ?? $person->address->currentzip }}" autocomplete="currentzip">
+
+                                @error('currentzip')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="permanent" class="col-md-3 col-form-label text-md-right">{{ __('Perm Addr') }}</label>
+
+                            <div class="col-md-8">
+                                <input list="permanents" id="permanent" type="text" class="form-control @error('permanent') is-invalid @enderror" name="permanent" value="{{ old('permanent') ?? $person->address->permanent }}" autocomplete="permanent">
+                                <datalist id="permanents">
+                                    @foreach($permanents as $permanent)
+                                        <option value="{{ $permanent->permanent ?? '' }}">
+                                    @endforeach
+                                </datalist>
+                                <small><em>{{ __('Barangay, Town, Province') }}</em></small>
+
+                                @error('permanent')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="permanentzip" class="col-md-3 col-form-label text-md-right">{{ __('Perm Addr Zip') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="permanentzip" type="text" class="form-control @error('permanentzip') is-invalid @enderror" name="permanentzip" value="{{ old('permanentzip') ?? $person->address->permanentzip }}" autocomplete="permanentzip">
+
+                                @error('permanentzip')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

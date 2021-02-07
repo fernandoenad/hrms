@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddressesTable extends Migration
+class CreateAccountRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('account_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('current')->nullable();
-            $table->unsignedBigInteger('currentzip')->nullable();
-            $table->string('permanent')->nullable();
-            $table->unsignedBigInteger('permanentzip')->nullable();
+            $table->string('action');
+            $table->string('remarks');
+            $table->unsignedBigInteger('status');
             $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+
             $table->timestamps();
 
             $table->index('person_id');
+            $table->index('user_id');
+
         });
     }
 
@@ -33,6 +36,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('account_requests');
     }
 }

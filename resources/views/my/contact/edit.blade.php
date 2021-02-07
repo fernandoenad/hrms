@@ -96,8 +96,12 @@
                             <label for="emergencyaddress" class="col-md-3 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-8">
-                                
-                                <input id="emergencyaddress" type="text" class="form-control @error('emergencyaddress') is-invalid @enderror" name="emergencyaddress" value="{{ old('emergencyaddress') ?? $person->contact->emergencyaddress }}" autocomplete="emergencyaddress">
+                                <input list="emergencyaddresses" id="emergencyaddress" type="text" class="form-control @error('emergencyaddress') is-invalid @enderror" name="emergencyaddress" value="{{ old('emergencyaddress') ?? $person->contact->emergencyaddress }}" autocomplete="emergencyaddress">
+                                <datalist id="emergencyaddresses">
+                                    @foreach($emergencyaddresses as $emergencyaddress)
+                                        <option value="{{ $emergencyaddress->emergencyaddress ?? '' }}">
+                                    @endforeach
+                                </datalist>
                                 <small><em>{{ __('Barangay, Town, Province') }}</em></small>
 
                                 @error('emergencyaddress')

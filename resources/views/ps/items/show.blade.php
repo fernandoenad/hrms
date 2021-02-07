@@ -41,6 +41,10 @@
                                 <td>{{ $item->itemno }}</td>
                             </tr>
                             <tr>
+                                <th>Level</th>
+                                <td>{{ $item->level }}</td>
+                            </tr>
+                            <tr>
                                 <th>Creation Date</th>
                                 <td>{{ $item->creationdate }}</td>
                             </tr>

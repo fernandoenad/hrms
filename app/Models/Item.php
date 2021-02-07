@@ -17,6 +17,7 @@ class Item extends Model
      */
     protected $fillable = [
         'itemno',
+        'level',
         'creationdate',
         'position',
         'salarygrade',

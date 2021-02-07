@@ -9,7 +9,8 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active"><a href="{{ route('my') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('rms') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('my') }}">My Profile</a></li>
                     <li class="breadcrumb-item active">My Profile</li>
                 </ol>
             </div>
@@ -116,12 +117,45 @@
                                 </table>
                                 <br>
 
+                                <h4>Address Information</h4>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="25%">Type</th>
+                                            <th>
+                                                Details
+                                                <a href="{{ route('my.address.edit') }}" class="btn btn-primary btn-sm float-right">
+                                                    <span class="fas fa-file-signature"></span>
+                                                    {{ __('Modify') }}
+                                                </a>                                            
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>{{ __('Current') }}</th>
+                                            <td>{{ $person->address->current }} ({{ $person->address->currentzip }})</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ __('Permanent') }}</th>
+                                            <td>{{ $person->address->permanent }} ({{ $person->address->permanentzip }})</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+
                                 <h4>Emergency Contact Information</h4>
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th width="25%">Field</th>
-                                            <th>Details</th>
+                                            <th>
+                                                Details
+                                                <a href="{{ route('my.contact.edit') }}" class="btn btn-primary btn-sm float-right">
+                                                    <span class="fas fa-file-signature"></span>
+                                                    {{ __('Modify') }}
+                                                </a>    
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>

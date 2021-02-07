@@ -15,7 +15,11 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('my') }}">User Profile</a>
+                    @if(isset(Auth::user()->person->employee))
+                        <a class="nav-link" href="{{ route('my') }}">My</a>
+                    @else
+                        <a class="nav-link" href="{{ route('rms') }}">RMS</a>
+                    @endif
                 </li>
             </ul>
 
@@ -61,33 +65,68 @@
                 <div class="pt-1"></div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item menu-open">
+                        <li class="nav-item 
+                            @if(Route::currentRouteName() == 'rms' ||
+                            Route::currentRouteName() == 'rms.show')
+                                {{ 'menu-open' }} @endif">
+                            <a href="{{ route('rms') }}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li> 
+                        <li class="nav-item
+                            @if(Route::currentRouteName() == 'my' ||
+                            Route::currentRouteName() == 'my.tools.password-edit' ||
+                            Route::currentRouteName() == 'my.tools.password-update' ||
+                            Route::currentRouteName() == 'my.tools.email-edit' ||
+                            Route::currentRouteName() == 'my.tools.email-update' ||
+                            Route::currentRouteName() == 'my.tools' ||
+                            Route::currentRouteName() == 'my.contact.edit' ||
+                            Route::currentRouteName() == 'my.contact.update' ||
+                            Route::currentRouteName() == 'my.address.edit' ||
+                            Route::currentRouteName() == 'my.address.update')
+                                {{ 'menu-open' }} @endif">
                             <a href="{{ route('my') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>My Profile</p>
                             </a>
                         </li> 
+
+                        @if(!isset(Auth::user()->person->employee))
+                            <li class="nav-item 
+                                @if(Route::currentRouteName() == 'rms.application' ||
+                                    Route::currentRouteName() == 'rms.application.create' ||
+                                    Route::currentRouteName() == 'rms.application.show')
+                                    {{ 'menu-open' }} @endif">
+                                <a href="{{ route('rms.application') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-paper-plane"></i>
+                                    <p>My Applications</p>
+                                </a>
+                            </li> 
+                        @endif
                         
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>Training Records</p>
-                            </a>
-                        </li> 
+                        @if(isset(Auth::user()->person->employee))
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-graduation-cap"></i>
+                                    <p>Training Records</p>
+                                </a>
+                            </li> 
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-file-signature"></i>
-                                <p>Leave Application</p>
-                            </a>
-                        </li> 
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-file-signature"></i>
+                                    <p>Leave Application</p>
+                                </a>
+                            </li> 
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-shopping-cart"></i>
-                                <p>Requests</p>
-                            </a>
-                        </li> 
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-shopping-cart"></i>
+                                    <p>Requests</p>
+                                </a>
+                            </li> 
+                        @endif
                     </ul>
                 </nav>
             </div>
