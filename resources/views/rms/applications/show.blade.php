@@ -72,7 +72,7 @@
                                     It is important that you print this application number: 
                                     <strong>{{ $application->code ?? '' }}</strong>
                                     to the folders you will be submitting to the 
-                                    school/station applied for. 
+                                    school/station/office applied for. 
                                 </div>
                                 <br>
                                 <div class="card">
