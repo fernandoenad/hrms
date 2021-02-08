@@ -77,7 +77,7 @@
                                 <br>
                                 <div class="card">
                                     <div class="card-header">
-                                        Application Status
+                                        Application Checklist
                                     </div>
                                     <div class="card-body p-0">
                                         <ul class="todo-list" data-widget="todo-list">
