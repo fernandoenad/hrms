@@ -20,6 +20,7 @@ class RMSController extends Controller
         $page = 'dashboard';
         $vacancies = Vacancy::where('status', '=', 1)
             ->orderBy('salarygrade', 'desc')
+            ->orderBy('name', 'asc')
             ->get();
 
         if (Auth::check()) {
