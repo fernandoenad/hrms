@@ -93,17 +93,15 @@
                             </a>
                         </li> 
 
-                        @if(!isset(Auth::user()->person->employee))
-                            <li class="nav-item 
-                                @if(Route::currentRouteName() == 'rms.application' ||
-                                    Route::currentRouteName() == 'rms.application.show')
-                                    {{ 'menu-open' }} @endif">
-                                <a href="{{ route('rms.application') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-paper-plane"></i>
-                                    <p>My Applications</p>
-                                </a>
-                            </li> 
-                        @endif
+                        <li class="nav-item 
+                            @if(Route::currentRouteName() == 'rms.application' ||
+                                Route::currentRouteName() == 'rms.application.show')
+                                {{ 'menu-open' }} @endif">
+                            <a href="{{ route('rms.application') }}" class="nav-link">
+                                <i class="nav-icon fas fa-paper-plane"></i>
+                                <p>My Applications</p>
+                            </a>
+                        </li> 
                         
                         @if(isset(Auth::user()->person->employee))
                             <li class="nav-item">
