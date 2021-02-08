@@ -46,9 +46,9 @@
                             <div class="col-7">
                                 <h2 class="lead"><b>{{ $application->person->getFullnameBox() ?? ''}}</b></h2>
                                 <p class="text-muted text-sm">
-                                    <b>Specialization: </b> {{ $application->major ?? ''}} 
+                                    <b>Position: </b> {{ $application->vacancy->name ?? ''}} 
                                     <br>
-                                    <b>Level: </b> {{ $application->level ?? ''}} 
+                                    <b>Curricular / CS Level: </b> {{ $application->vacancy->curricularlevel ?? ''}} 
                                     <br>
                                     <b>Application Type: </b> {{ $application->type ?? '' }} 
                                     <br>
@@ -57,17 +57,86 @@
                                             {{ $application->getStatus($application->status) ?? '' }} 
                                         </span>
                                 </p>
+                                
                                 <ul class="ml-4 mb-0 fa-ul text-muted">
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-school"></i></span> School applied for: {{ $application->station->code ?? '' }}- {{ $application->station->name ?? '' }}</li>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> School head: {{ (isset($application->station->person) ? $application->station->person->getFullnameBox() : '') ?? '' }}</li>
+                                    @if($application->vacancy->vacancylevel < 3)
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-school"></i></span> School applied for: {{ $application->station->code ?? '' }}- {{ $application->station->name ?? '' }}</li>
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> School head: {{ (isset($application->station->person) ? $application->station->person->getFullnameBox() : '') ?? '' }}</li>
+                                    @else
+                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-paperclip"></i></span> Pertinent Document (Softcopy): <a href="{{ asset('storage/' . $application->pertdoc_soft) }}" target="_blank">{{ $application->pertdoc_soft ?? '' }}</a></li>
+                                    @endif
                                 </ul>
                             </div>
-                            <div class="col-5 text-center">
+                            <div class="col-5">
                                 <div class="card-body bg-info">
                                     It is important that you print this application number: 
                                     <strong>{{ $application->code ?? '' }}</strong>
                                     to the folders you will be submitting to the 
                                     school/station applied for. 
+                                </div>
+                                <br>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Application Status
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <ul class="todo-list" data-widget="todo-list">
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" checked disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Basic Information</span>
+                                                <div class="tools">
+                                                    <a href="#"><i class="fas fa-edit"></i></a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Educational Background</span>
+                                                <div class="tools">
+                                                    <a href="#"><i class="fas fa-edit"></i></a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Employment Record</span>
+                                                <div class="tools">
+                                                    <a href="#"><i class="fas fa-edit"></i></a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Training History</span>
+                                                <div class="tools">
+                                                    <a href="#"><i class="fas fa-edit"></i></a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" @if($application->pertdoc_soft != '-') {{ 'checked'}} @endif disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Pertinent Docs (Softcopy)</span>
+                                            </li>
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Pertinent Docs (Hardcopy)</span>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

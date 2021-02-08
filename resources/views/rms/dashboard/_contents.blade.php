@@ -39,7 +39,7 @@
                                     an account as the account verification link
                                     will be sent to you to confirm the creation of 
                                     your account. Use and input the correct email.</li>
-                                <li>Once your account is already confirmed, head token_get_all
+                                <li>Once your account is already confirmed, head 
                                     to the My Applications link found on the left side-bar
                                     and click the Apply button.</li>
                                 <li>It is important that you take note of the auto-generated
@@ -61,15 +61,54 @@
 @elseif($page == 'vacancies')
 <div class="card">
     <div class="card-body">
-        <h2>Vacancies</h2>
-        <p>Content in progress. This page will be updated soon.</p>
+        <div class="alert alert-info">Click the position name to collapse its details and click the Apply button 
+            if interested to apply for the said position. To successfully apply though, you 
+            need to have a confirmed account. Click the register option on the navigator bar 
+            to create an account.</div>
+        <div id="accordion">
+            @if(sizeof($vacancies) > 0)
+                @foreach($vacancies as $vacancy)
+                    <div class="card">
+                        <div class="card-header">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ $vacancy->id ?? ''}}">
+                                {{ $vacancy->name ?? ''}}
+                            </a>
+                        </div>
+                        <div id="collapse-{{ $vacancy->id ?? ''}}" class="panel-collapse collapse in">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Position (SG)</strong>
+                                        <p>{{ $vacancy->name ?? '' }}</p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <strong>Qualifications</strong>
+                                        <p>{!! $vacancy->qualifications ?? '' !!}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Vacancy</strong>
+                                        <p>{{ $vacancy->vacancy ?? '' }} slot(s)</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="{{ route('rms.application.apply', $vacancy->id) }}" class="btn btn-success btn-lg">Apply</a>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="alert alert-danger">
+                    No vacancy found.
+                </div>
+            @endif
+        </div>
     </div>
 </div>
 
 @elseif($page == 'faqs')
 <div class="card">
     <div class="card-body">
-        <h2>FAQs</h2>
         <p>Content in progress. This page will be updated soon.</p>
     </div>
 </div> 
@@ -77,7 +116,6 @@
 @elseif($page == 'about')
 <div class="card">
     <div class="card-body">
-        <h2>About SDO Bohol HRMS-RMS</h2>
         <p>
             “RMS” stands for Recruitment Management System. 
             A Recruitment Management System (RMS) automates 
@@ -104,7 +142,6 @@
 @else
 <div class="card">
     <div class="card-body">
-        <h2>Page not found</h2>
         <p>
             We could not find the page you were looking for.<br>
             Meanwhile, you may <a href="{{ route('rms') }} ">return to dashboard</a>

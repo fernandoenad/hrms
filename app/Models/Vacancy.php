@@ -5,17 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Term extends Model
+class Vacancy extends Model
 {
     use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'year',
+        'name',
+        'salarygrade',
+        'vacancylevel',
+        'curricularlevel',
+        'qualifications',
+        'vacancy',
         'status',
     ];
 
@@ -32,4 +36,9 @@ class Term extends Model
      * @var array
      */
     protected $casts = [];
+
+    public function application()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

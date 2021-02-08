@@ -85,7 +85,7 @@ Route::get('/my/tools/expired-password', [PasswordSecurityController::class, 'in
 Route::post('/my/tools/reset-password', [PasswordSecurityController::class, 'resetPassword'])->name('auth.reset-password');
 
 Route::middleware(['default.password', 'verified'])->group(function () {
-    Route::get('/rms/create/{term}', [ApplicationController::class, 'create'])->name('rms.application.create');
+    Route::get('/rms/application/{vacancy}/apply', [ApplicationController::class, 'apply'])->name('rms.application.apply');
     Route::get('/rms/application/{application}', [ApplicationController::class, 'show'])->name('rms.application.show');
     Route::delete('/rms/application/{application}', [ApplicationController::class, 'destroy'])->name('rms.application.destroy');
     Route::post('/rms/application', [ApplicationController::class, 'store'])->name('rms.application.store');

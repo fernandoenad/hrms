@@ -16,17 +16,19 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('person_id');
+            $table->unsignedBigInteger('vacancy_id');
             $table->unsignedBigInteger('code');
             $table->unsignedBigInteger('schoolyear');
-            $table->string('position');
-            $table->string('major');
-            $table->string('level');
+            $table->string('pertdoc_soft')->nullable();
+            $table->unsignedBigInteger('pertdoc_hard');
             $table->string('type');
-            $table->unsignedBigInteger('status');
-            $table->unsignedBigInteger('station_id');
+            $table->unsignedBigInteger('status');       
+            $table->string('remarks')->nullable();      
+            $table->unsignedBigInteger('station_id')->nullable();
             $table->timestamps();
 
             $table->index('person_id');
+            $table->index('vacancy_id');
             $table->index('station_id');
         });
     }

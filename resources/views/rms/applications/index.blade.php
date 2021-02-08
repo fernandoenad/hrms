@@ -36,7 +36,7 @@
                     <div class="card-header">
                         Current applications
                         <span class="float-right">
-                            <a href="{{ route('rms.application.create', $curr_term) }}" class="btn btn-success btn-md">Apply</a>
+                            <a href="{{ route('rms.show', 'vacancies') }}">Check Vacancies</a>
                         </span>
                      </div>
                     <div class="card-body p-0">
@@ -47,29 +47,27 @@
                                         <th>Code</th>                                        
                                         <th>Position</th>
                                         <th>Level</th>
-                                        <th>Specialization</th>
                                         <th>Station Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(sizeof($curr_applications) > 0)
-                                        @foreach($curr_applications as $curr_application)
+                                    @if(sizeof($applications) > 0)
+                                        @foreach($applications as $application)
                                             <tr>
                                                 <td>
-                                                    <a href="{{ route('rms.application.show', $curr_application->id) }}">
-                                                        <strong title="Submitted at {{ date('M d, Y', strtotime($curr_application->created_at)) ?? '' }}">
-                                                            {{ $curr_application->code ?? '' }}
+                                                    <a href="{{ route('rms.application.show', $application->id) }}">
+                                                        <strong title="Submitted at {{ date('M d, Y', strtotime($application->created_at)) ?? '' }}">
+                                                            {{ $application->code ?? '' }}
                                                         </strong>
                                                     </a>
                                                 </td>
-                                                <td>{{ $curr_application->position ?? '' }} / {{ $curr_application->type ?? '' }}</td>
-                                                <td>{{ $curr_application->level ?? '' }}</td>
-                                                <td>{{ $curr_application->major ?? '' }}</td>
-                                                <td title="{{ $curr_application->station->name ?? '' }}, {{ $curr_application->station->office->name ?? '' }}">{{ $curr_application->station->code }}</td>
+                                                <td>{{ $application->vacancy->name ?? '' }} / {{ $application->type ?? '' }}</td>
+                                                <td>{{ $application->vacancy->curricularlevel ?? '' }}</td>
+                                                <td title="{{ $application->station->name ?? 'SDO Level' }}, {{ $application->station->office->name ?? 'SDO Level' }}">{{ $application->station->code ?? 'SDO' }}</td>
                                                 <td>
-                                                    <span class="badge badge-{{ $curr_application->getStatusColor($curr_application->status) ?? ''}}">
-                                                        {{ $curr_application->getStatus($curr_application->status) ?? '' }}
+                                                    <span class="badge badge-{{ $application->getStatusColor($application->status) ?? ''}}">
+                                                        {{ $application->getStatus($application->status) ?? '' }}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -85,57 +83,7 @@
                         <span class="float-right"></span>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        Previous applications
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table m-0 table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Code</th>                                        
-                                        <th>Position</th>
-                                        <th>Level</th>
-                                        <th>Specialization</th>
-                                        <th>Station</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if(sizeof($prev_applications) > 0)
-                                        @foreach($prev_applications as $prev_application)
-                                            <tr>
-                                                <td>
-                                                <a href="{{ route('rms.application.show', $prev_application->id) }}">
-                                                        <strong title="Submitted at {{ date('M d, Y', strtotime($prev_application->created_at)) ?? '' }}">
-                                                            {{ $prev_application->code ?? '' }}
-                                                        </strong>
-                                                    </a>
-                                                </td>
-                                                <td>{{ $prev_application->position ?? '' }}  / {{ $curr_application->type ?? '' }}</td>
-                                                <td>{{ $prev_application->level ?? '' }}</td>
-                                                <td>{{ $prev_application->major ?? '' }}</td>
-                                                <td title="{{ $prev_application->station->name ?? '' }}, {{ $prev_application->station->office->name ?? '' }}">{{ $curr_application->station->code }}</td>
-                                                <td>
-                                                    <span class="badge badge-{{ $prev_application->getStatusColor($prev_application->status) ?? ''}}">
-                                                        {{ $prev_application->getStatus($prev_application->status) ?? '' }}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr><td colspan="6">No record found.</td></tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer p-0">
-                    </div>
-                </div>
-            </div>
+            </div>                
 
             <div class="col-md-3">
                 @include('rms.applications._tools')

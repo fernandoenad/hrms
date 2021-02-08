@@ -14,12 +14,13 @@ class Application extends Model
      */
     protected $fillable = [
         'person_id',
+        'vacancy_id',
         'code',
         'schoolyear',
-        'position',
-        'major',
-        'level',
+        'pertdoc_soft',
+        'pertdoc_hard',
         'type',
+        'remarks',
         'status',
         'station_id',
     ];
@@ -46,6 +47,11 @@ class Application extends Model
     public function station()
     {
         return $this->belongsTo(Station::class);
+    }
+
+    public function vacancy()
+    {
+        return $this->belongsTo(Vacancy::class);
     }
 
     public function getStatus($status)

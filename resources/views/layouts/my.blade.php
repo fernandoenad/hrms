@@ -67,7 +67,8 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item 
                             @if(Route::currentRouteName() == 'rms' ||
-                            Route::currentRouteName() == 'rms.show')
+                            Route::currentRouteName() == 'rms.show' ||
+                            Route::currentRouteName() == 'rms.application.apply')
                                 {{ 'menu-open' }} @endif">
                             <a href="{{ route('rms') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -95,7 +96,6 @@
                         @if(!isset(Auth::user()->person->employee))
                             <li class="nav-item 
                                 @if(Route::currentRouteName() == 'rms.application' ||
-                                    Route::currentRouteName() == 'rms.application.create' ||
                                     Route::currentRouteName() == 'rms.application.show')
                                     {{ 'menu-open' }} @endif">
                                 <a href="{{ route('rms.application') }}" class="nav-link">

@@ -5,6 +5,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
+                <h1 class="m-0 text-dark">RMS- {{ ($page == 'faqs' ? 'FAQs' : ucwords($page)) }}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ route('rms') }}">Home</a></li>
+                    <li class="breadcrumb-item active">{{ ($page == 'faqs' ? 'FAQs' : ucwords($page)) }}</li>
+                </ol>
             </div>
         </div>
     </div>
@@ -20,7 +27,6 @@
             @endif
 
             <div class="col-md-9">
-                <h1>SDO Bohol HRMS-RMS</h1>
                 @include('rms.dashboard._contents')
             </div>
 

@@ -33,18 +33,14 @@
                         New Application
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-warning">
-                            Editing application once submitted is not allowed so please make sure everything is accurate.
-                        </div>
-
-                        <form method="POST" action="{{ route('rms.application.store') }}">
+                        <form method="POST" action="{{ route('rms.application.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="schoolyear" class="col-md-3 col-form-label text-md-right">{{ __('School Year') }}</label>
+                            <label for="schoolyear" class="col-md-3 col-form-label text-md-right">{{ __('Cycle') }}</label>
 
                             <div class="col-md-8">
-                                <input readonly id="schoolyear" type="text" class="form-control @error('schoolyear') is-invalid @enderror" name="schoolyear" value="{{ old('schoolyear') ?? $term }}" autocomplete="schoolyear">
+                                <input readonly id="schoolyear" type="text" class="form-control @error('schoolyear') is-invalid @enderror" name="schoolyear" value="{{ old('schoolyear') ?? $cycle }}" autocomplete="schoolyear">
 
                                 @error('schoolyear')
                                     <span class="invalid-feedback" role="alert">
@@ -55,17 +51,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="position" class="col-md-3 col-form-label text-md-right">{{ __('Position') }}</label>
+                            <label for="vacancy_id" class="col-md-3 col-form-label text-md-right">{{ __('Position') }}</label>
 
                             <div class="col-md-8">
-                                <select id="position" type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') }}" autocomplete="position">
-                                    <option value="">Select</option>
-                                    @foreach($positions as $position)
-                                     <option value="{{ $position->details }}" @if(old('position') == $position->details){{ 'selected'}} @endif>{{ $position->details }}</option>
-                                    @endforeach
-                                </select>
+                                <input id="vacancy_id" type="hidden" class="form-control @error('vacancy_id') is-invalid @enderror" name="vacancy_id" value="{{ old('vacancy_id') ?? $vacancy->id }}" autocomplete="vacancy_id">
+                                <input readonly id="vacancy_name" type="text" class="form-control @error('vacancy_name') is-invalid @enderror" name="vacancy_name" value="{{ old('vacancy_name') ?? $vacancy->name }}" autocomplete="vacancy_name">
 
-                                @error('position')
+                                @error('vacancy_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -73,80 +65,85 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="major" class="col-md-3 col-form-label text-md-right">{{ __('Specialization') }}</label>
+                        @if($vacancy->vacancylevel == 3)
+                            <input id="station_id" type="hidden" class="form-control-file @error('station_id') is-invalid @enderror" name="station_id" value="{{ old('station_id') ?? 0 }}" autocomplete="station_id">
+                            <input id="type" type="hidden" class="form-control-file @error('type') is-invalid @enderror" name="type" value="{{ old('type') ?? 'New' }}" autocomplete="type">
+                            <input id="remarks" type="hidden" class="form-control-file @error('remarks') is-invalid @enderror" name="remarks" value="{{ old('remarks') ?? '-' }}" autocomplete="remarks">
 
-                            <div class="col-md-8">
-                                <select id="major" type="text" class="form-control @error('major') is-invalid @enderror" name="major" value="{{ old('major') }}" autocomplete="major">
-                                    <option value="">Select</option>
-                                    @foreach($specializations as $specialization)
-                                    <option value="{{ $specialization->details }}" @if(old('major') == $specialization->details){{ 'selected'}} @endif>{{ $specialization->details }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group row">
+                                <label for="pertdoc_soft" class="col-md-3 col-form-label text-md-right"><small>{{ __('Pertinent Document (Softcopy)') }}</small></label>
 
-                                @error('major')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <div class="col-md-8">
+                                    <input id="pertdoc_soft" type="file" class="form-control-file @error('pertdoc_soft') is-invalid @enderror" name="pertdoc_soft" value="{{ old('pertdoc_soft') }}" autocomplete="pertdoc_soft">
+                                    <small><em>Refer to the memorandum relevant to the job opening for details.</em></small>
+                                    
+                                    @error('pertdoc_soft')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
+                        @endif 
+                        @if($vacancy->vacancylevel < 3)
+                            <input id="pertdoc_soft" type="hidden" class="form-control-file @error('pertdoc_soft') is-invalid @enderror" name="pertdoc_soft" value="{{ old('pertdoc_soft') ?? '-' }}" autocomplete="pertdoc_soft">
 
-                        <div class="form-group row">
-                            <label for="level" class="col-md-3 col-form-label text-md-right">{{ __('Level') }}</label>
+                            <div class="form-group row">
+                                <label for="station_id" class="col-md-3 col-form-label text-md-right">{{ __('School Applied For') }}</label>
 
-                            <div class="col-md-8">
-                                <select id="level" type="text" class="form-control @error('level') is-invalid @enderror" name="level" value="{{ old('level') }}" autocomplete="level">
+                                <div class="col-md-8">
+                                    <select id="station_id" type="text" class="form-control @error('station_id') is-invalid @enderror" name="station_id" value="{{ old('station_id') }}" autocomplete="station_id">
                                     <option value="">Select</option>
-                                    @foreach($itemlevels as $itemlevel)
-                                    <option value="{{ $itemlevel->details }}" @if(old('level') == $itemlevel->details){{ 'selected'}} @endif>{{ $itemlevel->details }}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('level')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                        @foreach($stations as $station)
+                                        <option value="{{ $station->id }}" @if(old('station_id') == $station->id){{ 'selected'}} @endif>{{ $station->code }}- {{ $station->name }}, {{ $station->office->name }} ({{ $station->office->town->name }})</option>
+                                        @endforeach
+                                    </select>
+                                    @error('station_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label for="type" class="col-md-3 col-form-label text-md-right">{{ __('Application Type') }}</label>
+                            <div class="form-group row">
+                                <label for="type" class="col-md-3 col-form-label text-md-right">{{ __('Application Type') }}</label>
+
+                                <div class="col-md-8">
+                                    <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}" autocomplete="type">
+                                    <option value="">Select</option>
+                                        @foreach($applicationtypes as $applicationtype)
+                                        <option value="{{ $applicationtype->details }}" @if(old('type') == $applicationtype->details){{ 'selected'}} @endif>{{ $applicationtype->details }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small><small><em>Update- update on any criterion score; Retain- all previous criterion scores will be carried over.</em></small></small>
+
+                                    @error('level')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="remarks" class="col-md-3 col-form-label text-md-right">{{ __('Remarks') }}</label>
+
+                                <div class="col-md-8">
+                                    <textarea id="remarks" type="text" class="form-control @error('remarks') is-invalid @enderror" name="remarks" 
+                                        value="{{ old('remarks') }}" placeholder="Indicate criterion/criteria you wish to be updated (e.g. Interview, etc)" 
+                                        autocomplete="remarks"></textarea>
+                                    
+                                    @error('remarks')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             
-                            <div class="col-md-8">
-                                <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}" autocomplete="type">
-                                    <option value="">Select</option>
-                                    @foreach($applicationtypes as $applicationtype)
-                                    <option value="{{ $applicationtype->details }}" @if(old('type') == $applicationtype->details){{ 'selected'}} @endif>{{ $applicationtype->details }}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="station_id" class="col-md-3 col-form-label text-md-right">{{ __('Station') }}</label>
-
-                            <div class="col-md-8">
-                                <select id="station_id" type="text" class="form-control @error('station_id') is-invalid @enderror" name="station_id" value="{{ old('station_id') }}" autocomplete="station_id">
-                                 <option value="">Select</option>
-                                    @foreach($stations as $station)
-                                    <option value="{{ $station->id }}" @if(old('station_id') == $station->id){{ 'selected'}} @endif>{{ $station->code }}- {{ $station->name }}, {{ $station->office->name }} ({{ $station->office->town->name }})</option>
-                                    @endforeach
-                                </select>
-                                @error('station_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        @endif
 
                         <div class="form-group row">
                             <div class="col-md-3">
@@ -166,6 +163,7 @@
             </div>
 
             <div class="col-md-3">
+                @include('rms.dashboard._tools')
                 @include('rms.applications._tools')
             </div>
         </div>
