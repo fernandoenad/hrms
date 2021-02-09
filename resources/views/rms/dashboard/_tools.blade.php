@@ -1,4 +1,4 @@
-<div class="card card-default">
+<div class="card card-info">
     <div class="card-header">Navigation</div>
 
     <div class="card-body p-0">

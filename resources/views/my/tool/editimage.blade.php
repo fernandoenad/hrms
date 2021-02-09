@@ -60,8 +60,28 @@
                             <tr>
                                 <th>Image</th>
                                 <td>
-                                    <img src="{{ asset('storage/avatars/' . $person->image) }}" class="img-circle" style="width: 50px"> 
-                                    <a href="{{ route('my.tools.image-edit') }}" title="Click to update image.">Change</a>
+                                    <form method="POST" action="{{ route('my.tools.image-update') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <div class="col-md-8">
+                                            <input id="image" type="file" class="form-control-file  @error('image') is-invalid @enderror" name="image" autocomplete="image">
+
+                                            @error('image')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+
+                                            <br>
+                                            <a href="{{ route('my.tools') }}" class="btn btn-default">
+                                                {{ __('Cancel') }}
+                                            </a>
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Update Image') }}
+                                            </button>
+                                        </div>
+</form>
                                 </td>
                             </tr>
                         </tbody>

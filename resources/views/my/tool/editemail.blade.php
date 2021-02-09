@@ -21,10 +21,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <div class="card card-primary card-outline">
-                @include('my._profile')
-            </div>
+            @include('my._profile')
         </div>
+
         <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
@@ -75,6 +74,13 @@
                             <tr>
                                 <th>Password</th>
                                 <td><a href="{{ route('my.tools.password-edit') }}" title="click to update password">********</a></td>
+                            </tr>
+                            <tr>
+                                <th>Image</th>
+                                <td>
+                                    <img src="{{ asset('storage/avatars/' . $person->image) }}" class="img-circle" style="width: 50px"> 
+                                    <a href="{{ route('my.tools.image-edit') }}" title="Click to update image.">Change</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

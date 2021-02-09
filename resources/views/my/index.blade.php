@@ -21,9 +21,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <div class="card card-primary card-outline">
-                @include('my._profile')
-            </div>
+            @include('my._profile')
         </div>
 
         <div class="col-md-9">

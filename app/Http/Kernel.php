@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'access.dpsu' => \App\Http\Middleware\CheckAccessDPSU::class,
         'access.ictu' => \App\Http\Middleware\CheckAccessICTU::class,
         'default.password' => \App\Http\Middleware\CheckDefaultPassword::class,
+        'record.log' => \App\Http\Middleware\RecordLog::class,
     ];
 }

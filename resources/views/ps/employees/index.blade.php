@@ -71,31 +71,41 @@
                     <div class="card-tools">
                         <div class="btn-group">
                             <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fas fa-th"></i>
+                                <i class="fas fa-filter"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <a href="#" class="dropdown-item">Field selection placeholder</a>
+                            <div class="dropdown-menu dropdown-menu-right pl-3 pr-3" role="menu">
+                                <strong>Field filters</strong><br>
+                                <input type="checkbox" name="item_no" checked="checked"> Item No<br>
+                                <input type="checkbox" name="position"> Position<br>
+                                <input type="checkbox" name="station"> Station<br>
+                                <input type="checkbox" name="district"> District<br>
+                                <input type="checkbox" name="appt_date" checked="checked"> Appt Date<br>
+                                <input type="checkbox" name="last_promo" checked="checked"> Last Promo Date<br>
+                                <input type="checkbox" name="sex"> Sex<br>
+                                <input type="checkbox" name="dob"> DOB<br>
+                                <input type="checkbox" name="civil_stat"> Civil Stat<br>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body p-0">
+                    
                     <div class="table-responsive">
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
                                     <th>Empl No.</th>
-                                    <th>Item No.</th>
                                     <th>Name</th>
-                                    <th>Position</th>
-                                    <th width="20%">Station</th>
-                                    <th width="15%">District</th>
-                                    <th>Appt Date</th>
-                                    <th>Last Promo Date</th>
-                                    <th>Sex</th>
-                                    <th>DOB</th>
-                                    <th>Civil Stat</th>                                    
+                                    <th class="item_no">Item No.</th>                                    
+                                    <th class="position">Position</th>
+                                    <th class="station" width="20%">Station</th>
+                                    <th class="district" width="15%">District</th>
+                                    <th class="appt_date">Appt Date</th>
+                                    <th class="last_promo">Last Promo Date</th>
+                                    <th class="sex">Sex</th>
+                                    <th class="dob">DOB</th>
+                                    <th class="civil_stat">Civil Stat</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,20 +113,20 @@
                                     @foreach($employees as $employee)
                                     <tr>
                                         <td>{{ $employee->empno ?? __('') }}</td>
-                                        <td>{{ $employee->item->itemno ?? __('') }}</td>
-                                        <td>
+                                        <td class="name">
                                             <a href="{{ route('ps.employees.show', $employee->empid) }}">
                                                 {{ $employee->person->getFullnameSorted() ?? __('') }}
                                             </a>
                                         </td>
-                                        <td>{{ $employee->item->position ?? __('') }}</td>
-                                        <td>{{ $employee->item->deployment->station->name ?? __('') }}</td>
-                                        <td>{{ $employee->item->deployment->station->office->name ?? __('') }}</td>
-                                        <td>{{ $employee->hiredate ?? __('') }}</td>
-                                        <td>{{ $employee->lastapptdate ?? __('') }}</td>
-                                        <td>{{ $employee->person->sex ?? __('') }}</td>
-                                        <td>{{ $employee->person->dob ?? __('') }}</td>
-                                        <td>{{ $employee->person->civilstatus ?? __('') }}</td>
+                                        <td class="item_no">{{ $employee->item->itemno ?? __('') }}</td>
+                                        <td class="position">{{ $employee->item->position ?? __('') }}</td>
+                                        <td class="station">{{ $employee->item->deployment->station->name ?? __('') }}</td>
+                                        <td class="district">{{ $employee->item->deployment->station->office->name ?? __('') }}</td>
+                                        <td class="appt_date">{{ $employee->hiredate ?? __('') }}</td>
+                                        <td class="last_promo">{{ $employee->lastapptdate ?? __('') }}</td>
+                                        <td class="sex">{{ $employee->person->sex ?? __('') }}</td>
+                                        <td class="dob">{{ $employee->person->dob ?? __('') }}</td>
+                                        <td class="civil_stat">{{ $employee->person->civilstatus ?? __('') }}</td>
                                     </tr>
                                     @endforeach
                                 @else

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class ToolController extends Controller
 {
@@ -71,6 +72,40 @@ class ToolController extends Controller
 
         Auth::logout();
         return redirect()->route('login')->with('status', 'Password updated, please re-login!'); 
+    }
+
+    public function editImage()
+    {       
+        $user = Auth::user();
+        $person = $user->person; 
+       
+        return view('my.tool.editimage', compact('person'));
+    }
+
+    public function updateImage()
+    {       
+        $data = request()->validate([
+            'image' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
+        ]); 
+
+        $user = Auth::user();
+        $person = $user->person; 
+
+        if($person->image != 'no-avatar.jpg')
+                unlink("storage/avatars/" . $person->image);
+            
+        $imagePath = $data['image']->store('avatars', 'public');
+        
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(300, 300);
+        $image->save();
+
+        $image = explode("/", $imagePath);
+
+        $person->update([
+            'image' => $image[1],
+        ]);
+       
+        return redirect()->route('my.tools')->with('status', 'Image updated!'); 
     }
 
 }

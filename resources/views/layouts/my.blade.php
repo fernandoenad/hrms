@@ -85,7 +85,8 @@
                             Route::currentRouteName() == 'my.contact.edit' ||
                             Route::currentRouteName() == 'my.contact.update' ||
                             Route::currentRouteName() == 'my.address.edit' ||
-                            Route::currentRouteName() == 'my.address.update')
+                            Route::currentRouteName() == 'my.address.update' ||
+                            Route::currentRouteName() == 'my.tools.image-edit')
                                 {{ 'menu-open' }} @endif">
                             <a href="{{ route('my') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>

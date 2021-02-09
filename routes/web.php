@@ -10,6 +10,7 @@ use App\Http\Controllers\My\ContactController;
 use App\Http\Controllers\My\AddressController;
 use App\Http\Controllers\My\MyController;
 use App\Http\Controllers\My\ToolController;
+use App\Http\Controllers\My\EmployeeController as MyEmployeeController; 
 
 use App\Http\Controllers\PS\PSController;
 use App\Http\Controllers\PS\PersonController;
@@ -59,6 +60,8 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+Route::middleware(['record.log'])->group(function () {
+
 Route::get('/', function () {
     return view('home.apps');
 });
@@ -97,8 +100,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
     Route::patch('/my/tools/email', [ToolController::class, 'updateEmail'])->name('my.tools.email-update');
     Route::get('/my/tools', [ToolController::class, 'index'])->name('my.tools');
 
-    Route::get('/my/upload-image', [ToolController::class, 'uploadImage'])->name('my.upload-image');
-    Route::post('/my/upload-image', [ToolController::class, 'storeImage'])->name('my.upload-image.store');
+    Route::patch('/my/tools/image', [ToolController::class, 'updateImage'])->name('my.tools.image-update');
+    Route::get('/my/tools/image-edit', [ToolController::class, 'editImage'])->name('my.tools.image-edit');
 
     Route::get('my/contact/edit', [ContactController::class, 'edit'])->name('my.contact.edit');
     Route::patch('my/contact/update', [ContactController::class, 'update'])->name('my.contact.update');
@@ -363,3 +366,5 @@ Route::post('/help/request', [HomeController::class, 'track'])->name('help.track
 Route::any('/help/search', [HomeController::class, 'search'])->name('help.search');
 
 Route::get('/help', [HomeController::class, 'help'])->name('help');
+
+});

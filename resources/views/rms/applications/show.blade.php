@@ -70,11 +70,18 @@
                             </div>
                             
                             <div class="col-md-5">
-                                <div class="card-body bg-info">
-                                    It is important that you print this application number: 
-                                    <strong>{{ $application->code ?? '' }}</strong>
-                                    to the folders you will be submitting to the 
-                                    school/station/office applied for. 
+                                <div class="card-body bg-info text-center">
+                                    @if($application->vacancy->vacancylevel == 3)
+                                        It is important that you take note of this application number: 
+                                        <strong>{{ $application->code ?? '' }}</strong>.
+                                        Use this as your reference number for any inquiry or
+                                        follow-up related to this application. 
+                                    @else
+                                        It is important that you print this application number: 
+                                        <strong>{{ $application->code ?? '' }}</strong>
+                                        to the folders you will be submitting to the 
+                                        school/station applied for. 
+                                    @endif
                                 </div>
                                 <br>
                                 <div class="card">
@@ -95,13 +102,10 @@
                                                     <input type="checkbox" value="" name="todo6" id="todoCheck6" @if($application->person->image != 'no-avatar.jpg') {{ 'checked'}} @endif disabled>
                                                     <label for="todoCheck6"></label>
                                                 </div>
-                                                <span class="text">Uploaded 2x2 Photo ID</span>
-                                                @if($application->person->image == 'no-avatar.jpg')  
-                                                    <div class="tools">
-                                                        <a href=""><i class="fas fa-edit"></i></a>
-                                                    </div>
-                                                @else
-                                                @endif
+                                                <span class="text">Uploaded 2x2 ID Photo</span>
+                                                <div class="tools">
+                                                    <a href="{{ route('my.tools.image-edit') }}"><i class="fas fa-edit"></i></a>
+                                                </div>
                                             </li>
 
                                             @if($application->vacancy->vacancylevel == 3)
@@ -118,6 +122,7 @@
                                                 </li>
                                                 -->
                                                 @if(isset($application->person->employee))
+                                                    <!--
                                                     <li>
                                                         <div  class="icheck-primary d-inline ml-2">
                                                             <input type="checkbox" value="" name="todo6" id="todoCheck6" @if(isset($application->person->employee)) {{ 'checked'}} @endif disabled>
@@ -125,7 +130,9 @@
                                                         </div>
                                                         <span class="text">Employment Record</span>
                                                     </li>
+                                                    -->
                                                 @else
+                                                     <!--
                                                     <li>
                                                         <div  class="icheck-primary d-inline ml-2">
                                                             <input type="checkbox" value="" name="todo6" id="todoCheck6" @if(isset($application->person->employee)) {{ 'checked'}} @endif disabled>
@@ -136,6 +143,7 @@
                                                             <a href="#"><i class="fas fa-plus-square"></i></a>
                                                         </div>
                                                     </li>
+                                                    -->
                                                 @endif
                                                 <!--
                                                 <li>
@@ -157,13 +165,16 @@
                                                     <span class="text">Pertinent Docs (Softcopy)</span>
                                                 </li>
                                             @endif
-                                            <li>
-                                                <div  class="icheck-primary d-inline ml-2">
-                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
-                                                    <label for="todoCheck6"></label>
-                                                </div>
-                                                <span class="text">Pertinent Docs (Hardcopy)</span>
-                                            </li>
+
+                                            @if($application->vacancy->vacancylevel < 3)
+                                                <li>
+                                                    <div  class="icheck-primary d-inline ml-2">
+                                                        <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
+                                                        <label for="todoCheck6"></label>
+                                                    </div>
+                                                    <span class="text">Pertinent Docs (Hardcopy)</span>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -184,6 +195,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             <div class="col-md-3">
