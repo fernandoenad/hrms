@@ -26,7 +26,9 @@ class ApplicationController extends Controller
     
     public function index()
     {
-        $applications = Application::orderBy('schoolyear', 'desc')->get();
+        $person = Auth::user()->person;
+        $applications = Application::where('person_id', '=', $person->id)
+            ->orderBy('schoolyear', 'desc')->get();
 
         return view('rms.applications.index', compact('applications'));
     }
@@ -43,9 +45,10 @@ class ApplicationController extends Controller
             ->get();
 
         if(sizeof($checkdupeapp) > 0)
-            return redirect('rms/p/vacancies')->with('error', 'You cannot apply two positions on the same curricular level. Go to My Applications and withdraw your current application to proceed.');
-        
-        
+            return redirect('rms/p/vacancies')->with('error', 'You cannot apply two positions on the same level. Go to My Applications and withdraw your current application to proceed.');
+        if($vacancy->status == 0)
+            abort(404, 'Page not found.');
+                
         $stations = Station::orderBy('name', 'asc')->select('id', 'name', 'code', 'office_id')->get();
         $applicationtypes = Dropdown::where('type', '=', 'applicationtype')->get();
 

@@ -22,9 +22,18 @@
                                 {{ __('A fresh verification link has been sent to your email address.') }}
                             </div>
                         @endif
-                        @if (session('status'))
+
+                        @if (session('request'))
                             <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+                                {{ session('request') }}
+                                Click <strong><a href="{{ route('help.track-request', session('request_id')) }}" 
+                                    class="text-primary" onclick="event.preventDefault(); 
+                                        document.getElementById('track-request').submit();">here</a></strong> 
+                                    to check the status of your request.
+                                    <form id="track-request" action="{{ route('help.track-request') }}" method="POST" class="d-none">
+                                        @csrf
+                                        <input name="id" type="hidden" name="id" value="{{ session('request_id') }}">
+                                    </form>
                             </div>
                         @endif
 
@@ -42,14 +51,7 @@
                             <a data-toggle="collapse" href="#sendRequest" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 {{ __('here') }}</a>.
                         </p>
-                        <p>
-                            {{ __('Click ') }}
-                            <a data-toggle="collapse" href="#statusRequest" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                {{ __('here') }}</a>
-                            {{ __(' to check on the status of your requests.') }}
-
-                        </p>
-                        <div class="collapse" id="sendRequest">
+                        <div class="collapse @error('remarks') {{ 'show' }} @enderror" id="sendRequest">
                             <div class="card card-body">
                                 <h5>Submit request</h5>
                                 <form method="POST" action="{{ route('rms.account.request') }}">
@@ -96,46 +98,6 @@
                                 </form>
                             </div>
                         </div>
-
-                        <div class="collapse" id="statusRequest">
-                            <div class="card card-body">
-                                <h5>Recent email correction requests</h5>
-                                <div class="table-responsive">
-                                    <table class="table m-0 table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Timestamp</th>
-                                                <th>Request</th>
-                                                <th>Remarks</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $accountrequests = App\Models\AccountRequest::join('people', 'account_requests.person_id', '=', 'people.id')
-                                                ->where('account_requests.person_id', '=', Auth()->user()->person_id)
-                                                ->where('account_requests.action', '=', 'Email Correction')
-                                                ->get(); ?>
-                                            @if(sizeof($accountrequests)> 0)
-                                                @foreach($accountrequests as $accountrequest)
-                                                    <tr>
-                                                        <td>{{ date('M d, Y h:ia', strtotime($accountrequest->created_at) ?? '') }}</td>
-                                                        <td>{{ $accountrequest->action ?? '' }}</td>
-                                                        <td>{{ $accountrequest->remarks ?? '' }}</td>
-                                                        <td>
-                                                            <span class="badge badge-{{  $accountrequest->getStatusColor($accountrequest->status) ?? ''}}">
-                                                                {{ $accountrequest->getStatuS($accountrequest->status) ?? '' }}
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                            <tr><td colspan="4">No record found.</td></tr>
-                                            @endif
-                                        </tbody>
-                                    </table> 
-                                </div>
-                            </div>
-                        </div<
                     </div>
                 </div>
             </div>

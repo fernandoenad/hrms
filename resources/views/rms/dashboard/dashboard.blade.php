@@ -19,13 +19,15 @@
 
 <div class="content">
     <div class="container-fluid">
-    @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
         <div class="row">
             <div class="col-md-9">
+                <div class="col-md-12 p-0">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                </div>
                 @include('rms.dashboard._contents')
             </div>
 

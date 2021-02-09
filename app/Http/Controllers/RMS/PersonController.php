@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\Person;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\AccountRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,7 @@ class PersonController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             ],
             [
-            'firstname.unique' => 'Duplicate record alert! Reach out to ICTU for account lookup.',
+            'firstname.unique' => 'Duplicate record alert! Try logging in by following instructions above.',
         ]);
 
        
@@ -92,16 +93,39 @@ class PersonController extends Controller
 
     public function request()
     {
-        $data = request()->validate([
-            'remarks' => ['required', 'email']
-        ]);
+        if(isset(Auth::user()->person)){
+            $person = Auth::user()->person;
+            $data = request()->validate([
+                'action' => ['string'],
+                'remarks' => ['required', 'email']
+            ],[
+                'remarks.required' => 'The email field is required.',
+                'remarks.email' => 'The email field is invalid.'
+            ]);
+    
+            $accountrequest = $person->accountrequest()->create(array_merge($data, [
+                'status' => 1,
+            ]));
+            return redirect()->route('verification.notice')->with('request', 'Request sent. Your reference # is ' . $accountrequest->id)->with('request_id', $accountrequest->id); 
+        }
+        else {
+            $data = request()->validate([
+                'action' => ['string'],
+                'remarks1' => ['required', 'string', 'min:3', 'max:255'],
+                'remarks2' => ['required', 'email'],
+            ],[
+                'remarks1.required' => 'The name field is required.',
+                'remarks2.required' => 'The email field is required.',
+                'remarks2.email' => 'The email field is invalid.'
+            ]);
+    
+            $accountrequest = AccountRequest::create(array_merge($data, [
+                'remarks' => $data['remarks1'] . ' / ' . $data['remarks2'],
+                'person_id' => 0,
+                'status' => 1,
+            ]));
+            return redirect()->route('password.request')->with('request', 'Request sent. Your reference # is ' . $accountrequest->id)->with('request_id', $accountrequest->id); 
 
-        $person = Auth::user()->person;
-        $person->accountrequest()->create(array_merge($data, [
-            'status' => 1,
-            'action' => 'Email Correction',
-        ]));
-
-        return redirect()->route('verification.notice')->with('status', 'Request sent.'); 
+        }
     }
 }

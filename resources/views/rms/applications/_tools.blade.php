@@ -1,3 +1,4 @@
+@include('rms.dashboard._tools')
 <div class="card card-info">
     <div class="card-header">My Applications</div>
 

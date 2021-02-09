@@ -23,6 +23,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('rms.account.register') }}">Register</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('help') }}">Help</a>
+                    </li>
                 @else
                     @include('layouts.sections.userpanel')
                 @endguest

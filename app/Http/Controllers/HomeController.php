@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AccountRequest;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth'); 
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -18,6 +14,28 @@ class HomeController extends Controller
      */
     public function help()
     {
+        return view('home.help');
+    }
+
+    public function track()
+    {
+        $accountrequest = AccountRequest::find(request()->id);
+
+        if(!isset($accountrequest->id))
+            return redirect()->route('help.track-requests')->with('status', 'Request Not Found');
+
+        return view('home.requests.show', compact('accountrequest'));
+    }
+
+    public function lookup()
+    {
+      
+        return view('home.requests.lookup');
+    }
+
+    public function search()
+    {
+      
         return view('home.help');
     }
 

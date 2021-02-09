@@ -97,6 +97,9 @@ Route::middleware(['default.password', 'verified'])->group(function () {
     Route::patch('/my/tools/email', [ToolController::class, 'updateEmail'])->name('my.tools.email-update');
     Route::get('/my/tools', [ToolController::class, 'index'])->name('my.tools');
 
+    Route::get('/my/upload-image', [ToolController::class, 'uploadImage'])->name('my.upload-image');
+    Route::post('/my/upload-image', [ToolController::class, 'storeImage'])->name('my.upload-image.store');
+
     Route::get('my/contact/edit', [ContactController::class, 'edit'])->name('my.contact.edit');
     Route::patch('my/contact/update', [ContactController::class, 'update'])->name('my.contact.update');
 
@@ -353,5 +356,10 @@ Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.a
 
 Route::get('/rms/p/{page}', [RMSController::class, 'show'])->name('rms.show');
 Route::get('/rms', [RMSController::class, 'index'])->name('rms');
+
+Route::get('/help/request', [HomeController::class, 'lookup'])->name('help.track-requests');
+Route::post('/help/request', [HomeController::class, 'track'])->name('help.track-request');
+
+Route::any('/help/search', [HomeController::class, 'search'])->name('help.search');
 
 Route::get('/help', [HomeController::class, 'help'])->name('help');

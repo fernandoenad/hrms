@@ -31,6 +31,18 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
+                                <div class="alert alert-warning">
+                                    Current employees of SDO Bohol may have had accounts already. 
+                                    Please try <a href="{{ route('login') }}" class="text-info">logging in instead</a> 
+                                    using your DepEd Email username (without the @deped.gov.ph) and 
+                                    use the default password "password" (without quote).
+                                </div>
+
+                                <div class="alert alert-danger">
+                                    Please verify information being filled out. Further modications, once 
+                                    submitted will no longer be allowed.
+                                </div>
+
                                 <form method="POST" action="{{ route('rms.account.store') }}">
                                     @csrf
 

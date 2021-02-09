@@ -12,7 +12,7 @@
                 <a href="{{ route('rms.show', 'vacancies') }}" class="nav-link">
                     <i class="fas fa-vote-yea"></i> Vacancies
                     <span class="badge badge-danger float-right">
-                        <?php $vacancies = app\Models\Vacancy::where('status', '=', 1)
+                        <?php $vacancies = App\Models\Vacancy::where('status', '=', 1)
                             ->orderBy('salarygrade', 'desc')
                             ->get(); ?>
                         {{ $vacancies->count() }} Open</span>

@@ -44,7 +44,7 @@
                             <table class="table m-0 table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Code</th>                                        
+                                        <th>Cycle / Code</th>                                        
                                         <th>Position</th>
                                         <th>Level</th>
                                         <th>Station Code</th>
@@ -56,11 +56,13 @@
                                         @foreach($applications as $application)
                                             <tr>
                                                 <td>
+                                                    {{ $application->schoolyear ?? '' }} /
                                                     <a href="{{ route('rms.application.show', $application->id) }}">
                                                         <strong title="Submitted at {{ date('M d, Y', strtotime($application->created_at)) ?? '' }}">
                                                             {{ $application->code ?? '' }}
-                                                        </strong>
+                                                        </strong>                                                         
                                                     </a>
+
                                                 </td>
                                                 <td>{{ $application->vacancy->name ?? '' }} / {{ $application->type ?? '' }}</td>
                                                 <td>{{ $application->vacancy->curricularlevel ?? '' }}</td>

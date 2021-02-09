@@ -15,7 +15,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    @if(isset(Auth::user()->person->employee))
+                    @if(strpos(Route::currentRouteName(), 'rms') === false)
                         <a class="nav-link" href="{{ route('my') }}">My</a>
                     @else
                         <a class="nav-link" href="{{ route('rms') }}">RMS</a>
