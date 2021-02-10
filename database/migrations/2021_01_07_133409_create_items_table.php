@@ -16,7 +16,7 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('itemno')->unique();
-            $table->string('level')();
+            $table->string('level');
             $table->date('creationdate');
             $table->string('position');
             $table->string('salarygrade');
