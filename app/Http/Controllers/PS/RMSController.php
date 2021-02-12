@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\PS;
 
 use App\Http\Controllers\Controller;
+use App\Models\Application;
 use Illuminate\Http\Request;
 
 class RMSController extends Controller
