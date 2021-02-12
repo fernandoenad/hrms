@@ -87,6 +87,16 @@
                         </li>
 
                         <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ps.rms') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ps.rms') }}" class="nav-link">
+                                <i class="nav-icon fas fa-hand-holding"></i>
+                                <p>RMS</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ps.reports') !== false) 
                                 {{ __('menu-open')}}
                             @endif">

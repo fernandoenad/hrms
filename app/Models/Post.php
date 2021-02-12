@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Post extends Model
 {
     use HasFactory;
     /**
@@ -14,11 +14,9 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
-        'current',
-        'currentzip',
-        'permanent',
-        'permanentzip',
-        'person_id',
+        'type',
+        'title',
+        'content',
     ];
 
     /**
@@ -34,9 +32,4 @@ class Address extends Model
      * @var array
      */
     protected $casts = [];
-
-    public function person()
-    {
-        return $this->belongsTo(Person::class);
-    }
 }

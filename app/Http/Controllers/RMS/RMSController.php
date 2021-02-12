@@ -17,29 +17,22 @@ class RMSController extends Controller
     
     public function index()
     {
-        $page = 'dashboard';
-        $vacancies = Vacancy::where('status', '=', 1)
-            ->orderBy('salarygrade', 'desc')
-            ->orderBy('name', 'asc')
-            ->get();
-
+        $page = 'announcements';
+        
         if (Auth::check()) {
-            return view('rms.dashboard.dashboard', compact('page', 'vacancies'));
+            return view('rms.dashboard.dashboard', compact('page'));
         } else {
-            return view('rms.dashboard.index', compact('page', 'vacancies'));
+            return view('rms.dashboard.index', compact('page'));
         }      
     }
 
     public function show($page)
     {
-        $vacancies = Vacancy::where('status', '=', 1)
-            ->orderBy('salarygrade', 'desc')
-            ->get();
-
         if (Auth::check()) {
-            return view('rms.dashboard.dashboard', compact('page', 'vacancies'));
+            return view('rms.dashboard.dashboard', compact('page'));
         } else {
-            return view('rms.dashboard.index', compact('page', 'vacancies'));
+            return view('rms.dashboard.index', compact('page'));
         }             
     }
+
 }

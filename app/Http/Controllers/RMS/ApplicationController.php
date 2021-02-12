@@ -36,7 +36,7 @@ class ApplicationController extends Controller
     public function apply(Vacancy $vacancy)
     {
         $person = Auth::user()->person;
-        $cycle = date('Y', strtotime(now()));
+        $cycle = date('Y', strtotime($vacancy->updated_at));
 
         $checkdupeapp = Application::join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
             ->where('schoolyear', '=', $cycle)

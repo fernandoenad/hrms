@@ -9,7 +9,6 @@ use Carbon\Carbon;
 class Item extends Model
 {
     use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *

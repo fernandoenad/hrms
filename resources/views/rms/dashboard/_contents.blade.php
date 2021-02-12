@@ -1,62 +1,38 @@
-@if($page == 'dashboard')
-<div class="card">
-    <div class="card-body">
-        <div class="attachment-block clearfix">
-            <img class="attachment-img" src="{{ asset('storage/images/logo.png') }}" alt="Attachment Image">
-            <div class="attachment-pushed">
-                <h4 class="attachment-heading pt-2 pb-2"><a href="#">Recruitment for SY 2021-2020 is already open</a></h4>
+@if($page == 'announcements')
+<?php $posts = App\Models\Post::where('type', '=', $page)
+    ->orderBy('created_at', 'desc')
+    ->paginate(3); ?>
 
-                <div class="attachment-text">
-                    <p>
-                        You may now submit your intent to apply for a teaching
-                        position at your desired school for SY 2021-2022. Please 
-                        refer to the Hiring Guidelines found at 
-                        <a href="http://depedbohol.org">http://depedbohol.org</a>...
-                        <a data-toggle="collapse" href="#more" 
-                            role="button" aria-expanded="false" 
-                            aria-controls="collapseExample">more</a> 
-                    </p>
+@if(sizeof($posts) > 0)
+    @foreach($posts as $post)           
+        <div class="callout callout-default">
+            <div class="attachment-block clearfix">
+                <img class="attachment-img" src="{{ asset('storage/images/logo.png') }}" alt="Site Logo">
+                <div class="attachment-pushed">
+                    <h4 class="attachment-heading pt-2 pb-2">
+                        {{ $post->title }}</h4>
 
-                    <div class="collapse" id="more">
+                    <div class="attachment-text">
                         <p>
-                            Due to the pandemic and with the SDO's initiative to
-                            streamline the application process, all application
-                            intents should be recorded in this system, thus, it is 
-                            imperative that new applicants should register to the RMS.
-                            Moreover, those applying to retain their points also 
-                            need to get theirselves registered in the system 
-                            for them to be included in this year's recruitment
-                            process. 
+                            {{ substr(Strip_tags($post->content), 0, 200) }}
+                            <a data-toggle="collapse" href="#more{{ $post->id }}" 
+                                role="button" aria-expanded="true" 
+                                aria-controls="collapseExample" class="text-primary">more</a> 
                         </p>
-                        <p>
-                            Follow the folowing steps:
-                            <ol>
-                                <li>Create an RMS account through the Register link
-                                    found on the navigator bar.</li>
-                                <li>Read all the fine prints including the data privacy
-                                    terms and conditions.</li>
-                                <li>A working email is required to successfully create
-                                    an account as the account verification link
-                                    will be sent to you to confirm the creation of 
-                                    your account. Use and input the correct email.</li>
-                                <li>Once your account is already confirmed, head 
-                                    to the My Applications link found on the left side-bar
-                                    and click the Apply button.</li>
-                                <li>It is important that you take note of the auto-generated
-                                    application number as you need to print and/or make this 
-                                    visible to the application documents you will be submitting 
-                                    to the school applied for.</li>
-                                <li>Frequently visit your applications for updated status.</li>
-                            </ol>
-                        </p>
+                        <div class="collapse" id="more{{ $post->id }}">
+                            <p><?php echo $post->content ?></p>
+                        </div>
                     </div>
-                    
-                    
                 </div>
-            </div>
+            </div>            
         </div>
+@endforeach
+@else
+    <div class="alert alert-danger">
+        No announcement found.
     </div>
-</div>
+@endif
+<span class="float-right">{{ $posts->links() }}</span>
 
 @elseif($page == 'vacancies')
 <div class="card">
@@ -66,6 +42,12 @@
             need to have a confirmed account. Click the register option on the navigator bar 
             to create an account.</div>
         <div id="accordion">
+            <?php $vacancies = App\Models\Vacancy::where('status', '=', 1)
+                ->orderBy('vacancylevel', 'desc')
+                ->orderBy('salarygrade', 'desc')
+                ->orderBy('name', 'asc')
+                ->get(); ?>
+
             @if(sizeof($vacancies) > 0)
                 @foreach($vacancies as $vacancy)
                     <div class="card">
@@ -79,7 +61,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <strong>Position (SG)</strong>
-                                        <p>{{ $vacancy->name ?? '' }}</p>
+                                        <p>{{ $vacancy->name ?? '' }}<br>(SG {{ $vacancy->salarygrade ?? '' }})</p>
                                     </div>
                                     <div class="col-md-5">
                                         <strong>Qualifications</strong>
@@ -107,11 +89,40 @@
 </div>
 
 @elseif($page == 'faqs')
-<div class="card">
-    <div class="card-body">
-        <p>Content in progress. This page will be updated soon.</p>
+<?php $posts = App\Models\Post::where('type', '=', $page)
+    ->orderBy('created_at', 'desc')
+    ->paginate(3); ?>
+
+@if(sizeof($posts) > 0)
+    @foreach($posts as $post)           
+        <div class="callout callout-default">
+            <div class="attachment-block clearfix">
+                <img class="attachment-img" src="{{ asset('storage/images/logo.png') }}" alt="Site Logo">
+                <div class="attachment-pushed">
+                    <h4 class="attachment-heading pt-2 pb-2">
+                        {{ $post->title }}</h4>
+
+                    <div class="attachment-text">
+                        <p>
+                            {{ substr(Strip_tags($post->content), 0, 200) }}
+                            <a data-toggle="collapse" href="#more{{ $post->id }}" 
+                                role="button" aria-expanded="true" 
+                                aria-controls="collapseExample" class="text-primary">more</a> 
+                        </p>
+                        <div class="collapse" id="more{{ $post->id }}">
+                            <p><?php echo $post->content ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+@endforeach
+@else
+    <div class="alert alert-danger">
+        No announcement found.
     </div>
-</div> 
+@endif
+<span class="float-right">{{ $posts->links() }}</span>
 
 @elseif($page == 'about')
 <div class="card">

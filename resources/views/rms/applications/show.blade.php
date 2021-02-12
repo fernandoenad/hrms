@@ -48,7 +48,7 @@
                                 <p class="text-muted text-sm">
                                     <b>Position: </b> {{ $application->vacancy->name ?? ''}} 
                                     <br>
-                                    <b>Curricular / CS Level: </b> {{ $application->vacancy->curricularlevel ?? ''}} 
+                                    <b>Curricular Level: </b> {{ $application->vacancy->curricularlevel ?? ''}} 
                                     <br>
                                     <b>Application Type: </b> {{ $application->type ?? '' }} 
                                     <br>

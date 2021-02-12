@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Dropdown extends Model
 {
     use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *

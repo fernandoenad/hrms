@@ -18,6 +18,10 @@ use App\Http\Controllers\PS\ItemController;
 use App\Http\Controllers\PS\EmployeeController;
 use App\Http\Controllers\PS\UserController;
 use App\Http\Controllers\PS\ReportController;
+use App\Http\Controllers\PS\RMSController as PSRMSController;
+use App\Http\Controllers\PS\PostController;
+use App\Http\Controllers\PS\VacancyController;
+use App\Http\Controllers\PS\ApplicationController as PSApplicationController;
 
 use App\Http\Controllers\RS\RSController;
 use App\Http\Controllers\RS\EmployeeController as RSEmployeeController;
@@ -188,6 +192,31 @@ Route::middleware(['default.password', 'verified'])->group(function () {
             Route::patch('/ps/items/{item}/activate-done', [ItemController::class, 'activatedone'])->name('ps.items.activate-done');
             Route::get('/ps/items/{item}/deactivate', [ItemController::class, 'deactivate'])->name('ps.items.deactivate');
             Route::patch('/ps/items/{item}/deactivate-done', [ItemController::class, 'deactivatedone'])->name('ps.items.deactivate-done');
+            
+            Route::get('/ps/rms/posts/show/{post}/edit', [PostController::class, 'edit'])->name('ps.rms.posts-edit');
+            Route::delete('/ps/rms/posts/show/{post}', [PostController::class, 'destroy'])->name('ps.rms.posts-destroy');
+            Route::patch('/ps/rms/posts/show/{post}', [PostController::class, 'update'])->name('ps.rms.posts-update');
+            Route::get('/ps/rms/posts/show/{post}', [PostController::class, 'show'])->name('ps.rms.posts-show');
+            Route::get('/ps/rms/posts/{type}', [PostController::class, 'type'])->name('ps.rms.posts');
+            Route::get('/ps/rms/posts/create/{type}', [PostController::class, 'create'])->name('ps.rms.posts-create');
+            Route::post('/ps/rms/posts', [PostController::class, 'store'])->name('ps.rms.posts-store');
+ 
+            Route::get('/ps/rms/vacancies/create/', [VacancyController::class, 'create'])->name('ps.rms.vacancies-create');
+            Route::get('/ps/rms/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->name('ps.rms.vacancies-edit');
+            Route::delete('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->name('ps.rms.vacancies-destroy');
+            Route::patch('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('ps.rms.vacancies-update');            
+            Route::get('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'show'])->name('ps.rms.vacancies-show');
+            Route::get('/ps/rms/vacancies', [VacancyController::class, 'index'])->name('ps.rms.vacancies');
+            Route::post('/ps/rms/vacancies', [VacancyController::class, 'store'])->name('ps.rms.vacancies-store');
+
+            Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'show'])->name('ps.rms.applications-show');
+            Route::get('/ps/rms/applications/{cycle}/{vacancy}', [PSApplicationController::class, 'showvacancy'])->name('ps.rms.applications-show-vacancy');
+            Route::get('/ps/rms/applications/{cycle}/', [PSApplicationController::class, 'showcycle'])->name('ps.rms.applications-show-cycle');
+            Route::get('/ps/rms/applications', [PSApplicationController::class, 'index'])->name('ps.rms.applications');
+
+            Route::get('/ps/rms', [PSRMSController::class, 'index'])->name('ps.rms');
+
+
         });
     });
 
@@ -358,6 +387,7 @@ Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.ac
 Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.account.store');
 
 Route::get('/rms/p/{page}', [RMSController::class, 'show'])->name('rms.show');
+Route::get('/rms/post/{post}', [RMSController::class, 'display'])->name('rms.display');
 Route::get('/rms', [RMSController::class, 'index'])->name('rms');
 
 Route::get('/help/request', [HomeController::class, 'lookup'])->name('help.track-requests');
