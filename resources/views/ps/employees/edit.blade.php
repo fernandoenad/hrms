@@ -209,6 +209,28 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="confirmationdate" class="col-md-3 col-form-label text-md-right">{{ __('CSC Conf Date') }}</label>
+
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <input id="confirmationdate_mark" name="confirmationdate_mark" type="checkbox" @if($person->employee->confirmationdate == null) {{ 'checked' }} @endif>&nbsp;  N/A
+                                        </span>
+                                    </div>
+                                    <input id="confirmationdate" type="date" class="form-control @error('confirmationdate') is-invalid @enderror" name="confirmationdate" value="{{ old('confirmationdate') ?? date('Y-m-d', strtotime($person->employee->confirmationdate)) }}" autocomplete="confirmationdate">
+                                </div>
+                                <small><em class="text-danger">Leave N/A if not yet confirmed by CSC.</em></small>
+
+                                @error('confirmationdate')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <br>
 
                         <h4>Employment Data</h4>

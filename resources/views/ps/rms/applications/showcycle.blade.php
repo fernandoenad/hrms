@@ -41,11 +41,11 @@
                             <thead>
                                 <tr>
                                     <th>Positions</th>
-                                    <th>Vacancies</th> 
-                                    <th>Applications</th>
-                                    <th>New</th>
-                                    <th>Pending</th>
-                                    <th>Confirmed</th>                                    
+                                    <th class="text-right">Vacancies</th> 
+                                    <th class="text-right">Applications</th>
+                                    <th class="text-right">New</th>
+                                    <th class="text-right">Pending</th>
+                                    <th class="text-right">Confirmed</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,11 +57,18 @@
                                                     <strong>{{ $vacancy->name ?? '' }}</strong>
                                                 </a>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-right">{{ $vacancy->vacancy ?? '' }}</td>
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle)
+                                                    ->where('vacancy_id', '=', $vacancy->id)->get()->count() }}</td>
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle)
+                                                    ->where('vacancy_id', '=', $vacancy->id)
+                                                    ->where('status', '=', 1)->get()->count() }}</td>
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle)
+                                                    ->where('vacancy_id', '=', $vacancy->id)
+                                                    ->where('status', '=', 2)->get()->count() }}</td>
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle)
+                                                    ->where('vacancy_id', '=', $vacancy->id)
+                                                    ->where('status', '=', 3)->get()->count() }}</td>
                                         </tr>
                                     @endforeach
                                 @else

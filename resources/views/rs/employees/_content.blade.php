@@ -258,6 +258,10 @@
                         <td>{{ $person->employee->item->firstdaydate ?? __('') }}</td>
                     </tr>
                     <tr>
+                        <th>CSC Conf Date</th>
+                        <td>{{ $person->employee->item->confirmationdate ?? __('') }}</td>
+                    </tr>
+                    <tr>
                         <th>Plantilla Owner</th>
                         <td>
                             {{ $person->employee->item->station->name ?? __('') }}

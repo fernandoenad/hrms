@@ -55,7 +55,8 @@
                 || Route::currentRouteName() == 'ps.employees.si'
                 || Route::currentRouteName() == 'ps.employees.pr'
                 || Route::currentRouteName() == 'ps.employees.ee'
-                || Route::currentRouteName() == 'ps.employees.re-employ') 
+                || Route::currentRouteName() == 'ps.employees.re-employ'
+                || Route::currentRouteName() == 'ps.employees.show-logs') 
                 <li class="nav-item">
                     <a href="#" class="nav-link"><b></a></b> 
                 </li>
@@ -80,7 +81,10 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
-                    </li>                    
+                    </li> 
+                    <li class="nav-item">
+                        <a href="{{ route('ps.employees.show-logs', $person->employee->id ) }}" class="nav-link"><i class="fas fa-file"></i> &nbsp;Show empl logs</a>
+                    </li>                   
                 @else
                     @if(!isset($person->employee))
                         <li class="nav-item">
@@ -93,6 +97,9 @@
                         <li class="nav-item">
                             <a href="{{ route('ps.employees.confirm-delete', $person->employee->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove employment</a>
                         </li> 
+                        <li class="nav-item">
+                            <a href="{{ route('ps.employees.show-logs', $person->employee->id ) }}" class="nav-link"><i class="fas fa-file"></i> &nbsp;Show empl logs</a>
+                        </li>
                     @endif
                 @endif              
             @endif

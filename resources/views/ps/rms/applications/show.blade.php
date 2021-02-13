@@ -1,4 +1,4 @@
-@extends('layouts.my')  
+@extends('layouts.ps')
 
 @section('content')    
 <div class="content-header">
@@ -9,9 +9,12 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('rms') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('rms.application') }}">My Application</a></li>
-                    <li class="breadcrumb-item active">Application</li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms') }}">RMS</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications') }}">All</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications-show-cycle', $cycle) }}">Cycle</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications-show-vacancy', [$cycle, $vacancy->id]) }}">Vacancy</a></li>
+                    <li class="breadcrumb-item">Application</li>
                 </ol>
             </div>
         </div>
@@ -20,25 +23,88 @@
 
 <div class="content">
     <div class="container-fluid">
-        <div class="row">
-            @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
-            @if (session('status'))
-                <div class="alert alert-danger">
-                    {{ session('status') }}
-                </div>
-            @endif
-
+        <div class="row">         
             <div class="col-md-9">
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                @if(Route::currentRouteName() == 'ps.rms.applications-show.take-action')
+                    <div class="row">         
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    Take Action
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="{{ route('ps.rms.applications-show.action-taken',  [$cycle, $vacancy->id, $application->id]) }}">
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <div class="form-group row">
+                                        <label for="status" class="col-md-3 col-form-label text-md-right">{{ __('Action') }}</label>
+
+                                        <div class="col-md-8">
+                                            <select id="application-status" type="text" class="form-control @error('status') is-invalid @enderror" name="status" value="{{ old('status') }}" autocomplete="status">
+                                                <option value="2" @if(old('status') == 2 || $application->status == 2) {{ 'selected' }} @endif>Pending</option>
+                                                <option value="3" @if(old('status') == 3 || $application->status == 3) {{ 'selected' }} @endif>Confirm</option>
+                                                <option value="4" @if(old('status') == 4 || $application->status == 4) {{ 'selected' }} @endif>Deny</option>
+                                            </select>
+                                            @error('type')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="remarks" class="col-md-3 col-form-label text-md-right">{{ __('Remarks') }}</label>
+
+                                        <div class="col-md-8">
+                                            <textarea id="application-remarks" class="form-control @error('remarks') is-invalid @enderror" name="remarks" value="" autocomplete="remarks">{{ old('remarks') }}</textarea>
+
+                                            @error('remarks')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                        <div class="col-md-3">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <button type="submit" class="btn btn-primary float-right">
+                                                {{ __('Proceed') }}
+                                            </button>
+                                            <a href="{{ route('ps.rms.applications-show', [$cycle, $vacancy->id, $application->id]) }}" class="btn btn-default">
+                                                {{ __('Cancel') }}
+                                            </a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="card bg-light">
                     <div class="card-header text-muted border-bottom-0">
                         Application #<strong>{{ $application->code ?? '' }}</strong>
-                        <span class="float-right">
-                            <a href="{{ route('rms.application') }}"><i class="fas fa-arrow-circle-left"></i> Back</a>
-                        </span>
+                            <a href="{{ route('ps.rms.applications-show.take-action', [$cycle, $vacancy->id, $application->id]) }}"   
+                                class="btn btn-primary float-right">Take Action</a>
                     </div>
                 
                     <div class="card-body pt-2">
@@ -72,23 +138,10 @@
                                     @endif
                                 </ul>
                                 <br>
+                                
                             </div>
                             
                             <div class="col-md-5">
-                                <div class="card-body bg-info text-center">
-                                    @if($application->vacancy->vacancylevel == 3)
-                                        It is important that you take note of this application number: 
-                                        <strong>{{ $application->code ?? '' }}</strong>.
-                                        Use this as your reference number for any inquiry or
-                                        follow-up related to this application. 
-                                    @else
-                                        It is important that you print this application number: 
-                                        <strong>{{ $application->code ?? '' }}</strong>
-                                        to the folders you will be submitting to the 
-                                        school/station applied for. 
-                                    @endif
-                                </div>
-                                <br>
                                 <div class="card">
                                     <div class="card-header">
                                         Application Checklist
@@ -186,21 +239,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="text-right">
-                            <form method="POST" action="{{ route('rms.application.destroy', $application->id) }}">
-                            @csrf
-                            @method('DELETE')
-
-                            <button href="#" class="btn btn-sm btn-danger" @if($application->status != 1) {{ 'disabled' }} @endif
-                                onClick="return confirm('This will delete your application which is IRREVERSIBLE. \nAre you sure wish to proceed?')">
-                                <i class="fas fa-trash"></i> Withdraw Application
-                            </button>
-                            </form>
-                        </div>
+                    <div class="card-footer p-0">
+                        
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-header">
                         Logs
@@ -223,7 +266,7 @@
                                             <tr>
                                                 <td>{{ date('M d, Y h:i a', strtotime($applicationlog->created_at)) ?? ''}}</td>
                                                 <td>{{ $applicationlog->action ?? '' }}</td>
-                                                <td>{{ $data['remarks'] ?? ''}}</td>
+                                                <td>{{ $data['remarks'] ?? '' }}</td>
                                                 <td>{{ $applicationlog->user->name ?? ''}}</td>
                                             </tr>
                                         @endforeach
@@ -235,10 +278,12 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             <div class="col-md-3">
-                @include('rms.applications._tools')
+                @include('ps.rms._tools')
             </div>
         </div>
     </div>

@@ -21,8 +21,20 @@ class RMSController extends Controller
     public function index()
     {
         $applications = Application::orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(15);
 
-        return view('ps.rms.index', compact('applications'));
+        $applications_new = Application::where('status', '=', 1)
+            ->get()
+            ->count();
+
+        $applications_pending = Application::where('status', '=', 2)
+            ->get()
+            ->count();
+
+        $applications_confirmed = Application::where('status', '=', 3)
+            ->get()
+            ->count();
+        
+        return view('ps.rms.index', compact('applications', 'applications_new', 'applications_pending', 'applications_confirmed'));
     }      
 }

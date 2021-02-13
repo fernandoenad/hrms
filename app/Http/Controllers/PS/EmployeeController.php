@@ -10,6 +10,7 @@ use App\Models\Station;
 use App\Models\Dropdown;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -73,8 +74,19 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         $person = $employee->person;
+        $personlogs = $person->personlog()
+            ->orderBy('created_at', 'desc')->get();
 
-        return view('ps.employees.show', compact('person'));
+        return view('ps.employees.show', compact('person', 'personlogs'));
+    }
+
+    public function showlogs(Employee $employee)
+    {
+        $person = $employee->person;
+        $employeelogs = $employee->employeelog()
+            ->orderBy('created_at', 'desc')->get();
+
+        return view('ps.employees.logs', compact('person', 'employeelogs'));
     }
 
     public function edit(Employee $employee)
@@ -108,6 +120,7 @@ class EmployeeController extends Controller
             'retirementdate' => ['required', 'date'],
             'appointmentdate' => ['required', 'date'],
             'firstdaydate' => ['required', 'date'],
+            'confirmationdate' => ['required', 'date'],
         ]); 
         
         if(isset(request()->lastnosidate_mark))
@@ -115,14 +128,30 @@ class EmployeeController extends Controller
         
         if(isset(request()->retirementdate_mark))
             $data = array_merge($data, ['retirementdate' => NULL]);
-        
+
+        if(isset(request()->confirmationdate_mark))
+            $data = array_merge($data, ['confirmationdate' => NULL]);
+
         $employee->update($data);
 
         $employee->item()->update([
             'appointmentdate' => $data['appointmentdate'],
-            'firstdaydate' => $data['firstdaydate'],     
+            'firstdaydate' => $data['firstdaydate'],   
+            'confirmationdate' => $data['confirmationdate'],   
         ]);
-       
+
+        $employee->employeelog()->create([
+            'action' => 'Modify',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+        
         return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employment updated!');
     }
 
@@ -148,6 +177,12 @@ class EmployeeController extends Controller
         ]);
 
         $employee->update($data);
+
+        $employee->employeelog()->create([
+            'action' => 'Modify-Step Increment',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
         
         return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'SG-Step incremented!');;
     }
@@ -195,6 +230,18 @@ class EmployeeController extends Controller
             'firstdaydate' => $data['firstdaydate'],     
         ]);
 
+        $employee->employeelog()->create([
+            'action' => 'Modify-Promotion',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify-Promotion',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
         return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Rank promoted!');
     }
 
@@ -219,6 +266,18 @@ class EmployeeController extends Controller
         $employee->item()->update([
             'appointmentdate' => null,
             'firstdaydate' => null,     
+        ]);
+
+        $employee->employeelog()->create([
+            'action' => 'Modify-End Employment',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify-End Employment',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
         ]);
 
         $employee->update(array_merge($data, [

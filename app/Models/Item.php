@@ -23,6 +23,7 @@ class Item extends Model
         'employeetype',
         'appointmentdate',
         'firstdaydate',
+        'confirmationdate',
         'status',
         'remarks',
         'station_id',
@@ -44,6 +45,7 @@ class Item extends Model
         'creationdate' => 'date',
         'appointmentdate' => 'date',
         'firstdaydate' => 'date',
+        'confirmationdate' => 'date',
     ];
 
     public function employee()
@@ -59,6 +61,11 @@ class Item extends Model
     public function deployment()
     {
         return $this->hasOne(Deployment::class);
+    }
+
+    public function itemlog()
+    {
+        return $this->hasMany(ItemLog::class);
     }
 
     public function getItemnoAttribute($value)
@@ -77,6 +84,11 @@ class Item extends Model
     }
 
     public function getFirstdaydateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('F d, Y') : null;
+    }
+
+    public function getConfirmationdateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('F d, Y') : null;
     }

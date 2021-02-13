@@ -29,8 +29,8 @@
                         <div class="info-box-content">
                             <span class="info-box-text">New Applications</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.employees') }}">
-                                    {{ number_format(0, 0) }}
+                                <a href="#">
+                                    {{ number_format($applications_new, 0) }}
                                 </a>
                             </span>
                         </div>
@@ -44,8 +44,8 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Pending Applications</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.employees') }}">
-                                    {{ number_format(0, 0) }}
+                                <a href="#">
+                                    {{ number_format($applications_pending, 0) }}
                                 </a>
                             </span>
                         </div>
@@ -59,8 +59,8 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Confirmed Applications</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.items') }}">
-                                    {{ number_format(0, 0) }}
+                                <a href="#">
+                                    {{ number_format($applications_confirmed, 0) }}
                                 </a>
                             </span>
                         </div>
@@ -84,11 +84,77 @@
 
             <div class="card card-primary card-outline">
                 <div class="card-header">
-
+                    Recent Applications
+                    <div class="float-right">
+                        <form class="form-inline" method="post" action="{{ route('ps.rms.applications-search') }}">
+                            @csrf
+                            <div class="input-group input-group-sm float-right">
+                                <input id="str" name="str" class="form-control form-control-navbar @error('str') is-invalid @enderror" value="{{ old('str') ?? request()->get('str') }}" autocomplete="str" type="search" placeholder="Search applicant" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body p-0">
-
+                    <div class="table-responsive">
+                        <table class="table m-0 table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name / Position Applied</th>
+                                    <th>Contact / Address</th> 
+                                    <th>Position / Station / District</th>                                    
+                                    <th>Submitted at / Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(sizeof($applications) > 0)
+                                    <?php $i=1;?>
+                                    @foreach($applications as $application)
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>
+                                                <a href="{{ route('ps.rms.applications-show', [$application->schoolyear, $application->vacancy->id,  $application->id]) }}">
+                                                    <strong>{{ $application->person->getFullnameBox() ?? '' }}</strong>
+                                                </a>
+                                                <br>
+                                                {{ $application->vacancy->name ?? '' }} ({{ $application->schoolyear ?? '' }})
+                                            </td>
+                                            <td>
+                                                {{ $application->person->contact->primaryno ?? '' }}<br>
+                                                {{ $application->person->address->current ?? '' }}                                            
+                                            </td>
+                                            <td>
+                                                {{ $application->person->employee->item->position ?? 'No employment record' }}<br>
+                                                {{ $application->person->employee->item->deployment->station->name ?? '' }}<br>
+                                                {{ $application->person->employee->item->deployment->station->office->name ?? '' }}
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-default">
+                                                    {{ date('M d, Y h:i a', strtotime($application->created_at)) ?? '' }}
+                                                </span>    
+                                                <br>
+                                                <span class="badge badge-{{ $application->getstatuscolor($application->status) ?? '' }}">
+                                                    {{ $application->getStatus($application->status) ?? '' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <?php $i++;?>
+                                    @endforeach
+                                @else
+                                    <tr><td colspan="5">No record found.</td></tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                 </div> 
+                <div class="card-footer p-1 pb-0">
+                    <span class="small float-right">{{ $applications->links() }}</span>
+                </div>
             </div>
         </div>
 

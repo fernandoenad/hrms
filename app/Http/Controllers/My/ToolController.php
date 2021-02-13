@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use App\Models\PUserLog;
 
 class ToolController extends Controller
 {
@@ -48,7 +49,14 @@ class ToolController extends Controller
         ]); 
 
         $user = Auth::user();
-        $user->update($data);      
+        $user->update($data);     
+        
+        PUserLog::create([
+            'u_id' => $user->id,
+            'action' => 'Modify Email',
+            'log' => $user->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
 
         return redirect()->route('my.tools')->with('status', 'E-Mail updated!'); 
     }
@@ -57,7 +65,7 @@ class ToolController extends Controller
     {       
         $user = Auth::user();
         $person = $user->person; 
-       
+      
         return view('my.tool.editpassword', compact('person'));
     }
 
@@ -69,6 +77,13 @@ class ToolController extends Controller
 
         $user = Auth::user();
         $user->update(['password' => Hash::make($data['password']),]);      
+
+        PUserLog::create([
+            'u_id' => $user->id,
+            'action' => 'Modify Password',
+            'log' => $user->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
 
         Auth::logout();
         return redirect()->route('login')->with('status', 'Password updated, please re-login!'); 
@@ -92,7 +107,7 @@ class ToolController extends Controller
         $person = $user->person; 
 
         if($person->image != 'no-avatar.jpg')
-                unlink("storage/avatars/" . $person->image);
+            unlink("storage/avatars/" . $person->image);
             
         $imagePath = $data['image']->store('avatars', 'public');
         
@@ -104,6 +119,12 @@ class ToolController extends Controller
         $person->update([
             'image' => $image[1],
         ]);
+
+        $user->person->personlog()->create([
+            'action' => 'Modify Image',
+            'log' => $person->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);  
        
         return redirect()->route('my.tools')->with('status', 'Image updated!'); 
     }

@@ -23,6 +23,7 @@ class CreateItemsTable extends Migration
             $table->string('employeetype');
             $table->date('appointmentdate')->nullable();
             $table->date('firstdaydate')->nullable();
+            $table->date('confirmationdate')->nullable();
             $table->unsignedBigInteger('station_id')->nullable();
             $table->integer('status');
             $table->string('remarks')->nullable();

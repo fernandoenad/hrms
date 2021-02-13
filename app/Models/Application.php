@@ -55,6 +55,11 @@ class Application extends Model
         return $this->belongsTo(Vacancy::class);
     }
 
+    public function applicationlog()
+    {
+        return $this->hasmany(ApplicationLog::class);
+    }
+
     public function getStatus($status)
     {
         switch($status){
@@ -65,7 +70,10 @@ class Application extends Model
                 $status_name = 'Pending';
                 break;
             case 3:
-                $status_name = 'Resolved';
+                $status_name = 'Confirmed';
+                break;
+            case 4:
+                $status_name = 'Declined';
                 break;
         }
 
@@ -83,6 +91,9 @@ class Application extends Model
                 break;
             case 3:
                 $status_color = 'success';
+                break;
+            case 4:
+                $status_color = 'danger';
                 break;
         }
 

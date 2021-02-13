@@ -82,6 +82,11 @@ class Person extends Model
         return $this->hasMany(AccountRequest::class);
     }
 
+    public function personlog()
+    {
+        return $this->hasMany(PersonLog::class);
+    }
+
     public function getFirstnameAttribute($value){
         return ucwords(mb_strtolower($value));
     }

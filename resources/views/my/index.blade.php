@@ -284,6 +284,10 @@
                                                 <td>{{ $person->employee->item->firstdaydate ?? __('') }}</td>
                                             </tr>
                                             <tr>
+                                                <th>CSC Confirmation Date</th>
+                                                <td>{{ $person->employee->item->confirmationdate ?? __('') }}</td>
+                                            </tr>
+                                            <tr>
                                                 <th>Plantilla Owner</th>
                                                 <td>
                                                     {{ $person->employee->item->station->name ?? __('') }}
@@ -325,7 +329,7 @@
                                             <tr>
                                                 <th>Station Head</th>
                                                 <td>
-                                                    @if($person->employee->item->deployment->station->person_id))
+                                                    @if($person->employee->item->deployment->station->person_id)
                                                         {{ $person->employee->item->deployment->station->person->getFullname() ?? __('') }}
                                                     @else 
                                                         {{ __('') }}

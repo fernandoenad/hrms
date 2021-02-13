@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -26,6 +28,40 @@ class ApplicationController extends Controller
             ->get();
 
         return view('ps.rms.applications.index', compact('cycles'));
+    }
+
+    public function search()
+    {
+        $str = request()->get('str');
+
+        $applications = Application::join('people', 'applications.person_id', '=', 'people.id')
+            ->where(function ($query) use ($str){
+                $query->where('lastname', 'like' , $str . '%')
+                    ->orWhere('firstname', 'like', $str . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $str . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $str . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $str . '%')
+                    ->orderBy('lastname', 'asc')
+                    ->orderBy('firstname', 'asc');
+            })
+            ->orWhere('code', '=', $str)
+            ->paginate(15);
+
+        $applications = $applications->appends(['str' => $str]);
+
+        $applications_new = Application::where('status', '=', 1)
+            ->get()
+            ->count();
+
+        $applications_pending = Application::where('status', '=', 2)
+            ->get()
+            ->count();
+
+        $applications_confirmed = Application::where('status', '=', 3)
+            ->get()
+            ->count();
+        
+        return view('ps.rms.index', compact('applications', 'applications_new', 'applications_pending', 'applications_confirmed'));
     }
 
     /**
@@ -55,9 +91,51 @@ class ApplicationController extends Controller
      * @param  \App\Models\Application  $application
      * @return \Illuminate\Http\Response
      */
+
+    public function takeaction($cycle, Vacancy $vacancy, Application $application)
+    {
+        if($application->status == 1){
+
+            $application->update([
+            'status' => 2,
+            'remarks' => 'Checking...',
+            ]); 
+                
+            $application->applicationlog()->create([
+                'action' => 'Modify',
+                'log' => $application->toJson(),
+                'user_id' => Auth::user()->id,
+            ]);
+    
+         }
+
+        return view('ps.rms.applications.show', compact('cycle', 'vacancy', 'application'));
+    }
+
+    public function actiontaken($cycle, Vacancy $vacancy, Application $application)
+    {
+        $data = request()->validate([
+            'status' => ['required'],
+            'remarks' => ['nullable', 'string', 'min:3', 'max:255'],
+            ]);      
+
+        $application->update($data);
+
+        $application->applicationlog()->create([
+            'action' => 'Modify',
+            'log' => $application->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->route('ps.rms.applications-show', compact('cycle', 'vacancy', 'application'))->with('status', 'Application was updated.');
+    }
+
     public function show($cycle, Vacancy $vacancy, Application $application)
     {
-        return view('ps.rms.applications.show', compact('cycle', 'vacancy', 'application'));
+        $applicationlogs = $application->applicationlog()
+            ->orderBy('created_at', 'desc')->get();
+
+        return view('ps.rms.applications.show', compact('cycle', 'vacancy', 'application', 'applicationlogs'));
     }
 
     public function showvacancy($cycle, Vacancy $vacancy)

@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Dropdown;
 use App\Models\Station;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -161,6 +162,12 @@ class ItemController extends Controller
 
         $item->deployment()->create(['station_id' => $data['deployment_station_id']]);
 
+        $item->itemlog()->create([
+            'action' => 'Create',
+            'log' => $item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
         return redirect()->route('ps.items.show', compact('item'))->with('status', 'Item created!'); 
     }
 
@@ -199,6 +206,12 @@ class ItemController extends Controller
         $item->update($data);
 
         $item->deployment()->update(['station_id' => $data['deployment_station_id']]);
+
+        $item->itemlog()->create([
+            'action' => 'Modify',
+            'log' => $item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
         
         return redirect()->route('ps.items.show', compact('item'))->with('status', 'Item updated!'); 
     }

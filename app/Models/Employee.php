@@ -65,6 +65,11 @@ class Employee extends Model
         return $this->hasOne(Deployment::class);
     }
 
+    public function employeelog()
+    {
+        return $this->hasOne(EmployeeLog::class);
+    }
+
     public function getHiredateAttribute($value)
     {
         return $value != '0000-00-00' ? Carbon::parse($value)->format('F d, Y') : null;

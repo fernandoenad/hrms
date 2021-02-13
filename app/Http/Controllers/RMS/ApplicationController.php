@@ -87,13 +87,22 @@ class ApplicationController extends Controller
             'pertdoc_hard' => 0,
             'status' => 1,
             ]));
-
+        
+        $application->applicationlog()->create([
+            'action' => 'Create',
+            'log' => $application->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+        
         return redirect()->route('rms.application.show', compact('application'));
     }
 
     public function show(Application $application)
     {
-        return view('rms.applications.show', compact('application'))->with('status', 'Application was submitted successfuly.');
+        $applicationlogs = $application->applicationlog()
+            ->orderBy('created_at', 'desc')->get();
+
+        return view('rms.applications.show', compact('application', 'applicationlogs'))->with('status', 'Application was submitted successfuly.');
     }
 
     public function destroy(Application $application)

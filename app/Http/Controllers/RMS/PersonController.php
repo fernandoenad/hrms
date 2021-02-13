@@ -8,6 +8,7 @@ use App\Models\Dropdown;
 use App\Models\Contact;
 use App\Models\Person;
 use App\Models\User;
+use App\Models\PUserLog;
 use App\Models\Address;
 use App\Models\AccountRequest;
 use Illuminate\Validation\Rule;
@@ -71,7 +72,7 @@ class PersonController extends Controller
             'civilstatus' => $data['civilstatus'],
             'image' => $data['image'],
         ]);
-        
+      
         $contact = $person->contact()->create([
             'primaryno' => $data['primaryno'],
         ]);
@@ -83,10 +84,23 @@ class PersonController extends Controller
             'password' => Hash::make($data['password']),
         ]); 
 
+        $address = $person->address()->create();
+
         $user->sendEmailVerificationNotification();
         Auth::loginUsingId($user->id);
+
+        $person->personlog()->create([
+            'action' => 'Create',
+            'log' => $person->toJson(),
+            'user_id' => $user->id,
+        ]);  
         
-        $address = $person->address()->create();
+        PUserLog::create([
+            'u_id' => $user->id,
+            'action' => 'Create',
+            'log' => $user->toJson(),
+            'user_id' => $user->id,
+        ]);
         
         return redirect()->route('verification.notice')->with('status', 'Account created! Please check your email for a verification link.'); 
     }

@@ -61,6 +61,31 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasmany(UserLog::class);
     }
 
+    public function applicationlog()
+    {
+        return $this->hasmany(ApplicationLog::class);
+    }
+
+    public function personlog()
+    {
+        return $this->hasmany(PersonLog::class);
+    }
+
+    public function employeelog()
+    {
+        return $this->hasmany(EmployeeLog::class);
+    }
+
+    public function puserlog()
+    {
+        return $this->hasmany(PUserLog::class);
+    }
+
+    public function itemlog()
+    {
+        return $this->hasmany(ItemLog::class);
+    }
+
     public function getNameAttribute($value){
         return ucwords($value);
     }

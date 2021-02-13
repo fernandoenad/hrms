@@ -19,6 +19,7 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid">  
 
     <div class="row">
@@ -80,7 +81,7 @@
                                         <tr>
                                             <td>{{ $i }}</td>
                                             <td>
-                                                <a href="">
+                                                <a href="{{ route('ps.rms.applications-show', [$application->schoolyear, $application->vacancy->id,  $application->id]) }}">
                                                     <strong>{{ $application->person->getFullnameBox() ?? '' }}</strong>
                                                 </a>
                                             </td>
@@ -106,7 +107,7 @@
                                         <?php $i++;?>
                                     @endforeach
                                 @else
-                                    <tr><td colspan="4">No record found.</td></tr>
+                                    <tr><td colspan="5">No record found.</td></tr>
                                 @endif
                             </tbody>
                         </table>

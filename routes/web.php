@@ -132,6 +132,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ps/employees/active', [EmployeeController::class, 'displayActive'])->name('ps.employees.active');
         Route::get('/ps/employees/unassigned', [EmployeeController::class, 'displayUnassigned'])->name('ps.employees.unassigned');
         Route::get('/ps/employees/terminated', [EmployeeController::class, 'displayTerminated'])->name('ps.employees.terminated');
+        Route::get('/ps/employees/{employee}/show-logs', [EmployeeController::class, 'showlogs'])->name('ps.employees.show-logs');
         Route::get('/ps/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('ps.employees.edit');
         Route::get('/ps/employees/{employee}/si', [EmployeeController::class, 'si'])->name('ps.employees.si');
         Route::patch('/ps/employees/{employee}/si-done', [EmployeeController::class, 'sidone'])->name('ps.employees.si-done');
@@ -209,9 +210,12 @@ Route::middleware(['default.password', 'verified'])->group(function () {
             Route::get('/ps/rms/vacancies', [VacancyController::class, 'index'])->name('ps.rms.vacancies');
             Route::post('/ps/rms/vacancies', [VacancyController::class, 'store'])->name('ps.rms.vacancies-store');
 
+            Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}/take-action', [PSApplicationController::class, 'takeaction'])->name('ps.rms.applications-show.take-action');
+            Route::patch('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'actiontaken'])->name('ps.rms.applications-show.action-taken');
             Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'show'])->name('ps.rms.applications-show');
             Route::get('/ps/rms/applications/{cycle}/{vacancy}', [PSApplicationController::class, 'showvacancy'])->name('ps.rms.applications-show-vacancy');
             Route::get('/ps/rms/applications/{cycle}/', [PSApplicationController::class, 'showcycle'])->name('ps.rms.applications-show-cycle');
+            Route::any('/ps/rms/applications/search', [PSApplicationController::class, 'search'])->name('ps.rms.applications-search');
             Route::get('/ps/rms/applications', [PSApplicationController::class, 'index'])->name('ps.rms.applications');
 
             Route::get('/ps/rms', [PSRMSController::class, 'index'])->name('ps.rms');

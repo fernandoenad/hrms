@@ -12,8 +12,10 @@ use App\Models\Item;
 use App\Models\Station;
 use App\Models\Employee;
 use App\Models\Address;
+use App\Models\PUserLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 
@@ -132,12 +134,12 @@ class PersonController extends Controller
             'image' => $data['image'],
         ]);
         
-        Contact::create([
+        $contact = $person->contact()->create([
             'person_id' => $person->id,
             'primaryno' => $data['primaryno'],
         ]);
 
-        User::create([
+        $user = $person->user()->create([
             'person_id' => $person->id,
             'name' => $name,
             'username' => $data['username'],
@@ -145,8 +147,21 @@ class PersonController extends Controller
             'password' => Hash::make($data['username']),
         ]); 
         
-        Address::create([
+        $address = $person->address()->create([
             'person_id' => $person->id,
+        ]);
+
+        $person->personlog()->create([
+            'action' => 'Create',
+            'log' => $person->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);  
+        
+        PUserLog::create([
+            'u_id' => $user->id,
+            'action' => 'Create',
+            'log' => $user->toJson(),
+            'user_id' => Auth::user()->id,
         ]);
         
         return redirect()->route('ps.people.show', compact('person'))->with('status', 'Profile created!'); 
@@ -159,8 +174,11 @@ class PersonController extends Controller
             $employee = $person->employee;
             return redirect()->route('ps.employees.show', compact('employee')); 
         }
-        else
-            return view('ps.people.show', compact('person')); 
+        else {
+            $personlogs = $person->personlog()
+                ->orderBy('created_at', 'desc')->get();
+            return view('ps.people.show', compact('person', 'personlogs')); 
+        }
     }
 
     public function edit(Person $person)
@@ -271,7 +289,20 @@ class PersonController extends Controller
             'name' => $name,
             'username' => $data['username'],
             'email' => $data['email'],
+        ]); 
+        
+        $person->personlog()->create([
+            'action' => 'Modify',
+            'log' => $person->toJson(),
+            'user_id' => Auth::user()->id,
         ]);  
+        
+        PUserLog::create([
+            'u_id' => $person->user->id,
+            'action' => 'Modify',
+            'log' => $person->user->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
         
         if(isset($person->employee))
         {
@@ -326,11 +357,23 @@ class PersonController extends Controller
             'employmentstatus' => $data['employmentstatus'],         
         ]);
 
-        $employee->item()->update([
+        $item = $employee->item()->update([
             'appointmentdate' => $data['appointmentdate'],
             'firstdaydate' => $data['firstdaydate'],     
         ]);
 
+        $employee->employeelog()->create([
+            'action' => 'Modify',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+        
         return redirect()->route('ps.employees.show', compact('employee'))->with('status', 'Employment created!');
     }
 
