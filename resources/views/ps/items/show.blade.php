@@ -27,7 +27,11 @@
             @endif
             <div class="card card-primary">
                 <div class="card-body">
-                    <h4>Item Details</h4>
+                    <span class="float-right">
+                        <small><a href="#" data-toggle="modal" data-target="#modal-lg">Show Logs</a></small>
+                    </span>
+
+                    <h4>Item Details</h4>                 
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -132,6 +136,74 @@
 
         <div class="col-md-3">
             @include('ps.items._tools')
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                Logs
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table m-0 table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Action</th> 
+                                    <th>Remarks</th>                                    
+                                    <th>Actor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(sizeof($itemlogs) > 0)
+                                    @foreach($itemlogs as $itemlog)
+                                        <?php $data = json_decode($itemlog->log, true); ?>
+                                        <tr>
+                                            <td>{{ date('M d, Y h:i a', strtotime($itemlog->created_at)) ?? ''}}</td>
+                                            <td>{{ $itemlog->action ?? '' }}</td>
+                                            <td>
+                                                <div id="accordion">
+                                                    <a class="text-primary" data-toggle="collapse" data-parent="#accordion" 
+                                                        href="#collapseOne{{ $itemlog->id }}">
+                                                        <i class="fas fa-plus-square"></i>
+                                                    </a>
+                                                    <div id="collapseOne{{ $itemlog->id }}" class="panel-collapse collapse in">
+                                                        <small>
+                                                            IN: <strong>{{ $data['itemno'] ?? '' }}</strong><br>
+                                                            LE: <strong>{{ $data['level'] ?? '' }}</strong><br>
+                                                            CD: <strong>{{ $data['creationdate'] ?? '' }}</strong><br>
+                                                            POS: <strong>{{ $data['position'] ?? '' }}</strong><br>
+                                                            SG: <strong>{{ $data['salarygrade'] ?? '' }}</strong><br>
+                                                            ET: <strong>{{ $data['employeetype'] ?? '' }}</strong><br>
+                                                            AD: <strong>{{ $data['appointmentdate'] ?? '' }}</strong><br>
+                                                            FD: <strong>{{ $data['firstdaydate'] ?? '' }}</strong><br>
+                                                            ST: <strong>{{ $data['status'] ?? '' }}</strong><br>
+                                                            RE: <strong>{{ $data['remarks'] ?? '' }}</strong><br>
+                                                            ST-I: <strong>{{ $data['station_id'] ?? '' }}</strong>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $itemlog->user->name ?? ''}}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr><td colspan="4">No record found.</td></tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>

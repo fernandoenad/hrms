@@ -93,7 +93,10 @@ class ItemController extends Controller
 
     public function show(Item $item)
     {
-        return view('ps.items.show', compact('item'));
+        $itemlogs = $item->itemlog()
+            ->orderBy('created_at', 'desc')->get();
+            
+        return view('ps.items.show', compact('item', 'itemlogs'));
     }
 
     public function itemsActiveCounter()
