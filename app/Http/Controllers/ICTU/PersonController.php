@@ -113,9 +113,9 @@ class PersonController extends Controller
         $person->user->update($data);
 
         PUserLog::create([
-            'u_id' => $user->id,
+            'u_id' => $person->user->id,
             'action' => 'Create',
-            'log' => $user->toJson(),
+            'log' => $person->user->toJson(),
             'user_id' => Auth::user()->id,
         ]);
 
