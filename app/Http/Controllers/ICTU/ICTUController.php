@@ -24,7 +24,7 @@ class ICTUController extends Controller
     {
         $people = $this->getPeople()->take(10);
         $people_count = $this->getPeople()->count();
-        $employees_count = $this->getExmployees()->count();
+        $employees_count = $this->getEmployees()->count();
         $userroles_count = $this->getUserRoles()->count();
 
         return view('ictu.index', compact('people', 'people_count', 'employees_count', 'userroles_count'));
@@ -32,12 +32,16 @@ class ICTUController extends Controller
 
     public function getPeople()
     {
-        $people = Person::orderBy('id', 'desc')->get();
+        $people = Person::orderBy('id', 'desc')
+            ->whereNotIn('people.id', function($query){
+                $query->select('person_id')->from('employees');
+            })
+            ->get();
 
         return $people;
     }
 
-    public function getExmployees()
+    public function getEmployees()
     {
         $employees = Employee::all();
 
