@@ -165,7 +165,7 @@
                                 <div class="col-md-8">
                                     <input id="person_id" type="hidden" class="form-control @error('person_id') is-invalid @enderror" name="person_id" value="{{ old('person_id') ?? request()->id ?? $office->person_id}}" autocomplete="person_id">
                                     <div class="input-group input-group-md">
-                                        <input readonly id="office_name" type="text" class="form-control @error('office_name') is-invalid @enderror" name="office_name" value="{{ old('office_name') ?? request()->name ?? $office->person->getFullnameBox() }}" autocomplete="office_name">
+                                        <input readonly id="office_name" type="text" class="form-control @error('office_name') is-invalid @enderror" name="office_name" value="{{ old('office_name') ?? request()->name ?? (isset($office->person) ? $office->person->getFullnameBox() : '') }}" autocomplete="office_name">
 
                                         <div class="input-group-append">
                                             <a href="{{ route('pu.offices.lookup') }}?redirect={{ Route::currentRouteName() }}&id={{ $office->id }}" class="btn btn-primary float-right">
