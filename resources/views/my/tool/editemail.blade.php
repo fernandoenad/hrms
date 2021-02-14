@@ -65,7 +65,7 @@
                                             <a href="{{ route('my.tools') }}" class="btn btn-default">
                                                 {{ __('Cancel') }}
                                             </a>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary" @if($person->user->email_verified_at !== null) {{ 'disabled' }} @endif>
                                                 {{ __('Update Email') }}
                                             </button>
                                         </div>

@@ -69,7 +69,7 @@
                             <div class="col-md-3">
                             </div>
                             <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary float-right">
+                                <button type="submit" class="btn btn-primary float-right" @if($person->user->email_verified_at !== null) {{ 'disabled' }} @endif>
                                     {{ __('Update Credentials') }}
                                 </button>
                                 <a href="{{ url()->previous() }}" class="btn btn-default">
