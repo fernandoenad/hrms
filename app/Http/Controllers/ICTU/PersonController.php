@@ -9,6 +9,7 @@ use App\Models\PUserLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class PersonController extends Controller
 {
