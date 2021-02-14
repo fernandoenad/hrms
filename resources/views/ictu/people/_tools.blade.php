@@ -4,7 +4,9 @@
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item active p-3">
-                @if(Route::currentRouteName() == 'ictu.people' || Route::currentRouteName() == 'ictu.people.search') 
+                @if(Route::currentRouteName() == 'ictu.people' || 
+                    Route::currentRouteName() == 'ictu.people.search' ||
+                    Route::currentRouteName() == 'ictu.people.non-employees') 
                     <form class="form-inline" method="post" action="{{ route('ictu.people.search') }}">
                 @else
                     <form class="form-inline" method="post" action="{{ route('ictu.employees.search') }}">
@@ -22,7 +24,9 @@
             </li>
             @if(Route::currentRouteName() == 'ictu.people' || 
                 Route::currentRouteName() == 'ictu.people.search' ||
-                Route::currentRouteName() == 'ictu.people.show')
+                Route::currentRouteName() == 'ictu.people.show' ||
+                Route::currentRouteName() == 'ictu.people.edit-credentials' || 
+                Route::currentRouteName() == 'ictu.people.delete')
                 <li class="nav-item">
                     <a href="{{ route('ictu.people') }}" class="nav-link">
                         <i class="fas fa-users"></i> View all
@@ -38,13 +42,29 @@
 
             @if(Route::currentRouteName() == 'ictu.people.show' 
                 || Route::currentRouteName() == 'ictu.people.reset'
-                || Route::currentRouteName() == 'ictu.employees.show') 
+                || Route::currentRouteName() == 'ictu.employees.show'
+                || Route::currentRouteName() == 'ictu.people.edit-credentials'
+                || Route::currentRouteName() == 'ictu.people.delete') 
                 <li class="nav-item">
                     <a href="#" class="nav-link"><b></a></b> 
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('ictu.people.reset', $person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Reset password</a>
-                </li>
+                @if($person->user->isSuperAdmin() !== true)
+                    <li class="nav-item">
+                        <a href="{{ route('ictu.people.reset', $person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Reset password</a>
+                    </li>
+                @endif
+                
+                @if(!isset($person->employee))
+                    <li class="nav-item">
+                        <a href="{{ route('ictu.people.edit-credentials', $person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Modify credentials</a>
+                    </li>                  
+                @endif
+
+                @if($person->user->isSuperAdmin() !== true)
+                    <li class="nav-item">
+                        <a href="{{ route('ictu.people.delete', $person->id) }}" class="nav-link"><i class="fas fa-user-times"></i> Remove account</a>
+                    </li>
+                @endif
             @endif
         </ul>
     </div>

@@ -138,5 +138,43 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return false;
     }
+
+    public function isSuperAdmin()
+    {
+        $result = $this->userrole()->where('status', '=', 1)
+            ->where('role_id', '=', 1)
+            ->first();
+
+        //dd($result->role_id);
+
+        if (isset($result)) 
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getStation()
+    {
+        $station = Auth::user()->person->employee->item->deployment->station;
+        
+        return $station;
+    }
+
+    public function isEmployeeOfStation($station_id)
+    {
+        $result = $this->person->employee->item->deployment->where('station_id', '=', $station_id)
+            ->first();
+
+        //dd($result->role_id);
+
+        if (isset($result)) 
+        {
+            return true;
+        }
+
+        return false;
+    }
     
 }

@@ -27,9 +27,11 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Non-Employees</span>
                             <span class="info-box-number">
-                                {{ number_format(App\Models\Person::whereNotIn('people.id', function($query){
-                                        $query->select('person_id')->from('employees');
-                                    })->count(), 0) }}
+                                <a href="{{ route('ictu.people.non-employees') }}">
+                                    {{ number_format(App\Models\Person::whereNotIn('people.id', function($query){
+                                            $query->select('person_id')->from('employees');
+                                        })->count(), 0) }}
+                                </a>
                             </span>
                         </div>
                     </div>
@@ -41,7 +43,9 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Employees</span>
                             <span class="info-box-number">
-                                {{ number_format(App\Models\Employee::count(), 0) }}
+                                <a href="{{ route('ictu.employees') }}">
+                                    {{ number_format(App\Models\Employee::count(), 0) }}
+                                </a>
                             </span>
                         </div>
                     </div>

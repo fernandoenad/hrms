@@ -53,6 +53,8 @@ use App\Http\Controllers\RMS\RMSController;
 use App\Http\Controllers\RMS\PersonController as RMSPersonController;
 use App\Http\Controllers\RMS\ApplicationController;
 
+use App\Http\Controllers\Station\StationController as STSTationController;
+
 use App\Http\Controllers\HomeController;
 
 /*
@@ -342,7 +344,12 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
 
     Route::middleware(['role.ictu'])->group(function () {
+        Route::get('/ictu/people/non-employees', [ICTUPersonController::class, 'nonemployees'])->name('ictu.people.non-employees');
         Route::any('/ictu/people/search', [ICTUPersonController::class, 'search'])->name('ictu.people.search');
+        Route::get('/ictu/people/{person}/edit-credentials', [ICTUPersonController::class, 'editcredentials'])->name('ictu.people.edit-credentials');
+        Route::post('/ictu/people/{person}', [ICTUPersonController::class, 'updatecredentials'])->name('ictu.people.update-credentials');
+        Route::get('/ictu/people/{person}/delete', [ICTUPersonController::class, 'delete'])->name('ictu.people.delete');
+        Route::delete('/ictu/people/{person}', [ICTUPersonController::class, 'destroy'])->name('ictu.people.destroy');
         Route::get('/ictu/people/{person}/reset', [ICTUPersonController::class, 'reset'])->name('ictu.people.reset');
         Route::patch('/ictu/people/{person}', [ICTUPersonController::class, 'update'])->name('ictu.people.update');
         Route::get('/ictu/people/{person}', [ICTUPersonController::class, 'show'])->name('ictu.people.show');
@@ -406,8 +413,9 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
 
 Route::get('/station/{station}/employees/{employee}', [EmployeeController::class, 'show'])->name('station.employees.show');
-Route::get('/station/{station}/employees', [EmployeeController::class, 'index'])->name('station.employees');
-Route::get('/station/{station}', [StationController::class, 'index'])->name('station');
+Route::get('/station/{station}/employees', [EmployeeController::class, 'show'])->name('station.employees');
+Route::get('/station/{station}', [STSTationController::class, 'show'])->name('station.show');
+Route::get('/station', [STSTationController::class, 'index'])->name('station');
 
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');

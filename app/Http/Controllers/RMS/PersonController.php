@@ -40,8 +40,8 @@ class PersonController extends Controller
                 ->where('middlename', request()->middlename)
                 ->where('lastname', request()->lastname)
                 ->where('extname', request()->extname)
-                ->where('sex', request()->sex)
-                ->where('dob', request()->dob)
+                //->where('sex', request()->sex)
+                //->where('dob', request()->dob)
                 ->where('civilstatus', request()->civilstatus)],
             'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],

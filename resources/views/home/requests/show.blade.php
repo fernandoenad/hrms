@@ -36,7 +36,7 @@
                                     <br>
                                     <b>Remarks: </b> 
                                     <br>
-                                    {{ $accountrequest->remarks ?? ''}}                                    
+                                    <?php echo $accountrequest->remarks ?? '' ?>                                    
                                    
                                 </p>
                             </div>

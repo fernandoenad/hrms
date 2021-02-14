@@ -49,7 +49,13 @@ class ToolController extends Controller
         ]); 
 
         $user = Auth::user();
-        $user->update($data);     
+        $user->update($data); 
+
+        /* 
+        $user->email_verified_at = null;
+        $user->save();
+        $user->sendEmailVerificationNotification();    
+        */
         
         PUserLog::create([
             'u_id' => $user->id,
@@ -57,6 +63,7 @@ class ToolController extends Controller
             'log' => $user->toJson(),
             'user_id' => Auth::user()->id,
         ]);
+
 
         return redirect()->route('my.tools')->with('status', 'E-Mail updated!'); 
     }
