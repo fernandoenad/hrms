@@ -53,12 +53,10 @@
                         <a href="{{ route('ictu.people.reset', $person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Reset password</a>
                     </li>
                 @endif
-                
-                @if(!isset($person->employee))
-                    <li class="nav-item">
-                        <a href="{{ route('ictu.people.edit-credentials', $person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Modify credentials</a>
-                    </li>                  
-                @endif
+
+                <li class="nav-item">
+                    <a href="{{ route('ictu.people.edit-credentials', $person->id) }}" class="nav-link"><i class="fas fa-user-edit"></i> Modify credentials</a>
+                </li>                  
 
                 @if($person->user->isSuperAdmin() !== true)
                     <li class="nav-item">
