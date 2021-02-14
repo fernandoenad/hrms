@@ -333,8 +333,8 @@
                             <label for="email" class="col-md-3 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $person->user->email }}" autocomplete="email">
-
+                                <input @if($person->user->email_verified_at !== null) {{ 'readonly' }} @endif id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $person->user->email }}" autocomplete="email">
+                                <small class="text-danger">@if($person->user->email_verified_at !== null) {{ 'Emails are no longer editable once verified.' }} @endif </small>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -347,8 +347,8 @@
                             <label for="username" class="col-md-3 col-form-label text-md-right">{{ __('Username') }}</label>
 
                             <div class="col-md-8">
-                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') ?? $person->user->username }}" autocomplete="username">
-                                <small><em>{{ __('Spaces are not allowed.') }}</em></small>
+                                <input @if($person->user->email_verified_at !== null) {{ 'readonly' }} @endif id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') ?? $person->user->username }}" autocomplete="username">
+                                <small class="text-danger">@if($person->user->email_verified_at !== null) {{ 'Usernames are no longer editable once verified.' }} @endif </small>
 
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
