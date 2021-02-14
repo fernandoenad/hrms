@@ -49,7 +49,7 @@
                             @endif">
                             <a href="{{ route('ictu.people') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>Non Employees</p>
+                                <p>People</p>
                             </a>
                         </li>
 
@@ -60,6 +60,31 @@
                             <a href="{{ route('ictu.employees') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Employees</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ictu.support') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ictu.support') }}" class="nav-link">
+                                <i class="nav-icon fas fa-life-ring"></i>
+                                <p>Support Mgmt</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ictu.requests') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ictu.requests') }}" class="nav-link">
+                                <i class="nav-icon fas fa-inbox"></i>
+                                <p>Requests Mgmt</p>
+                                <span class="badge badge-danger float-right">
+                                    <div id="accountrequest-new">
+                                        {{ number_format(App\Models\AccountRequest::where('status', '=', 1)->count(), 0) }} New
+                                    </div>
+                                </span>
                             </a>
                         </li>
 

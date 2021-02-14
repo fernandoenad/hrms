@@ -22,11 +22,9 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $people = $this->getList();
-        $people_count = $people->count();
-        $people = $people->paginate(15);
+        $people = $this->getList()->paginate(15);
         
-        return view('ictu.people.index', compact('people', 'people_count'));
+        return view('ictu.people.index', compact('people'));
     }
 
     public function search()
@@ -44,9 +42,6 @@ class PersonController extends Controller
                     ->orderBy('lastname', 'asc')
                     ->orderBy('firstname', 'asc');
             })
-            ->whereNotIn('people.id', function($query){
-                $query->select('person_id')->from('employees');
-            })
             ->paginate(15);
 
         $people = $people->appends(['searchString' => $searchString]);
@@ -56,11 +51,8 @@ class PersonController extends Controller
 
     public function getList()
     {
-        $people = Person::whereNotIn('people.id', function($query){
-            $query->select('person_id')->from('employees');
-        })
-        ->orderBy('lastname', 'asc')
-        ->orderBy('firstname', 'asc');
+        $people = Person::orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc');
 
         return $people;
     }

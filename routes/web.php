@@ -46,6 +46,8 @@ use App\Http\Controllers\ICTU\PersonController as ICTUPersonController;
 use App\Http\Controllers\ICTU\EmployeeController as ICTUEmployeeController;
 use App\Http\Controllers\ICTU\UserRoleController;
 use App\Http\Controllers\ICTU\UserController as ICTUUserController;
+use App\Http\Controllers\ICTU\SupportController;
+use App\Http\Controllers\ICTU\RequestController;
 
 use App\Http\Controllers\RMS\RMSController;
 use App\Http\Controllers\RMS\PersonController as RMSPersonController;
@@ -349,6 +351,27 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::any('/ictu/employees/search', [ICTUEmployeeController::class, 'search'])->name('ictu.employees.search');
         Route::get('/ictu/employees/{employee}', [ICTUEmployeeController::class, 'show'])->name('ictu.employees.show');
         Route::get('/ictu/employees', [ICTUEmployeeController::class, 'index'])->name('ictu.employees');
+
+        Route::any('/ictu/support/search', [SupportController::class, 'search'])->name('ictu.support.search');
+        Route::get('/ictu/support/create', [SupportController::class, 'create'])->name('ictu.support.create');
+        Route::get('/ictu/support/{post}/edit', [SupportController::class, 'edit'])->name('ictu.support.edit');
+        Route::delete('/ictu/support/{post}', [SupportController::class, 'destroy'])->name('ictu.support.destroy');
+        Route::patch('/ictu/support/{post}', [SupportController::class, 'update'])->name('ictu.support.update');
+        Route::get('/ictu/support/{post}', [SupportController::class, 'show'])->name('ictu.support.show');
+        Route::post('/ictu/support', [SupportController::class, 'store'])->name('ictu.support.store');
+        Route::get('/ictu/support', [SupportController::class, 'index'])->name('ictu.support');
+
+        Route::any('/ictu/requests/activations', [RequestController::class, 'activations'])->name('ictu.requests.activations');
+        Route::any('/ictu/requests/search', [RequestController::class, 'search'])->name('ictu.requests.search');
+        Route::get('/ictu/requests/display-new', [RequestController::class, 'display'])->name('ictu.requests.display-new');
+        Route::get('/ictu/requests/display-pending', [RequestController::class, 'display'])->name('ictu.requests.display-pending');
+        Route::get('/ictu/requests/display-resolved', [RequestController::class, 'display'])->name('ictu.requests.display-resolved');
+        Route::get('/ictu/requests/{accountrequest}', [RequestController::class, 'edit'])->name('ictu.requests.edit');
+        Route::patch('/ictu/requests/{accountrequest}', [RequestController::class, 'update'])->name('ictu.requests.update');
+        Route::get('/ictu/requests/{accountrequest}/reset-password', [RequestController::class, 'resetpassword'])->name('ictu.requests.reset-password');
+        Route::get('/ictu/requests/{accountrequest}/verify-email', [RequestController::class, 'verifyemail'])->name('ictu.requests.verify-email');
+
+        Route::get('/ictu/requests', [RequestController::class, 'index'])->name('ictu.requests');
 
         Route::get('/ictu/roles', [ICTUController::class, 'index'])->name('ictu.roles');
 

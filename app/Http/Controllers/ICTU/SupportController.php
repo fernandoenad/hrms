@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\PS;
+namespace App\Http\Controllers\ICTU;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class PostController extends Controller
+class SupportController extends Controller
 {
     public function __construct()
     {
@@ -21,15 +21,26 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('ps.rms.posts.index');
+        $posts = Post::where('type', '=', 'Help')
+            ->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('ictu.support.index', compact('posts'));
     }
 
-    public function type($type)
+    public function search()
     {
-        $posts = Post::where('type', '=', $type)
-            ->orderBy('created_at', 'desc')->get();
+        $str = request()->get('str');
 
-        return view('ps.rms.posts.index', compact('posts'));
+        $posts = Post::where('type', '=', 'Help')
+            ->where(function ($query) use ($str){
+                $query->where('title', 'like', '%' . $str . '%')
+                    ->orWhere('title', 'like', '%' . $str . '%');
+            })
+            ->orderBy('created_at', 'desc')->paginate(15);
+
+        $posts = $posts->appends(['str' => $str]);
+
+        return view('ictu.support.index', compact('posts'));
     }
 
     /**
@@ -39,7 +50,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('ps.rms.posts.create');
+        return view('ictu.support.create');
     }
 
     /**
@@ -58,37 +69,36 @@ class PostController extends Controller
 
         $post = Post::create($data);
 
-        return redirect()->route('ps.rms.posts-show', compact('post'))->with('status', 'Posting was successful.');
+        return redirect()->route('ictu.support.show', compact('post'))->with('status', 'Posting was successful.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post $post
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
     {
-        return view('ps.rms.posts.show', compact('post'));
-
+        return view('ictu.support.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post $post
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
     {
-        return view('ps.rms.posts.edit', compact('post'));
+        return view('ictu.support.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post $post
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function update(Post $post)
@@ -101,21 +111,19 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('ps.rms.posts-show', compact('post'))->with('status', 'Post modification was successful.');
+        return redirect()->route('ictu.support.show', compact('post'))->with('status', 'Post modification was successful.');       
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post $post
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
-        $type = $post->type;
         $post->delete();
 
-        return redirect()->route('ps.rms.posts', compact('type'))->with('status', 'Post deletion was successful.');
-     
+        return redirect()->route('ictu.support')->with('status', 'Post deletion was successful.');
     }
 }

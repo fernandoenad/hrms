@@ -94,7 +94,7 @@
                                                 @if(isset($person->employee))
                                                     {{ __('Employee') }}
                                                 @else
-                                                    {{ __('Nony Employee') }}
+                                                    {{ __('Non-Employee') }}
                                                 @endif
                                             </td>
                                             <td>{{ $person->created_at }}</td>

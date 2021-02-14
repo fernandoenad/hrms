@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AccountRequest;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,10 @@ class HomeController extends Controller
      */
     public function help()
     {
-        return view('home.help');
+        $posts = Post::where('type', '=', 'Help')
+            ->orderBy('created_at', 'desc')->paginate(4);
+
+        return view('home.help', compact('posts'));
     }
 
     public function track()
@@ -35,8 +39,18 @@ class HomeController extends Controller
 
     public function search()
     {
-      
-        return view('home.help');
+        $str = request()->get('str');
+
+        $posts = Post::where('type', '=', 'Help')
+            ->where(function ($query) use ($str){
+                $query->where('title', 'like', '%' . $str . '%')
+                    ->orWhere('title', 'like', '%' . $str . '%');
+            })
+            ->orderBy('created_at', 'desc')->paginate(15);
+
+        $posts = $posts->appends(['str' => $str]);
+
+        return view('home.help', compact('posts'));
     }
 
     public function apps()

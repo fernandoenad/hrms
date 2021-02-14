@@ -7,7 +7,7 @@
                 <form class="form-inline" method="post" action="{{ route('help.search') }}">
                     @csrf
                     <div class="input-group input-group-md">
-                        <input id="str" name="str" class="form-control form-control-navbar @error('str') is-invalid @enderror" value="{{ old('str') ?? request()->get('str') }}" autocomplete="id" type="search" placeholder="Search topic" aria-label="str">
+                        <input id="str" name="str" class="form-control form-control-navbar @error('str') is-invalid @enderror" value="{{ old('str') ?? request()->get('str') }}" autocomplete="id" type="search" placeholder="Search article" aria-label="str">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search"></i>
