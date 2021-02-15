@@ -37,7 +37,9 @@
             <?php $userlogs =  Auth::user()->userlog()->select('sessionkey')
                 ->groupBy('sessionkey')
                 ->take(5)
+                ->orderBy('created_at', 'desc')
                 ->get(); ?>
+
             @foreach($userlogs as $userlog)
             <li class="nav-item">
                 <a href="#" class="nav-link">

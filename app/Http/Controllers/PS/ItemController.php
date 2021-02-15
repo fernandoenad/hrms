@@ -198,6 +198,7 @@ class ItemController extends Controller
     {
         $data = request()->validate([
             'itemno' => ['required', 'string', 'min:25', 'max:255', 'regex:/^[a-zA-Z0-9-]*$/', Rule::unique('items')->ignore($item->id)],
+            'level' => ['required'],
             'creationdate' => ['required', 'date', 'before: today'],
             'position' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
             'salarygrade' => ['required'],

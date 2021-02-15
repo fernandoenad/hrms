@@ -114,11 +114,11 @@
                         <tbody>
                             <tr>
                                 <th>{{ __('Current') }}</th>
-                                <td>{{ $person->address->current }} ({{ $person->address->currentzip }})</td>
+                                <td>{{ $person->address->current ?? '' }} ({{ $person->address->currentzip ?? '' }})</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Permanent') }}</th>
-                                <td>{{ $person->address->permanent }} ({{ $person->address->permanentzip }})</td>
+                                <td>{{ $person->address->permanent ?? '' }} ({{ $person->address->permanentzip ?? '' }})</td>
                             </tr>
                         </tbody>
                     </table>
