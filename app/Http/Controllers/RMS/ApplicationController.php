@@ -10,6 +10,7 @@ use App\Models\Dropdown;
 use App\Models\Station;
 use App\Models\Vacancy;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ApplicationController extends Controller
@@ -76,14 +77,16 @@ class ApplicationController extends Controller
             ]);
 
         if(request()->pertdoc_soft != '-'){
-            $uploadedFile = request()->validate(['pertdoc_soft' => ['required', 'mimes:pdf'], ]);
-            $filePath = $uploadedFile['pertdoc_soft']->store('docs', 'public');
+            $uploadedFile = request()->validate(['pertdoc_soft' => ['required', 'mimes:pdf', 'max:2000'], ]);
+            $ext = request()->file('pertdoc_soft')->extension();
+            $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
+                        
         } else 
             $filePath = '-';
 
         $application = $person->application()->create(array_merge($data, [
             'code' => strtotime(now()),
-            'pertdoc_soft' => $filePath,
+            'pertdoc_soft' => str_replace('public', '', $path),
             'pertdoc_hard' => 0,
             'status' => 1,
             ]));

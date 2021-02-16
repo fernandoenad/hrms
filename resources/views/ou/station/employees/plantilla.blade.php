@@ -1,23 +1,23 @@
-@extends('layouts.ps')
+@extends('layouts.oust')
 
 @section('content')    
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Items</h1>
+                <h1 class="m-0 text-dark">Plantilla</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active"><a href="{{ route('my') }}">Home</a></li>
-                    <li class="breadcrumb-item active">Items</li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }} </a></li>
+                    <li class="breadcrumb-item active">Plantilla</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-md-9">
             <div class="row">
@@ -28,9 +28,11 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Active</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.items.active') }}">
-                                    {{ number_format($items_a, 0) }}
-                                </a>
+                                {{ number_format(
+                                    App\Models\Item::join('employees', 'items.id', '=', 'employees.item_id')
+                                        ->where('items.station_id', '=', $station->id)
+                                        ->where('status', '=', 1)->count()
+                                    , 0) }}
                             </span>
                         </div>
                     </div>
@@ -43,9 +45,14 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Unfilled</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.items.unfilled') }}">
-                                    {{ number_format($items_un, 0) }}
-                                </a>
+                                {{ number_format(
+                                    App\Models\Item::whereNotIn('items.id', function($query){
+                                            $query->select('item_id')->from('employees');
+                                            })
+                                        ->where('items.station_id', '=', $station->id)
+                                        ->where('status', '=', 1)
+                                        ->count()
+                                    , 0) }}
                             </span>
                         </div>
                     </div>
@@ -58,35 +65,57 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Deactivated</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ps.items.deactivated') }}">
-                                    {{ number_format($items_da, 0) }}
-                                </a>
+                                {{ number_format(
+                                    App\Models\Item::join('employees', 'items.id', '=', 'employees.item_id')
+                                        ->where('items.station_id', '=', $station->id)
+                                        ->where('status', '=', 0)->count()
+                                    , 0) }}
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="card card-outline card-primary">
+                <div class="card-header">
+                    Item List
+                </div>
+
                 <div class="card-body p-0">
                     <div class="table-responsive">
+                        <small>
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Item #</th>
                                     <th>Plantilla Position (SG) /  Station</th>
                                     <th>Current Appointment / Station</th>
                                 </tr>
                             </thead>
+                            <tbody>
                                 @if(sizeof($items) > 0)
+                                    <?php $i=1; ?>
                                     @foreach($items as $item)
                                         <tr>
+                                            <td>{{ $i++ }}</td>
                                             <td>
-                                                <strong>
-                                                    <a href="{{ route('ps.items.show', $item->id) }}">{{ $item->itemno }}</a>
+                                                <div id="accordion" >
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne{{ $item->id }}">
+                                                        <strong>{{ $item->itemno }}</strong>
+                                                    </a>
                                                     <br>
                                                     @if($item->status == 'Inactive') {{ __('Deactivated') }} @endif
-                                                </strong>
+                                                    <div id="collapseOne{{ $item->id }}" class="panel-collapse collapse in">
+                                                        Type: <strong>{{ $item->employeetype ?? ''  }}</strong> <br>
+                                                        Level: <strong>{{ $item->level ?? ''  }}</strong> <br>
+                                                        Creation: <strong>{{ $item->creationdate ?? ''  }}</strong> <br>
+                                                        Appointment: <strong>{{ $item->appointmentdate ?? '-'  }}</strong> <br>
+                                                        First Day: <strong>{{ $item->firstdaydate ?? '-'  }}</strong> <br>
+                                                        Confirmation: <strong>{{ $item->confirmationdate ?? '-'  }}</strong> <br>
+                                                        Remarks: <strong>{{ $item->remarks ?? '-'  }}</strong> <br>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 <strong>{{ $item->position }} ({{ $item->salarygrade }})</strong>
@@ -95,24 +124,24 @@
                                                     
                                                     {{ $item->station->name }} ({{ $item->station->code }})
                                                 @else
-                                                    {{ __('Unassigned Item') }}
+                                                    <strong class="text-danger">{{ __('Unassigned Item') }}</strong>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if(isset($item->employee))
                                                     <strong>
-                                                        <a href="{{ route('ps.employees.show', $item->employee->id) }}">
+                                                        <a href="{{ route('ou.station.employees.show', [$station->id, $item->employee->id]) }}">
                                                             {{ $item->employee->person->getFullnameSorted() }}
                                                         </a>
                                                     </strong>                                                   
                                                 @else
-                                                    {{ __('Unfilled Item') }}
+                                                    <strong class="text-danger">{{ __('Unfilled Item') }}</strong>
                                                 @endif
                                                 <br>
                                                 @if(isset($item->deployment->station))
                                                     {{ $item->deployment->station->name }} ({{ $item->deployment->station->code }})
                                                 @else
-                                                    {{ __('Undeployed Item') }}
+                                                    <strong class="text-danger">{{ __('Undeployed Item') }}</strong>
                                                 @endif
                                             </td>                                        
                                         </tr>
@@ -122,23 +151,21 @@
                                         <td colspan="5">{{ __('No record was found.') }}</td>
                                     </tr>
                                 @endif
-                            <tbody>
+                            </tbody>
                         </table>
+                        </small>
                     </div>
                 </div>
-
-                <div class="card-footer clearfix">
-                    <div class="float-right">
-                        {!! $items->render() !!}
-                    </div>
+                <div class="card-footer p-2">
+                    <span class="float-right">{{ $items->links() }}</span>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
-            @include('ps.items._tools')
-        </div>        
+            @include('ou.station.employees._tools')
+        </div>
     </div>
 </div>
-@endsection
 
+@endsection

@@ -155,13 +155,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
-    public function getStation()
-    {
-        $station = Auth::user()->person->employee->item->deployment->station;
-        
-        return $station;
-    }
-
     public function isEmployeeOfStation($station_id)
     {
         $result = $this->person->employee->item->deployment->where('station_id', '=', $station_id)
@@ -175,6 +168,13 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return false;
+    }
+
+    public function getStations()
+    {
+        $stations = Station::where('person_id', '=', $this->person->id);
+
+        return $stations;
     }
     
 }

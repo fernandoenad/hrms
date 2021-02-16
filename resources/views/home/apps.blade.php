@@ -2,17 +2,17 @@
 
 @section('content')    
 <div class="content-header">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">{{ __('Welcome!')}}</h1>
+                <h1 class="m-0 text-dark">{{ __('Welcome to HRMS Apps!')}}</h1>
             </div>
         </div>
     </div>
 </div>
 
 <div class="content">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             @if (session('error'))
                 <div class="alert alert-danger">
@@ -115,8 +115,8 @@
                     <span class="info-box-icon"><i class="fas fa-school"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Station / Unit </span>
-                        <span class="info-box-number"><a href="#" onClick="return confirm('Page under construction...'); return false" class="text-white">Access the app</a></span>
+                        <span class="info-box-text">Organizational Unit </span>
+                        <span class="info-box-number"><a href="#" onClick="return confirm('Page under construction...');" class="text-white">Access the app</a></span>
                     </div>
                 </div>
             </div>

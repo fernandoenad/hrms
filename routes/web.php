@@ -53,7 +53,11 @@ use App\Http\Controllers\RMS\RMSController;
 use App\Http\Controllers\RMS\PersonController as RMSPersonController;
 use App\Http\Controllers\RMS\ApplicationController;
 
-use App\Http\Controllers\Station\StationController as STSTationController;
+use App\Http\Controllers\OU\OUController;
+use App\Http\Controllers\OU\StationController as OUStationController;
+use App\Http\Controllers\OU\STEmployeeController;
+use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
+
 
 use App\Http\Controllers\HomeController;
 
@@ -348,8 +352,6 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::any('/ictu/people/search', [ICTUPersonController::class, 'search'])->name('ictu.people.search');
         Route::get('/ictu/people/{person}/edit-credentials', [ICTUPersonController::class, 'editcredentials'])->name('ictu.people.edit-credentials');
         Route::post('/ictu/people/{person}', [ICTUPersonController::class, 'updatecredentials'])->name('ictu.people.update-credentials');
-        Route::get('/ictu/people/{person}/delete', [ICTUPersonController::class, 'delete'])->name('ictu.people.delete');
-        Route::delete('/ictu/people/{person}', [ICTUPersonController::class, 'destroy'])->name('ictu.people.destroy');
         Route::get('/ictu/people/{person}/reset', [ICTUPersonController::class, 'reset'])->name('ictu.people.reset');
         Route::patch('/ictu/people/{person}', [ICTUPersonController::class, 'update'])->name('ictu.people.update');
         Route::get('/ictu/people/{person}', [ICTUPersonController::class, 'show'])->name('ictu.people.show');
@@ -383,6 +385,9 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ictu/roles', [ICTUController::class, 'index'])->name('ictu.roles');
 
         Route::middleware(['access.ictu'])->group(function () {
+            Route::get('/ictu/people/{person}/delete', [ICTUPersonController::class, 'delete'])->name('ictu.people.delete');
+            Route::delete('/ictu/people/{person}', [ICTUPersonController::class, 'destroy'])->name('ictu.people.destroy');
+     
             Route::get('/ictu/users/create', [ICTUUserController::class, 'create'])->name('ictu.users.create');
             Route::any('/ictu/users/search', [ICTUUserController::class, 'search'])->name('ictu.users.search');
             Route::any('/ictu/users/lookup', [ICTUUserController::class, 'lookup'])->name('ictu.users.lookup');
@@ -410,12 +415,21 @@ Route::middleware(['default.password', 'verified'])->group(function () {
     });
 });
 
+Route::get('/ou/office/', [OUController::class, 'offfice'])->name('ou.office');
 
+Route::any('/ou/station/{station}/employees/search', [STEmployeeController::class, 'search'])->name('ou.station.employees.search');
+Route::get('/ou/station/{station}/employees/items/{pagination}', [STEmployeeController::class, 'items'])->name('ou.station.employees.items');
+Route::get('/ou/station/{station}/employees/plantilla/{pagination}', [STEmployeeController::class, 'plantilla'])->name('ou.station.employees.plantilla');
+Route::get('/ou/station/{station}/employees/filter/{position}', [STEmployeeController::class, 'filter'])->name('ou.station.employees.filter');
+Route::get('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'show'])->name('ou.station.employees.show');
+Route::get('/ou/station/{station}/employees/{employee}/edit', [STEmployeeController::class, 'edit'])->name('ou.station.employees.edit');
+Route::get('/ou/station/{station}/employees/{employee}/move', [STEmployeeController::class, 'move'])->name('ou.station.employees.move');
 
-Route::get('/station/{station}/employees/{employee}', [EmployeeController::class, 'show'])->name('station.employees.show');
-Route::get('/station/{station}/employees', [EmployeeController::class, 'show'])->name('station.employees');
-Route::get('/station/{station}', [STSTationController::class, 'show'])->name('station.show');
-Route::get('/station', [STSTationController::class, 'index'])->name('station');
+Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
+
+Route::get('/ou/station/{station}', [OUStationController::class, 'index'])->name('ou.station.show');
+Route::get('/ou/station/', [OUController::class, 'station'])->name('ou.station');
+Route::get('/ou', [OUController::class, 'index'])->name('ou');
 
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');

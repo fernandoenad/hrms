@@ -15,7 +15,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('rs') }}">Station / Unit</a>
+                    <a class="nav-link" href="{{ route('ou.station') }}">Station / Unit</a>
                 </li>
             </ul>
 
@@ -34,14 +34,34 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item 
-                            @if(Route::currentRouteName() == 'station') 
+                            @if(Route::currentRouteName() == 'ou.station.show') 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('rs') }}" class="nav-link">
+                            <a href="{{ route('ou.station') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li> 
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ou.station.employees') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Employees</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ou.station.employees.aol') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                                <i class="nav-icon fas fa-inbox"></i>
+                                <p>Leave Applications</p>
+                            </a>
+                        </li>
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'rs.employees') !== false) 
@@ -49,7 +69,7 @@
                             @endif">
                             <a href="{{ route('rs.employees') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>Employees</p>
+                                <p>Applicants</p>
                             </a>
                         </li>
 
