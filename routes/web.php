@@ -164,6 +164,31 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ps/items', [ItemController::class, 'store'])->name('ps.items.store');
         Route::get('/ps/items', [ItemController::class, 'index'])->name('ps.items');
 
+        Route::get('/ps/rms/posts/show/{post}/edit', [PostController::class, 'edit'])->name('ps.rms.posts-edit');
+        Route::delete('/ps/rms/posts/show/{post}', [PostController::class, 'destroy'])->name('ps.rms.posts-destroy');
+        Route::patch('/ps/rms/posts/show/{post}', [PostController::class, 'update'])->name('ps.rms.posts-update');
+        Route::get('/ps/rms/posts/show/{post}', [PostController::class, 'show'])->name('ps.rms.posts-show');
+        Route::get('/ps/rms/posts/{type}', [PostController::class, 'type'])->name('ps.rms.posts');
+        Route::get('/ps/rms/posts/create/{type}', [PostController::class, 'create'])->name('ps.rms.posts-create');
+        Route::post('/ps/rms/posts', [PostController::class, 'store'])->name('ps.rms.posts-store');
+
+        Route::get('/ps/rms/vacancies/create/', [VacancyController::class, 'create'])->name('ps.rms.vacancies-create');
+        Route::get('/ps/rms/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->name('ps.rms.vacancies-edit');
+        Route::delete('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->name('ps.rms.vacancies-destroy');
+        Route::patch('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('ps.rms.vacancies-update');            
+        Route::get('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'show'])->name('ps.rms.vacancies-show');
+        Route::get('/ps/rms/vacancies', [VacancyController::class, 'index'])->name('ps.rms.vacancies');
+        Route::post('/ps/rms/vacancies', [VacancyController::class, 'store'])->name('ps.rms.vacancies-store');
+
+        Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}/take-action', [PSApplicationController::class, 'takeaction'])->name('ps.rms.applications-show.take-action');
+        Route::patch('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'actiontaken'])->name('ps.rms.applications-show.action-taken');
+        Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'show'])->name('ps.rms.applications-show');
+        Route::get('/ps/rms/applications/{cycle}/{vacancy}', [PSApplicationController::class, 'showvacancy'])->name('ps.rms.applications-show-vacancy');
+        Route::get('/ps/rms/applications/{cycle}/', [PSApplicationController::class, 'showcycle'])->name('ps.rms.applications-show-cycle');
+        Route::any('/ps/rms/applications/search', [PSApplicationController::class, 'search'])->name('ps.rms.applications-search');
+        Route::get('/ps/rms/applications', [PSApplicationController::class, 'index'])->name('ps.rms.applications');
+        Route::get('/ps/rms', [PSRMSController::class, 'index'])->name('ps.rms');
+
         Route::any('/ps/search', [PSController::class, 'search'])->name('ps.search');
         Route::get('/ps', [PSController::class, 'index'])->name('ps');
 
@@ -201,34 +226,6 @@ Route::middleware(['default.password', 'verified'])->group(function () {
             Route::patch('/ps/items/{item}/activate-done', [ItemController::class, 'activatedone'])->name('ps.items.activate-done');
             Route::get('/ps/items/{item}/deactivate', [ItemController::class, 'deactivate'])->name('ps.items.deactivate');
             Route::patch('/ps/items/{item}/deactivate-done', [ItemController::class, 'deactivatedone'])->name('ps.items.deactivate-done');
-            
-            Route::get('/ps/rms/posts/show/{post}/edit', [PostController::class, 'edit'])->name('ps.rms.posts-edit');
-            Route::delete('/ps/rms/posts/show/{post}', [PostController::class, 'destroy'])->name('ps.rms.posts-destroy');
-            Route::patch('/ps/rms/posts/show/{post}', [PostController::class, 'update'])->name('ps.rms.posts-update');
-            Route::get('/ps/rms/posts/show/{post}', [PostController::class, 'show'])->name('ps.rms.posts-show');
-            Route::get('/ps/rms/posts/{type}', [PostController::class, 'type'])->name('ps.rms.posts');
-            Route::get('/ps/rms/posts/create/{type}', [PostController::class, 'create'])->name('ps.rms.posts-create');
-            Route::post('/ps/rms/posts', [PostController::class, 'store'])->name('ps.rms.posts-store');
- 
-            Route::get('/ps/rms/vacancies/create/', [VacancyController::class, 'create'])->name('ps.rms.vacancies-create');
-            Route::get('/ps/rms/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->name('ps.rms.vacancies-edit');
-            Route::delete('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->name('ps.rms.vacancies-destroy');
-            Route::patch('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('ps.rms.vacancies-update');            
-            Route::get('/ps/rms/vacancies/{vacancy}', [VacancyController::class, 'show'])->name('ps.rms.vacancies-show');
-            Route::get('/ps/rms/vacancies', [VacancyController::class, 'index'])->name('ps.rms.vacancies');
-            Route::post('/ps/rms/vacancies', [VacancyController::class, 'store'])->name('ps.rms.vacancies-store');
-
-            Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}/take-action', [PSApplicationController::class, 'takeaction'])->name('ps.rms.applications-show.take-action');
-            Route::patch('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'actiontaken'])->name('ps.rms.applications-show.action-taken');
-            Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'show'])->name('ps.rms.applications-show');
-            Route::get('/ps/rms/applications/{cycle}/{vacancy}', [PSApplicationController::class, 'showvacancy'])->name('ps.rms.applications-show-vacancy');
-            Route::get('/ps/rms/applications/{cycle}/', [PSApplicationController::class, 'showcycle'])->name('ps.rms.applications-show-cycle');
-            Route::any('/ps/rms/applications/search', [PSApplicationController::class, 'search'])->name('ps.rms.applications-search');
-            Route::get('/ps/rms/applications', [PSApplicationController::class, 'index'])->name('ps.rms.applications');
-
-            Route::get('/ps/rms', [PSRMSController::class, 'index'])->name('ps.rms');
-
-
         });
     });
 
@@ -382,7 +379,16 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
         Route::get('/ictu/requests', [RequestController::class, 'index'])->name('ictu.requests');
 
-        Route::get('/ictu/roles', [ICTUController::class, 'index'])->name('ictu.roles');
+        Route::get('/ictu/roles/create', [UserRoleController::class, 'create'])->name('ictu.roles.create');
+        Route::any('/ictu/roles/search', [UserRoleController::class, 'search'])->name('ictu.roles.search');
+        Route::any('/ictu/roles/lookup', [UserRoleController::class, 'lookup'])->name('ictu.roles.lookup');
+        Route::get('/ictu/roles/{userrole}/edit', [UserRoleController::class, 'edit'])->name('ictu.roles.edit');
+        Route::get('/ictu/roles/{userrole}/confirm-delete', [UserRoleController::class, 'confirmDelete'])->name('ictu.roles.confirm-delete');
+        Route::delete('/ictu/roles/{userrole}', [UserRoleController::class, 'delete'])->name('ictu.roles.delete');
+        Route::patch('/ictu/roles/{userrole}', [UserRoleController::class, 'update'])->name('ictu.roles.update');
+        Route::get('/ictu/roles/{userrole}', [UserRoleController::class, 'show'])->name('ictu.roles.show');
+        Route::post('/ictu/roles', [UserRoleController::class, 'store'])->name('ictu.roles.store');
+        Route::get('/ictu/roles', [UserRoleController::class, 'index'])->name('ictu.roles');
 
         Route::middleware(['access.ictu'])->group(function () {
             Route::get('/ictu/people/{person}/delete', [ICTUPersonController::class, 'delete'])->name('ictu.people.delete');
@@ -398,17 +404,6 @@ Route::middleware(['default.password', 'verified'])->group(function () {
             Route::get('/ictu/users/{userrole}', [ICTUUserController::class, 'show'])->name('ictu.users.show');
             Route::post('/ictu/users', [ICTUUserController::class, 'store'])->name('ictu.users.store');
             Route::get('/ictu/users', [ICTUUserController::class, 'index'])->name('ictu.users');
-
-            Route::get('/ictu/roles/create', [UserRoleController::class, 'create'])->name('ictu.roles.create');
-            Route::any('/ictu/roles/search', [UserRoleController::class, 'search'])->name('ictu.roles.search');
-            Route::any('/ictu/roles/lookup', [UserRoleController::class, 'lookup'])->name('ictu.roles.lookup');
-            Route::get('/ictu/roles/{userrole}/edit', [UserRoleController::class, 'edit'])->name('ictu.roles.edit');
-            Route::get('/ictu/roles/{userrole}/confirm-delete', [UserRoleController::class, 'confirmDelete'])->name('ictu.roles.confirm-delete');
-            Route::delete('/ictu/roles/{userrole}', [UserRoleController::class, 'delete'])->name('ictu.roles.delete');
-            Route::patch('/ictu/roles/{userrole}', [UserRoleController::class, 'update'])->name('ictu.roles.update');
-            Route::get('/ictu/roles/{userrole}', [UserRoleController::class, 'show'])->name('ictu.roles.show');
-            Route::post('/ictu/roles', [UserRoleController::class, 'store'])->name('ictu.roles.store');
-            Route::get('/ictu/roles', [UserRoleController::class, 'index'])->name('ictu.roles');
         });
 
         Route::get('/ictu', [ICTUController::class, 'index'])->name('ictu');

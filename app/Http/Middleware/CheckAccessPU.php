@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckAccessPU
 {
@@ -16,7 +17,9 @@ class CheckAccessPU
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->isAdmin('pu')) {
+        $user = Auth::user();
+
+        if (! $user->isAdmin('pu')) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);

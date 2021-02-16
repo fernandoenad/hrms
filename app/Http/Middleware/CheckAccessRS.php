@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckAccessRS
 {
@@ -16,7 +17,9 @@ class CheckAccessRS
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->isAdmin('rs')) {
+        $user = Auth::user();
+
+        if (! $user->isAdmin('rs')) {
             abort(401, 'This action is unauthorized.');
         }
         return $next($request);

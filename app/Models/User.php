@@ -123,19 +123,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin($route)
     {
-        $result = $this->userrole()->where('status', '=', 1)
-            ->where('route', 'like', $route)
-            ->where('role_id', '<', 3)
-            ->orWhere('role_id', '=', 1)
-            ->first();
+        $result = $this->userrole->where('route', 'like', $route)
+            ->where('role_id', '=', 2);
 
-        //dd($result->role_id);
-
-        if (isset($result)) 
-        {
+        if (sizeof($result) > 0)
             return true;
-        }
-
+        else if (Auth::user()->userrole->first()->role_id == 1)
+            return true;
         return false;
     }
 
