@@ -77,7 +77,7 @@ class ApplicationController extends Controller
             ]);
 
         if(request()->pertdoc_soft != '-'){
-            $uploadedFile = request()->validate(['pertdoc_soft' => ['required', 'mimes:pdf', 'max:2000'],]);
+            $uploadedFile = request()->validate(['pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],]);
             $ext = request()->file('pertdoc_soft')->extension();
             $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
             $path = str_replace('public', '', $path);
