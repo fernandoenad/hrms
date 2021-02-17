@@ -76,7 +76,7 @@
                                 <div class="col-md-8">
                                     <input id="pertdoc_soft" type="file" class="form-control-file @error('pertdoc_soft') is-invalid @enderror" name="pertdoc_soft" value="{{ old('pertdoc_soft') }}" autocomplete="pertdoc_soft">
                                     <small><em>Refer to the memorandum relevant to the job opening for details.</em></small>
-                                    <small><em class="text-danger">
+                                    <small><em class="text-mute">
                                         <br>
                                         Note: If your file is more than 2MB, please only submit a scanned copy of your 
                                         omnibus certification, and email the rest of your pertinent papers (<strong>in a single
