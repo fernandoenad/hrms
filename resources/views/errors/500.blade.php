@@ -26,8 +26,8 @@
                 <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Server error.</h3>
 
                 <p>
-                    The server encountered an error and can't process your request.<br>
-                    Meanwhile, you may <a href="{{ url()->previous() }}">return to previous page</a>.
+                    The server can't process your request.<br>
+                    Meanwhile, you may <a href="{{ url()->previous() }}">return to the previous page</a>.
                 </p>
             </div>
         </div>

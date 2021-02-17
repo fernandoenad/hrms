@@ -27,7 +27,7 @@
 
                 <p>
                     You are not authorized to access this feature.<br>
-                    Meanwhile, you may <a href="{{ url()->previous() }}">return to previous page</a>.
+                    Meanwhile, you may <a href="{{ url()->previous() }}">return to the previous page</a>.
                 </p>
             </div>
         </div>
