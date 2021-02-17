@@ -27,7 +27,7 @@
 
                 <p>
                     We could not find the page you were looking for.<br>
-                    Meanwhile, you may <a href="{{ route('my') }} ">return to dashboard</a>
+                    Meanwhile, you may <a href="{{ url()->previous() }}">return to previous page</a>.
                 </p>
             </div>
         </div>
