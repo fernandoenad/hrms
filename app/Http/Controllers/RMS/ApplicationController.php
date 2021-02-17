@@ -80,13 +80,14 @@ class ApplicationController extends Controller
             $uploadedFile = request()->validate(['pertdoc_soft' => ['required', 'mimes:pdf', 'max:2000'], ]);
             $ext = request()->file('pertdoc_soft')->extension();
             $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
+            $path = str_replace('public', '', $path);
                         
         } else 
-            $filePath = '-';
+            $path = '-';
 
         $application = $person->application()->create(array_merge($data, [
             'code' => strtotime(now()),
-            'pertdoc_soft' => str_replace('public', '', $path),
+            'pertdoc_soft' => $path,
             'pertdoc_hard' => 0,
             'status' => 1,
             ]));
