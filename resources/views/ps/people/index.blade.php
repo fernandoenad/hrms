@@ -37,6 +37,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-body p-0">
                     <div class="table-responsive">
+                        <small>
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
@@ -69,6 +70,7 @@
                                 @endif
                             </tbody>
                         </table>
+</small>
                     </div>
                 </div>
                 <div class="card-footer clearfix">

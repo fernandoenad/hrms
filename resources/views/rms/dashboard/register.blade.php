@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="content">
+<div class="content load-register-modal">
     <div class="container-fluid">
         <div class="row">
             @if (session('error'))
@@ -31,18 +31,6 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <div class="alert alert-warning">
-                                    Current employees of SDO Bohol may have had accounts already. 
-                                    Please try <a href="{{ route('login') }}" class="text-info">logging in instead</a> 
-                                    using your DepEd Email username (without the @deped.gov.ph) and 
-                                    use the default password "password" (without quote).
-                                </div>
-
-                                <div class="alert alert-danger">
-                                    Please verify information being filled out. Further modications, once 
-                                    submitted will no longer be allowed.
-                                </div>
-
                                 <form method="POST" action="{{ route('rms.account.store') }}">
                                     @csrf
 
@@ -447,6 +435,51 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="register-modal">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content bg-default">
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <strong>Disclaimer</strong>
+                    <p>
+                        By proceeding with accomplishing this Form, you
+                        give consent to the processing of your personal
+                        information by the SDO Bohol pursuant to 
+                        recruitment.
+                    </p>
+                    <p>
+                        <u>PLEASE REMEMBER</u> that accomplishing this online 
+                        form DOES NOT mean that you are already an 
+                        applicant. You have to apply first to the 
+                        position after registering.
+                    </p>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Notices</strong>
+                    <p>
+                        Current employees of SDO Bohol may have had accounts already. 
+                        Please try <a href="{{ route('login') }}" class="text-info">logging in instead</a> 
+                        using your DepEd Email username (without the @deped.gov.ph) and 
+                        use the default password "password" (without quote).
+                    </p>
+                </div>
+
+                <div class="alert alert-danger">
+                    <strong>Warning</strong>
+                    <p>
+                        Please verify information being filled out. Further modications, once 
+                        submitted will no longer be allowed.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer p-1">
+                <button type="button" class="btn btn-primary btn-sm float-right" data-dismiss="modal">Continue</button>
             </div>
         </div>
     </div>

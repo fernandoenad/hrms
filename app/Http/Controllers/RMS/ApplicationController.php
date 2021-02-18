@@ -77,7 +77,13 @@ class ApplicationController extends Controller
             ]);
 
         if(request()->pertdoc_soft != '-'){
-            $uploadedFile = request()->validate(['pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],]);
+            $uploadedFile = request()->validate([
+                'pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],
+            ],[
+                'pertdoc_soft.required' => 'The pertinent document field is required.',
+                'pertdoc_soft.mimes' => 'The pertinent document field should be in a pdf format.',
+                'pertdoc_soft.max' => 'The pertinent document field should be less than 45000 Kilobytes.'
+            ]);
             $ext = request()->file('pertdoc_soft')->extension();
             $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
             $path = str_replace('public', '', $path);

@@ -42,7 +42,8 @@ class PersonController extends Controller
                 ->where('extname', request()->extname)
                 //->where('sex', request()->sex)
                 //->where('dob', request()->dob)
-                ->where('civilstatus', request()->civilstatus)],
+                //->where('civilstatus', request()->civilstatus)
+                ],
             'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
@@ -57,6 +58,14 @@ class PersonController extends Controller
             ],
             [
             'firstname.unique' => 'Duplicate record alert! Try logging in by following instructions above.',
+            'dob.required' => 'The date of birth field is required.',
+            'dob.before' => 'The date of birth field should take place before :date.',
+            'civilstatus.required' => 'The civil status field is required.',
+            'primaryno.required' => 'The primary contact no field is required.',
+            'primaryno.min' => 'The primary contact no field must be at least :min characters.',
+            'primaryno.max' => 'The primary contact no field must be at most :max characters.',
+            'primaryno.regex' => 'The primary contact no format is invalid.',
+            'primaryno.unique' => 'The primary contact no field is already taken.',
         ]);
 
        

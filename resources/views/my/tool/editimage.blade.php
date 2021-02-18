@@ -77,17 +77,28 @@
                                             <a href="{{ route('my.tools') }}" class="btn btn-default">
                                                 {{ __('Cancel') }}
                                             </a>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" id="image-submit" class="btn btn-primary">
                                                 {{ __('Update Image') }}
                                             </button>
                                         </div>
-</form>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="progress-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content bg-default">
+            <div class="modal-body">
+                <strong class="text-center">Uploading media, please wait...</strong>
+            </div>
+            
         </div>
     </div>
 </div>

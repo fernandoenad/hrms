@@ -30,7 +30,7 @@
                             <span class="info-box-text">New Applications</span>
                             <span class="info-box-number">
                                 <a href="#">
-                                    {{ number_format($applications_new, 0) }}
+                                    {{ number_format(0, 0) }}
                                 </a>
                             </span>
                         </div>
@@ -101,6 +101,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
+                        <small>
                         <table class="table m-0 table-hover ">
                             <thead>
                                 <tr>
@@ -150,6 +151,7 @@
                                 @endif
                             </tbody>
                         </table>
+                        </small>
                     </div>
                 </div> 
                 <div class="card-footer p-1 pb-0">

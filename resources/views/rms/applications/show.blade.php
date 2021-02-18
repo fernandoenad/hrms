@@ -64,12 +64,9 @@
                                 </p>
                                 
                                 <ul class="ml-4 mb-0 fa-ul text-muted">
-                                    @if($application->vacancy->vacancylevel < 3)
-                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-school"></i></span> School applied for: {{ $application->station->code ?? '' }}- {{ $application->station->name ?? '' }}</li>
-                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> School head: {{ (isset($application->station->person) ? $application->station->person->getFullnameBox() : '') ?? '' }}</li>
-                                    @else
-                                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-paperclip"></i></span> Pertinent Document (Softcopy): <a href="{{ asset('storage/' . $application->pertdoc_soft) }}" target="_blank">{{ $application->pertdoc_soft ?? '' }}</a></li>
-                                    @endif
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-school"></i></span> School applied for: {{ $application->station->code ?? '' }}- {{ $application->station->name ?? '' }}</li>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> School head: {{ (isset($application->station->person) ? $application->station->person->getFullnameBox() : '') ?? '' }}</li>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-paperclip"></i></span> Pertinent Document (Softcopy): <a href="{{ asset('storage/' . $application->pertdoc_soft) }}" target="_blank">{{ $application->pertdoc_soft ?? '' }}</a></li>
                                 </ul>
                                 <br>
                             </div>
@@ -162,24 +159,22 @@
                                                     </div>
                                                 </li>
                                                 -->
-                                                <li>
-                                                    <div  class="icheck-primary d-inline ml-2">
-                                                        <input type="checkbox" value="" name="todo6" id="todoCheck6" @if($application->pertdoc_soft != '-') {{ 'checked'}} @endif disabled>
-                                                        <label for="todoCheck6"></label>
-                                                    </div>
-                                                    <span class="text">Pertinent Docs (Softcopy)</span>
-                                                </li>
+                                                
                                             @endif
-
-                                            @if($application->vacancy->vacancylevel < 3)
-                                                <li>
-                                                    <div  class="icheck-primary d-inline ml-2">
-                                                        <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
-                                                        <label for="todoCheck6"></label>
-                                                    </div>
-                                                    <span class="text">Pertinent Docs (Hardcopy)</span>
-                                                </li>
-                                            @endif
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" @if($application->pertdoc_soft != '-') {{ 'checked'}} @endif disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Pertinent Docs (Softcopy)</span>
+                                            </li>
+                                            <li>
+                                                <div  class="icheck-primary d-inline ml-2">
+                                                    <input type="checkbox" value="" name="todo6" id="todoCheck6" @if($application->status == 3) {{ 'checked'}} @endif disabled>
+                                                    <label for="todoCheck6"></label>
+                                                </div>
+                                                <span class="text">Confirmation</span>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

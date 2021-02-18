@@ -260,8 +260,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(sizeof($applicationlogs) > 0)
-                                        @foreach($applicationlogs as $applicationlog)
+                                    @if(sizeof($application->applicationlog) > 0)
+                                        @foreach($application->applicationlog as $applicationlog)
                                             <?php $data = json_decode($applicationlog->log, true); ?>
                                             <tr>
                                                 <td>{{ date('M d, Y h:i a', strtotime($applicationlog->created_at)) ?? ''}}</td>

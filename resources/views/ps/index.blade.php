@@ -68,6 +68,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
+                        <small>
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
@@ -106,9 +107,10 @@
                                 @endif
                             </tbody>
                         </table>
+                        </small>
                     </div>
                 </div>
-                <div class="card-footer clearfix">
+                <div class="card-footer p-2 pb-0">
                     <div class="float-right">
                         {!! $stations->render() !!}
                     </div>
