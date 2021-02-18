@@ -30,7 +30,7 @@
                             <span class="info-box-text">New Applications</span>
                             <span class="info-box-number">
                                 <a href="#">
-                                    {{ number_format(0, 0) }}
+                                    {{ number_format($applications_new, 0) }}
                                 </a>
                             </span>
                         </div>
