@@ -152,4 +152,12 @@ class RequestController extends Controller
 
         return redirect()->route('ictu.requests')->with('status', 'Account request was updated.');    
     }
+
+    public function getNewCounter()
+    {
+        $accountrequestcount_new = AccountRequest::where('status', '=', 1)
+            ->count();
+
+        return view('ictu.requests.counter', compact('accountrequestcount_new'));
+    }
 }

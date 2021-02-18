@@ -367,6 +367,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ictu/support', [SupportController::class, 'store'])->name('ictu.support.store');
         Route::get('/ictu/support', [SupportController::class, 'index'])->name('ictu.support');
 
+        Route::get('/ictu/requests/new-counter', [RequestController::class, 'getNewCounter'])->name('ictu.requests.new-counter');
         Route::any('/ictu/requests/activations', [RequestController::class, 'activations'])->name('ictu.requests.activations');
         Route::any('/ictu/requests/search', [RequestController::class, 'search'])->name('ictu.requests.search');
         Route::get('/ictu/requests/display-new', [RequestController::class, 'display'])->name('ictu.requests.display-new');

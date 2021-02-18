@@ -81,12 +81,17 @@
                                 <i class="nav-icon fas fa-inbox"></i>
                                 <p>Requests Mgmt</p>
                                 <span class="badge badge-danger float-right">
-                                    <div id="accountrequest-new">
+                                    <div id="request-new-counter">
                                         {{ number_format(App\Models\AccountRequest::where('status', '=', 1)->count(), 0) }} New
                                     </div>
                                 </span>
                             </a>
                         </li>
+                        <script>
+                            setInterval(function(){ 
+                                $('#request-new-counter').load('{{ route('ictu.requests.new-counter') }}');
+                                    }, 1000);
+                        </script>
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ictu.roles') !== false) 
