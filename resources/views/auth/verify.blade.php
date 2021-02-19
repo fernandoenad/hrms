@@ -73,7 +73,7 @@
                                 <div class="form-group row">
                                    <div class="col-md-12">
                                         <label for="remarks">{{ __('Correct Email') }}</label>
-                                        <input id="remarks" type="text" class="form-control @error('remarks') is-invalid @enderror" name="remarks" value="{{ old('remarks') }}" autocomplete="remarks">
+                                        <input id="verify-remarks" type="text" class="form-control @error('remarks') is-invalid @enderror" name="remarks" value="{{ old('remarks') }}" autocomplete="remarks">
   
                                         @error('remarks')
                                             <span class="invalid-feedback" role="alert">
