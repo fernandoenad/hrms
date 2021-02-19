@@ -107,7 +107,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name / Position Applied</th>
+                                    <th width="25%">Name / Position Applied</th>
                                     <th>Contact / Address</th> 
                                     <th>Position / Station / District</th>                                    
                                     <th>Submitted at / Status</th>
