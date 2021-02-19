@@ -103,7 +103,7 @@ class ApplicationController extends Controller
     public function show(Application $application)
     {
         $applicationlogs = $application->applicationlog()
-            ->orderBy('created_at', 'desc')->get();
+            ->orderBy('application_logs.created_at', 'desc')->get();
 
         return view('rms.applications.show', compact('application', 'applicationlogs'))->with('status', 'Application was submitted successfuly.');
     }
@@ -115,5 +115,43 @@ class ApplicationController extends Controller
         $application->delete();
 
         return redirect()->route('rms.application')->with('status', 'Application was withdrawn sucessfully.');
+    }
+
+    public function editdoc(Application $application)
+    {
+        $applicationlogs = $application->applicationlog()
+            ->orderBy('created_at', 'desc')->get();
+
+        return view('rms.applications.show', compact('application', 'applicationlogs'));
+    }
+
+    public function updatedoc(Application $application)
+    {
+        $person = Auth::user()->person;
+
+        $data = request()->validate([
+            'pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],
+            ],[
+            'pertdoc_soft.required' => 'The pertinent document field is required.',
+            'pertdoc_soft.mimes' => 'The pertinent document field should be in a pdf format.',
+            'pertdoc_soft.max' => 'The pertinent document field should be less than 45000 Kilobytes.'
+            ]);
+
+        $ext = request()->file('pertdoc_soft')->extension();
+        $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
+        $path = str_replace('public', '', $path);
+
+        $application->applicationlog()->create([
+            'action' => 'Update',
+            'log' => $application->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $application->update(array_merge($data,[
+            'pertdoc_soft' => $path,
+            'remarks' => 'Updated document',
+        ]));
+              
+        return redirect()->route('rms.application.show', compact('application'));
     }
 }

@@ -101,6 +101,8 @@ Route::post('/my/tools/reset-password', [PasswordSecurityController::class, 'res
 
 Route::middleware(['default.password', 'verified'])->group(function () {
     Route::get('/rms/application/{vacancy}/apply', [ApplicationController::class, 'apply'])->name('rms.application.apply');
+    Route::get('/rms/application/{application}/edit-doc', [ApplicationController::class, 'editdoc'])->name('rms.application.edit-doc');
+    Route::patch('/rms/application/{application}/update-doc', [ApplicationController::class, 'updatedoc'])->name('rms.application.update-doc');
     Route::get('/rms/application/{application}', [ApplicationController::class, 'show'])->name('rms.application.show');
     Route::delete('/rms/application/{application}', [ApplicationController::class, 'destroy'])->name('rms.application.destroy');
     Route::post('/rms/application', [ApplicationController::class, 'store'])->name('rms.application.store');

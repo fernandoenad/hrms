@@ -96,7 +96,8 @@
 
                         <li class="nav-item 
                             @if(Route::currentRouteName() == 'rms.application' ||
-                                Route::currentRouteName() == 'rms.application.show')
+                                Route::currentRouteName() == 'rms.application.show' ||
+                                Route::currentRouteName() == 'rms.application.edit-doc')
                                 {{ 'menu-open' }} @endif">
                             <a href="{{ route('rms.application') }}" class="nav-link">
                                 <i class="nav-icon fas fa-paper-plane"></i>

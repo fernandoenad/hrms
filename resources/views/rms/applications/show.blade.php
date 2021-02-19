@@ -69,8 +69,39 @@
                                     <li class="small"><span class="fa-li"><i class="fas fa-lg fa-school"></i></span> School applied for: {{ $application->station->code ?? '' }}- {{ $application->station->name ?? '' }}</li>
                                     <li class="small"><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> School head: {{ (isset($application->station->person) ? $application->station->person->getFullnameBox() : '') ?? '' }}</li>
                                     <li class="small"><span class="fa-li"><i class="fas fa-lg fa-paperclip"></i></span> Pertinent Document (Softcopy): <a href="{{ asset('storage/' . $application->pertdoc_soft) }}" target="_blank">{{ $application->pertdoc_soft ?? '' }}</a></li>
+                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-upload"></i></span> <a href="{{ route('rms.application.edit-doc', $application->id) }}">Update pertinent document</a></li>
                                 </ul>
                                 <br>
+                                @if(Route::currentRouteName() == 'rms.application.edit-doc')
+                                    <div class="card p-2">
+                                        <form id="form" method="POST" action="{{ route('rms.application.update-doc', $application->id) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <div class="form-group row">
+                                            <div class="col-md-8">
+                                                <input id="pertdoc_soft" type="file" class="form-control-file @error('pertdoc_soft') is-invalid @enderror" name="pertdoc_soft" value="{{ old('pertdoc_soft') }}" autocomplete="pertdoc_soft">
+                                            
+                                                @error('pertdoc_soft')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <button type="submit" id="apply-submit" class="btn btn-primary float-right">
+                                                    {{ __('Update document') }}
+                                                </button>
+                                                <a href="{{ route('rms.application.show', $application->id) }}" class="btn btn-default">
+                                                    {{ __('Cancel') }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                @endif                              
                             </div>
                             
                             <div class="col-md-5">
@@ -169,7 +200,9 @@
                                             <tr>
                                                 <td>{{ date('M d, Y h:i a', strtotime($applicationlog->created_at)) ?? ''}}</td>
                                                 <td>{{ $applicationlog->action ?? '' }}</td>
-                                                <td>{{ $data['remarks'] ?? ''}}</td>
+                                                <td>
+                                                    {{ $data['remarks'] ?? '' }}<br>
+                                                </td>
                                                 <td>{{ $applicationlog->user->name ?? ''}}</td>
                                             </tr>
                                         @endforeach
