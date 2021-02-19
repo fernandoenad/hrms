@@ -112,57 +112,6 @@
                                                 </div>
                                             </li>
 
-                                            @if($application->vacancy->vacancylevel == 3)
-                                                <!--
-                                                <li>
-                                                    <div  class="icheck-primary d-inline ml-2">
-                                                        <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
-                                                        <label for="todoCheck6"></label>
-                                                    </div>
-                                                    <span class="text">Educational Background</span>
-                                                    <div class="tools">
-                                                        <a href="#"><i class="fas fa-edit"></i></a>
-                                                    </div>
-                                                </li>
-                                                -->
-                                                @if(isset($application->person->employee))
-                                                    <!--
-                                                    <li>
-                                                        <div  class="icheck-primary d-inline ml-2">
-                                                            <input type="checkbox" value="" name="todo6" id="todoCheck6" @if(isset($application->person->employee)) {{ 'checked'}} @endif disabled>
-                                                            <label for="todoCheck6"></label>
-                                                        </div>
-                                                        <span class="text">Employment Record</span>
-                                                    </li>
-                                                    -->
-                                                @else
-                                                     <!--
-                                                    <li>
-                                                        <div  class="icheck-primary d-inline ml-2">
-                                                            <input type="checkbox" value="" name="todo6" id="todoCheck6" @if(isset($application->person->employee)) {{ 'checked'}} @endif disabled>
-                                                            <label for="todoCheck6"></label>
-                                                        </div>
-                                                        <span class="text">Employment Record</span>
-                                                        <div class="tools">
-                                                            <a href="#"><i class="fas fa-plus-square"></i></a>
-                                                        </div>
-                                                    </li>
-                                                    -->
-                                                @endif
-                                                <!--
-                                                <li>
-                                                    <div  class="icheck-primary d-inline ml-2">
-                                                        <input type="checkbox" value="" name="todo6" id="todoCheck6" disabled>
-                                                        <label for="todoCheck6"></label>
-                                                    </div>
-                                                    <span class="text">Training History</span>
-                                                    <div class="tools">
-                                                        <a href="#"><i class="fas fa-edit"></i></a>
-                                                    </div>
-                                                </li>
-                                                -->
-                                                
-                                            @endif
                                             <li>
                                                 <div  class="icheck-primary d-inline ml-2">
                                                     <input type="checkbox" value="" name="todo6" id="todoCheck6" @if($application->pertdoc_soft != '-') {{ 'checked'}} @endif disabled>
