@@ -71,25 +71,18 @@ class ApplicationController extends Controller
                 ->where('person_id', $person->id)],
             'station_id' => ['required'], 
             'type' => ['required'], 
-            'remarks' => ['nullable', 'string'], 
+            'remarks' => ['required', 'string'], 
+            'pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],
             ],[
             'vacancy_id.unique' => 'You cannot apply twice on the same curricular level.',
+            'pertdoc_soft.required' => 'The pertinent document field is required.',
+            'pertdoc_soft.mimes' => 'The pertinent document field should be in a pdf format.',
+            'pertdoc_soft.max' => 'The pertinent document field should be less than 45000 Kilobytes.'
             ]);
 
-        if(request()->pertdoc_soft != '-'){
-            $uploadedFile = request()->validate([
-                'pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],
-            ],[
-                'pertdoc_soft.required' => 'The pertinent document field is required.',
-                'pertdoc_soft.mimes' => 'The pertinent document field should be in a pdf format.',
-                'pertdoc_soft.max' => 'The pertinent document field should be less than 45000 Kilobytes.'
-            ]);
-            $ext = request()->file('pertdoc_soft')->extension();
-            $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
-            $path = str_replace('public', '', $path);
-                        
-        } else 
-            $path = '-';
+        $ext = request()->file('pertdoc_soft')->extension();
+        $path = Storage::putFile('public/docs', request()->file('pertdoc_soft'));
+        $path = str_replace('public', '', $path);
 
         $application = $person->application()->create(array_merge($data, [
             'code' => strtotime(now()),
