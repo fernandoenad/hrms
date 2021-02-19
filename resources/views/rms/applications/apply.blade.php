@@ -114,7 +114,7 @@
                                 <label for="remarks" class="col-md-3 col-form-label text-md-right">{{ __('Remarks') }}</label>
 
                                 <div class="col-md-8">
-                                    <textarea id="remarks" type="text" class="form-control @error('remarks') is-invalid @enderror" name="remarks" 
+                                    <textarea id="remarks" type="text" rows="4" class="form-control @error('remarks') is-invalid @enderror" name="remarks" 
                                         value="" placeholder="" 
                                         autocomplete="remarks">{{ old('remarks') }}</textarea>
                                     

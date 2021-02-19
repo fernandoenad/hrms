@@ -48,6 +48,8 @@
                                 <p class="text-muted text-sm">
                                     <b>Position: </b> {{ $application->vacancy->name ?? ''}} 
                                     <br>
+                                    <b>Contact #: </b> {{ $application->person->contact->primaryno ?? ''}} 
+                                    <br>
                                     <b>Curricular Level: </b> {{ $application->vacancy->curricularlevel ?? ''}} 
                                     <br>
                                     <b>Application Type: </b> {{ $application->type ?? '' }} 

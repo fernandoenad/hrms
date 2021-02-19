@@ -20,7 +20,8 @@ function updateRemarks(type){
     } else if(type == 'Update'){
         $('#remarks').removeAttr('disabled');
         $('#remarks').attr('placeholder', 'Indicate the criterion/criteria you wish to be updated '+
-            '(e.g. Interview, etc) and please upload a scanned copy of your letter of intent. ');
+            '(e.g. Interview, etc) and please upload a scanned copy of your letter of intent as well '+
+            'the scanned copy of your pertinent papers that you want to be updated. ');
         $('#remarks').attr('required', 'required');
         $('#remarks').val('');
     } else {

@@ -71,7 +71,7 @@ class ApplicationController extends Controller
                 ->where('person_id', $person->id)],
             'station_id' => ['required'], 
             'type' => ['required'], 
-            'remarks' => ['required', 'string'], 
+            'remarks' => ['nullable', 'string'], 
             'pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],
             ],[
             'vacancy_id.unique' => 'You cannot apply twice on the same curricular level.',
