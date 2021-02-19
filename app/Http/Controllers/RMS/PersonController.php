@@ -34,7 +34,7 @@ class PersonController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/', 
+            'firstname' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/', 
                 Rule::unique('people')
                 ->where('firstname',request()->firstname)
                 ->where('middlename', request()->middlename)
@@ -44,8 +44,8 @@ class PersonController extends Controller
                 //->where('dob', request()->dob)
                 //->where('civilstatus', request()->civilstatus)
                 ],
-            'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
-            'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'middlename' => ['nullable', 'string', 'min:2', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'lastname' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
             'sex' => ['required', 'string'],
             'dob' => ['required', 'date', 'before:-15 years'],

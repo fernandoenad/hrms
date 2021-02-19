@@ -124,7 +124,9 @@
                                                     <strong>{{ $application->person->getFullnameBox() ?? '' }}</strong>
                                                 </a>
                                                 <br>
-                                                {{ $application->vacancy->name ?? '' }} ({{ $application->schoolyear ?? '' }})
+                                                {{ $application->vacancy->name ?? '' }} 
+                                                <br>
+                                                ({{ $application->schoolyear ?? '' }})
                                             </td>
                                             <td>
                                                 {{ $application->person->contact->primaryno ?? '' }}<br>
