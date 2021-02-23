@@ -45,7 +45,7 @@ class EmployeeController extends Controller
             ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
             ->orderBy('lastname', 'asc')
             ->orderBy('firstname', 'asc')
-            ->select('employees.id AS empid', 'employees.*', 'people.*')
+            ->select('people.*')
             ->paginate(15);
         
         $employees = $employees->appends(['searchString' => $searchString]);

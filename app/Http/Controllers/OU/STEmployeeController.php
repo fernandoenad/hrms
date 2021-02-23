@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Station;
 use App\Models\Deployment;
 use App\Models\Employee;
+use App\Models\Contact;
+use App\Models\Person;
+use App\Models\Address;
+use App\Models\Dropdown;
 use App\Models\Item;
 use Illuminate\Support\Facades\DB;
 
@@ -113,9 +117,36 @@ class STEmployeeController extends Controller
 
     public function edit(Station $station, Employee $employee)
     {
+        $sexes = Dropdown::where('type', 'sex')->get();
+        $extensions = Dropdown::where('type', 'extension')->get();
+        $relations = Contact::groupBy('emergencyrelation')
+            ->select('emergencyrelation')
+            ->get();
+        $addresses = Contact::groupBy('emergencyaddress')
+            ->select('emergencyaddress')
+            ->get();
+
+        $civilstatuses = Dropdown::where('type', 'civilstatus')->get();
+
+        $currents = Address::groupBy('current')
+            ->orderBy('current', 'asc')
+            ->select('current')
+            ->get();
+        $permanents = Address::groupBy('permanent')
+            ->orderBy('permanent', 'asc')
+            ->select('permanent')
+            ->get();
+
+        $employmentstatuses = Dropdown::where('type', 'employmentstatus')
+            ->get();
+
+        $stations = Station::select('id', 'code', 'name', 'office_id')
+            ->orderBy('code', 'asc')
+            ->get();
+
         $person = $employee->person;
 
-        return view('ou.station.employees.show', compact('station', 'person'));
+        return view('ou.station.employees.edit', compact('station', 'person', 'employmentstatuses', 'stations', 'sexes', 'extensions', 'relations', 'addresses', 'civilstatuses', 'currents', 'permanents'));
     }
 
     public function move(Station $station, Employee $employee)

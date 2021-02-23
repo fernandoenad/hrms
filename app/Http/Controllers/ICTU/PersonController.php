@@ -55,6 +55,7 @@ class PersonController extends Controller
                     ->orderBy('lastname', 'asc')
                     ->orderBy('firstname', 'asc');
             })
+            ->select('people.*')
             ->paginate(15);
 
         $people = $people->appends(['searchString' => $searchString]);
