@@ -58,6 +58,7 @@ class PersonController extends Controller
                     ->orderBy('lastname', 'asc')
                     ->orderBy('firstname', 'asc');
             })
+            ->orWhere('email', 'like', $searchString . '%')
             ->select('people.*')
             ->paginate(15);
 
