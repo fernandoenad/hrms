@@ -25,7 +25,9 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $people = $this->getList()->paginate(15);
+        $people = $this->getList()
+        ->select('people.*')
+        ->paginate(15);
         
         return view('ictu.people.index', compact('people'));
     }
@@ -35,6 +37,7 @@ class PersonController extends Controller
         $people = $this->getList()->whereNotIn('people.id', function($query){
             $query->select('person_id')->from('employees');
         })
+        ->select('people.*')
         ->paginate(15);
         
         return view('ictu.people.index', compact('people'));
