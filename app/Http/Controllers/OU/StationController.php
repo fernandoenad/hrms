@@ -5,6 +5,7 @@ namespace App\Http\Controllers\OU;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Station;
+use Illuminate\Support\Facades\Auth;
 
 class StationController extends Controller
 {
@@ -25,6 +26,9 @@ class StationController extends Controller
      */
     public function index(Station $station)
     {
+        if(!Auth::user()->isStationPersonnel($station->id))
+            abort(401, 'Unauthorized access.');
+
         return view('ou.station.index', compact('station'));
     }
 }

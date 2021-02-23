@@ -39,6 +39,7 @@
 
                 <div class="card-body p-0">
                     <div class="table-responsive">
+                        <small>
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
@@ -54,7 +55,11 @@
                                     @foreach($users as $user)
                                         <tr>
                                             <td>{{ date('M d, Y h:ia', strtotime($user->email_verified_at)) ?? '' }}</td>
-                                            <td>{{ $user->name ?? '' }}</td>
+                                            <td>
+                                                <a href="{{ route('ictu.people.show', $user->person->id )}}">
+                                                    {{ $user->name ?? '' }}
+                                                </a>
+                                            </td>
                                             <td>{{ $user->username ?? '' }}</td>
                                             <td>{{ $user->email ?? '' }}</td>
                                             <td></td>
@@ -67,6 +72,7 @@
                                 @endif
                             </tbody>
                         </table>
+                        </small>
                     </div>
                 </div>
                 <div class="card-footer clearfix p-2 pb-0">

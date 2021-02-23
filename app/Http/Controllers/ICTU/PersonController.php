@@ -64,7 +64,8 @@ class PersonController extends Controller
 
     public function getList()
     {
-        $people = Person::orderBy('lastname', 'asc')
+        $people = Person::join('users', 'people.id', '=', 'users.person_id')
+            ->orderBy('lastname', 'asc')
             ->orderBy('firstname', 'asc');
 
         return $people;

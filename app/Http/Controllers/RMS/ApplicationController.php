@@ -45,8 +45,17 @@ class ApplicationController extends Controller
             ->where('curricularlevel', '=', $vacancy->curricularlevel)
             ->get();
 
-        if(sizeof($checkdupeapp) > 0)
+        $checkdupeapp2 = Application::join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
+            ->where('schoolyear', '=', $cycle)
+            ->where('person_id', '=', $person->id)
+            ->where('vacancies.id', '=', $vacancy->id)
+            ->get();
+
+        if(sizeof($checkdupeapp2) > 0)
+            return redirect('rms/p/vacancies')->with('error', 'You cannot apply the same position twice. Go to My Applications and withdraw your current application to proceed.');
+        if((sizeof($checkdupeapp) > 0 && $vacancy->vacancylevel < 3))
             return redirect('rms/p/vacancies')->with('error', 'You cannot apply two positions on the same level. Go to My Applications and withdraw your current application to proceed.');
+        
         if($vacancy->status == 0)
             abort(404, 'Page not found.');
                 

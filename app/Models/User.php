@@ -92,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function getNameAttribute($value){
-        return ucwords($value);
+        return ucwords(mb_strtolower($value));
     }
 
     public function getUserType()
@@ -149,12 +149,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
-    public function isEmployeeOfStation($station_id)
+    public function isStationPersonnel($station_id)
     {
-        $result = $this->person->employee->item->deployment->where('station_id', '=', $station_id)
+        $result = $this->person->station->where('id', '=', $station_id)
             ->first();
-
-        //dd($result->role_id);
 
         if (isset($result)) 
         {

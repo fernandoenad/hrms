@@ -21,17 +21,17 @@
                 Route::currentRouteName() == 'ou.station.employees.edit' ||
                 Route::currentRouteName() == 'ou.station.employees.move') 
                 <li class="nav-item">
-                    <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                    <a href="{{ route('ou.station.employees.show', [$station->id, $person->employee->id]) }}" class="nav-link">
                         <i class="fas fa-user"></i> View employee
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                    <a href="{{ route('ou.station.employees.edit', [$station->id, $person->employee->id]) }}" class="nav-link">
                         <i class="fas fa-user-edit"></i> Modify employee
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                    <a href="{{ route('ou.station.employees.move', [$station->id, $person->employee->id]) }}" class="nav-link">
                         <i class="fas fa-user-minus"></i> Move/transfer employee
                     </a>
                 </li>

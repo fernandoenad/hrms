@@ -378,7 +378,6 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ictu/requests/{accountrequest}', [RequestController::class, 'edit'])->name('ictu.requests.edit');
         Route::patch('/ictu/requests/{accountrequest}', [RequestController::class, 'update'])->name('ictu.requests.update');
         Route::get('/ictu/requests/{accountrequest}/reset-password', [RequestController::class, 'resetpassword'])->name('ictu.requests.reset-password');
-        Route::get('/ictu/requests/{accountrequest}/verify-email', [RequestController::class, 'verifyemail'])->name('ictu.requests.verify-email');
 
         Route::get('/ictu/requests', [RequestController::class, 'index'])->name('ictu.requests');
 
@@ -394,6 +393,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ictu/roles', [UserRoleController::class, 'index'])->name('ictu.roles');
 
         Route::middleware(['access.ictu'])->group(function () {
+            Route::get('/ictu/requests/{accountrequest}/verify-email', [RequestController::class, 'verifyemail'])->name('ictu.requests.verify-email');
+
             Route::get('/ictu/people/{person}/delete', [ICTUPersonController::class, 'delete'])->name('ictu.people.delete');
             Route::delete('/ictu/people/{person}', [ICTUPersonController::class, 'destroy'])->name('ictu.people.destroy');
      

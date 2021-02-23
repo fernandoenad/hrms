@@ -79,7 +79,7 @@ class StationController extends Controller
             'services' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,]*$/'],
             'category' => ['required'],
             'office_id' => ['required'],
-            'address' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,\.]*$/'],
+            'address' => ['nullable', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,\.]*$/'],
             'person_id' => ['required'],
         ],
         [
@@ -148,7 +148,7 @@ class StationController extends Controller
             'services' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,]*$/'],
             'category' => ['required'],
             'office_id' => ['required'],
-            'address' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,\.]*$/'],
+            'address' => ['nullable', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\,\.]*$/'],
             'person_id' => ['required'],
         ]);
 

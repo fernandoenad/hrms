@@ -17,6 +17,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('ou.station') }}">Station / Unit</a>
                 </li>
+                <li class="dropdown">
+                    <a type="button" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        Other Station Assignments
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        @foreach(Auth::user()->getStations()->get() as $station_a)
+                            <a href="{{ $station_a->id }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
+                        @endforeach
+                    </div>
+                </li>
             </ul>
 
             @include('layouts.sections.userpanel')

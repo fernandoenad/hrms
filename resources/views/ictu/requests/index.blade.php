@@ -129,13 +129,15 @@
 
                                     <div class="col-md-8 pt-2">
                                         <small>
-                                        <?php $remarks_arr = explode('/', $accountrequest->remarks);  ?>
-                                        <a href="{{ route('ictu.people.search') }}?searchString={{ $remarks_arr[0] }}" target="_blank">Modify Email</a>  
+                                        @if(isset($accountrequest->person)) 
+                                            <a href="{{ route('ictu.people.edit-credentials', $accountrequest->person->id) }}" target="_blank">Modify Credentials / Reset Password</a>
+                                            <!--/ <a href="{{ route('ictu.requests.reset-password', $accountrequest->id) }}">Reset Password</a>
+                                            / <a href="{{ route('ictu.requests.verify-email', $accountrequest->id) }}">Verify Manually</a>-->
+                                        @else
+                                            <?php $remarks_arr = explode('/', $accountrequest->remarks);  ?>
+                                            <a href="{{ route('ictu.people.search') }}?searchString={{ $remarks_arr[0] }}" target="_blank">Modify Email</a>  
+                                        @endif                                        
 
-                                        @if(isset($accountrequest->person))
-                                            / <a href="{{ route('ictu.requests.reset-password', $accountrequest->id) }}">Reset Password</a>
-                                            / <a href="{{ route('ictu.requests.verify-email', $accountrequest->id) }}">Verify Manually</a>
-                                        @endif
                                         </small>
                                     </div>
                                 </div>
