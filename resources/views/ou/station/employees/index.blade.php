@@ -94,7 +94,7 @@
                                                 <a href="{{ route('ou.station.employees.show', [$station->id, $employee->empid]) }}" class="dropdown-item">View</a>
                                                 <a href="{{ route('ou.station.employees.edit', [$station->id, $employee->empid]) }}" class="dropdown-item">Modify</a>
                                                 <a class="dropdown-divider"></a>
-                                                <a href="#" class="dropdown-item">Move / Transfer</a>
+                                                <a href="{{ route('ou.station.employees.move', [$station->id, $employee->empid]) }}" class="dropdown-item">Move / Transfer</a>
                                                 
                                             </div>
                                         </td>

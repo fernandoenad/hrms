@@ -423,6 +423,8 @@ Route::get('/ou/station/{station}/employees/filter/{position}', [STEmployeeContr
 Route::get('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'show'])->name('ou.station.employees.show');
 Route::get('/ou/station/{station}/employees/{employee}/edit', [STEmployeeController::class, 'edit'])->name('ou.station.employees.edit');
 Route::get('/ou/station/{station}/employees/{employee}/move', [STEmployeeController::class, 'move'])->name('ou.station.employees.move');
+Route::patch('/ou/station/{station}/employees/{employee}/moved', [STEmployeeController::class, 'moved'])->name('ou.station.employees.moved');
+Route::patch('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'update'])->name('ou.station.employees.update');
 
 Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
 

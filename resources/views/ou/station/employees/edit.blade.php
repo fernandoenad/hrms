@@ -20,20 +20,38 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            @include('ps.people._profile')
-        </div>
+        <div class="col-md-9">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
-        <div class="col-md-6">
             <div class="card card-default">
                 <div class="card-header">
                     <h5>Modify Employment</h5>
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('ps.employees.update', $person->employee->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('ou.station.employees.update', [$station->id, $person->employee->id]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
+
+                        <h5>Personal Information</h5>
+                        <div class="form-group row">
+                            <label for="firstname" class="col-md-3 col-form-label text-md-right">{{ __('Firstname') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="firstname" type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" value="{{ old('firstname') ?? $person->firstname }}" autocomplete="firstname">
+
+                                @error('firstname')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="middlename" class="col-md-3 col-form-label text-md-right">{{ __('Middlename') }}</label>
 
@@ -336,7 +354,7 @@
                             <label for="username" class="col-md-3 col-form-label text-md-right">{{ __('Username') }}</label>
 
                             <div class="col-md-8">
-                                <input @if($person->user->email_verified_at !== null) {{ 'readonly' }} @endif id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') ?? $person->user->username }}" autocomplete="username">
+                                <input @if($person->user->email_verified_at !== null) {{ 'readonly' }} @endif id="x-username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') ?? $person->user->username }}" autocomplete="username">
                                 <small class="text-danger">@if($person->user->email_verified_at !== null) {{ 'Usernames are no longer editable once verified.' }} @endif </small>
 
                                 @error('username')
@@ -347,18 +365,67 @@
                             </div>
                         </div>
                         
-                        <h4>Compensation and Benefit Information</h4>
+                        <hr>
+                        <h5>Compensation and Benefit Information</h5>
                         <div class="form-group row">
-                            <label for="empno" class="col-md-3 col-form-label text-md-right">{{ __('Employee No.') }}</label>
+                            <label for="hiredate" class="col-md-3 col-form-label text-md-right">{{ __('Hire Date') }}</label>
 
                             <div class="col-md-8">
-                                <input id="empno" type="text" class="form-control @error('empno') is-invalid @enderror" name="empno" value="{{ old('empno') ?? $person->employee->empno }}" autocomplete="empno">
-
-                                @error('empno')
+                                <input id="hiredate " type="date" class="form-control @error('hiredate') is-invalid @enderror" name="hiredate" value="{{ old('hiredate') ?? date('Y-m-d', strtotime($person->employee->hiredate)) }}" autocomplete="hiredate">
+                                <small><em class="text-danger">Original appointment date.</em></small>
+                                
+                                @error('hiredate')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lastnosidate" class="col-md-3 col-form-label text-md-right">{{ __('Last NOSI') }}</label>
+
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <input id="lastnosidate_mark" name="lastnosidate_mark" type="checkbox" @if($person->employee->lastnosidate == null) {{ 'checked' }} @endif>&nbsp; N/A
+                                        </span>
+                                    </div>
+                                    <input id="lastnosidate" type="date" class="form-control @error('lastnosidate') is-invalid @enderror" name="lastnosidate" value="{{ old('lastnosidate') ?? date('Y-m-d', strtotime($person->employee->lastnosidate)) }}" autocomplete="lastnosidate">
+                                </div>
+                                <small><em class="text-danger">Leave N/A if no history.</em></small>
+
+                                @error('lastnosidate')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="empno" class="col-md-3 col-form-label text-md-right">{{ __('Employee No.') }}</label>
+
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <input id="empno_mark" name="empno_mark" type="checkbox">&nbsp;  N/A
+                                        </span>
+                                    </div><input id="oust-empno" type="text" class="form-control @error('empno') is-invalid @enderror" name="empno" value="{{ old('empno') ?? (substr($person->employee->empno, 0, 1) == 'T' || $person->employee->empno <= 1014480 ? '' : $person->employee->empno) }}" autocomplete="empno">                                   
+                                    
+                                    @error('empno')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <small class="text-danger"><em>Leave N/A (e.g. Provisional, Job Order, etc)</em></small>
+                                
+                                
+                                
                             </div>
                         </div>
 
@@ -431,23 +498,130 @@
                                 @enderror
                             </div>
                         </div>
-                        <br>
-
-                        <h4>Appointment Information</h4>
+                        
+                        <hr>
+                        <h5>Appointment Information</h5>
                         <div class="form-group row">
                             <label for="itemno" class="col-md-3 col-form-label text-md-right">{{ __('Item No.') }}</label>
 
                             <div class="col-md-8">
-                                <input readonly id="itemno" type="text" class="form-control @error('itemno') is-invalid @enderror" name="itemno" value="{{ old('itemno') ?? $person->employee->item->itemno}}" autocomplete="itemno">
-                                <small><em>
-                                    <strong>{{ $person->employee->item->position }}
-                                    ({{ $person->employee->item->employeetype }}),  
-                                    SG-{{ $person->employee->item->salarygrade }}</strong>
-                                    &nbsp;
-                                    <strong><a href="{{ route('ps.items.edit', $person->employee->item->id ) }}"><i class="fas fa-edit"></i></a></strong>
-                                </em></small>
+                                <input id="itemno" type="text" class="form-control @error('itemno') is-invalid @enderror" name="itemno" value="{{ old('itemno') ?? $person->employee->item->itemno}}" autocomplete="itemno">
 
                                 @error('itemno')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="level" class="col-md-3 col-form-label text-md-right">{{ __('Level') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="level" type="text" class="form-control @error('level') is-invalid @enderror" name="level" value="{{ old('level') }}" autocomplete="level">
+                                    <option value="">Select</option>
+                                    @foreach($itemlevels as $itemlevel)
+                                        <option value="{{ $itemlevel->details }}" @if(old('level') == $itemlevel->details || $itemlevel->details == $person->employee->item->level) {{ 'selected' }} @endif>{{ $itemlevel->details }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('level')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="position" class="col-md-3 col-form-label text-md-right">{{ __('Position') }}</label>
+
+                            <div class="col-md-8">
+                                <input list="positions" id="position" type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') ?? $person->employee->item->position }}" autocomplete="position">
+                                <datalist id="positions">
+                                    @foreach($positions as $position)
+                                        <option value="{{ $position->position }}">
+                                    @endforeach
+                                </datalist>
+
+                                @error('position')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="salarygrade" class="col-md-3 col-form-label text-md-right">{{ __('Salary Grade') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="salarygrade" type="text" class="form-control @error('salarygrade') is-invalid @enderror" name="salarygrade" value="{{ old('salarygrade') }}" autocomplete="salarygrade">
+                                    <option value="">Select</option>
+                                    @for($i=1; $i<33; $i++)
+                                        <option value="{{ $i }}" @if (old('salarygrade') == $i || $person->employee->item->salarygrade == $i ) {{ 'selected' }} @endif>{{ $i }}</option>
+                                    @endfor
+                                </select>
+
+                                @error('salarygrade')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="employeetype" class="col-md-3 col-form-label text-md-right">{{ __('Employee Type') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="employeetype" type="text" class="form-control @error('employeetype') is-invalid @enderror" name="employeetype" value="{{ old('employeetype') }}" autocomplete="employeetype">
+                                    <option value="">Select</option>
+                                    @foreach($employeetypes as $employeetype)
+                                        <option value="{{ $employeetype->details }}" @if (old('employeetype') == $employeetype->details || $person->employee->item->employeetype == $employeetype->details ) {{ 'selected' }} @endif>{{ $employeetype->details }}</option>
+                                    @endforeach
+                                </select>
+                                @error('employeetype')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="station_id" class="col-md-3 col-form-label text-md-right">{{ __('Plantilla Owner') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="station_id" type="text" class="form-control @error('station_id') is-invalid @enderror" name="station_id" value="{{ old('station_id') }}" autocomplete="station_id">
+                                    <option value="">Select</option>
+                                    <option value="0" @if (old('station_id') == 0 ) {{ 'selected' }} @endif>TBA</option>
+                                    @foreach($stations as $station_i)
+                                        <option value="{{ $station_i->id }}" @if (old('station_id') == $station_i->id  || $person->employee->item->station_id == $station_i->id ) {{ 'selected' }} @endif>{{ $station_i->code }} - {{ $station_i->name }}, {{ $station_i->office->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('station_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="deployment_station_id" class="col-md-3 col-form-label text-md-right">{{ __('Deployment') }}</label>
+
+                            <div class="col-md-8">
+                                <select id="deployment_station_id" type="text" class="form-control @error('deployment_station_id') is-invalid @enderror" name="deployment_station_id" value="{{ old('deployment_station_id') }}" autocomplete="deployment_station_id">
+                                    <option value="">Select</option>
+                                    <option value="0" @if (old('deployment_station_id') == 0 ) {{ 'selected' }} @endif>TBA</option>
+                                    @foreach($stations as $station_i)
+                                        <option value="{{ $station_i->id }}" @if (old('deployment_station_id') == $station_i->id || $person->employee->item->deployment->station_id == $station_i->id ) {{ 'selected' }} @endif>{{ $station_i->code }} - {{ $station_i->name }}, {{ $station_i->office->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('deployment_station_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -533,99 +707,26 @@
                                         </span>
                                     </div>
                                     <input id="confirmationdate" type="date" class="form-control @error('confirmationdate') is-invalid @enderror" name="confirmationdate" value="{{ old('confirmationdate') ?? date('Y-m-d', strtotime($person->employee->confirmationdate)) }}" autocomplete="confirmationdate">
+                                    @error('confirmationdate')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <small><em class="text-danger">Leave N/A if not yet confirmed by CSC.</em></small>
 
-                                @error('confirmationdate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <br>
-
-                        <h4>Employment Data</h4>
-                        <div class="form-group row">
-                            <label for="hiredate" class="col-md-3 col-form-label text-md-right">{{ __('Hire Date') }}</label>
-
-                            <div class="col-md-8">
-                                <input id="hiredate " type="date" class="form-control @error('hiredate') is-invalid @enderror" name="hiredate" value="{{ old('hiredate') ?? date('Y-m-d', strtotime($person->employee->hiredate)) }}" autocomplete="hiredate">
-                                <small><em class="text-danger">Original appointment date. Only change this if need be.</em></small>
                                 
-                                @error('hiredate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="lastapptdate" class="col-md-3 col-form-label text-md-right">{{ __('Last Appt') }}</label>
-
-                            <div class="col-md-8">
-                                <input id="lastapptdate" type="date" class="form-control @error('lastapptdate') is-invalid @enderror" name="lastapptdate" value="{{ old('lastapptdate') ?? date('Y-m-d', strtotime($person->employee->lastapptdate)) }}" autocomplete="lastapptdate">
-                                <small><em class="text-danger">Last appointment date. Only change this if need be.</em></small>
-
-                                @error('lastapptdate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="lastnosidate" class="col-md-3 col-form-label text-md-right">{{ __('Last NOSI') }}</label>
-
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <input id="lastnosidate_mark" name="lastnosidate_mark" type="checkbox" @if($person->employee->lastnosidate == null) {{ 'checked' }} @endif>&nbsp; N/A
-                                        </span>
-                                    </div>
-                                    <input id="lastnosidate" type="date" class="form-control @error('lastnosidate') is-invalid @enderror" name="lastnosidate" value="{{ old('lastnosidate') ?? date('Y-m-d', strtotime($person->employee->lastnosidate)) }}" autocomplete="lastnosidate">
-                                </div>
-                                <small><em class="text-danger">Leave N/A if no history.</em></small>
-
-                                @error('lastnosidate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="retirementdate" class="col-md-3 col-form-label text-md-right">{{ __('Retirement') }}</label>
-
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <input id="retirementdate_mark" name="retirementdate_mark" type="checkbox" @if($person->employee->retirementdate == null) {{ 'checked' }} @endif>&nbsp;  N/A
-                                        </span>
-                                    </div>
-                                    <input id="retirementdate" type="date" class="form-control @error('retirementdate') is-invalid @enderror" name="retirementdate" value="{{ old('retirementdate') ?? date('Y-m-d', strtotime($person->employee->retirementdate)) }}" autocomplete="retirementdate">
-                                </div>
-                                <small><em class="text-danger">Leave N/A if no history.</em></small>
-
-                                @error('retirementdate')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                 
+                        <hr>                       
 
                         <div class="row">
                             <div class="col-md-3">
                             </div>
                             <div class="col-md-8">
                                 <button type="submit" class="btn btn-primary float-right">
-                                    {{ __('Modify Employment') }}
+                                    {{ __('Update Employee') }}
                                 </button>
                                 <a href="{{ url()->previous() }}" class="btn btn-default">
                                     {{ __('Cancel') }}

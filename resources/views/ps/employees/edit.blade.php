@@ -217,7 +217,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <input id="confirmationdate_mark" name="confirmationdate_mark" type="checkbox" @if($person->employee->confirmationdate == null) {{ 'checked' }} @endif>&nbsp;  N/A
+                                            <input id="confirmationdate_mark" name="confirmationdate_mark" type="checkbox">&nbsp;  N/A
                                         </span>
                                     </div>
                                     <input id="confirmationdate" type="date" class="form-control @error('confirmationdate') is-invalid @enderror" name="confirmationdate" value="{{ old('confirmationdate') ?? date('Y-m-d', strtotime($person->employee->confirmationdate)) }}" autocomplete="confirmationdate">

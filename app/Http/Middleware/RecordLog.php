@@ -20,6 +20,9 @@ class RecordLog
      */
     public function handle(Request $request, Closure $next)
     {
+        if(Route::currentRouteName() == 'ictu.requests.new-counter')
+            return $next($request);
+            
         if (Auth::check()) {
             $user = Auth::user();
             $user->userlog()->create([

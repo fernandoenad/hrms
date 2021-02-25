@@ -11,10 +11,12 @@ use App\Models\Contact;
 use App\Models\Person;
 use App\Models\Address;
 use App\Models\Dropdown;
+use App\Models\PUserLog;
 use App\Models\Item;
 use Illuminate\Support\Facades\DB;
-
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
 
 class STEmployeeController extends Controller
 {
@@ -137,22 +139,234 @@ class STEmployeeController extends Controller
             ->select('permanent')
             ->get();
 
+        $positions = Item::groupBy('position')
+            ->select('position')
+            ->get();
+        
+        $employeetypes = Dropdown::where('type', '=', 'employeetype')
+            ->get();    
+       
+        $itemlevels = Dropdown::where('type', '=', 'itemlevel')
+        ->get(); 
+
         $employmentstatuses = Dropdown::where('type', 'employmentstatus')
             ->get();
 
         $stations = Station::select('id', 'code', 'name', 'office_id')
-            ->orderBy('code', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
 
         $person = $employee->person;
 
-        return view('ou.station.employees.edit', compact('station', 'person', 'employmentstatuses', 'stations', 'sexes', 'extensions', 'relations', 'addresses', 'civilstatuses', 'currents', 'permanents'));
+        return view('ou.station.employees.edit', compact('station', 'person', 'employmentstatuses', 'stations', 'sexes', 'extensions', 'relations', 'addresses', 'civilstatuses', 'currents', 'permanents', 'positions', 'employeetypes', 'stations', 'itemlevels'));
+    }
+
+    public function update(Station $station, Employee $employee)
+    {
+        $data = request()->validate([
+            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'extname' => ['nullable', 'string'],
+            'sex' => ['required'],
+            'dob' => ['required', 'date', 'before:-15 years'],
+            'civilstatus' => ['required'],
+            'image' => ['nullable', 'image'],
+            'primaryno' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($employee->person->contact->id)],
+            'secondaryno' => ['nullable', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($employee->person->contact->id)], 
+            'current' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
+            'currentzip' => ['required', 'integer', 'min:1000', 'max:9999', 'regex:/^[0-9]*$/'],
+            'permanent' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
+            'permanentzip' => ['nullable', 'integer', 'min:1000', 'max:9999', 'regex:/^[0-9]*$/'],
+            'emergencyperson' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'emergencyrelation' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'emergencyaddress' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.,Ññ-]*$/'],
+            'emergencycontact' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', Rule::unique('contacts')->ignore($employee->person->contact->id)],
+            'username' => ['required', 'string', 'max:255', 'regex:/^[0-9a-zA-Z.-]*$/', Rule::unique('users')->ignore($employee->person->user->id)],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($employee->person->user->id)],
+            'empno' => ['required', 'string', 'min:7', 'max:12', 'regex:/^[Tt0-9-]*$/', Rule::unique('employees')->ignore($employee->id)],
+            'tinno' => ['required', 'string', 'min:9', 'max:12', 'regex:/^[0-9]*$/', Rule::unique('employees')->ignore($employee->id)],
+            'gsisbpno' => ['required', 'string', 'min:9', 'max:12', 'regex:/^[0-9]*$/', Rule::unique('employees')->ignore($employee->id)],
+            'pagibigid' => ['required', 'string', 'min:12', 'max:12', 'regex:/^[0-9]*$/', Rule::unique('employees')->ignore($employee->id)],
+            'philhealthno' => ['required', 'string', 'min:12', 'max:12', 'regex:/^[0-9]*$/', Rule::unique('employees')->ignore($employee->id)],
+            'dbpaccountno' => ['required', 'string', 'min:6', 'max:12', 'regex:/^[0-9]*$/', Rule::unique('employees')->ignore($employee->id)],
+            'itemno' => ['required', 'string', 'min:25', 'max:255', 'regex:/^[a-zA-Z0-9-]*$/', Rule::unique('items')->ignore($employee->item->id)],
+            'level' => ['required'],
+            'position' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+            'salarygrade' => ['required'],
+            'employeetype' => ['required'],
+            'station_id' => ['required'],
+            'deployment_station_id' => ['required'],
+            'step' => ['required'],
+            'employmentstatus' => ['required'],
+            'appointmentdate' => ['required', 'date', 'before_or_equal:today'],
+            'firstdaydate' => ['required', 'date', 'after:appointmentdate'],
+            'confirmationdate' => ['nullable', 'date'],             
+            'hiredate' => ['required', 'date'],
+            'lastnosidate' => ['required', 'date'],
+        ]);
+
+        $name = $data['firstname'] . " " . $data['lastname'] . " " . $data['extname'];
+
+        if(isset($data['image']))
+        {
+            if($employee->person->image != 'no-avatar.jpg')
+                unlink("storage/avatars/" . $employee->person->image);
+            
+            $imagePath = $data['image']->store('avatars', 'public');
+            
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(300, 300);
+            $image->save();
+
+            $image = explode("/", $imagePath);
+
+            $employee->person()->update([
+                'firstname' => $data['firstname'],
+                'middlename' => $data['middlename'],
+                'lastname' => $data['lastname'],
+                'extname' => $data['extname'],
+                'sex' => $data['sex'],
+                'dob' => $data['dob'],
+                'civilstatus' => $data['civilstatus'],
+                'image' => $image[1],
+            ]);
+        }
+        else 
+        {
+            $employee->person()->update([
+                'firstname' => $data['firstname'],
+                'middlename' => $data['middlename'],
+                'lastname' => $data['lastname'],
+                'extname' => $data['extname'],
+                'sex' => $data['sex'],
+                'dob' => $data['dob'],
+                'civilstatus' => $data['civilstatus'],
+            ]);
+        }
+
+        $employee->person->contact()->update([
+            'primaryno' => $data['primaryno'],
+            'secondaryno' => $data['secondaryno'],
+            'emergencyperson' => $data['emergencyperson'],
+            'emergencyrelation' => $data['emergencyrelation'],
+            'emergencyaddress' => $data['emergencyaddress'],
+            'emergencycontact' => $data['emergencycontact'],
+        ]);
+
+        $employee->person->address()->update([
+            'current' => $data['current'],
+            'currentzip' => $data['currentzip'],
+            'permanent' => $data['permanent'],
+            'permanentzip' => $data['permanentzip'],
+        ]);
+
+        $employee->person->user()->update([
+            'name' => $name,
+            'username' => $data['username'],
+            'email' => $data['email'],
+        ]); 
+        
+        $employee->person->personlog()->create([
+            'action' => 'Modify',
+            'log' => $employee->person->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);  
+        
+        PUserLog::create([
+            'u_id' => $employee->person->user->id,
+            'action' => 'Modify',
+            'log' => $employee->person->user->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+       
+        if(isset(request()->empno_mark))
+            $data = array_merge($data, ['empno' => 'T-' . strtotime('now')]);
+
+        if(isset(request()->lastnosidate_mark))
+            $data = array_merge($data, ['lastnosidate' => NULL]);
+        
+        if(isset(request()->retirementdate_mark))
+            $data = array_merge($data, ['retirementdate' => NULL]);
+
+        if(isset(request()->confirmationdate_mark))
+            $data = array_merge($data, ['confirmationdate' => NULL]);
+
+        $employee->update([
+            'empno' => $data['empno'],
+            'hiredate' => $data['hiredate'],
+            'step' => $data['step'],
+            'lastapptdate' => $data['appointmentdate'],
+            'lastnosidate' => $data['lastnosidate'],
+            'employmentstatus' => $data['employmentstatus'],
+            'tinno' => $data['tinno'],
+            'gsisbpno' => $data['gsisbpno'],
+            'pagibigid' => $data['pagibigid'],
+            'philhealthno' => $data['philhealthno'],
+            'dbpaccountno' => $data['dbpaccountno'],
+            ]);
+
+        $employee->item()->update([
+            'itemno' => $data['itemno'],
+            'level' => $data['level'],
+            'position' => $data['position'],
+            'salarygrade' => $data['salarygrade'],
+            'employeetype' => $data['employeetype'],
+            'appointmentdate' => $data['appointmentdate'],
+            'firstdaydate' => $data['firstdaydate'],
+            'confirmationdate' => $data['confirmationdate'],
+            'station_id' => $data['station_id'],
+            ]);
+
+        $employee->item->deployment()->update(['station_id' => $data['deployment_station_id']]);
+
+        $employee->employeelog()->create([
+            'action' => 'Modify',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        return redirect()->route('ou.station.employees.show', compact('station', 'employee'))->with('status', 'Employee record has been updated.');
     }
 
     public function move(Station $station, Employee $employee)
     {
+        $stations = Station::select('id', 'code', 'name', 'office_id')
+            ->orderBy('name', 'asc')
+            ->get();
+
         $person = $employee->person;
 
-        return view('ou.station.employees.show', compact('station', 'person'));
+        return view('ou.station.employees.move', compact('station', 'person', 'stations'));
+    }
+
+    public function moved(Station $station, Employee $employee)
+    {
+        $data = request()->validate([
+            'deployment_station_id' => ['required'],
+            ]);
+
+        $employee->item->deployment()->update(['station_id' => $data['deployment_station_id']]);
+
+        $employee->employeelog()->create([
+            'action' => 'Modify Deployment',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify Deployment',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+        
+
+        return redirect()->route('ou.station.employees.show', compact('station', 'employee'))->with('status', 'Employee has been transfered.');
     }
 }

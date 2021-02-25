@@ -23,7 +23,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                         @foreach(Auth::user()->getStations()->get() as $station_a)
-                            <a href="{{ $station_a->id }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
+                            <a href="{{ route('ou.station.show', $station_a->id) }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
                         @endforeach
                     </div>
                 </li>
