@@ -26,8 +26,13 @@ class StationController extends Controller
      */
     public function index(Station $station)
     {
-        if(!Auth::user()->isStationPersonnel($station->id))
-            abort(401, 'Unauthorized access.');
+
+        if(!Auth::user()->isStationPersonnel($station->id)){
+            if(Auth::user()->isSuperAdmin())
+                return view('ou.station.index', compact('station'));
+            else
+                abort(401, 'Unauthorized access.');
+        }
 
         return view('ou.station.index', compact('station'));
     }

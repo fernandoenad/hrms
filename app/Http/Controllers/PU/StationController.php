@@ -36,9 +36,12 @@ class StationController extends Controller
     {
         $searchString = request()->get('searchString');
         
-        $stations = Station::where('stations.name', 'like' , $searchString . '%')
+        $stations = Station::join('offices', 'stations.office_id', '=', 'offices.id')
+            ->where('stations.name', 'like' , '%' . $searchString . '%')
+            ->orWhere('offices.name', 'like' , $searchString . '%')
             ->orWhere('code', '=' , $searchString)
             ->orderBy('name', 'asc')
+            ->select('stations.*')
             ->paginate(15);
         
         $stations = $stations->appends(['searchString' => $searchString]);

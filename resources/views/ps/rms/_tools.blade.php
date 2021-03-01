@@ -28,6 +28,15 @@
                     <i class="fas fa-inbox"></i> Applications
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('ps.rms.applications-needs-confirmation') }}" class="nav-link">
+                    <i class="fas fa-inbox"></i> Needs Confirmation
+                    <span class="badge badge-danger float-right">
+                        {{ App\Models\Application::where('station_id', '=', 0)
+                            ->where('status', '=', 1)->get()->count() }}
+                    </span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

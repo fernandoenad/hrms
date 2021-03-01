@@ -1,4 +1,4 @@
-@extends('layouts.ps')
+@extends('layouts.oust')
 
 @section('content')    
 <div class="content-header">
@@ -9,12 +9,12 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ps.rms') }}">RMS</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications') }}">All</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications-show-cycle', $cycle) }}">Cycle</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications-show-vacancy', [$cycle, $vacancy->id]) }}">Vacancy</a></li>
-                    <li class="breadcrumb-item">Application</li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.applications', $station->id) }}">Cycles</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.applications.showcycle', [$station->id, $cycle]) }}">{{ $cycle }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}">Vacancy</a></li>
+                    <li class="breadcrumb-item active">Application</li>
                 </ol>
             </div>
         </div>
@@ -36,7 +36,7 @@
                     </div>
                 @endif
 
-                @if(Route::currentRouteName() == 'ps.rms.applications-show.take-action')
+                @if(Route::currentRouteName() == 'ou.station.applications.show.take-action')
                     <div class="row">         
                         <div class="col-md-8 offset-md-2">
                             <div class="card card-primary card-outline">
@@ -44,7 +44,7 @@
                                     Take Action
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="{{ route('ps.rms.applications-show.action-taken',  [$cycle, $vacancy->id, $application->id]) }}">
+                                    <form method="POST" action="{{ route('ou.station.applications.show.action-taken',  [$station->id, $cycle, $vacancy->id, $application->id]) }}">
                                     @csrf
                                     @method('PATCH')
 
@@ -103,7 +103,7 @@
                 <div class="card bg-light">
                     <div class="card-header text-muted border-bottom-0">
                         Application #<strong>{{ $application->code ?? '' }}</strong>
-                            <a href="{{ route('ps.rms.applications-show.take-action', [$cycle, $vacancy->id, $application->id]) }}"   
+                            <a href="{{ route('ou.station.applications.show.take-action', [$station->id, $cycle, $vacancy->id, $application->id]) }}"   
                                 class="btn btn-primary float-right">Take Action</a>
                     </div>
                 
@@ -225,7 +225,7 @@
             </div>
 
             <div class="col-md-3">
-                @include('ps.rms._tools')
+                @include('ou.station.applications._tools')
             </div>
         </div>
     </div>

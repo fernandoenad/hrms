@@ -163,6 +163,16 @@ class ApplicationController extends Controller
         return view('ps.rms.applications.showcycle', compact('cycle', 'vacancies'));
     }
 
+    public function needsconfirmation()
+    {
+        $applications = Application::where('station_id', '=', 0)
+        ->where('status', '=', 1)->get();
+
+        return view('ps.rms.applications.needsconfirmation', compact('applications'));
+    }
+
+    
+
     /**
      * Show the form for editing the specified resource.
      *

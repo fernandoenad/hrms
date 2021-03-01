@@ -17,14 +17,21 @@
                 </form>
             </li>
             @if(Route::currentRouteName() == 'ou.station.employees.show' ||
-                Route::currentRouteName() == 'ou.station.employees.add' || 
                 Route::currentRouteName() == 'ou.station.employees.edit' ||
-                Route::currentRouteName() == 'ou.station.employees.move') 
+                Route::currentRouteName() == 'ou.station.employees.move' ||
+                Route::currentRouteName() == 'ou.station.employees.service-credits') 
                 <li class="nav-item">
                     <a href="{{ route('ou.station.employees.show', [$station->id, $person->employee->id]) }}" class="nav-link">
                         <i class="fas fa-user"></i> View employee
                     </a>
                 </li>
+                <!--
+                <li class="nav-item">
+                    <a href="{{ route('ou.station.employees.service-credits', [$station->id, $person->employee->id]) }}" class="nav-link">
+                        <i class="fas fa-user"></i> Service Credits
+                    </a>
+                </li>
+                -->
                 <li class="nav-item">
                     <a href="{{ route('ou.station.employees.edit', [$station->id, $person->employee->id]) }}" class="nav-link">
                         <i class="fas fa-user-edit"></i> Modify employee
@@ -40,6 +47,7 @@
                     </a>
                 </li>
             @endif
+
             <li class="nav-item">
                 <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
                     <i class="fas fa-users"></i> View employees
@@ -51,7 +59,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                <a href="{{ route('ou.station.employees.add', $station->id) }}" class="nav-link">
                     <i class="fas fa-user-plus"></i> Add employee
                 </a>
             </li>

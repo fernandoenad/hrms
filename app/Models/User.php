@@ -114,9 +114,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
         if(isset($result)) 
-        {
             return true;
-        }
 
         return false;
     }
@@ -124,27 +122,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin($route)
     {
         $result = $this->userrole->where('route', 'like', $route)
-            ->where('role_id', '=', 2);
+            ->where('role_id', '=', 2)
+            ->where('status', '=', 1);
 
         if (sizeof($result) > 0)
             return true;
         else if (Auth::user()->userrole->first()->role_id == 1)
             return true;
+
         return false;
     }
 
     public function isSuperAdmin()
     {
-        $result = $this->userrole()->where('status', '=', 1)
-            ->where('role_id', '=', 1)
-            ->first();
+        $result = $this->userrole->where('role_id', '=', 1)
+            ->where('status', '=', 1);
 
-        //dd($result->role_id);
-
-        if (isset($result)) 
-        {
+        if (sizeof($result) > 0)
             return true;
-        }
 
         return false;
     }
@@ -155,17 +150,21 @@ class User extends Authenticatable implements MustVerifyEmail
             ->first();
 
         if (isset($result)) 
-        {
             return true;
-        }
 
         return false;
     }
 
     public function getStations()
     {
+        /*
+        if($this->isSuperAdmin())
+            $stations = Station::orderBy('name', 'asc');
+        else
+            $stations = Station::where('person_id', '=', $this->person->id);
+        */
         $stations = Station::where('person_id', '=', $this->person->id);
-
+        
         return $stations;
     }
     

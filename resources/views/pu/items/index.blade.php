@@ -70,6 +70,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-body p-0">
                     <div class="table-responsive">
+                        <small>
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
@@ -78,6 +79,7 @@
                                     <th>Current Appointment / Station</th>
                                 </tr>
                             </thead>
+                            <tbody>
                                 @if(sizeof($items) > 0)
                                     @foreach($items as $item)
                                         <tr>
@@ -122,10 +124,9 @@
                                         <td colspan="5">{{ __('No record was found.') }}</td>
                                     </tr>
                                 @endif
-                            <tbody>
-
                             </tbody>
                         </table>
+                        </small>
                     </div>
                 </div>
 

@@ -116,7 +116,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Organizational Unit </span>
-                        <span class="info-box-number"><a href="#" onClick="return confirm('Page under construction...');" class="text-white">Access the app</a></span>
+                        <span class="info-box-number"><a href="/ou" class="text-white">Access the app</a></span>
                     </div>
                 </div>
             </div>

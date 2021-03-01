@@ -21,7 +21,7 @@
                     <a type="button" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         Other Station Assignments
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                    <div class="dropdown-menu dropdown-menu-left" role="menu">
                         @foreach(Auth::user()->getStations()->get() as $station_a)
                             <a href="{{ route('ou.station.show', $station_a->id) }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
                         @endforeach
@@ -47,7 +47,7 @@
                             @if(Route::currentRouteName() == 'ou.station.show') 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ou.station') }}" class="nav-link">
+                            <a href="{{ route('ou.station.show', $station->id) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -64,20 +64,20 @@
                         </li>
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'ou.station.employees.aol') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'ou.station.leaves') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ou.station.employees', $station->id) }}" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-inbox"></i>
                                 <p>Leave Applications</p>
                             </a>
                         </li>
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'rs.employees') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'ou.station.applications') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('rs.employees') }}" class="nav-link">
+                            <a href="{{ route('ou.station.applications', $station->id) }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Applicants</p>
                             </a>
@@ -87,7 +87,7 @@
                             @if(strpos(Route::currentRouteName(), 'rs.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('rs.users') }}" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>User Management</p>
                             </a>

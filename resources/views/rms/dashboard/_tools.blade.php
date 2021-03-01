@@ -23,6 +23,13 @@
                         {{ $vacancies->count() }} Open</span>
                 </a>
             </li>
+            @if(Auth::user()->hasRole('ps'))
+            <li class="nav-item">
+                <a href="{{ route('ps.rms') }}" class="nav-link">
+                    <i class="fas fa-inbox"></i> Applications
+                </a>
+            </li>
+            @endif
             <li class="nav-item">
                 <a href="{{ route('rms.show', 'faqs') }}" class="nav-link">
                     <i class="fas fa-question-circle"></i> FAQs

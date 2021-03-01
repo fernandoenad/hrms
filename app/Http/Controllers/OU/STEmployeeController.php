@@ -117,6 +117,13 @@ class STEmployeeController extends Controller
         return view('ou.station.employees.show', compact('station', 'person'));
     }
 
+    public function servicecredits(Station $station, Employee $employee)
+    {
+        $person = $employee->person;
+
+        return view('ou.station.employees.servicecredits', compact('station', 'person'));
+    }
+
     public function edit(Station $station, Employee $employee)
     {
         $sexes = Dropdown::where('type', 'sex')->get();
@@ -364,9 +371,66 @@ class STEmployeeController extends Controller
             'action' => 'Modify Deployment',
             'log' => $employee->item->toJson(),
             'user_id' => Auth::user()->id,
-        ]);
-        
+        ]);        
 
         return redirect()->route('ou.station.employees.show', compact('station', 'employee'))->with('status', 'Employee has been transfered.');
     }
+
+    public function add(Station $station)
+    {
+        $stations = Station::select('id', 'code', 'name', 'office_id')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('ou.station.employees.add', compact('station', 'stations'));
+    }
+
+    public function lookup(Station $station)
+    {
+        $searchString = request()->get('searchString');
+
+        $employees = Employee::join('people', 'employees.person_id', '=', 'people.id')
+            ->where(function ($query) use ($searchString){
+                $query->where('lastname', 'like' , $searchString . '%')
+                    ->orWhere('firstname', 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
+                    ->orderBy('lastname', 'asc')
+                    ->orderBy('firstname', 'asc');
+        })
+        ->select('employees.id AS empid', 'employees.*', 'people.*')
+        ->paginate(15);
+
+        $employees = $employees->appends(['searchString' => $searchString]);
+
+        return view('ou.station.employees.lookup', compact('employees', 'station'));
+    } 
+
+    public function store(Station $station)
+    {
+        $data = request()->validate([
+            'person_id' => ['required'],
+            'deployment_station_id' => ['required'],
+            ]);
+         
+        $person = Person::find($data['person_id']);
+        $employee = $person->employee;
+
+        $employee->item->deployment()->update(['station_id' => $data['deployment_station_id']]);
+
+        $employee->employeelog()->create([
+            'action' => 'Modify Deployment',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify Deployment',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);    
+
+        return redirect()->route('ou.station.employees.show', compact('station', 'employee'))->with('status', 'Employee has been added.');
+    } 
 }

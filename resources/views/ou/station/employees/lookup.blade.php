@@ -5,14 +5,15 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Lookup Employee</h1>
+                <h1 class="m-0 text-dark">Add Employee</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('pu') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('pu.stations') }}">Station</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('pu.stations.create') }}">New Station</a></li>
-                    <li class="breadcrumb-item active">Lookup Employee</li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.employees', $station->id) }}">Employees</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.employees.add', $station->id) }}">Add Employee</a></li>
+                    <li class="breadcrumb-item active">Lookup</li>
                 </ol>
             </div>
         </div>
@@ -25,7 +26,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header pr-3">
                     <div class="float-right">
-                        <form class="form-inline" method="post" action="{{ route('pu.offices.lookup') }}?redirect={{ request()->redirect }}&id={{ request()->id }}">
+                        <form class="form-inline" method="post" action="{{ route('ou.station.employees.lookup', $station->id) }}?redirect={{ request()->redirect }}&id={{ request()->id }}">
                             @csrf
 
                             <div class="input-group input-group-sm float-right">
@@ -58,7 +59,7 @@
                                         <tr>
                                             <td>{{ $employee->empno }}</td>
                                             <td>
-                                                <a href="{{ route(request()->redirect, request()->id) }}?id={{ $employee->person->id }}&name={{ $employee->person->getFullnameBox() }}">
+                                                <a href="{{ route(request()->redirect, [$station->id, request()->id]) }}?id={{ $employee->person->id }}&name={{ $employee->person->getFullnameBox() }}">
                                                     <strong>{{ $employee->person->getFullnameSorted() }}</strong>
                                                 </a>
                                             </td>
