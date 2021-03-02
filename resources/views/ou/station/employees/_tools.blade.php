@@ -54,7 +54,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('ou.station.employees.filter', [$station->id, '%']) }}" class="nav-link">
+             <?php $count = App\Models\Employee::join('deployments', 'employees.item_id', '=', 'deployments.item_id')->where('station_id', '=', $station->id)->count(); ?>
+                <a href="{{ route('ou.station.employees.filter', [$station->id, 1]) }}" class="nav-link">
                     <i class="fas fa-users"></i> View all employees
                 </a>
             </li>

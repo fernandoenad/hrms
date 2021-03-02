@@ -76,7 +76,7 @@ class STEmployeeController extends Controller
 
     public function filter(Station $station, $filter)
     {
-
+        $filter = ($filter == 1 ? '%' : $filter);
         $employees = Employee::join('deployments', 'employees.item_id', '=', 'deployments.item_id')
             ->join('people', 'employees.person_id', '=', 'people.id')
             ->join('items', 'deployments.item_id', '=', 'items.id')

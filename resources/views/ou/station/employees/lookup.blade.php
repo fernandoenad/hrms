@@ -1,4 +1,4 @@
-@extends('layouts.pu')
+@extends('layouts.oust')
 
 @section('content')    
 <div class="content-header">

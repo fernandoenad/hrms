@@ -107,7 +107,7 @@ class ToolController extends Controller
     public function updateImage()
     {       
         $data = request()->validate([
-            'image' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:1024'],
+            'image' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:5120'],
         ]); 
 
         $user = Auth::user();
