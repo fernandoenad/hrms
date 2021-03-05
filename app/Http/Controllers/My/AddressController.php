@@ -40,9 +40,9 @@ class AddressController extends Controller
     {
 
         $data = request()->validate([
-            'current' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
+            'current' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s-]*$/'],
             'currentzip' => ['required', 'integer', 'min:1000', 'max:9999', 'regex:/^[0-9]*$/'],
-            'permanent' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s]*$/'],
+            'permanent' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z,.Ññ\s-]*$/'],
             'permanentzip' => ['required', 'integer', 'min:1000', 'max:9999', 'regex:/^[0-9]*$/'],
         ]); 
 
