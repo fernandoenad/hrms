@@ -87,7 +87,7 @@
                                             <button type="submit" class="btn btn-primary float-right">
                                                 {{ __('Proceed') }}
                                             </button>
-                                            <a href="{{ route('ou.station.applications.show', [$tation->id, $vacancy->id, $application->id]) }}" class="btn btn-default">
+                                            <a href="{{ url()->previous() }}" class="btn btn-default">
                                                 {{ __('Cancel') }}
                                             </a>
                                         </div>
