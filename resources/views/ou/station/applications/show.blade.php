@@ -87,7 +87,7 @@
                                             <button type="submit" class="btn btn-primary float-right">
                                                 {{ __('Proceed') }}
                                             </button>
-                                            <a href="{{ route('ps.rms.applications-show', [$cycle, $vacancy->id, $application->id]) }}" class="btn btn-default">
+                                            <a href="{{ route('ou.station.applications.show', [$cycle, $vacancy->id, $application->id]) }}" class="btn btn-default">
                                                 {{ __('Cancel') }}
                                             </a>
                                         </div>
