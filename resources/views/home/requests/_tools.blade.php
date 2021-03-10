@@ -16,21 +16,24 @@
                     </div>
                 </form>
             </li>
-            <?php $accountrequests = App\Models\AccountRequest::where('person_id', '=', Auth::user()->person->id)->get(); ?>
-            
-            @foreach($accountrequests as $accountrequest)
-                <li class="nav-item">
-                    <a href="{{ route('help.track-request') }}" class="nav-link" 
-                        onclick="event.preventDefault();
-                        document.getElementById('accountrequest-form-{{ $accountrequest->id ?? '' }}').submit();">
-                        <i class="fas fa-search"></i> Reference #{{ $accountrequest->id }}
-                    </a>
-                </li>
-                <form id="accountrequest-form-{{ $accountrequest->id ?? '' }}" action="{{ route('help.track-request') }}" method="POST" class="d-none">
-                    @csrf
-                    <input type="text" id="id" name="id" value="{{ $accountrequest->id ?? '' }}">
-                </form>
-            @endforeach
+            @guest
+            @else
+                <?php $accountrequests = App\Models\AccountRequest::where('person_id', '=', Auth::user()->person->id)->get(); ?>
+                
+                @foreach($accountrequests as $accountrequest)
+                    <li class="nav-item">
+                        <a href="{{ route('help.track-request') }}" class="nav-link" 
+                            onclick="event.preventDefault();
+                            document.getElementById('accountrequest-form-{{ $accountrequest->id ?? '' }}').submit();">
+                            <i class="fas fa-search"></i> Reference #{{ $accountrequest->id }}
+                        </a>
+                    </li>
+                    <form id="accountrequest-form-{{ $accountrequest->id ?? '' }}" action="{{ route('help.track-request') }}" method="POST" class="d-none">
+                        @csrf
+                        <input type="text" id="id" name="id" value="{{ $accountrequest->id ?? '' }}">
+                    </form>
+                @endforeach
+            @endguest
         </ul>
     </div>
 </div>
