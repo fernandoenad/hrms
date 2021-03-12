@@ -111,6 +111,11 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
+        $person = Auth::user()->person;
+
+        if($application->person_id != $person->id)
+            abort(401, 'Unauthorized Access');
+
         $applicationlogs = $application->applicationlog()
             ->orderBy('application_logs.created_at', 'desc')->get();
 
@@ -119,6 +124,11 @@ class ApplicationController extends Controller
 
     public function destroy(Application $application)
     {
+        $person = Auth::user()->person;
+
+        if($application->person_id != $person->id)
+            abort(401, 'Unauthorized Access');
+
         if( $application->pertdoc_soft != '-')
             unlink("storage/" . $application->pertdoc_soft);
         $application->delete();
@@ -128,6 +138,11 @@ class ApplicationController extends Controller
 
     public function editdoc(Application $application)
     {
+        $person = Auth::user()->person;
+
+        if($application->person_id != $person->id)
+            abort(401, 'Unauthorized Access');
+
         $applicationlogs = $application->applicationlog()
             ->orderBy('created_at', 'desc')->get();
 
@@ -137,6 +152,9 @@ class ApplicationController extends Controller
     public function updatedoc(Application $application)
     {
         $person = Auth::user()->person;
+
+        if($application->person_id != $person->id)
+            abort(401, 'Unauthorized Access');
 
         $data = request()->validate([
             'pertdoc_soft' => ['required', 'mimes:pdf', 'max:45000'],
