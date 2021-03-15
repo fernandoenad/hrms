@@ -5,6 +5,7 @@ namespace App\Http\Controllers\OU;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Station;
+use App\Models\UserST;
 use Illuminate\Support\Facades\Auth;
 
 class OUController extends Controller
@@ -32,9 +33,12 @@ class OUController extends Controller
     public function station()
     {
         $station = Auth::user()->getStations()->first();
+        $station2 = Auth::user()->getStationsUser()->first();
 
-        if(!isset($station))
+        if(!isset($station) && !isset($station2))
             abort(401, 'Unauthorized accesss');
+
+        $station = isset($station) ? $station : $station2;
 
         return redirect()->route('ou.station.show', compact('station'));
     }

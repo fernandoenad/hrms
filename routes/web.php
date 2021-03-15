@@ -58,7 +58,7 @@ use App\Http\Controllers\OU\StationController as OUStationController;
 use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\STEmployeeController ;
 use App\Http\Controllers\OU\STApplicationController;
-
+use App\Http\Controllers\OU\OUUserController;
 
 use App\Http\Controllers\HomeController;
 
@@ -414,36 +414,48 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
         Route::get('/ictu', [ICTUController::class, 'index'])->name('ictu');
     });
+
+    Route::middleware(['station.user'])->group(function () {
+        Route::get('/ou/office/', [OUController::class, 'office'])->name('ou.office');
+
+        Route::get('/ou/station/{station}/employees/add', [STEmployeeController::class, 'add'])->name('ou.station.employees.add');
+        Route::any('/ou/station/{station}/employees/lookup', [STEmployeeController::class, 'lookup'])->name('ou.station.employees.lookup');
+        Route::any('/ou/station/{station}/employees/search', [STEmployeeController::class, 'search'])->name('ou.station.employees.search');
+        Route::get('/ou/station/{station}/employees/items/{pagination}', [STEmployeeController::class, 'items'])->name('ou.station.employees.items');
+        Route::get('/ou/station/{station}/employees/plantilla/{pagination}', [STEmployeeController::class, 'plantilla'])->name('ou.station.employees.plantilla');
+        Route::get('/ou/station/{station}/employees/filter/{position}', [STEmployeeController::class, 'filter'])->name('ou.station.employees.filter');
+        Route::get('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'show'])->name('ou.station.employees.show');
+        Route::get('/ou/station/{station}/employees/{employee}/service-credits', [STEmployeeController::class, 'servicecredits'])->name('ou.station.employees.service-credits');
+        Route::get('/ou/station/{station}/employees/{employee}/edit', [STEmployeeController::class, 'edit'])->name('ou.station.employees.edit');
+        Route::get('/ou/station/{station}/employees/{employee}/move', [STEmployeeController::class, 'move'])->name('ou.station.employees.move');
+        Route::patch('/ou/station/{station}/employees/{employee}/moved', [STEmployeeController::class, 'moved'])->name('ou.station.employees.moved');
+        Route::patch('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'update'])->name('ou.station.employees.update');
+        Route::post('/ou/station/{station}/employees', [STEmployeeController::class, 'store'])->name('ou.station.employees.store');
+        Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
+
+        Route::get('/ou/station/{station}/applications/needs-confirmation', [STApplicationController::class, 'needsconfirmation'])->name('ou.station.applications.needs-confirmation');
+        Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}/take-action', [STApplicationController::class, 'takeaction'])->name('ou.station.applications.show.take-action');
+        Route::patch('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'actiontaken'])->name('ou.station.applications.show.action-taken');
+        Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'show'])->name('ou.station.applications.show');
+        Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}', [STApplicationController::class, 'showvacancy'])->name('ou.station.applications.showvacancy');
+        Route::get('/ou/station/{station}/applications/{cycle}', [STApplicationController::class, 'showcycle'])->name('ou.station.applications.showcycle');
+        Route::get('/ou/station/{station}/applications', [STApplicationController::class, 'index'])->name('ou.station.applications');
+
+        Route::get('/ou/station/{station}/users/create', [OUUserController::class, 'create'])->name('ou.station.users.create');
+        Route::any('/ou/station/{station}/users/lookup', [OUUserController::class, 'lookup'])->name('ou.station.users.lookup');
+        Route::post('/ou/station/{station}/users', [OUUserController::class, 'store'])->name('ou.station.users.store');
+        Route::delete('/ou/station/{station}/users/{userst}', [OUUserController::class, 'destroy'])->name('ou.station.users.destroy');
+        Route::get('/ou/station/{station}/users', [OUUserController::class, 'index'])->name('ou.station.users');
+
+        Route::get('/ou/station/{station}', [OUStationController::class, 'index'])->name('ou.station.show');
+        
+    });    
+    
+    Route::get('/ou/station/', [OUController::class, 'station'])->name('ou.station');
+    Route::get('/ou', [OUController::class, 'index'])->name('ou');
 });
 
-Route::get('/ou/office/', [OUController::class, 'offfice'])->name('ou.office');
 
-Route::get('/ou/station/{station}/employees/add', [STEmployeeController::class, 'add'])->name('ou.station.employees.add');
-Route::any('/ou/station/{station}/employees/lookup', [STEmployeeController::class, 'lookup'])->name('ou.station.employees.lookup');
-Route::any('/ou/station/{station}/employees/search', [STEmployeeController::class, 'search'])->name('ou.station.employees.search');
-Route::get('/ou/station/{station}/employees/items/{pagination}', [STEmployeeController::class, 'items'])->name('ou.station.employees.items');
-Route::get('/ou/station/{station}/employees/plantilla/{pagination}', [STEmployeeController::class, 'plantilla'])->name('ou.station.employees.plantilla');
-Route::get('/ou/station/{station}/employees/filter/{position}', [STEmployeeController::class, 'filter'])->name('ou.station.employees.filter');
-Route::get('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'show'])->name('ou.station.employees.show');
-Route::get('/ou/station/{station}/employees/{employee}/service-credits', [STEmployeeController::class, 'servicecredits'])->name('ou.station.employees.service-credits');
-Route::get('/ou/station/{station}/employees/{employee}/edit', [STEmployeeController::class, 'edit'])->name('ou.station.employees.edit');
-Route::get('/ou/station/{station}/employees/{employee}/move', [STEmployeeController::class, 'move'])->name('ou.station.employees.move');
-Route::patch('/ou/station/{station}/employees/{employee}/moved', [STEmployeeController::class, 'moved'])->name('ou.station.employees.moved');
-Route::patch('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'update'])->name('ou.station.employees.update');
-Route::post('/ou/station/{station}/employees', [STEmployeeController::class, 'store'])->name('ou.station.employees.store');
-Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
-
-Route::get('/ou/station/{station}/applications/needs-confirmation', [STApplicationController::class, 'needsconfirmation'])->name('ou.station.applications.needs-confirmation');
-Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}/take-action', [STApplicationController::class, 'takeaction'])->name('ou.station.applications.show.take-action');
-Route::patch('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'actiontaken'])->name('ou.station.applications.show.action-taken');
-Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'show'])->name('ou.station.applications.show');
-Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}', [STApplicationController::class, 'showvacancy'])->name('ou.station.applications.showvacancy');
-Route::get('/ou/station/{station}/applications/{cycle}', [STApplicationController::class, 'showcycle'])->name('ou.station.applications.showcycle');
-Route::get('/ou/station/{station}/applications', [STApplicationController::class, 'index'])->name('ou.station.applications');
-
-Route::get('/ou/station/{station}', [OUStationController::class, 'index'])->name('ou.station.show');
-Route::get('/ou/station/', [OUController::class, 'station'])->name('ou.station');
-Route::get('/ou', [OUController::class, 'index'])->name('ou');
 
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');

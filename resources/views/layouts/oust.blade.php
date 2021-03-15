@@ -25,6 +25,9 @@
                         @foreach(Auth::user()->getStations()->get() as $station_a)
                             <a href="{{ route('ou.station.show', $station_a->id) }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
                         @endforeach
+                        @foreach(Auth::user()->getStationsUser()->get() as $station_a)
+                            <a href="{{ route('ou.station.show', $station_a->id) }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
+                        @endforeach
                     </div>
                 </li>
             </ul>
@@ -84,10 +87,10 @@
                         </li>                       
 
                         <li class="nav-item 
-                            @if(strpos(Route::currentRouteName(), 'rs.users') !== false) 
+                            @if(strpos(Route::currentRouteName(), 'ou.station.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('ou.station.users', $station->id) }}" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
                                 <p>User Management</p>
                             </a>

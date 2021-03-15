@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Station;
 
-class EmployeeOfStation
+class UserOfStation
 {
     /**
      * Handle an incoming request.
@@ -16,9 +17,12 @@ class EmployeeOfStation
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->isEmployeeOfStation('dpsu')) {
-            abort(401, 'This action is unauthorized.');
+        $station = $request->station; 
+ 
+        if(! $request->user()->isStationUser($station->id)){
+            abort(401, 'Unauthorized access.');
         }
+
         return $next($request);
     }
 }

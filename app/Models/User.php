@@ -91,6 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasmany(ItemLog::class);
     }
 
+    public function userst()
+    {
+        return $this->hasmany(UserST::class);
+    }
+
     public function getNameAttribute($value){
         return ucwords(mb_strtolower($value));
     }
@@ -144,12 +149,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
-    public function isStationPersonnel($station_id)
+    public function isStationUser($station_id)
     {
         $result = $this->person->station->where('id', '=', $station_id)
             ->first();
+        
+        $result2 = $this->userst->where('station_id', '=', $station_id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->first();
+        
+        $result3 = $this->isSuperAdmin();
 
-        if (isset($result)) 
+        if (isset($result) || isset($result2) || $result3) 
             return true;
 
         return false;
@@ -157,14 +168,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getStations()
     {
-        /*
         if($this->isSuperAdmin())
-            $stations = Station::orderBy('name', 'asc');
+            $stations = Station::orderBy('name', 'asc')->take(5);
         else
             $stations = Station::where('person_id', '=', $this->person->id);
-        */
-        $stations = Station::where('person_id', '=', $this->person->id);
-        
+
+        return $stations;
+    }
+
+    public function getStationsUser()
+    {
+        $stations = UserST::join('stations', 'user_s_t_s.station_id', '=', 'stations.id')
+            ->where('user_id', '=', $this->id)
+            ->select('stations.*');
+
         return $stations;
     }
     
