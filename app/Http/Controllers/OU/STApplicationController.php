@@ -41,7 +41,8 @@ class STApplicationController extends Controller
             ->orderBy('vacancylevel', 'desc')
             ->orderBy('salarygrade', 'desc')
             ->orderBy('name', 'asc')
-            ->select('vacancies.*')
+            ->select('vacancies.id')
+            ->groupby('vacancies.id')
             ->get();
 
         return view('ou.station.applications.showcycle', compact('cycle', 'vacancies', 'station'));

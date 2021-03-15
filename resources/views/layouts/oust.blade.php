@@ -81,7 +81,7 @@
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Applicants</p>
                             </a>
-                        </li>
+                        </li>                       
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'rs.users') !== false) 

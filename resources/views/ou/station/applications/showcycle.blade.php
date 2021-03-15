@@ -55,10 +55,11 @@
                                         <tr>
                                             <td>
                                                 <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}">
-                                                    <strong>{{ $vacancy->name ?? '' }}</strong>
+                                                    <?php $vacancy_ = App\Models\Vacancy::find($vacancy->id); ?>
+                                                    <strong>{{ $vacancy_->name ?? '' }}</strong>
                                                 </a>
                                             </td>
-                                            <td class="text-right">{{ $vacancy->vacancy ?? '' }}</td>
+                                            <td class="text-right">{{ $vacancy_->vacancy ?? '' }}</td>
                                             <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle)
                                                     ->where('station_id', '=', $station->id)
                                                     ->where('vacancy_id', '=', $vacancy->id)->get()->count() }}</td>
