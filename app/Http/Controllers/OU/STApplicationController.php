@@ -37,7 +37,6 @@ class STApplicationController extends Controller
         $vacancies = Vacancy::join('applications', 'vacancies.id', '=', 'applications.vacancy_id')
             ->where('station_id', '=', $station->id)
             ->whereYear('vacancies.updated_at', '=', $cycle)
-            ->where('vacancies.status', '=', 1)
             ->orderBy('vacancylevel', 'desc')
             ->orderBy('salarygrade', 'desc')
             ->orderBy('name', 'asc')

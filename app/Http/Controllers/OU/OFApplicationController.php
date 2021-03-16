@@ -43,7 +43,6 @@ class OFApplicationController extends Controller
             ->join('offices', 'stations.office_id', '=', 'offices.id')
             ->where('office_id', '=', $office->id)
             ->whereYear('vacancies.updated_at', '=', $cycle)
-            ->where('vacancies.status', '=', 1)
             ->orderBy('vacancylevel', 'desc')
             ->orderBy('salarygrade', 'desc')
             ->orderBy('vacancies.name', 'asc')
