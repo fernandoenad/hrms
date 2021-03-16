@@ -55,10 +55,14 @@ use App\Http\Controllers\RMS\ApplicationController;
 
 use App\Http\Controllers\OU\OUController;
 use App\Http\Controllers\OU\StationController as OUStationController;
-use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\STEmployeeController ;
 use App\Http\Controllers\OU\STApplicationController;
-use App\Http\Controllers\OU\OUUserController;
+use App\Http\Controllers\OU\STUserController;
+
+use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
+use App\Http\Controllers\OU\OFUserController;
+use App\Http\Controllers\OU\OFApplicationController;
+
 
 use App\Http\Controllers\HomeController;
 
@@ -416,8 +420,6 @@ Route::middleware(['default.password', 'verified'])->group(function () {
     });
 
     Route::middleware(['station.user'])->group(function () {
-        Route::get('/ou/office/', [OUController::class, 'office'])->name('ou.office');
-
         Route::get('/ou/station/{station}/employees/add', [STEmployeeController::class, 'add'])->name('ou.station.employees.add');
         Route::any('/ou/station/{station}/employees/lookup', [STEmployeeController::class, 'lookup'])->name('ou.station.employees.lookup');
         Route::any('/ou/station/{station}/employees/search', [STEmployeeController::class, 'search'])->name('ou.station.employees.search');
@@ -441,18 +443,40 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/applications/{cycle}', [STApplicationController::class, 'showcycle'])->name('ou.station.applications.showcycle');
         Route::get('/ou/station/{station}/applications', [STApplicationController::class, 'index'])->name('ou.station.applications');
 
-        Route::get('/ou/station/{station}/users/create', [OUUserController::class, 'create'])->name('ou.station.users.create');
-        Route::any('/ou/station/{station}/users/lookup', [OUUserController::class, 'lookup'])->name('ou.station.users.lookup');
-        Route::post('/ou/station/{station}/users', [OUUserController::class, 'store'])->name('ou.station.users.store');
-        Route::delete('/ou/station/{station}/users/{userst}', [OUUserController::class, 'destroy'])->name('ou.station.users.destroy');
-        Route::get('/ou/station/{station}/users', [OUUserController::class, 'index'])->name('ou.station.users');
+        Route::get('/ou/station/{station}/users/create', [STUserController::class, 'create'])->name('ou.station.users.create');
+        Route::any('/ou/station/{station}/users/lookup', [STUserController::class, 'lookup'])->name('ou.station.users.lookup');
+        Route::post('/ou/station/{station}/users', [STUserController::class, 'store'])->name('ou.station.users.store');
+        Route::delete('/ou/station/{station}/users/{userst}', [STUserController::class, 'destroy'])->name('ou.station.users.destroy');
+        Route::get('/ou/station/{station}/users', [STUserController::class, 'index'])->name('ou.station.users');
 
         Route::get('/ou/station/{station}', [OUStationController::class, 'index'])->name('ou.station.show');
         
     });    
     
     Route::get('/ou/station/', [OUController::class, 'station'])->name('ou.station');
+    
+    Route::middleware(['office.user'])->group(function () {
+        Route::get('/ou/office/{office}/applications/needs-confirmation', [OFApplicationController::class, 'needsconfirmation'])->name('ou.office.applications.needs-confirmation');
+        Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}/{application}/take-action', [OFApplicationController::class, 'takeaction'])->name('ou.office.applications.show.take-action');
+        Route::patch('/ou/office/{office}/applications/{cycle}/{vacancy}/{application}', [OFApplicationController::class, 'actiontaken'])->name('ou.office.applications.show.action-taken');
+        Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}/{application}', [OFApplicationController::class, 'show'])->name('ou.office.applications.show');
+        Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}', [OFApplicationController::class, 'showvacancy'])->name('ou.office.applications.showvacancy');
+        Route::get('/ou/office/{office}/applications/{cycle}', [OFApplicationController::class, 'showcycle'])->name('ou.office.applications.showcycle');
+        Route::get('/ou/office/{office}/applications', [OFApplicationController::class, 'index'])->name('ou.office.applications');
+
+        Route::get('/ou/office/{office}/users/create', [OFUserController::class, 'create'])->name('ou.office.users.create');
+        Route::any('/ou/office/{office}/users/lookup', [OFUserController::class, 'lookup'])->name('ou.office.users.lookup');
+        Route::delete('/ou/office/{office}/users/{userof}', [OFUserController::class, 'destroy'])->name('ou.office.users.destroy');
+        Route::post('/ou/office/{office}/users', [OFUserController::class, 'store'])->name('ou.office.users.store');
+        Route::get('/ou/office/{office}/users', [OFUserController::class, 'index'])->name('ou.office.users');
+
+        Route::get('/ou/office/{office}', [OUSOfficeController::class, 'index'])->name('ou.office.show');
+    });
+
+    Route::get('/ou/office/', [OUController::class, 'office'])->name('ou.office');
+
     Route::get('/ou', [OUController::class, 'index'])->name('ou');
+
 });
 
 

@@ -70,7 +70,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">District / Office </span>
-                        <span class="info-box-number"><a href="#" class="text-white">Access the app</a></span>
+                        <span class="info-box-number"><a href="{{ route('ou.office') }}" class="text-white">Access the app</a></span>
                     </div>
                 </div>
                               

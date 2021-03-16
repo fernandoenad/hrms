@@ -1,4 +1,4 @@
-@extends('layouts.oust')
+@extends('layouts.ouof')
 
 @section('content')    
 <div class="content-header">
@@ -9,10 +9,10 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.users', $station->id) }}">Users</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.users.create', $station->id) }}">New</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">{{ $office->name ?? '' }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.users', $office->id) }}">Users</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.users.create', $office->id) }}">New</a></li>
                     <li class="breadcrumb-item active">Lookup Employee</li>
                 </ol>
             </div>
@@ -26,7 +26,7 @@
             <div class="card card-outline card-primary">
                 <div class="card-header pr-3">
                     <div class="float-right">
-                        <form class="form-inline" method="post" action="{{ route('ou.station.users.lookup', $station->id) }}">
+                        <form class="form-inline" method="post" action="{{ route('ou.office.users.lookup', $office->id) }}">
                             @csrf
 
                             <div class="input-group input-group-md float-right">
@@ -58,7 +58,7 @@
                                         <tr>
                                             <td>{{ $employee->empno }}</td>
                                             <td>
-                                                <a href="{{ route('ou.station.users.create', $station->id)}}?id={{ $employee->person->user->id }}&name={{ $employee->person->getFullnameBox() }}">
+                                                <a href="{{ route('ou.office.users.create', $office->id)}}?id={{ $employee->person->user->id }}&name={{ $employee->person->getFullnameBox() }}">
                                                     <strong>{{ $employee->person->getFullnameSorted() }}</strong>
                                                 </a>
                                             </td>
@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            @include('ou.station.users._tools')
+            @include('ou.office.users._tools')
         </div>        
     </div>
 </div>

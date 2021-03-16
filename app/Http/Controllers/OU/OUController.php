@@ -42,4 +42,17 @@ class OUController extends Controller
 
         return redirect()->route('ou.station.show', compact('station'));
     }
+
+    public function office()
+    {
+        $office = Auth::user()->getOffices()->first();
+        $office2 = Auth::user()->getOfficesUser()->first();
+
+        if(!isset($office) && !isset($office2))
+            abort(401, 'Unauthorized accesss');
+
+        $office = isset($office) ? $office : $office2;
+
+        return redirect()->route('ou.office.show', compact('office'));
+    }
 }

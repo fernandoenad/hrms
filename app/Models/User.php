@@ -96,6 +96,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasmany(UserST::class);
     }
 
+    public function userof()
+    {
+        return $this->hasmany(UserOF::class);
+    }
+
     public function getNameAttribute($value){
         return ucwords(mb_strtolower($value));
     }
@@ -169,7 +174,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getStations()
     {
         if($this->isSuperAdmin())
-            $stations = Station::orderBy('name', 'asc')->take(5);
+            $stations = Station::orderBy('name', 'asc')->take(10);
         else
             $stations = Station::where('person_id', '=', $this->person->id);
 
@@ -179,10 +184,47 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getStationsUser()
     {
         $stations = UserST::join('stations', 'user_s_t_s.station_id', '=', 'stations.id')
-            ->where('user_id', '=', $this->id)
+            ->where('user_id', '=', Auth::user()->id)
             ->select('stations.*');
 
         return $stations;
+    }
+
+    public function isOfficeUser($office_id)
+    {
+        $result = $this->person->office->where('id', '=', $office_id)
+            ->first();
+        
+        $result2 = $this->userof->where('office_id', '=', $office_id)
+            ->where('user_id', '=', Auth::user()->id)
+            ->first();
+        
+        $result3 = $this->isSuperAdmin();
+
+        if (isset($result) || isset($result2) || $result3) 
+            return true;
+
+        return false;
+    }
+
+    public function getOffices()
+    {
+        if($this->isSuperAdmin())
+            $offices = Office::orderBy('name', 'asc')->take(10);
+        else
+            $offices = Office::where('person_id', '=', $this->person->id);
+
+        return $offices;
+    }
+
+    public function getOfficesUser()
+    {
+        $offices = UserOF::join('offices', 'user_o_f_s.office_id', '=', 'offices.id')
+            ->join('towns', 'offices.town_id', '=', 'towns.id')
+            ->where('user_id', '=', Auth::user()->id)
+            ->select('offices.*', 'towns.name as tname');
+
+        return $offices;
     }
     
 }

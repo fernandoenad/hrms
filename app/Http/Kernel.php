@@ -75,5 +75,6 @@ class Kernel extends HttpKernel
         'default.password' => \App\Http\Middleware\CheckDefaultPassword::class,
         'record.log' => \App\Http\Middleware\RecordLog::class,
         'station.user' => \App\Http\Middleware\UserOfStation::class,
+        'office.user' => \App\Http\Middleware\UserOfOffice::class,
     ];
 }

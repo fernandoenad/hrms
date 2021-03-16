@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\OU;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserST;
-use App\Models\Station;
-use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Models\Office;
+use App\Models\UserOF;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
-class OUUserController extends Controller
+class OFUserController extends Controller
 {
     public function __construct()
     {
@@ -21,12 +21,12 @@ class OUUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Station $station)
+    public function index(Office $office)
     {
-        $usersts = UserST::where('station_id', '=', $station->id)
+        $usersofs = UserOF::where('office_id', '=', $office->id)
             ->get();
 
-        return view('ou.station.users.index', compact('usersts', 'station'));
+        return view('ou.office.users.index', compact('usersofs', 'office'));
     }
 
     /**
@@ -34,12 +34,12 @@ class OUUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Station $station)
+    public function create(Office $office)
     {
-        return view('ou.station.users.create', compact('station'));
+        return view('ou.office.users.create', compact('office'));
     }
 
-    public function lookup(Station $station)
+    public function lookup(Office $office)
     {
         $searchString = request()->get('searchString');
 
@@ -58,7 +58,7 @@ class OUUserController extends Controller
 
         $employees = $employees->appends(['searchString' => $searchString]);
 
-        return view('ou.station.users.lookup', compact('station', 'employees'));
+        return view('ou.office.users.lookup', compact('office', 'employees'));
     }
 
     /**
@@ -67,11 +67,11 @@ class OUUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Station $station)
+    public function store(Office $office)
     {
         $data = request()->validate([
-            'user_id' => ['required', Rule::unique('user_s_t_s')
-                ->where('station_id', $station->id)
+            'user_id' => ['required', Rule::unique('user_o_f_s')
+                ->where('office_id', $office->id)
                 ->where('user_id', request()->user_id)],
         ],
         [
@@ -79,11 +79,11 @@ class OUUserController extends Controller
             'user_id.required' => 'The employee field is required.',
         ]);
 
-        UserST::create(array_merge($data, [
-            'station_id' => $station->id,
+        UserOF::create(array_merge($data, [
+            'office_id' => $office->id,
         ]));
 
-        return redirect()->route('ou.station.users', compact('station'))->with('status', 'User created!');
+        return redirect()->route('ou.office.users', compact('office'))->with('status', 'User created!');
     }
 
     /**
@@ -126,11 +126,11 @@ class OUUserController extends Controller
      * @param  \App\Models\UserST  $userST
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Station $station, $userST)
+    public function destroy(Office $office, $userOF)
     {
-        $userst = UserST::find($userST);
-        $userst->delete();
+        $userof = UserOF::find($userOF);
+        $userof->delete();
 
-        return redirect()->route('ou.station.users', compact('station'))->with('status', 'User removed!');
+        return redirect()->route('ou.office.users', compact('office'))->with('status', 'User removed!');
     }
 }

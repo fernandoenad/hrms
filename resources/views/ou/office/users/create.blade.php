@@ -1,4 +1,4 @@
-@extends('layouts.oust')
+@extends('layouts.ouof')
 
 @section('content')    
 <div class="content-header">
@@ -9,9 +9,9 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.users', $station->id) }}">Users</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">{{ $office->name ?? '' }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.users', $office->id) }}">Users</a></li>
                     <li class="breadcrumb-item active">New User</li>
                 </ol>
             </div>
@@ -24,7 +24,7 @@
         <div class="col-md-9">
             <div class="card card-primary">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('ou.station.users.store', $station->id) }}">
+                    <form method="POST" action="{{ route('ou.office.users.store', $office->id) }}">
                         @csrf
 
                         <h5>User Details</h5>
@@ -37,7 +37,7 @@
                                     <input readonly id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? request()->name }}" autocomplete="name">
                                 
                                     <div class="input-group-append">
-                                        <a href="{{ route('ou.station.users.lookup', $station->id) }}" class="btn btn-primary float-right">
+                                        <a href="{{ route('ou.office.users.lookup', $office->id) }}" class="btn btn-primary float-right">
                                             <i class="fas fa-search"></i>
                                         </a>
                                     </div>
@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            @include('ou.station.users._tools')
+            @include('ou.office.users._tools')
         </div>        
     </div>
 </div>
