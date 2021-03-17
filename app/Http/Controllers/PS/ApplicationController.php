@@ -154,7 +154,6 @@ class ApplicationController extends Controller
     public function showcycle($cycle)
     {
         $vacancies = Vacancy::whereYear('updated_at', '=', $cycle)
-            ->where('status', '=', 1)
             ->orderBy('vacancylevel', 'desc')
             ->orderBy('salarygrade', 'desc')
             ->orderBy('name', 'asc')

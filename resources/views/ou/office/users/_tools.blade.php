@@ -3,6 +3,7 @@
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
+            <!--
             <li class="nav-item active p-3">
                 <form class="form-inline" method="post" action="{{ route('dpsu.users.search') }}">
                     @csrf
@@ -16,6 +17,7 @@
                     </div>
                 </form>
             </li>
+            -->
             <li class="nav-item">
                 <a href="{{ route('ou.office.users', $office->id) }}" class="nav-link">
                     <i class="fas fa-users"></i> View all                    
