@@ -73,7 +73,7 @@ class OfficeController extends Controller
         $offices = Office::get(); 
 
         $data = request()->validate([
-            'name' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\.\s]*$/', 'unique:offices'],
+            'name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s\-\.\s]*$/', 'unique:offices'],
             'town_id' => ['required'],
             'person_id' => ['required'],
         ],
@@ -116,7 +116,7 @@ class OfficeController extends Controller
         $offices = Office::get(); 
 
         $data = request()->validate([
-            'name' => ['required', 'string', 'min:6', 'max:255', 'regex:/^[a-zA-Z\s\-\.]*$/', Rule::unique('offices')->ignore($office->id)],
+            'name' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s\-\.]*$/', Rule::unique('offices')->ignore($office->id)],
             'town_id' => ['required'],
             'person_id' => ['required'],
         ]);
