@@ -46,6 +46,7 @@ class ApplicationController extends Controller
                     ->orderBy('firstname', 'asc');
             })
             ->orWhere('code', '=', $str)
+            ->select('applications.*')
             ->paginate(15);
 
         $applications = $applications->appends(['str' => $str]);
