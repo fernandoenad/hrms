@@ -46,7 +46,6 @@
                             <div class="col-md-8">
                                 <select id="deployment_station_id" type="text" class="form-control @error('deployment_station_id') is-invalid @enderror" name="deployment_station_id" value="{{ old('deployment_station_id') }}" autocomplete="deployment_station_id">
                                     <option value="">Select</option>
-                                    <option value="0" @if (old('deployment_station_id') == 0 ) {{ 'selected' }} @endif>TBA</option>
                                     @foreach($stations as $station_i)
                                         <option value="{{ $station_i->id }}" @if (old('deployment_station_id') == $station_i->id || $person->employee->item->deployment->station_id == $station_i->id ) {{ 'selected' }} @endif>{{ $station_i->code }} - {{ $station_i->name }}, {{ $station_i->office->name }}</option>
                                     @endforeach

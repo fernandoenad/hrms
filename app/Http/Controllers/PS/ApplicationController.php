@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PS;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Vacancy;
+use App\Models\Station;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -107,14 +108,17 @@ class ApplicationController extends Controller
                 'user_id' => Auth::user()->id,
             ]);
     
-         }
+        }
 
-        return view('ps.rms.applications.show', compact('cycle', 'vacancy', 'application'));
+        $stations = Station::orderBy('name', 'asc')->select('id', 'name', 'code', 'office_id')->get();
+
+        return view('ps.rms.applications.show', compact('cycle', 'vacancy', 'application', 'stations'));
     }
 
     public function actiontaken($cycle, Vacancy $vacancy, Application $application)
     {
         $data = request()->validate([
+            'station_id' => ['required'],
             'status' => ['required'],
             'remarks' => ['nullable', 'string', 'min:3', 'max:255'],
             ]);      

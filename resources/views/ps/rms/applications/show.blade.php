@@ -49,10 +49,28 @@
                                     @method('PATCH')
 
                                     <div class="form-group row">
+                                        <label for="station_id" class="col-md-3 col-form-label text-md-right">{{ __('Station') }}</label>
+
+                                        <div class="col-md-8">
+                                            <select id="station_id" type="text" class="form-control @error('station_id') is-invalid @enderror" name="station_id" value="{{ old('station_id') }}" autocomplete="station_id">
+                                                @foreach($stations as $station)
+                                                    <option value="{{ $station->id ?? '' }}" @if(old('station_id') == $station->id || $application->station_id == $station->id) {{ 'selected' }} @endif>{{ $station->code }}- {{ $station->name }}, {{ $station->office->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('station_id')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                         <label for="status" class="col-md-3 col-form-label text-md-right">{{ __('Action') }}</label>
 
                                         <div class="col-md-8">
                                             <select id="application-status" type="text" class="form-control @error('status') is-invalid @enderror" name="status" value="{{ old('status') }}" autocomplete="status">
+                                                <option value="1" @if(old('status') == 1 || $application->status == 1) {{ 'selected' }} @endif>New</option>
                                                 <option value="2" @if(old('status') == 2 || $application->status == 2) {{ 'selected' }} @endif>Pending</option>
                                                 <option value="3" @if(old('status') == 3 || $application->status == 3) {{ 'selected' }} @endif>Confirm</option>
                                                 <option value="4" @if(old('status') == 4 || $application->status == 4) {{ 'selected' }} @endif>Deny</option>
