@@ -58,6 +58,7 @@ use App\Http\Controllers\OU\StationController as OUStationController;
 use App\Http\Controllers\OU\STEmployeeController ;
 use App\Http\Controllers\OU\STApplicationController;
 use App\Http\Controllers\OU\STUserController;
+use App\Http\Controllers\OU\STRankingController;
 
 use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\OFUserController;
@@ -436,6 +437,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
 
         Route::get('/ou/station/{station}/applications/needs-confirmation', [STApplicationController::class, 'needsconfirmation'])->name('ou.station.applications.needs-confirmation');
+        Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/upload-ranklist', [STApplicationController::class, 'uploadranklist'])->name('ou.station.applications.upload-ranklist');
+        Route::post('/ou/station/{station}/applications/{cycle}/{vacancy}/uploaded-ranklist', [STApplicationController::class, 'uploadedranklist'])->name('ou.station.applications.uploaded-ranklist');
         Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}/take-action', [STApplicationController::class, 'takeaction'])->name('ou.station.applications.show.take-action');
         Route::patch('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'actiontaken'])->name('ou.station.applications.show.action-taken');
         Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'show'])->name('ou.station.applications.show');
@@ -443,6 +446,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/applications/{cycle}', [STApplicationController::class, 'showcycle'])->name('ou.station.applications.showcycle');
         Route::get('/ou/station/{station}/applications', [STApplicationController::class, 'index'])->name('ou.station.applications');
 
+        
         Route::get('/ou/station/{station}/users/create', [STUserController::class, 'create'])->name('ou.station.users.create');
         Route::any('/ou/station/{station}/users/lookup', [STUserController::class, 'lookup'])->name('ou.station.users.lookup');
         Route::post('/ou/station/{station}/users', [STUserController::class, 'store'])->name('ou.station.users.store');
@@ -457,6 +461,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
     
     Route::middleware(['office.user'])->group(function () {
         Route::get('/ou/office/{office}/applications/needs-confirmation', [OFApplicationController::class, 'needsconfirmation'])->name('ou.office.applications.needs-confirmation');
+        Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}/upload-ranklist', [OFApplicationController::class, 'uploadranklist'])->name('ou.office.applications.upload-ranklist');
+        Route::post('/ou/office/{office}/applications/{cycle}/{vacancy}/uploaded-ranklist', [OFApplicationController::class, 'uploadedranklist'])->name('ou.office.applications.uploaded-ranklist');
         Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}/{application}/take-action', [OFApplicationController::class, 'takeaction'])->name('ou.office.applications.show.take-action');
         Route::patch('/ou/office/{office}/applications/{cycle}/{vacancy}/{application}', [OFApplicationController::class, 'actiontaken'])->name('ou.office.applications.show.action-taken');
         Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}/{application}', [OFApplicationController::class, 'show'])->name('ou.office.applications.show');

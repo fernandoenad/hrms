@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\Station;
 use App\Models\Vacancy;
+use App\Models\Ranking;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class STApplicationController extends Controller
 {
@@ -59,6 +61,44 @@ class STApplicationController extends Controller
             ->get();
 
         return view('ou.station.applications.showvacancy', compact('cycle', 'vacancy', 'applications', 'station'));
+    }
+
+    public function uploadranklist(Station $station, $cycle, Vacancy $vacancy)
+    {
+        $applications = Application::join('people', 'applications.person_id', '=', 'people.id')
+            ->where('station_id', '=', $station->id)
+            ->where('schoolyear', '=', $cycle)
+            ->where('vacancy_id', '=', $vacancy->id)
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')
+            ->select('applications.created_at AS submitted_at', 'people.*', 'applications.*')
+            ->get();
+
+        return view('ou.station.applications.showvacancy', compact('cycle', 'vacancy', 'applications', 'station'));
+    }
+
+    public function uploadedranklist(Station $station, $cycle, Vacancy $vacancy)
+    {
+        $data = request()->validate([
+            'year' => ['required'], 
+            'attachment' => ['required', 'mimes:pdf', 'max:20000'],
+            ],[
+            'attachment.required' => 'The ranklist document field is required.',
+            'attachment.mimes' => 'The ranklist document field should be in a pdf format.',
+            'attachment.max' => 'The ranklist document field should be less than 20000 Kilobytes.'
+            ]);
+
+        $ext = request()->file('attachment')->extension();
+        $path = Storage::putFile('public/docs', request()->file('attachment'));
+        $path = str_replace('public', '', $path);
+
+        $application = Ranking::create(array_merge($data, [
+            'vacancy_id' => $vacancy->id,
+            'station_id' => $station->id,
+            'attachment' => $path,
+            ]));
+
+        return redirect()->route('ou.station.applications.showvacancy', compact('cycle', 'vacancy', 'station'))->with('status', 'Ranklist was uploaded successfully.');
     }
 
     public function show(Station $station, $cycle, Vacancy $vacancy, Application $application)

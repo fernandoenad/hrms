@@ -18,7 +18,7 @@ class UserOfOffice
     {
         $office = $request->office; 
 
-        if(! $request->user()->isOfficeUser($office->id)){
+        if(! $request->user()->isOfficeUser($office)){
             abort(401, 'Unauthorized access.');
         }
         return $next($request);

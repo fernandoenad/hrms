@@ -86,4 +86,9 @@ class Vacancy extends Model
 
         return $status_color;
     }
+
+    public function ranking()
+    {
+        return $this->hasMany(Ranking::class);
+    }
 }

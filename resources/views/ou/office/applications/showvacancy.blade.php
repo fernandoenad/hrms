@@ -36,6 +36,80 @@
                 {{ session('error') }}
             </div>
         @endif
+
+        @if(Route::currentRouteName() == 'ou.office.applications.upload-ranklist')
+            <div class="row">         
+                <div class="col-md-8 offset-md-2">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            Upload Ranklist
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('ou.office.applications.uploaded-ranklist', [$office->id, $cycle, $vacancy->id]) }}" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="form-group row">
+                                <label for="year" class="col-md-3 col-form-label text-md-right">{{ __('Cycle') }}</label>
+
+                                <div class="col-md-8">
+                                    <input readonly id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') ?? $cycle }}" autocomplete="year">
+
+                                    @error('year')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="vacancy_id" class="col-md-3 col-form-label text-md-right">{{ __('Position') }}</label>
+
+                                <div class="col-md-8">
+                                    <input id="vacancy_id" type="hidden" class="form-control @error('vacancy_id') is-invalid @enderror" name="vacancy_id" value="{{ old('vacancy_id') ?? $vacancy->id }}" autocomplete="vacancy_id">
+                                    <input readonly id="vacancy_name" type="text" class="form-control @error('vacancy_name') is-invalid @enderror" name="vacancy_name" value="{{ old('vacancy_name') ?? $vacancy->name }}" autocomplete="vacancy_name">
+
+                                    @error('vacancy_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="attachment" class="col-md-3 col-form-label text-md-right">{{ __('Ranklist') }}</label>
+
+                                <div class="col-md-8">
+                                    <input id="attachment" type="file" class="form-control-file @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') }}" autocomplete="attachment">
+                                    <small><em>Please make sure this is already final.</em></small>       
+
+                                    @error('attachment')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-8">
+                                    <button type="submit" id="apply-submit" class="btn btn-primary float-right">
+                                        {{ __('Upload') }}
+                                    </button>
+                                    <a href="{{ url()->previous() }}" class="btn btn-default">
+                                        {{ __('Cancel') }}
+                                    </a>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
             <div class="card card-primary card-outline">
                 <div class="card-body">
                     <span class="badge badge-success float-right">

@@ -69,4 +69,9 @@ class Station extends Model
     {
         return ucwords(strtolower($value));
     }
+
+    public function ranking()
+    {
+        return $this->hasMany(Ranking::class);
+    }
 }

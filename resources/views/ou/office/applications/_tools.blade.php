@@ -21,6 +21,24 @@
                     </span>
                 </a>
             </li>
+            @if(Route::currentRouteName() == 'ou.office.applications.showvacancys' ||
+                Route::currentRouteName() == 'ou.office.applications.upload-ranklists')    
+                <?php $ranking = App\Models\Ranking::join('stations', 'station_id', '=', 'stations.id')->where('year', '=', $cycle)->where('vacancy_id', '=', $vacancy->id)->where('office_id', '=', $office->id)->get()->first(); ?>         
+
+                @if($ranking != null)
+                <li class="nav-item">
+                    <a href="{{ asset('storage/') }}/{{ $ranking->attachment }}" class="nav-link" download>
+                        <i class="fas fa-eye"></i> View Ranklist
+                    </a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a href="{{ route('ou.office.applications.upload-ranklist', [$office->id, $cycle, $vacancy->id]) }}" class="nav-link">
+                        <i class="fas fa-upload"></i> Upload Ranklist
+                    </a>
+                </li>
+                @endif                
+            @endif
         </ul>
     </div>
 </div>
