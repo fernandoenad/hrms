@@ -20,7 +20,7 @@ class RecordLog
      */
     public function handle(Request $request, Closure $next)
     {
-        /*
+        
         if(Route::currentRouteName() == 'ictu.requests.new-counter')
             return $next($request);
             
@@ -41,7 +41,7 @@ class RecordLog
                 'sessionkey' => session()->getId(),       
             ]);
         }
-        */
+        
         return $next($request);
     }
 }
