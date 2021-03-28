@@ -18,8 +18,9 @@ class UserOfStation
     public function handle(Request $request, Closure $next)
     {
         $station = $request->station; 
+        //dd($station);
 
-        if(! $request->user()->isStationUser($station)){
+        if(! $request->user()->isStationUser($station->id)){
             abort(401, 'Unauthorized access.');
         }
 
