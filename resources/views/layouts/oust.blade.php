@@ -19,7 +19,7 @@
                 </li>
                 <li class="dropdown">
                     <a type="button" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        Other Station Assignments
+                        Other Assignments
                     </a>
                     <div class="dropdown-menu dropdown-menu-left" role="menu">
                         @foreach(Auth::user()->getStations()->get() as $station_a)
