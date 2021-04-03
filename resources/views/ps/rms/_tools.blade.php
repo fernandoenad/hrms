@@ -51,8 +51,8 @@
                     <a href="{{ route('ps.rms') }}" class="nav-link">
                         <i class="fas fa-inbox"></i> New
                         <span class="badge badge-danger float-right">
-                            {{ App\Models\Application::where('schoolyear', '=', $cycle)
-                                ->where('type', '=', 'New')->get()->count() }}
+                            {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
+                                ->where('type', '=', 'New')->get()->count(),0) }}
                         </span>
                     </a>
                 </li>
@@ -60,8 +60,8 @@
                     <a href="{{ route('ps.rms') }}" class="nav-link">
                         <i class="fas fa-inbox"></i> Update
                         <span class="badge badge-danger float-right">
-                            {{ App\Models\Application::where('schoolyear', '=', $cycle)
-                                ->where('type', '=', 'Update')->get()->count() }}
+                            {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
+                                ->where('type', '=', 'Update')->get()->count(),0) }}
                         </span>
                     </a>
                 </li>
@@ -69,8 +69,8 @@
                     <a href="{{ route('ps.rms') }}" class="nav-link">
                         <i class="fas fa-inbox"></i> Retain
                         <span class="badge badge-danger float-right">
-                            {{ App\Models\Application::where('schoolyear', '=', $cycle)
-                                ->where('type', '=', 'Retain')->get()->count() }}
+                            {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
+                                ->where('type', '=', 'Retain')->get()->count(),0) }}
                         </span>
                     </a>
                 </li>
