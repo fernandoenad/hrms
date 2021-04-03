@@ -62,12 +62,17 @@
                             <label for="deployment_station_id" class="col-md-3 col-form-label text-md-right">{{ __('Deployment') }}</label>
 
                             <div class="col-md-8">
+                                <!--
                                 <select id="deployment_station_id" type="text" class="form-control @error('deployment_station_id') is-invalid @enderror" name="deployment_station_id" value="{{ old('deployment_station_id') }}" autocomplete="deployment_station_id">
                                     <option value="">Select</option>
                                     @foreach($stations as $station_i)
                                         <option value="{{ $station_i->id }}" @if (old('deployment_station_id') == $station_i->id) {{ 'selected' }} @endif>{{ $station_i->code }} - {{ $station_i->name }}, {{ $station_i->office->name }}</option>
                                     @endforeach
                                 </select>
+                                -->
+                                <input id="deployment_station_id" type="hidden" class="form-control @error('deployment_station_id') is-invalid @enderror" name="deployment_station_id" value="{{ old('deployment_station_id') ?? $station->id }}" autocomplete="deployment_station_id">
+                                <input readonly id="deployment_station_name" type="text" class="form-control @error('deployment_station_name') is-invalid @enderror" name="deployment_station_name" value="{{ old('deployment_station_name') ?? $station->name }}" autocomplete="deployment_station_name">
+
 
                                 @error('deployment_station_id')
                                     <span class="invalid-feedback" role="alert">

@@ -223,7 +223,7 @@
                                             <td>
                                                 <strong>{{ $office->name }}</strong>
                                                 <br>
-                                                {{ $office->town->name }}
+                                                @if($office->person != null) {{ $office->person->user->name }} @endif
                                             </td>
                                             <td class="text-right">{{ $office->station->count() }}</td>
                                             <td class="text-right">{{ \App\Http\Controllers\PU\OfficeController::getEmployees($office->id, 'Teaching')->count() }}</td>

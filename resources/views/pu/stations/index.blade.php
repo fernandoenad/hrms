@@ -427,7 +427,11 @@
                                 @if(sizeof($stations) > 0)
                                     @foreach($stations as $station)
                                         <tr>
-                                            <td><strong>{{ $station->name }} ({{ $station->code }})</strong></td>
+                                            <td>
+                                                <strong>{{ $station->name }} ({{ $station->code }})</strong>
+                                                <br>
+                                                @if($station->person != null) {{ $station->person->user->name }} @endif                                         
+                                            </td>
                                             <td>{{ $station->office->name }}</td>
                                             <td class="text-right">{{ \App\Http\Controllers\PU\StationController::getEmployees($station->id, 'Teaching')->count() }}</td>
                                             <td class="text-right">{{ \App\Http\Controllers\PU\StationController::getEmployees($station->id, 'Non-Teaching')->count() }}</td>
