@@ -46,7 +46,22 @@ class STApplicationController extends Controller
             ->groupby('vacancies.id')
             ->get();
 
-        return view('ou.station.applications.showcycle', compact('cycle', 'vacancies', 'station'));
+        $station_id = $station->id;
+        $vacancies2 = Vacancy::whereNotIn('vacancies.id', function($query) use($station_id){
+                $query->select('vacancy_id')->from('applications')
+                    ->where('station_id', '=', $station_id);
+            })
+            ->where('vacancylevel', '=', 1)
+            ->whereYear('vacancies.updated_at', '=', $cycle)
+            ->orderBy('vacancylevel', 'desc')
+            ->orderBy('salarygrade', 'desc')
+            ->orderBy('name', 'asc')
+            ->select('vacancies.id')
+            ->groupby('vacancies.id')
+            ->get();
+        
+
+        return view('ou.station.applications.showcycle', compact('cycle', 'vacancies', 'station', 'vacancies2'));
     }
 
     public function showvacancy(Station $station, $cycle, Vacancy $vacancy)

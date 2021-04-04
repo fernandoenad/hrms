@@ -85,6 +85,38 @@
                     </div>
                 </div> 
             </div>
+       
+            @if($station->services == 'Secondary')
+            <div class="card card-primary card-outline">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table m-0 table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>Positions Not Applied For</th>                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(sizeof($vacancies2) > 0)
+                                    @foreach($vacancies2 as $vacancy)
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}">
+                                                    <?php $vacancy_ = App\Models\Vacancy::find($vacancy->id); ?>
+                                                    <strong>{{ $vacancy_->name ?? '' }}</strong>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr><td colspan="6"></td></tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+            </div>
+            @endif
         </div>
 
         <div class="col-md-3">
