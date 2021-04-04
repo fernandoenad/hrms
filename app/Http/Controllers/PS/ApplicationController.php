@@ -175,6 +175,14 @@ class ApplicationController extends Controller
         return view('ps.rms.applications.needsconfirmation', compact('applications'));
     }
 
+    public function showfilter($cycle, $filter, $page)
+    {
+        $applications = Application::where('schoolyear', '=', $cycle)
+        ->where('type', '=', $filter)->paginate($page);
+
+        return view('ps.rms.applications.showfilter', compact('cycle', 'applications', 'filter'));
+    }
+
     
 
     /**

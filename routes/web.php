@@ -189,6 +189,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ps/rms/vacancies', [VacancyController::class, 'store'])->name('ps.rms.vacancies-store');
 
         Route::get('/ps/rms/applications/needs-confirmation', [PSApplicationController::class, 'needsconfirmation'])->name('ps.rms.applications-needs-confirmation');
+        Route::get('/ps/rms/applications/{cycle}/showfilter/{filter}/{page}', [PSApplicationController::class, 'showfilter'])->name('ps.rms.applications-show-showfilter');
         Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}/take-action', [PSApplicationController::class, 'takeaction'])->name('ps.rms.applications-show.take-action');
         Route::patch('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'actiontaken'])->name('ps.rms.applications-show.action-taken');
         Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'show'])->name('ps.rms.applications-show');

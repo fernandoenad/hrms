@@ -41,14 +41,15 @@
     </div>
 </div>
 
-@if(Route::currentRouteName() == 'ps.rms.applications-show-cycle')
+@if(Route::currentRouteName() == 'ps.rms.applications-show-cycle' ||
+    Route::currentRouteName() == 'ps.rms.applications-show-showfilter')
     <div class="card card-info">
         <div class="card-header">Application Filters</div>
 
         <div class="card-body p-0">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a href="{{ route('ps.rms') }}" class="nav-link">
+                    <a href="{{ route('ps.rms.applications-show-showfilter', [$cycle, 'New', 15]) }}" class="nav-link">
                         <i class="fas fa-inbox"></i> New
                         <span class="badge badge-danger float-right">
                             {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
@@ -57,7 +58,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ps.rms') }}" class="nav-link">
+                    <a href="{{ route('ps.rms.applications-show-showfilter', [$cycle, 'Update', 15]) }}" class="nav-link">
                         <i class="fas fa-inbox"></i> Update
                         <span class="badge badge-danger float-right">
                             {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
@@ -66,7 +67,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('ps.rms') }}" class="nav-link">
+                    <a href="{{ route('ps.rms.applications-show-showfilter', [$cycle, 'Retain', 15]) }}" class="nav-link">
                         <i class="fas fa-inbox"></i> Retain
                         <span class="badge badge-danger float-right">
                             {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
