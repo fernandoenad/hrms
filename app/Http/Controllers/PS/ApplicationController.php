@@ -177,10 +177,40 @@ class ApplicationController extends Controller
 
     public function showfilter($cycle, $filter, $page)
     {
-        $applications = Application::where('schoolyear', '=', $cycle)
-        ->where('type', '=', $filter)->paginate($page);
+        $applications = Application::join('people', 'applications.person_id', '=', 'people.id')
+            ->join('stations', 'applications.station_id', '=', 'stations.id')
+            ->join('offices', 'stations.office_id', '=', 'offices.id')
+            ->join('towns', 'offices.town_id', '=', 'towns.id')
+            ->where('schoolyear', '=', $cycle)
+            ->where('applications.type', '=', $filter)
+            ->orderBy('cdlevel', 'asc')
+            ->orderBy('vacancy_id', 'asc')
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')            
+            ->select('applications.*')->paginate($page);
 
         return view('ps.rms.applications.showfilter', compact('cycle', 'applications', 'filter'));
+    }
+
+    public function vacancyfilter($cycle, Vacancy $vacancy, $filter, $page)
+    {
+        $applications = Application::where('schoolyear', '=', $cycle)
+            ->where('vacancy_id', '=', $vacancy->id)
+            ->where('type', '=', $filter)->get();
+        
+        $applications2 = Application::join('people', 'applications.person_id', '=', 'people.id')
+            ->join('stations', 'applications.station_id', '=', 'stations.id')
+            ->join('offices', 'stations.office_id', '=', 'offices.id')
+            ->join('towns', 'offices.town_id', '=', 'towns.id')
+            ->where('schoolyear', '=', $cycle)
+            ->where('vacancy_id', '=', $vacancy->id)
+            ->where('applications.type', '=', $filter)
+            ->orderBy('cdlevel', 'asc')
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')
+            ->select('applications.*')->paginate($page);
+
+        return view('ps.rms.applications.vacancyfilter', compact('cycle', 'vacancy', 'applications', 'applications2', 'filter'));
     }
 
     

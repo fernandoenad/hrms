@@ -11,6 +11,9 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ps') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ps.rms') }}">RMS</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications') }}">All</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications-show-cycle', $cycle) }}">Cycle</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ps.rms.applications-show-vacancy', [$cycle, $vacancy->id]) }}">Vacancy</a></li>
                     <li class="breadcrumb-item">{{ $filter }} Applications</li>
                 </ol>
             </div>
@@ -35,6 +38,31 @@
             </div>
         @endif
             <div class="card card-primary card-outline">
+                <div class="card-body">
+                    <span class="badge badge-success float-right">
+                        {{ $applications->count() }} Applicant(s)
+                    </span>
+
+                    <h3>
+                        <a href="{{ route('ps.rms.vacancies-show', $vacancy->id) }}">
+                            {{ $vacancy->name ?? '' }} (Cycle {{ $cycle }})
+                        </a>
+                    </h3>  
+                    
+                    <span class="badge badge-mute text-left p-0">
+                        Salary Grade: {{ $vacancy->salarygrade ?? '' }} | 
+                        Vacancy Level: {{ $vacancy->getvacancylevel($vacancy->vacancylevel) ?? '' }} |
+                        Curricular Level: {{ $vacancy->curricularlevel ?? '' }} |
+                        Vacancy: {{ $vacancy->vacancy ?? '' }} slot(s) | 
+                        Status: <span class="badge badge-{{ $vacancy->getstatuscolor($vacancy->status) ?? '' }}">{{ $vacancy->getstatus($vacancy->status) ?? '' }}</span>
+                        <br>
+                        Posted at {{ date('M d, Y h:i A', strtotime($vacancy->created_at )) }},
+                        Updated at {{ date('M d, Y h:i A', strtotime($vacancy->updated_at )) }}
+                    </span> 
+                </div> 
+            </div>
+
+            <div class="card">
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <small>
@@ -42,17 +70,16 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th width="25%">Name</th>
-                                    <th width="15%">Position applied</th>
+                                    <th>Name</th>
                                     <th>Contact / Address</th> 
                                     <th>Position / Station / District</th>                                    
                                     <th>Submitted at / Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(sizeof($applications) > 0)
+                                @if(sizeof($applications2) > 0)
                                     <?php $i=1;?>
-                                    @foreach($applications as $application)
+                                    @foreach($applications2 as $application)
                                         <tr>
                                             <td>{{ $i }}</td>
                                             <td>
@@ -61,9 +88,6 @@
                                                 </a>
                                                 <br>
                                                 {{ $application->code ?? '' }} / CD {{ $application->station->office->town->cdlevel ?? '' }}
-                                            </td>
-                                            <td>
-                                                {{ $application->vacancy->name ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $application->person->contact->primaryno ?? '' }}<br>
@@ -93,15 +117,15 @@
                         </table>
                         </small>
                     </div>
-                </div> 
+                </div>
                 <div class="card-footer py-1 ">
                     <?php $count = App\Models\Application::where('schoolyear', '=', $cycle)
                                 ->where('type', '=', $filter)->get()->count(); ?>
-                    <a href="{{ route('ps.rms.applications-show-showfilter', [$cycle, $filter, $count]) }}" class="btn btn-primary btn-sm">View all</a>
+                    <a href="{{ route('ps.rms.applications-show-vacancyfilter', [$cycle, $vacancy->id, $filter, $count]) }}" class="btn btn-primary btn-sm">View all</a>
                     <div class="float-right">
-                        {!! $applications->render() !!}
+                        {!! $applications2->render() !!}
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
 
