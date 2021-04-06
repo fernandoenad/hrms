@@ -28,7 +28,7 @@ class CreateEmployeesTable extends Migration
             $table->string('philhealthno')->nullable();
             $table->string('pagibigid')->nullable();
             $table->string('dbpaccountno')->nullable();
-            $table->unsignedBigInteger('item_id')->unique();
+            $table->unsignedBigInteger('item_id');
             $table->timestamps();
 
             $table->index('person_id');
