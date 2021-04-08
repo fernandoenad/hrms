@@ -185,7 +185,7 @@ class ItemController extends Controller
             ->get();    
 
         $stations = Station::select('id', 'code', 'name', 'office_id')
-            ->orderBy('code', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
         
         $itemlevels = Dropdown::where('type', '=', 'itemlevel')
