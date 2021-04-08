@@ -190,6 +190,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
         Route::get('/ps/rms/applications/needs-confirmation', [PSApplicationController::class, 'needsconfirmation'])->name('ps.rms.applications-needs-confirmation');
         Route::get('/ps/rms/applications/{cycle}/{vacancy}/vacancyfilter/{filter}/{page}', [PSApplicationController::class, 'vacancyfilter'])->name('ps.rms.applications-show-vacancyfilter');
+        Route::get('/ps/rms/applications/{cycle}/{vacancy}/ranking/{ranking}', [PSApplicationController::class, 'deleteranking'])->name('ps.rms.applications-delete-ranking');
+        Route::get('/ps/rms/applications/{cycle}/{vacancy}/ranking', [PSApplicationController::class, 'showranking'])->name('ps.rms.applications-show-ranking');
         Route::get('/ps/rms/applications/{cycle}/showfilter/{filter}/{page}', [PSApplicationController::class, 'showfilter'])->name('ps.rms.applications-show-showfilter');
         Route::get('/ps/rms/applications/{cycle}/{vacancy}/{application}/take-action', [PSApplicationController::class, 'takeaction'])->name('ps.rms.applications-show.take-action');
         Route::patch('/ps/rms/applications/{cycle}/{vacancy}/{application}', [PSApplicationController::class, 'actiontaken'])->name('ps.rms.applications-show.action-taken');

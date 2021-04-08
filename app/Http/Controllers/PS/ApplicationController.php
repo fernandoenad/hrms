@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Vacancy;
 use App\Models\Station;
+use App\Models\Ranking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -211,6 +212,31 @@ class ApplicationController extends Controller
             ->select('applications.*')->paginate($page);
 
         return view('ps.rms.applications.vacancyfilter', compact('cycle', 'vacancy', 'applications', 'applications2', 'filter'));
+    }
+
+    public function showranking($cycle, Vacancy $vacancy)
+    {
+        $applications = Application::where('schoolyear', '=', $cycle)
+            ->where('vacancy_id', '=', $vacancy->id)->get();
+
+        $rankings = Ranking::join('stations', 'rankings.station_id', '=', 'stations.id')
+            ->join('offices', 'stations.office_id', '=', 'offices.id')
+            ->join('towns', 'offices.town_id', '=', 'towns.id')
+            ->where('year', '=', $cycle)
+            ->where('vacancy_id', '=', $vacancy->id)
+            ->orderby('towns.cdlevel', 'asc')
+            ->orderby('offices.name', 'asc')
+            ->orderby('stations.name', 'asc')
+            ->select('rankings.*')->get();
+        
+        return view('ps.rms.applications.showranking', compact('cycle', 'vacancy', 'applications', 'rankings'));
+    }
+
+    public function deleteranking($cycle, Vacancy $vacancy, Ranking $ranking)
+    {
+        $ranking->delete();
+
+        return redirect()->route('ps.rms.applications-show-ranking', compact('cycle', 'vacancy'))->with('status', 'Ranking file deleted.');
     }
 
     

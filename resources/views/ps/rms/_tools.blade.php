@@ -81,7 +81,8 @@
 @endif
 
 @if(Route::currentRouteName() == 'ps.rms.applications-show-vacancy' ||
-    Route::currentRouteName() == 'ps.rms.applications-show-vacancyfilter')
+    Route::currentRouteName() == 'ps.rms.applications-show-vacancyfilter' || 
+    Route::currentRouteName() == 'ps.rms.applications-show-ranking' )
     <div class="card card-info">
         <div class="card-header">Application Filters</div>
 
@@ -114,6 +115,24 @@
                             {{ number_format(App\Models\Application::where('schoolyear', '=', $cycle)
                                 ->where('vacancy_id', '=', $vacancy->id)
                                 ->where('type', '=', 'Retain')->get()->count(),0) }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card card-info">
+        <div class="card-header">Ranking Files</div>
+
+        <div class="card-body p-0">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a href="{{ route('ps.rms.applications-show-ranking', [$cycle, $vacancy->id]) }}" class="nav-link">
+                        <i class="fas fa-inbox"></i> Initial Ranking
+                        <span class="badge badge-danger float-right">
+                            {{ number_format(App\Models\Ranking::where('year', '=', $cycle)
+                                ->where('vacancy_id', '=', $vacancy->id)->get()->count(),0) }}
                         </span>
                     </a>
                 </li>
