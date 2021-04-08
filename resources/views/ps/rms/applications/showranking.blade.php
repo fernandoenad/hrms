@@ -88,7 +88,8 @@
                                             <td><a href="{{ asset('storage') }}/{{ $ranking->attachment ?? '' }}" download><i class="fas fa-download"></i></td>
                                             <td>{{ date('M d, Y h:i a', strtotime($ranking->created_at)) ?? '' }}</td>
                                             <td>
-                                                <a href="{{ route('ps.rms.applications-delete-ranking', [$cycle, $vacancy->id, $ranking->id]) }}" onclick="return confirm('This action is IRRVERSIBLE. Are you sure wish to delete this ranking submission?');">
+                                                <a href="{{ route('ps.rms.applications-delete-ranking', [$cycle, $vacancy->id, $ranking->id]) }}" 
+                                                    onclick="return confirm('This action is IRRVERSIBLE.\nAre you sure wish to delete this ranking submission?');">
                                                 <i class="fas fa-trash-alt text-danger"></i></a>
                                             </td>
                                         </tr>
