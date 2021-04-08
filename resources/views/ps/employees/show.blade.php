@@ -300,15 +300,19 @@
                                 <tr>
                                     <th>Plantilla Owner</th>
                                     <td>
-                                        {{ $person->employee->item->station->name ?? __('') }}
-                                        ({{ $person->employee->item->station->code ?? __('') }})
+                                        @if($person->employee->item->station != null)
+                                            {{ $person->employee->item->station->name ?? __('') }}
+                                            ({{ $person->employee->item->station->code ?? __('') }})
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Deployment</th>
                                     <td>
-                                        {{ $person->employee->item->deployment->station->name ?? __('') }}
-                                        ({{ $person->employee->item->deployment->station->code ?? __('') }})
+                                        @if($person->employee->item->station != null)
+                                            {{ $person->employee->item->deployment->station->name ?? __('') }}
+                                            ({{ $person->employee->item->deployment->station->code ?? __('') }})
+                                        @endif
                                     </td>
                                 </tr>
                             </tbody>
