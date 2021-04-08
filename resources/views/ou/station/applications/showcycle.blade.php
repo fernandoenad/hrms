@@ -86,7 +86,6 @@
                 </div> 
             </div>
        
-            @if($station->services == 'Secondary')
             <div class="card card-primary card-outline">
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -116,7 +115,7 @@
                     </div>
                 </div> 
             </div>
-            @endif
+            
         </div>
 
         <div class="col-md-3">
