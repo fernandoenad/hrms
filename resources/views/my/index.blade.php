@@ -333,10 +333,8 @@
                                             <tr>
                                                 <th>Station Head</th>
                                                 <td>
-                                                    @if($person->employee->item->deployment->station->person_id)
+                                                    @if($person->employee->item->deployment->station != null)
                                                         {{ $person->employee->item->deployment->station->person->getFullname() ?? __('') }}
-                                                    @else 
-                                                        {{ __('') }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -351,10 +349,8 @@
                                             <tr>
                                                 <th>District/Office Head</th>
                                                 <td>
-                                                    @if(isset($person->employee->item->deployment->station->office->person_id))
+                                                    @if($person->employee->item->deployment->station != null))
                                                         {{ $person->employee->item->deployment->station->office->person->getFullname() ?? __('')  }}
-                                                    @else 
-                                                        {{ __('') }}
                                                     @endif
                                                 </td>
                                             </tr>
