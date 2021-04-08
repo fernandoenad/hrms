@@ -300,8 +300,8 @@
                                                 <th>Deployment</th>
                                                 <td>
                                                     @if($person->employee->item->station != null)
-                                                        {{ $person->employee->item->deployment->station->name ?? __('') }}
-                                                        ({{ $person->employee->item->deployment->station->code ?? __('') }})
+                                                    {{ $person->employee->item->deployment->station->name ?? __('') }}
+                                                    ({{ $person->employee->item->deployment->station->code ?? __('') }})
                                                     @endif
                                                 </td>
                                             </tr>
@@ -335,6 +335,8 @@
                                                 <td>
                                                     @if($person->employee->item->deployment->station != null)
                                                         {{ $person->employee->item->deployment->station->person->getFullname() ?? __('') }}
+                                                    @else 
+                                                        {{ __('') }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -349,8 +351,10 @@
                                             <tr>
                                                 <th>District/Office Head</th>
                                                 <td>
-                                                    @if($person->employee->item->deployment->station != null))
+                                                    @if($person->employee->item->deployment->station != null)
                                                         {{ $person->employee->item->deployment->station->office->person->getFullname() ?? __('')  }}
+                                                    @else 
+                                                        {{ __('') }}
                                                     @endif
                                                 </td>
                                             </tr>
