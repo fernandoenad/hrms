@@ -110,12 +110,12 @@ class Person extends Model
 
     public function getFullname()
     {
-        return ucwords(mb_strtolower($this->firstname)). " " . mb_strtoupper($this->lastname) . " " . $this->extname;
+        return ucwords(mb_strtolower($this->firstname)). " " . mb_strtoupper($this->lastname) . " " )). $this->extname;
     }
 
     public function getFullnameBox()
     {
-        return ucwords(mb_strtolower($this->firstname. " " . $this->lastname . " " . $this->extname));
+        return ucwords(mb_strtolower($this->firstname. " " . $this->lastname . " ")) . $this->extname;
     }
 
     public function getFullnameSorted()
