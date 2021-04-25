@@ -344,7 +344,7 @@
                                 <tr>
                                     <th>Station Head</th>
                                     <td>
-                                        @if(isset($person->employee->item->deployment->station->person_id))
+                                        @if(isset($person->employee->item->deployment->station->person))
                                             {{ $person->employee->item->deployment->station->person->getFullname() ?? __('') }}
                                         @else 
                                             {{ __('') }}
@@ -362,7 +362,7 @@
                                 <tr>
                                     <th>District/Office Head</th>
                                     <td>
-                                        @if(isset($person->employee->item->deployment->station->office->person_id))
+                                        @if(isset($person->employee->item->deployment->station->office->person))
                                             {{ $person->employee->item->deployment->station->office->person->getFullname() ?? __('')  }}
                                         @else 
                                             {{ __('') }}
