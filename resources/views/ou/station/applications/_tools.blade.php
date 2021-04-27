@@ -20,12 +20,17 @@
 
             @if(Route::currentRouteName() == 'ou.station.applications.showvacancy' ||
                 Route::currentRouteName() == 'ou.station.applications.upload-ranklist')    
-                <?php $ranking = App\Models\Ranking::where('year', '=', $cycle)->where('vacancy_id', '=', $vacancy->id)->where('station_id', '=', $station->id)->get()->first(); ?>         
+                <?php $ranking = App\Models\Ranking::where('year', '=', $cycle)->where('vacancy_id', '=', $vacancy->id)->where('station_id', '=', $station->id)->orderby('rankings.id', 'desc')->get()->first(); ?>         
                 
                 @if($ranking != null)
                 <li class="nav-item">
                     <a href="{{ asset('storage/') }}/{{ $ranking->attachment }}" class="nav-link" download>
                         <i class="fas fa-eye"></i> View Ranklist
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('ou.station.applications.upload-ranklist', [$station->id, $cycle, $vacancy->id]) }}?ranking_id={{ $ranking->id }}" class="nav-link">
+                        <i class="fas fa-upload"></i> Re-upload Ranklist
                     </a>
                 </li>
                 @else

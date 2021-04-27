@@ -63,7 +63,7 @@ use App\Http\Controllers\OU\STRankingController;
 use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\OFUserController;
 use App\Http\Controllers\OU\OFApplicationController;
-
+use App\Http\Controllers\OU\OFStationController;
 
 use App\Http\Controllers\HomeController;
 
@@ -473,6 +473,11 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}', [OFApplicationController::class, 'showvacancy'])->name('ou.office.applications.showvacancy');
         Route::get('/ou/office/{office}/applications/{cycle}', [OFApplicationController::class, 'showcycle'])->name('ou.office.applications.showcycle');
         Route::get('/ou/office/{office}/applications', [OFApplicationController::class, 'index'])->name('ou.office.applications');
+
+        Route::any('/ou/office/{office}/stations/{station}/lookup', [OFStationController::class, 'lookup'])->name('ou.office.stations.lookup');
+        Route::get('/ou/office/{office}/stations/{station}/edit', [OFStationController::class, 'edit'])->name('ou.office.stations.edit');
+        Route::patch('/ou/office/{office}/stations/{station}/edit', [OFStationController::class, 'update'])->name('ou.office.stations.update');
+        Route::get('/ou/office/{office}/stations', [OFStationController::class, 'index'])->name('ou.office.stations');
 
         Route::get('/ou/office/{office}/users/create', [OFUserController::class, 'create'])->name('ou.office.users.create');
         Route::any('/ou/office/{office}/users/lookup', [OFUserController::class, 'lookup'])->name('ou.office.users.lookup');

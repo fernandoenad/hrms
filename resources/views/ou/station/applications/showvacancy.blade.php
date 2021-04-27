@@ -45,7 +45,7 @@
                             Upload Ranklist
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('ou.station.applications.uploaded-ranklist', [$station->id, $cycle, $vacancy->id]) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('ou.station.applications.uploaded-ranklist', [$station->id, $cycle, $vacancy->id]) }}?ranking_id={{ $ranking_id }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">

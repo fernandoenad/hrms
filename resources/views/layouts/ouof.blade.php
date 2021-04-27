@@ -68,6 +68,16 @@
                         </li>
 
                         <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ou.office.stations') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ou.office.stations', $office->id) }}" class="nav-link">
+                                <i class="nav-icon fas fa-school"></i>
+                                <p>Stations</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ou.office.leaves') !== false) 
                                 {{ __('menu-open')}}
                             @endif">

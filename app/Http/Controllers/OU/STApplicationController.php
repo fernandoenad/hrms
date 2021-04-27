@@ -80,6 +80,8 @@ class STApplicationController extends Controller
 
     public function uploadranklist(Station $station, $cycle, Vacancy $vacancy)
     {
+        $ranking_id = request()->get('ranking_id');
+        
         $applications = Application::join('people', 'applications.person_id', '=', 'people.id')
             ->where('station_id', '=', $station->id)
             ->where('schoolyear', '=', $cycle)
@@ -89,11 +91,13 @@ class STApplicationController extends Controller
             ->select('applications.created_at AS submitted_at', 'people.*', 'applications.*')
             ->get();
 
-        return view('ou.station.applications.showvacancy', compact('cycle', 'vacancy', 'applications', 'station'));
+        return view('ou.station.applications.showvacancy', compact('cycle', 'vacancy', 'applications', 'station', 'ranking_id'));
     }
 
     public function uploadedranklist(Station $station, $cycle, Vacancy $vacancy)
     {
+        $ranking_id = request()->get('ranking_id');
+  
         $data = request()->validate([
             'year' => ['required'], 
             'attachment' => ['required', 'mimes:pdf', 'max:20000'],
@@ -107,11 +111,16 @@ class STApplicationController extends Controller
         $path = Storage::putFile('public/docs', request()->file('attachment'));
         $path = str_replace('public', '', $path);
 
-        $application = Ranking::create(array_merge($data, [
-            'vacancy_id' => $vacancy->id,
-            'station_id' => $station->id,
-            'attachment' => $path,
-            ]));
+        if($ranking_id == null){
+            $application = Ranking::create(array_merge($data, [
+                'vacancy_id' => $vacancy->id,
+                'station_id' => $station->id,
+                'attachment' => $path,
+                ]));
+        } else {
+            $ranking = Ranking::find($ranking_id);
+            $ranking->update(['attachment' => $path]);           
+        }
 
         return redirect()->route('ou.station.applications.showvacancy', compact('cycle', 'vacancy', 'station'))->with('status', 'Ranklist was uploaded successfully.');
     }
