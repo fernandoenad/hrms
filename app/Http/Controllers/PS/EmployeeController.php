@@ -26,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = $this->getList()->paginate(15);     
+        $employees = $this->getList()->paginate(150);     
         $empl_a = $this->employeesActiveCounter();
         $empl_un = $this->employeesUnassignedCounter();
         $empl_te = $this->employeesTerminatedCounter();

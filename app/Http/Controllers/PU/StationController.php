@@ -179,7 +179,7 @@ class StationController extends Controller
 
         $employees = $employees->appends(['searchString' => $searchString]);
 
-        return view('pu.offices.lookup', compact('employees'));
+        return view('pu.stations.lookup', compact('employees'));
     } 
     
 }

@@ -62,7 +62,7 @@
                                                     <strong>{{ $employee->person->getFullnameSorted() }}</strong>
                                                 </a>
                                             </td>
-                                            <td>{{ $employee->item->position }}</td>
+                                            <td>{{ $employee->item->position ?? '' }}</td>
                                             <td>
                                                 {{ $employee->item->deployment->station->name ?? __('') }}
                                                 ({{ $employee->item->deployment->station->code ?? __('') }})
@@ -90,7 +90,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            @include('pu.offices._tools')
+           @include('pu.stations._tools')
         </div>        
     </div>
 </div>
