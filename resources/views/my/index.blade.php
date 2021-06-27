@@ -351,7 +351,7 @@
                                             <tr>
                                                 <th>District/Office Head</th>
                                                 <td>
-                                                    @if($person->employee->item->deployment->station != null)
+                                                    @if($person->employee->item->deployment->station->office->person != null)
                                                         {{ $person->employee->item->deployment->station->office->person->getFullname() ?? __('')  }}
                                                     @else 
                                                         {{ __('') }}
