@@ -68,6 +68,9 @@
                         <li class="nav-item 
                             @if(Route::currentRouteName() == 'rms' ||
                             Route::currentRouteName() == 'rms.show' ||
+                            Route::currentRouteName() == 'rms.vacancy' ||
+                            Route::currentRouteName() == 'rms.vacancy.show' ||
+                            Route::currentRouteName() == 'rms.user' ||
                             Route::currentRouteName() == 'rms.application.apply')
                                 {{ 'menu-open' }} @endif">
                             <a href="{{ route('rms') }}" class="nav-link">

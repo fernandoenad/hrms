@@ -83,7 +83,7 @@ class Application extends Model
     public function getStatusColor($status)
     {
         switch($status){
-            case 1:
+            case 1: 
                 $status_color = 'danger';
                 break;
             case 2:
@@ -98,5 +98,23 @@ class Application extends Model
         }
 
         return $status_color;
+    }
+
+    public function getTypeColor($type)
+    {
+        switch($type){
+            case "New": 
+                $type_color = 'danger';
+                break;
+            case "Update":
+                $type_color = 'warning';
+                break;
+            case "Retain":
+                $type_color = 'info';
+                break;
+
+        }
+
+        return $type_color;
     }
 }
