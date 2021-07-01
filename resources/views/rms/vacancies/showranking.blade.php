@@ -69,7 +69,7 @@
                                                 <td>{{ $i }}</td>
                                                 <td>{{ $ranking->station->name ?? '' }} ({{ $ranking->station->code ?? '' }})</td>
                                                 <td>{{ $ranking->station->office->name ?? '' }} (CD {{ $ranking->station->office->town->cdlevel ?? '' }})</td>
-                                                <td><a href="{{ asset('storage') }}/{{ $ranking->attachment ?? '' }}" target="_blank"><i class="fas fa-download"></i></td>
+                                                <td><a href="{{ asset('storage') }}/{{ $ranking->attachment ?? '' }}" target="_blank"><i class="fas fa-download"></i> Download</a></td>
                                                 <td>{{ date('M d, Y h:i a', strtotime($ranking->created_at)) ?? '' }}</td>
                                             </tr>
                                             <?php $i++;?>

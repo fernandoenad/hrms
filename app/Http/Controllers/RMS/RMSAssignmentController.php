@@ -10,6 +10,11 @@ use App\Models\Ranking;
 
 class RMSAssignmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'); 
+    }
+    
     public function index()
     {
         $vacancies = Vacancy::orderBy('status', 'desc')

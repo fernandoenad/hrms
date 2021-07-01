@@ -49,7 +49,7 @@
 
 @include('rms.vacancies._tools')
 
-@if(Route::currentRouteName() == 'rms' || Route::currentRouteName() == 'rms.show')
+@if(Route::currentRouteName() == 'rms_x' || Route::currentRouteName() == 'rms.show_x')
 <div class="card card-info">
     <div class="card-header">Unique Visits</div>
 
