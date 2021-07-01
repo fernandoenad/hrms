@@ -24,8 +24,7 @@ class UserRankingController extends Controller
     public function index()
     {
         $userrankings = UserRanking::join('users', 'users.id' , '=', 'user_id')
-            ->orderBy('vacancy_id', 'asc')
-            ->orderBy('vacancy_id', 'asc')
+            ->orderBy('name', 'asc')
             ->select('user_rankings.*')
             ->get();
 
