@@ -70,6 +70,7 @@
                             Route::currentRouteName() == 'rms.show' ||
                             Route::currentRouteName() == 'rms.vacancy' ||
                             Route::currentRouteName() == 'rms.vacancy.show' ||
+                            Route::currentRouteName() == 'rms.vacancy.show.ranking' ||
                             Route::currentRouteName() == 'rms.user' ||
                             Route::currentRouteName() == 'rms.application.apply')
                                 {{ 'menu-open' }} @endif">

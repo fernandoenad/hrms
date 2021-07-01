@@ -41,7 +41,7 @@
                                     @foreach($vacancies as $vacancy)
                                         <tr>
                                             <td>
-                                                <a href="{{ route('rms.vacancy.show', $vacancy->id) }}">
+                                                <a href="{{ route('rms.vacancy.show', [$vacancy->id, 'All']) }}">
                                                     <strong>{{ $vacancy->name ?? '' }}</strong>
                                                 </a>
                                             </td>

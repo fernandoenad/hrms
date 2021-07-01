@@ -504,8 +504,10 @@ Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.a
 
 Route::get('/rms/user', [RMSUserController::class, 'index'])->name('rms.user');
 
-Route::get('/rms/vacancy/{vacancy}', [RMSAssignmentController::class, 'show'])->name('rms.vacancy.show');
+Route::get('/rms/vacancy/{vacancy}/ranking/{filter}', [RMSAssignmentController::class, 'showRanking'])->name('rms.vacancy.show.ranking');
+Route::get('/rms/vacancy/{vacancy}/{filter}', [RMSAssignmentController::class, 'show'])->name('rms.vacancy.show');
 Route::get('/rms/vacancy', [RMSAssignmentController::class, 'index'])->name('rms.vacancy');
+
 
 Route::get('/rms/p/{page}', [RMSController::class, 'show'])->name('rms.show');
 Route::get('/rms/post/{post}', [RMSController::class, 'display'])->name('rms.display');
