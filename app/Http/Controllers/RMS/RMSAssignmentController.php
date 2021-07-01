@@ -14,7 +14,7 @@ class RMSAssignmentController extends Controller
     {
         $this->middleware('auth'); 
     }
-    
+
     public function index()
     {
         $vacancies = Vacancy::orderBy('status', 'desc')
@@ -56,11 +56,8 @@ class RMSAssignmentController extends Controller
             ->where('year', '=', $cycle)
             ->where('vacancy_id', '=', $vacancy->id)
             ->where('towns.cdlevel', 'LIKE', $filter)
-            ->orderby('towns.cdlevel', 'asc')
-            ->orderby('offices.name', 'asc')
             ->orderby('stations.name', 'asc')
             ->select('rankings.*')->get();
-        //dd($rankings);
 
         return view('rms.vacancies.showranking', compact('vacancy', 'applications', 'rankings',  'cycle'));
     }
