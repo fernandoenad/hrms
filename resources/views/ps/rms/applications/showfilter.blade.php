@@ -43,10 +43,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th width="25%">Name</th>
+                                    <th>Contact</th> 
+                                    <th>Address</th> 
+                                    <th width="8%">CD</th> 
                                     <th width="15%">Position applied</th>
-                                    <th>Contact / Address</th> 
-                                    <th>Position / Station / District</th>                                    
-                                    <th>Submitted at / Status</th>
+                                    <th>Appl. No.</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,29 +60,21 @@
                                                 <a href="{{ route('ps.rms.applications-show', [$application->schoolyear, $application->vacancy->id,  $application->id]) }}">
                                                     <strong>{{ $application->person->getFullnameSorted() ?? '' }}</strong>
                                                 </a>
-                                                <br>
-                                                {{ $application->code ?? '' }} / CD {{ $application->station->office->town->cdlevel ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $application->person->contact->primaryno ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $application->person->address->current ?? '' }} 
+                                            </td>
+                                            <td>
+                                                CD {{ $application->station->office->town->cdlevel ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $application->vacancy->name ?? '' }}
                                             </td>
                                             <td>
-                                                {{ $application->person->contact->primaryno ?? '' }}<br>
-                                                {{ $application->person->address->current ?? '' }}                                            
-                                            </td>
-                                            <td>
-                                                {{ $application->person->employee->item->position ?? 'No employment record' }}<br>
-                                                {{ $application->person->employee->item->deployment->station->name ?? '' }}<br>
-                                                {{ $application->person->employee->item->deployment->station->office->name ?? '' }}
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-default">
-                                                    {{ date('M d, Y h:i a', strtotime($application->created_at)) ?? '' }}
-                                                </span>    
-                                                <br>
-                                                <span class="badge badge-{{ $application->getstatuscolor($application->status) ?? '' }}">
-                                                    {{ $application->getStatus($application->status) ?? '' }}
-                                                </span>
+                                                {{ $application->code ?? '' }}                                         
                                             </td>
                                         </tr>
                                         <?php $i++;?>

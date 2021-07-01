@@ -91,4 +91,9 @@ class Vacancy extends Model
     {
         return $this->hasMany(Ranking::class);
     }
+
+    public function userranking()
+    {
+        return $this->hasMany(UserRanking::class);
+    }
 }

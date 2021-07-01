@@ -1,21 +1,37 @@
-<div class="card card-info">
-    <div class="card-header">Navigation</div>
+@if (Auth::check())
+    
+    <?php $userranking = App\Models\UserRanking::where('user_id', '=', Auth::id())->get(); ?>
 
-    <div class="card-body p-0">
-        <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-                <a href="{{ route('rms.vacancy') }}" class="nav-link">
-                    <i class="fas fa-list"></i> My Assignments
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('rms.user') }}" class="nav-link">
-                    <i class="fas fa-users-cog"></i> Users
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
+    @if(sizeof($userranking) > 0 || Auth::user()->isSuperAdmin())
+        <div class="card card-info">
+            <div class="card-header">RMS Tools</div>
+
+            <div class="card-body p-0">
+                <ul class="nav nav-pills flex-column">
+                    @if(Route::currentRouteName() == 'rms')
+                    <li class="nav-item">
+                        <a href="{{ route('rms.vacancy') }}" class="nav-link">
+                            <i class="fas fa-list"></i> My Assignments
+                        </a>
+                    </li>
+                    @else
+                    <li class="nav-item">
+                        <a href="{{ route('rms') }}" class="nav-link">
+                            <i class="fas fa-th"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('rms.vacancy') }}" class="nav-link">
+                            <i class="fas fa-list"></i> My Assignments
+                        </a>
+                    </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+    @endif
+@endif
+
 @if(Route::currentRouteName() == 'rms.vacancy.show' || Route::currentRouteName() == 'rms.vacancy.show.ranking')
 <div class="card card-info">
     <div class="card-header">Filters</div>

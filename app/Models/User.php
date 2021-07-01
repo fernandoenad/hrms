@@ -101,6 +101,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasmany(UserOF::class);
     }
 
+    public function userranking()
+    {
+        return $this->hasmany(UserRanking::class);
+    }
+
     public function getNameAttribute($value){
         return ucwords(mb_strtolower($value));
     }

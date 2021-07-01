@@ -45,6 +45,7 @@ use App\Http\Controllers\ICTU\ICTUController;
 use App\Http\Controllers\ICTU\PersonController as ICTUPersonController;
 use App\Http\Controllers\ICTU\EmployeeController as ICTUEmployeeController;
 use App\Http\Controllers\ICTU\UserRoleController;
+use App\Http\Controllers\ICTU\UserRankingController;
 use App\Http\Controllers\ICTU\UserController as ICTUUserController;
 use App\Http\Controllers\ICTU\SupportController;
 use App\Http\Controllers\ICTU\RequestController;
@@ -53,7 +54,6 @@ use App\Http\Controllers\RMS\RMSController;
 use App\Http\Controllers\RMS\PersonController as RMSPersonController;
 use App\Http\Controllers\RMS\ApplicationController;
 use App\Http\Controllers\RMS\RMSAssignmentController;
-use App\Http\Controllers\RMS\RMSUserController;
 
 use App\Http\Controllers\OU\OUController;
 use App\Http\Controllers\OU\StationController as OUStationController;
@@ -405,6 +405,12 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ictu/roles', [UserRoleController::class, 'store'])->name('ictu.roles.store');
         Route::get('/ictu/roles', [UserRoleController::class, 'index'])->name('ictu.roles');
 
+        Route::delete('/ictu/userranking/{userranking}/', [UserRankingController::class, 'destroy'])->name('ictu.userranking.destroy');
+        Route::any('/ictu/userranking/lookup', [UserRankingController::class, 'lookup'])->name('ictu.userranking.lookup');
+        Route::get('/ictu/userranking/create', [UserRankingController::class, 'create'])->name('ictu.userranking.create');
+        Route::post('/ictu/userranking', [UserRankingController::class, 'store'])->name('ictu.userranking.store');
+        Route::get('/ictu/userranking', [UserRankingController::class, 'index'])->name('ictu.userranking');
+
         Route::middleware(['access.ictu'])->group(function () {
             Route::get('/ictu/requests/{accountrequest}/verify-email', [RequestController::class, 'verifyemail'])->name('ictu.requests.verify-email');
 
@@ -501,8 +507,6 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');
 Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.account.store');
-
-Route::get('/rms/user', [RMSUserController::class, 'index'])->name('rms.user');
 
 Route::get('/rms/vacancy/{vacancy}/ranking/{filter}', [RMSAssignmentController::class, 'showRanking'])->name('rms.vacancy.show.ranking');
 Route::get('/rms/vacancy/{vacancy}/{filter}', [RMSAssignmentController::class, 'show'])->name('rms.vacancy.show');

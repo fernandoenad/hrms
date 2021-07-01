@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Vacancy;
 use App\Models\Application;
 use App\Models\Ranking;
+use Illuminate\Support\Facades\Auth;
 
 class RMSAssignmentController extends Controller
 {
@@ -17,10 +18,19 @@ class RMSAssignmentController extends Controller
 
     public function index()
     {
-        $vacancies = Vacancy::orderBy('status', 'desc')
-            ->orderBy('vacancylevel', 'desc')
-            ->orderBy('salarygrade', 'desc')
-            ->get();
+        if(Auth::user()->isSuperAdmin())
+            $vacancies = Vacancy::orderBy('status', 'desc')
+                ->orderBy('vacancylevel', 'desc')
+                ->orderBy('salarygrade', 'desc')
+                ->get();
+        else
+            $vacancies = Vacancy::join('user_rankings', 'vacancies.id', '=', 'user_rankings.vacancy_id')
+                ->where('user_rankings.user_id', '=', Auth::id())
+                ->orderBy('status', 'desc')
+                ->orderBy('vacancylevel', 'desc')
+                ->orderBy('salarygrade', 'desc')
+                ->select('vacancies.*')
+                ->get();
 
         return view('rms.vacancies.index', compact('vacancies'));
     }
@@ -30,14 +40,23 @@ class RMSAssignmentController extends Controller
         $cycle = $vacancy->updated_at->year;
         $filter = ($filter == "All" ? "%" : $filter);
 
-        $applications = Application::join('people', 'applications.person_id', '=', 'people.id')
-            ->where('schoolyear', '=', $cycle)
-            ->where('vacancy_id', '=', $vacancy->id)
-            ->where('type', 'LIKE', $filter)
-            ->orderBy('lastname', 'asc')
-            ->orderBy('firstname', 'asc')
-            ->select('applications.created_at AS submitted_at', 'people.*', 'applications.*')
+        $access = Vacancy::join('user_rankings', 'vacancies.id', '=', 'user_rankings.vacancy_id')
+            ->where('user_rankings.user_id', '=', Auth::id())
+            ->where('user_rankings.vacancy_id', '=', $vacancy->id)
+            ->select('vacancies.*')
             ->get();
+        
+        if(sizeof($access) > 0 || Auth::user()->isSuperAdmin())  
+            $applications = Application::join('people', 'applications.person_id', '=', 'people.id')
+                ->where('schoolyear', '=', $cycle)
+                ->where('vacancy_id', '=', $vacancy->id)
+                ->where('type', 'LIKE', $filter)
+                ->orderBy('lastname', 'asc')
+                ->orderBy('firstname', 'asc')
+                ->select('applications.created_at AS submitted_at', 'people.*', 'applications.*')
+                ->get();
+        else
+            abort(401, 'This action is unauthorized.');
 
         return view('rms.vacancies.show', compact('vacancy', 'applications', 'cycle'));
     }

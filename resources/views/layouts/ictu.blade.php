@@ -104,6 +104,16 @@
                         </li>
 
                         <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ictu.userranking') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ictu.userranking') }}" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>User-Ranking Management</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ictu.users') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
