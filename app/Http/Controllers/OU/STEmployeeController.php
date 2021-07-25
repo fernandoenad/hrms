@@ -385,6 +385,28 @@ class STEmployeeController extends Controller
         return view('ou.station.employees.add', compact('station', 'stations'));
     }
 
+    public function add2(Station $station)
+    {
+        $stations = Station::select('id', 'code', 'name', 'office_id')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $positions = Item::groupBy('position')
+            ->select('position')
+            ->get();
+        
+        $employeetypes = Dropdown::where('type', '=', 'employeetype')
+            ->get();    
+        
+        $itemlevels = Dropdown::where('type', '=', 'itemlevel')
+            ->get();  
+
+        $employmentstatuses = Dropdown::where('type', 'employmentstatus')
+            ->get();
+
+        return view('ou.station.employees.add2', compact('station', 'stations', 'positions', 'employeetypes', 'itemlevels', 'employmentstatuses'));
+    }
+
     public function lookup(Station $station)
     {
         $searchString = request()->get('searchString');
@@ -405,6 +427,30 @@ class STEmployeeController extends Controller
         $employees = $employees->appends(['searchString' => $searchString]);
 
         return view('ou.station.employees.lookup', compact('employees', 'station'));
+    } 
+
+    public function lookup2(Station $station)
+    {
+        $searchString = request()->get('searchString');
+
+        $employees = Person::whereNotIn('id', function ($query){
+                $query->select('person_id')->from('employees');
+            })
+            ->where(function ($query) use ($searchString){
+                $query->where('lastname', 'like' , $searchString . '%')
+                    ->orWhere('firstname', 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%');
+                    
+        })
+        ->orderBy('lastname', 'asc')
+        ->orderBy('firstname', 'asc')
+        ->paginate(15);
+
+        $employees = $employees->appends(['searchString' => $searchString]);
+
+        return view('ou.station.employees.lookup2', compact('employees', 'station'));
     } 
 
     public function store(Station $station)
@@ -430,6 +476,66 @@ class STEmployeeController extends Controller
             'log' => $employee->item->toJson(),
             'user_id' => Auth::user()->id,
         ]);    
+
+        return redirect()->route('ou.station.employees.show', compact('station', 'employee'))->with('status', 'Employee has been added.');
+    } 
+
+    public function store2(Station $station)
+    {
+        $data = request()->validate([
+            'person_id' => ['required'],
+            'deployment_station_id' => ['required'],
+            'itemno' => ['required', 'string', 'min:25', 'max:255', 'regex:/^[a-zA-Z0-9-]*$/', 'unique:items'],
+            'level' => ['required'],
+            'creationdate' => ['required', 'date', 'before_or_equal: today'],
+            'position' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+            'salarygrade' => ['required'],
+            'employeetype' => ['required'],
+            'station_id' => ['required'],
+            'deployment_station_id' => ['required'],
+            'appointmentdate' => ['required', 'date', 'before_or_equal: today'],
+            'firstdaydate' => ['required', 'date', 'after_or_equal:'.request()->appointmentdate],            
+            'employmentstatus' => ['required'],
+            ]);
+         
+        $item = Item::create(array_merge($data, ['status' => 1]));
+
+        $item->deployment()->create(['station_id' => $data['deployment_station_id']]);
+
+        $item->itemlog()->create([
+            'action' => 'Create',
+            'log' => $item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $person = Person::find($data['person_id']);
+        
+        $employee = $person->employee()->create([
+            'empno' => 'T-' . strtotime('now'),
+            'person_id' => $person->id,
+            'item_id' => $item->id,
+            'step' => 1,
+            'lastapptdate' => $data['firstdaydate'], 
+            'hiredate' => $data['firstdaydate'], 
+            'employmentstatus' => $data['employmentstatus'],         
+        ]);
+
+        $item = $employee->item()->update([
+            'appointmentdate' => $data['appointmentdate'],
+            'firstdaydate' => $data['firstdaydate'],     
+        ]);
+
+        $employee->employeelog()->create([
+            'action' => 'Modify',
+            'log' => $employee->toJson(),
+            'user_id' => Auth::user()->id,
+        ]); 
+
+        $employee->item->itemlog()->create([
+            'action' => 'Modify',
+            'log' => $employee->item->toJson(),
+            'user_id' => Auth::user()->id,
+        ]);
 
         return redirect()->route('ou.station.employees.show', compact('station', 'employee'))->with('status', 'Employee has been added.');
     } 

@@ -65,6 +65,11 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('ou.station.employees.add2', $station->id) }}" class="nav-link">
+                    <i class="fas fa-user-plus"></i> Add non-employee
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="#" class="nav-link">
                 </a>
             </li>

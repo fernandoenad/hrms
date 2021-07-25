@@ -434,7 +434,9 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
     Route::middleware(['station.user'])->group(function () {
         Route::get('/ou/station/{station}/employees/add', [STEmployeeController::class, 'add'])->name('ou.station.employees.add');
+        Route::get('/ou/station/{station}/employees/add2', [STEmployeeController::class, 'add2'])->name('ou.station.employees.add2');
         Route::any('/ou/station/{station}/employees/lookup', [STEmployeeController::class, 'lookup'])->name('ou.station.employees.lookup');
+        Route::any('/ou/station/{station}/employees/lookup2', [STEmployeeController::class, 'lookup2'])->name('ou.station.employees.lookup2');
         Route::any('/ou/station/{station}/employees/search', [STEmployeeController::class, 'search'])->name('ou.station.employees.search');
         Route::get('/ou/station/{station}/employees/items/{pagination}', [STEmployeeController::class, 'items'])->name('ou.station.employees.items');
         Route::get('/ou/station/{station}/employees/plantilla/{pagination}', [STEmployeeController::class, 'plantilla'])->name('ou.station.employees.plantilla');
@@ -446,6 +448,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::patch('/ou/station/{station}/employees/{employee}/moved', [STEmployeeController::class, 'moved'])->name('ou.station.employees.moved');
         Route::patch('/ou/station/{station}/employees/{employee}', [STEmployeeController::class, 'update'])->name('ou.station.employees.update');
         Route::post('/ou/station/{station}/employees', [STEmployeeController::class, 'store'])->name('ou.station.employees.store');
+        Route::post('/ou/station/{station}/employees/add', [STEmployeeController::class, 'store2'])->name('ou.station.employees.store2');
         Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
 
         Route::get('/ou/station/{station}/applications/needs-confirmation', [STApplicationController::class, 'needsconfirmation'])->name('ou.station.applications.needs-confirmation');
