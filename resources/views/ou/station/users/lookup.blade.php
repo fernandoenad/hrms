@@ -62,7 +62,7 @@
                                                     <strong>{{ $employee->person->getFullnameSorted() }}</strong>
                                                 </a>
                                             </td>
-                                            <td>{{ $employee->item->position }}</td>
+                                            <td>{{ $employee->item->position ?? '' }}</td>
                                             <td>
                                                 {{ $employee->item->deployment->station->name ?? __('') }}
                                                 ({{ $employee->item->deployment->station->code ?? __('') }})
