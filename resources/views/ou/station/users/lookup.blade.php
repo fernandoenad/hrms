@@ -56,7 +56,7 @@
                                 @if(sizeof($employees) > 0)
                                     @foreach($employees as $employee)
                                         <tr>
-                                            <td>{{ $employee->empno }}</td>
+                                            <td>{{ $employee->empno ?? '' }}</td>
                                             <td>
                                                 <a href="{{ route('ou.station.users.create', $station->id)}}?id={{ $employee->person->user->id }}&name={{ $employee->person->getFullnameBox() }}">
                                                     <strong>{{ $employee->person->getFullnameSorted() }}</strong>
