@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            @include('pu.offices._tools')
+            @include('ou.station.employees._tools')
         </div>        
     </div>
 </div>

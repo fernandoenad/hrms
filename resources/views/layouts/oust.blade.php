@@ -67,6 +67,16 @@
                         </li>
 
                         <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ou.station.pbb') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ou.station.pbb', [$station->id, 2020]) }}" class="nav-link">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>PBB Report</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ou.station.leaves') !== false) 
                                 {{ __('menu-open')}}
                             @endif">

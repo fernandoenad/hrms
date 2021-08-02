@@ -61,6 +61,7 @@ use App\Http\Controllers\OU\STEmployeeController ;
 use App\Http\Controllers\OU\STApplicationController;
 use App\Http\Controllers\OU\STUserController;
 use App\Http\Controllers\OU\STRankingController;
+use App\Http\Controllers\OU\STPBBController;
 
 use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\OFUserController;
@@ -461,7 +462,15 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/applications/{cycle}', [STApplicationController::class, 'showcycle'])->name('ou.station.applications.showcycle');
         Route::get('/ou/station/{station}/applications', [STApplicationController::class, 'index'])->name('ou.station.applications');
 
-        
+        Route::get('/ou/station/{station}/pbb/{year}', [STPBBController::class, 'index'])->name('ou.station.pbb');
+        Route::post('/ou/station/{station}/pbb/{year}/', [STPBBController::class, 'store'])->name('ou.station.pbb.store');
+        Route::get('/ou/station/{station}/pbb/{year}/add', [STPBBController::class, 'add'])->name('ou.station.pbb.add');
+        Route::any('/ou/station/{station}/pbb/{year}/lookup', [STPBBController::class, 'lookup'])->name('ou.station.pbb.lookup');
+        Route::get('/ou/station/{station}/pbb/{year}/{pbbreport}/edit', [STPBBController::class, 'edit'])->name('ou.station.pbb.edit');
+        Route::get('/ou/station/{station}/pbb/{year}/{pbbreport}/delete', [STPBBController::class, 'delete'])->name('ou.station.pbb.delete');
+        Route::delete('/ou/station/{station}/pbb/{year}/{pbbreport}/destroy', [STPBBController::class, 'destroy'])->name('ou.station.pbb.destroy');
+        Route::any('/ou/station/{station}/pbb/{year}/search', [STPBBController::class, 'search'])->name('ou.station.pbb.search');
+
         Route::get('/ou/station/{station}/users/create', [STUserController::class, 'create'])->name('ou.station.users.create');
         Route::any('/ou/station/{station}/users/lookup', [STUserController::class, 'lookup'])->name('ou.station.users.lookup');
         Route::post('/ou/station/{station}/users', [STUserController::class, 'store'])->name('ou.station.users.store');

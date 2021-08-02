@@ -64,6 +64,10 @@ class Station extends Model
         return $this->hasOne(Application::class);
     }
 
+    public function pbbreport()
+    {
+        return $this->hasmany(PBBReport::class);
+    }
 
     public function getTypeAttribute($value)
     {

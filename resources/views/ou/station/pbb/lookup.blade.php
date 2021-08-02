@@ -5,14 +5,14 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Request to Add Employee</h1>
+                <h1 class="m-0 text-dark">Add Employee</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.employees', $station->id) }}">Employees</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.station.employees.add', $station->id) }}">Add Non-Employee</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.station.pbb', [$station->id, $year]) }}">PBB Report {{ $year }}</a></li>
+                    <li class="breadcrumb-item "><a href="{{ route('ou.station.pbb', [$station->id, $year]) }}">PBB Report {{ $year }}</a></li>
                     <li class="breadcrumb-item active">Lookup</li>
                 </ol>
             </div>
@@ -26,11 +26,11 @@
             <div class="card card-outline card-primary">
                 <div class="card-header pr-3">
                     <div class="float-right">
-                        <form class="form-inline" method="post" action="{{ route('ou.station.employees.lookup2', $station->id) }}?redirect={{ request()->redirect }}&id={{ request()->id }}">
+                        <form class="form-inline" method="post" action="{{ route('ou.station.pbb.lookup', [$station->id, $year]) }}?redirect={{ request()->redirect }}&id={{ request()->id }}">
                             @csrf
 
                             <div class="input-group input-group-sm float-right">
-                                <input id="searchString" name="searchString" class="form-control form-control-navbar" value="{{ request()->searchString }}" autocomplete="searchString" type="search" placeholder="Search person" aria-label="Search">
+                                <input id="searchString" name="searchString" class="form-control form-control-navbar" value="{{ request()->searchString }}" autocomplete="searchString" type="search" placeholder="Search employee" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-search"></i>
@@ -47,30 +47,27 @@
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
-                                    <th>Person No.</th>
-                                    <th>Person Name</th>
-                                    <th>Sex</th>
-                                    <th>Address</th>
-                                    <th>Contact No.</th>
+                                    <th>Employee No.</th>
+                                    <th>Employee Name</th>
+                                    <th>Position</th>
+                                    <th>Station</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(sizeof($employees) > 0)
                                     @foreach($employees as $employee)
                                         <tr>
-                                            <td>{{ $employee->id ?? '' }}</td>
+                                            <td>{{ $employee->empno }}</td>
                                             <td>
-                                                <a href="{{ route(request()->redirect, [$station->id, request()->id]) }}?id={{ $employee->id }}&name={{ $employee->getFullnameBox() }}">
-                                                    <strong>{{ $employee->getFullnameSorted() ?? '' }}</strong>
+                                                <a href="{{ route(request()->redirect, [$station->id, $year, request()->id]) }}?id={{ $employee->person->id }}&name={{ $employee->person->getFullnameBox() }}">
+                                                    <strong>{{ $employee->person->getFullnameSorted() }}</strong>
                                                 </a>
                                             </td>
-                                            <td>{{ $employee->sex ?? __('') }}</td>
+                                            <td>{{ $employee->item->position ?? __('') }}</td>
                                             <td>
-                                                {{ $employee->address->current ?? __('') }}
-                                            </td>  
-                                            <td>
-                                                {{ $employee->contact->primaryno ?? __('') }}
-                                            </td>                                   
+                                                {{ $employee->item->deployment->station->name ?? __('') }}
+                                                ({{ $employee->item->deployment->station->code ?? __('') }})
+                                            </td>                                    
                                         </tr>
                                     @endforeach
                                 @else
@@ -94,7 +91,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            @include('ou.station.employees._tools')
+            @include('ou.station.pbb._tools')
         </div>        
     </div>
 </div>
