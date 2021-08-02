@@ -81,7 +81,7 @@
                         <?php $employee_id = $person->employee->id; ?>
                         <?php $empno = $person->employee->empno; ?>
                         <?php $hiredate = strtotime($person->employee->hiredate); ?>
-                        <?php $startdate = strtotime($year . "-" . "04-01"); ?>
+                        <?php $startdate = strtotime($year . "-" . "10-01"); ?>
                         <?php $startdate= ($hiredate < $startdate ? $startdate : $hiredate); ?>
                         <?php $enddate= strtotime($year+1 . "-" . "03-31"); ?>
                         <?php $length_of_service = date('m', $enddate - $startdate); ?>

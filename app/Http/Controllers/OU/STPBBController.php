@@ -114,7 +114,7 @@ class STPBBController extends Controller
             'length_of_service' => ['required', 'integer', 'min:1', 'max:12'],
             'salary_grade' => ['required', 'integer', 'min:1', 'max:26'],
             'step' => ['required', 'integer', 'min:1', 'max:8'],
-            'ipcr_score' => ['required', 'numeric', 'min:1', 'max:5', 'regex:/^[0-9]+(\.[0-9][0-9][0-9]?)?$/'],
+            'ipcr_score' => ['required', 'numeric', 'min:0', 'max:5', 'regex:/^[0-9]+(\.[0-9][0-9][0-9]?)?$/'],
             'qualified' => ['required', 'string'],
             ],[
             'ipcr_score.regex' => 'IPCR score must have 3 decimal places.',
