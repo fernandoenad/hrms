@@ -30,6 +30,7 @@
                             <li>The employee/ex-employee has rendered at least three months of service.</li>
                             <li>In case of a transferred employee/ex-employee, he/she will be added to the station where  
                                 he/she spent most of the months within the period (April {{ $year }} - March {{ $year + 1 }}).</li>
+                            <li>The required IPCR score is based on the approved IPCR result for SY {{ $year }}-{{ $year+1}}. </li>
                         </ol>
                         </small>
                 </div>
@@ -69,7 +70,7 @@
                                         </td>
                                         <td>{{ $pbb->length_of_service ?? '' }}</td>
                                         <td>{{ $pbb->salary_grade ?? '' }} - {{ $pbb->step ?? '' }}</td>
-                                        <td>{{ number_format($pbb->ipcr_score, 3) ?? '' }}</td>
+                                        <td>{{ number_format($pbb->ipcr_score) ?? '' }}</td>
                                         <td>{{ $pbb->getpbbstatus($pbb->qualified) ?? '' }}</td>
                                         <td>{{ $pbb->getapprovaltatus($pbb->status) ?? '' }}</td>
 
