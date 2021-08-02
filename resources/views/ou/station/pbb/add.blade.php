@@ -80,7 +80,11 @@
                         <?php $employee = $person->employee; ?>
                         <?php $employee_id = $person->employee->id; ?>
                         <?php $empno = $person->employee->empno; ?>
-                        <?php $length_of_service = 12; ?>
+                        <?php $hiredate = strtotime($person->employee->hiredate); ?>
+                        <?php $startdate = strtotime($year . "-" . "04-01"); ?>
+                        <?php $startdate= ($hiredate < $startdate ? $startdate : $hiredate); ?>
+                        <?php $enddate= strtotime($year+1 . "-" . "03-31"); ?>
+                        <?php $length_of_service = date('m', $enddate - $startdate); ?>
                         <?php $salary_grade = $person->employee->item->salarygrade; ?>
                         <?php $step = $person->employee->step; ?>
 
@@ -110,7 +114,7 @@
                             <label for="length_of_service" class="col-md-3 col-form-label text-md-right">{{ __('Length of Service') }}</label>
 
                             <div class="col-md-8">
-                                <input id="length_of_service" type="number" step="1" class="form-control @error('length_of_service') is-invalid @enderror" name="length_of_service" value="{{ old('length_of_service') ?? $length_of_service }}" placeholder="in months" autocomplete="length_of_service">
+                                <input id="length_of_service" type="text" step="1" class="form-control @error('length_of_service') is-invalid @enderror" name="length_of_service" value="{{ old('length_of_service') ?? $length_of_service }}" placeholder="in months" autocomplete="length_of_service">
                                 
                                 @error('length_of_service')
                                     <span class="invalid-feedback" role="alert">
