@@ -35,11 +35,11 @@ class PersonController extends Controller
     {
         $data = request()->validate([
             'firstname' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/', 
-                Rule::unique('people')
-                ->where('firstname',request()->firstname)
-                ->where('middlename', request()->middlename)
-                ->where('lastname', request()->lastname)
-                ->where('extname', request()->extname)
+                //Rule::unique('people')
+                //->where('firstname',request()->firstname)
+                //->where('middlename', request()->middlename)
+                //->where('lastname', request()->lastname)
+                //->where('extname', request()->extname)
                 //->where('sex', request()->sex)
                 //->where('dob', request()->dob)
                 //->where('civilstatus', request()->civilstatus)

@@ -35,11 +35,11 @@
 							<div class="input-group mb-3">
 								<input 
 									type="text" 
-									name="username" 
-									placeholder="Username"
-									class="form-control @error('username') is-invalid @enderror" 
-									value="{{ old('username') }}" 
-									autocomplete="username" 
+									name="email" 
+									placeholder="Email"
+									class="form-control @error('email') is-invalid @enderror" 
+									value="{{ old('email') }}" 
+									autocomplete="email"
 									autofocus
 								>
 								<div class="input-group-append">
@@ -47,7 +47,7 @@
 										<span class="fas fa-user"></span>
 									</div>
 								</div>
-								@error('username')
+								 @error('email')
 									<span class="invalid-feedback" role="alert">
 										<strong>{{ $message }}</strong>
 									</span>

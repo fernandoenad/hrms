@@ -38,9 +38,9 @@
                         <label for="email" class="col-md-3 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                         <div class="col-md-8">
-                            <input @if($person->user->email_verified_at !== null) {{ 'readonly' }} @endif id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $person->user->email }}" autocomplete="email">
-                            <small class="text-danger">@if($person->user->email_verified_at !== null) {{ 'Emails are no longer editable once verified.' }} @endif </small>
-
+                            <input @if($person->user->email_verified_at !== null) {{ 'readonly_' }} @endif id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $person->user->email }}" autocomplete="email">
+                            <!-- <small class="text-danger">@if($person->user->email_verified_at !== null) {{ 'Emails are no longer editable once verified.' }} @endif </small> -->
+ 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -69,7 +69,7 @@
                             <div class="col-md-3">
                             </div>
                             <div class="col-md-8">
-                                <button type="submit" class="btn btn-primary float-right" @if($person->user->email_verified_at !== null) {{ 'disabled' }} @endif>
+                                <button type="submit" class="btn btn-primary float-right" @if($person->user->email_verified_at !== null) {{ 'disabled_' }} @endif>
                                     {{ __('Update Credentials') }}
                                 </button>
                                 <a href="{{ url()->previous() }}" class="btn btn-default">
