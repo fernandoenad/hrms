@@ -45,15 +45,6 @@
 
             <div class="col-md-3">
                 <div class="info-box mb-3 bg-primary">
-                    <span class="info-box-icon"><i class="fas fa-user"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Recruitment Mgmt Sys</span>
-                        <span class="info-box-number"><a href="/rms" class="text-white">Access the app</a></span>
-                    </div>
-                </div>
-
-                <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-user-tie"></i></span>
 
                     <div class="info-box-content">
@@ -78,7 +69,16 @@
                         <span class="info-box-text">Personnel Services</span>
                         <span class="info-box-number"><a href="/ps" class="text-white">Access the app</a></span>
                     </div>
-                </div>                        
+                </div>   
+                
+                <div class="info-box mb-3 bg-primary">
+                    <span class="info-box-icon"><i class="fas fa-swatchbook"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Planning Unit</span>
+                        <span class="info-box-number"><a href="/pu" class="text-white">Access the app</a></span>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-3">
@@ -91,14 +91,7 @@
                     </div>
                 </div>
 
-                <div class="info-box mb-3 bg-primary">
-                    <span class="info-box-icon"><i class="fas fa-swatchbook"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Planning Unit</span>
-                        <span class="info-box-number"><a href="/pu" class="text-white">Access the app</a></span>
-                    </div>
-                </div>
+                
 
                 <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-user-tag"></i></span>
@@ -109,14 +102,21 @@
                     </div>
                 </div>
 
+                <div class="info-box mb-3 bg-primary">
+                    <span class="info-box-icon"><i class="fas fa-sitemap"></i></span>
 
+                    <div class="info-box-content">
+                        <span class="info-box-text">District / Office </span>
+                        <span class="info-box-number"><a href="{{ route('ou.office') }}" class="text-white">Access the app</a></span>
+                    </div>
+                </div>
 
                 <div class="info-box mb-3 bg-primary">
                     <span class="info-box-icon"><i class="fas fa-school"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Organizational Unit </span>
-                        <span class="info-box-number"><a href="/ou" class="text-white">Access the app</a></span>
+                        <span class="info-box-text">Station / Unit</span>
+                        <span class="info-box-number"><a href="{{ route('ou.station') }}" class="text-white">Access the app</a></span>
                     </div>
                 </div>
             </div>

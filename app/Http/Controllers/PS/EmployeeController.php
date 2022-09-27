@@ -41,7 +41,8 @@ class EmployeeController extends Controller
         $employees = $this->getList();
         
         $employees = $employees->where(function ($query) use ($searchString){
-                $query->where('lastname', 'like' , $searchString . '%')
+                $query->where('empno', 'like', $searchString)
+                    ->orWhere('lastname', 'like' , $searchString . '%')
                     ->orWhere('firstname', 'like', $searchString . '%')
                     ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
                     ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
