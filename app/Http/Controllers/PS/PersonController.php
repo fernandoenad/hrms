@@ -96,15 +96,7 @@ class PersonController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/', 
-                Rule::unique('people')
-                ->where('firstname',request()->firstname)
-                ->where('middlename', request()->middlename)
-                ->where('lastname', request()->lastname)
-                ->where('extname', request()->extname)
-                ->where('sex', request()->sex)
-                ->where('dob', request()->dob) 
-                ->where('civilstatus', request()->civilstatus)],
+            'firstname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'], 
             'middlename' => ['nullable', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'lastname' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
             'extname' => ['nullable', 'string'],
@@ -117,7 +109,7 @@ class PersonController extends Controller
             'email' => ['required', 'email', 'max:255', 'unique:users'],
             ],
             [
-            'firstname.unique' => 'Duplicate record alert! Please search up existing record using the search bar.',
+            'email.unique' => 'Email already exist on file.',
         ]);
 
        
