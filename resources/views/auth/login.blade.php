@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-body login-card-body">
 						<div class="row d-flex justify-content-center">
-							<img src="{{ url('./')}}/storage/images/lock.png" width="80">
+							<img src="{{ asset('img/lock.png') }}" width="80">
 						</div>
 
 						<div class="row d-flex justify-content-center">
