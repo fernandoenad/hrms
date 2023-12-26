@@ -17,13 +17,13 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             @include('ou.station._profile')
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
            <div class="info-box">
                 <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-tags"></i></span>
 
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card card-primary">
                 <div class="card-header">
                     Breakdown by Position

@@ -2,7 +2,7 @@
     <div class="card-body box-profile">
         <div class="text-center">
             <img class="profile-user-img img-fluid img-circle"
-                src="{{ asset('storage/images/logo.png') }}">
+                src="{{ asset('img/logo.png') }}">
         </div>
 
         <h3 class="profile-username text-center">{{ $station->name ?? '' }}</h3>
