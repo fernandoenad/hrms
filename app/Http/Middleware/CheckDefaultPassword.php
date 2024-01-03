@@ -19,6 +19,7 @@ class CheckDefaultPassword
      */
     public function handle(Request $request, Closure $next)
     {
+        /** 
         $password_expired_id = Auth::user()->id;
         $current_password = Auth::user()->password;
         $default_password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
@@ -29,5 +30,6 @@ class CheckDefaultPassword
             return redirect()->route('auth.expired-password')->with('message', "You are using your default password. You need to change it for security purposes.");
         }
         return $next($request);
+        */
     }
 }
