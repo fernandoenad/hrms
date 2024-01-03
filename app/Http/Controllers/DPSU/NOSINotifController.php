@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
-class NOSINOtificationController extends Controller
+class NOSINotifController extends Controller
 {
     public function __construct()
     {

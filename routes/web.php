@@ -37,7 +37,7 @@ use App\Http\Controllers\PU\ItemController as PUItemController;
 
 use App\Http\Controllers\DPSU\DPSUController;
 use App\Http\Controllers\DPSU\LoyaltyNotificationController;
-use App\Http\Controllers\DPSU\NOSINotificationController;
+use App\Http\Controllers\DPSU\NOSINotifController;
 use App\Http\Controllers\DPSU\EmployeeController as DPSUEmployeeController;
 use App\Http\Controllers\DPSU\UserController as DPSUUserController;
 
@@ -337,8 +337,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/dpsu/employees/{employee}', [DPSUEmployeeController::class, 'show'])->name('dpsu.employees.show');
         Route::get('/dpsu/employees', [DPSUEmployeeController::class, 'index'])->name('dpsu.employees');
 
-        Route::any('/dpsu/nosi-notifications/search', [NOSINotificationController::class, 'search'])->name('dpsu.nosi-notifications.search');
-        Route::get('/dpsu/nosi-notifications', [NOSINotificationController::class, 'index'])->name('dpsu.nosi-notifications');
+        Route::any('/dpsu/nosi-notifications/search', [NOSINotifController::class, 'search'])->name('dpsu.nosi-notifications.search');
+        Route::get('/dpsu/nosi-notifications', [NOSINotifController::class, 'index'])->name('dpsu.nosi-notifications');
 
         Route::any('/dpsu/loyalty-notifications/search', [LoyaltyNotificationController::class, 'search'])->name('dpsu.loyalty-notifications.search');
         Route::get('/dpsu/loyalty-notifications', [LoyaltyNotificationController::class, 'index'])->name('dpsu.loyalty-notifications');
