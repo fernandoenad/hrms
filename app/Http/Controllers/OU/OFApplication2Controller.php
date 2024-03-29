@@ -15,7 +15,7 @@ use App\Models\Template;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
-use PDF;
+//use PDF;
 
 class OFApplication2Controller extends Controller
 {

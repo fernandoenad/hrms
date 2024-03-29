@@ -11,7 +11,7 @@ use App\Models\Vacancy2;
 use App\Models\Town;
 use App\Models\Dropdown;
 use Illuminate\Validation\Rule;
-use PDF;
+//use PDF;
 
 class STApplication2Controller extends Controller
 {
