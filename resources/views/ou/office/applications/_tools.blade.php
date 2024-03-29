@@ -1,43 +1,57 @@
+@if(Route::currentRouteName() == 'ou.office.applications.umindex' || 
+    Route::currentRouteName() == 'ou.office.applications.umlookup' || 
+    Route::currentRouteName() == 'ou.office.applications.umprocess')
+    <div class="card card-info">
+        <div class="card-header">{{ __('Search') }}</div>
+
+        <div class="card-body p-0">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item active p-3">
+                    <form class="form-inline" method="post" action="{{ route('ou.office.applications.umlookup', [$office, $cycle]) }}">
+                        @csrf
+                        @method('post')
+                        <div class="input-group input-group-md">
+                            <input id="searchString" name="searchString" 
+                                class="form-control form-control-navbar @error('searchString') is-invalid @enderror" 
+                                value="{{ old('searchString') ?? request()->get('searchString') }}" 
+                                autocomplete="searchString" type="search" placeholder="Search last name" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+@endif 
+
 <div class="card card-info">
     <div class="card-header">Navigation</div>
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-                <a href="{{ route('ou.office.applications' , $office->id) }}" class="nav-link">
+                <a href="{{ route('ou.office.applications.index' , $office) }}" class="nav-link">
                     <i class="fas fa-inbox"></i> Applications
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('ou.office.applications.needs-confirmation' , $office->id) }}" class="nav-link">
-                    <i class="fas fa-inbox"></i> Needs Confirmation
-                    <span class="badge badge-danger float-right">
-                        {{ App\Models\Application::join('stations', 'applications.station_id', '=', 'stations.id')
-                            ->join('offices', 'stations.office_id', '=', 'offices.id')
-                            ->where('office_id', '=', $office->id)
-                            ->where('services', 'like', 'elementary')
-                            ->where('status', '=', 1)
-                            ->count() }}
-                    </span>
+                <a href="{{ route('ou.office.applications.umindex' , [$office, $cycle]) }}" class="nav-link">
+                    <i class="fas fa-inbox"></i> Unmark Complete Applications
                 </a>
             </li>
-            @if(Route::currentRouteName() == 'ou.office.applications.showvacancys' ||
-                Route::currentRouteName() == 'ou.office.applications.upload-ranklists')    
-                <?php $ranking = App\Models\Ranking::join('stations', 'station_id', '=', 'stations.id')->where('year', '=', $cycle)->where('vacancy_id', '=', $vacancy->id)->where('office_id', '=', $office->id)->get()->first(); ?>         
 
-                @if($ranking != null)
-                <li class="nav-item">
-                    <a href="{{ asset('storage/') }}/{{ $ranking->attachment }}" class="nav-link" download>
-                        <i class="fas fa-eye"></i> View Ranklist
-                    </a>
-                </li>
-                @else
-                <li class="nav-item">
-                    <a href="{{ route('ou.office.applications.upload-ranklist', [$office->id, $cycle, $vacancy->id]) }}" class="nav-link">
-                        <i class="fas fa-upload"></i> Upload Ranklist
-                    </a>
-                </li>
-                @endif                
+            @if(Route::currentRouteName() == 'ou.office.applications.show')
+            <li class="nav-item">
+                <a href="{{ route('ou.office.applications.carview' , [$office, $cycle, $vacancy]) }}" 
+                    target="_blank" class="nav-link">
+                    <i class="fas fa-inbox"></i> View CAR Sheet
+                </a>
+            </li>
             @endif
         </ul>
     </div>

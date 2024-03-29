@@ -11,7 +11,7 @@
 
         <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top ">
             <a class="navbar-brand" href="#">
-                <img src="logo.png" alt="Logo" style="width:30px;">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" style="width:30px;">
                 {{ config('app.name', 'Laravel') }}
             </a> 
 

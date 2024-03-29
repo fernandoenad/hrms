@@ -9,7 +9,6 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item active"><a href="{{ route('rms') }}">Home</a></li>
                     <li class="breadcrumb-item active"><a href="{{ route('my') }}">My Profile</a></li>
                     <li class="breadcrumb-item active">My Tools</li>
                 </ol>

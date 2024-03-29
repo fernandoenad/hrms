@@ -37,102 +37,15 @@
             </div>
         @endif
 
-        @if(Route::currentRouteName() == 'ou.station.applications.upload-ranklist')
-            <div class="row">         
-                <div class="col-md-8 offset-md-2">
-                    <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            Upload Ranklist
-                        </div>
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('ou.station.applications.uploaded-ranklist', [$station->id, $cycle, $vacancy->id]) }}?ranking_id={{ $ranking_id }}" enctype="multipart/form-data">
-                            @csrf
-
-                            <div class="form-group row">
-                                <label for="year" class="col-md-3 col-form-label text-md-right">{{ __('Cycle') }}</label>
-
-                                <div class="col-md-8">
-                                    <input readonly id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') ?? $cycle }}" autocomplete="year">
-
-                                    @error('year')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="vacancy_id" class="col-md-3 col-form-label text-md-right">{{ __('Position') }}</label>
-
-                                <div class="col-md-8">
-                                    <input id="vacancy_id" type="hidden" class="form-control @error('vacancy_id') is-invalid @enderror" name="vacancy_id" value="{{ old('vacancy_id') ?? $vacancy->id }}" autocomplete="vacancy_id">
-                                    <input readonly id="vacancy_name" type="text" class="form-control @error('vacancy_name') is-invalid @enderror" name="vacancy_name" value="{{ old('vacancy_name') ?? $vacancy->name }}" autocomplete="vacancy_name">
-
-                                    @error('vacancy_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="attachment" class="col-md-3 col-form-label text-md-right">{{ __('Ranklist') }}</label>
-
-                                <div class="col-md-8">
-                                    <input id="attachment" type="file" class="form-control-file @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') }}" autocomplete="attachment">
-                                    <small><em>Please make sure this is already final.</em></small>       
-
-                                    @error('attachment')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                </div>
-                                <div class="col-md-8">
-                                    <button type="submit" id="apply-submit" class="btn btn-primary float-right">
-                                        {{ __('Upload') }}
-                                    </button>
-                                    <a href="{{ url()->previous() }}" class="btn btn-default">
-                                        {{ __('Cancel') }}
-                                    </a>
-                                </div>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
             <div class="card card-primary card-outline">
                 <div class="card-body">
                     <span class="badge badge-success float-right">
                         {{ $applications->count() }} Applicant(s)
                     </span>
-
-                    <h3>
-                        <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}">
-                            {{ $vacancy->name ?? '' }} (Cycle {{ $cycle }})
-                        </a>
-                    </h3>  
-                    
                     <span class="badge badge-mute text-left p-0">
-                        Salary Grade: {{ $vacancy->salarygrade ?? '' }} | 
-                        Vacancy Level: {{ $vacancy->getvacancylevel($vacancy->vacancylevel) ?? '' }} |
-                        Curricular Level: {{ $vacancy->curricularlevel ?? '' }} |
-                        Vacancy: {{ $vacancy->vacancy ?? '' }} slot(s) | 
-                        Status: <span class="badge badge-{{ $vacancy->getstatuscolor($vacancy->status) ?? '' }}">{{ $vacancy->getstatus($vacancy->status) ?? '' }}</span>
-                        <br>
-                        Posted at {{ date('M d, Y h:i A', strtotime($vacancy->created_at )) }},
-                        Updated at {{ date('M d, Y h:i A', strtotime($vacancy->updated_at )) }}
+                        <h4>{{ $vacancy->position_title }}</h4>
                     </span> 
+                    
                 </div> 
             </div>
 
@@ -144,39 +57,47 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Contact / Address</th> 
-                                    <th>Position / Station / District</th>                                    
-                                    <th>Submitted at / Status</th>
+                                    <th>Contact</th> 
+                                    <th>Address</th>                                    
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(sizeof($applications) > 0)
-                                    <?php $i=1;?>
+                                    @php $i=1; @endphp
                                     @foreach($applications as $application)
                                         <tr>
                                             <td>{{ $i }}</td>
+                                            <td>{{ $application->getFullname()}}</td>
+                                            <td>{{ $application->phone }}</td>
+                                            <td>{{ $application->barangay }}, {{ $application->municipality }}</td>
+                                            <td title="Submitted on {{ $application->updated_at->format('M d, Y H:ia') }}">
+                                                @php 
+                                                    $assessment = App\Models\Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
+                                                        ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
+                                                        ->where('applications.vacancy_id', '=', $application->vacancy_id)
+                                                        ->where('applications.station_id', '=', $station->id)
+                                                        ->where('applications.id', '=', $application->id)
+                                                        ->select('assessments.*')
+                                                        ->get();
+                                                @endphp
+                                                {{ $assessment->count() == 0 ? 'New' :  ($assessment->first()->status == 1 ? 'Pending' : 'Completed') }}
+                                            </td>
                                             <td>
-                                                <a href="{{ route('ou.station.applications.show', [$station->id, $application->schoolyear, $application->vacancy->id,  $application->id]) }}">
-                                                    <strong>{{ $application->person->getFullnameBox() ?? '' }}</strong>
+                                                <a href="{{ route('ou.station.applications.assess.index', [$station, $cycle, $vacancy, $application]) }}" 
+                                                    class="btn btn-sm btn-primary" title="Assess">
+                                                    <span class="fas fa-tasks fa-fw"></span>
                                                 </a>
-                                            </td>
-                                            <td>
-                                                {{ $application->person->contact->primaryno ?? '' }}<br>
-                                                {{ $application->person->address->current ?? '' }}                                            
-                                            </td>
-                                            <td>
-                                                {{ $application->person->employee->item->position ?? 'No employment record' }}<br>
-                                                {{ $application->person->employee->item->deployment->station->name ?? '' }}<br>
-                                                {{ $application->person->employee->item->deployment->station->office->name ?? '' }}
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-default">
-                                                    {{ date('M d, Y h:i a', strtotime($application->created_at)) ?? '' }}
-                                                </span>    
-                                                <br>
-                                                <span class="badge badge-{{ $application->getstatuscolor($application->status) ?? '' }}">
-                                                    {{ $application->getStatus($application->status) ?? '' }}
-                                                </span>
+                                                <a href="{{ route('ou.station.applications.show', [$station, $cycle, $vacancy, $application]) }}"
+                                                    class="btn btn-sm btn-warning" title="View">
+                                                    <span class="fas fa-eye fa-fw"></span>
+                                                </a>
+                                                <a href="{{ route('ou.station.applications.withdraw', [$station, $cycle, $vacancy, $application])}}" 
+                                                class="btn btn-sm btn-danger {{ $assessment->count() > 0 ? 'disabled' : '' }}" title="Withdraw"
+                                                    onclick="return confirm('This will withraw the application. Are you sure?')">
+                                                    <span class="fas fa-sign-out-alt fa-fw"></span>
+                                                </a>
                                             </td>
                                         </tr>
                                         <?php $i++;?>

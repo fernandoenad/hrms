@@ -91,11 +91,21 @@
                             @if(strpos(Route::currentRouteName(), 'ou.office.applications') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ou.office.applications', $office->id) }}" class="nav-link">
+                            <a href="{{ route('ou.office.applications.index', $office->id) }}" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Applicants</p>
                             </a>
                         </li>                       
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ou.office.pw') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ou.office.pw.index', $office) }}" class="nav-link">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>User Password Reset</p>
+                            </a>
+                        </li>
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ou.office.users') !== false) 
