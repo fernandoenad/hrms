@@ -40,53 +40,57 @@
                     <div class="card-header text-muted border-bottom-0">
                         Application #<strong>{{ $application->id  }}</strong>
                     </div>
-                
+
+                    <form method="post" action="{{ route('ou.station.applications.assess.update', [$station, $cycle, $vacancy, $application, $assessment]) }}">
+                        @csrf 
+                        @method('put')
                     <div class="card-body p-0">
-                        <table class="table m-0 table-hover ">
+                        <table class="table m-0 table-hover">
                             <tbody>
                                 <tr>
-                                    <th width="25%">Name</th>
+                                    <th width="30%">Name</th>
                                     <td>{{ $application->getFullname() }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Address</th>
-                                    <td>{{ $application->getAddress() }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Age</th>
-                                    <td>{{ $application->age }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Gender</th>
-                                    <td>{{ $application->gender }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Gender</th>
-                                    <td>{{ $application->civil_status }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Religion</th>
-                                    <td>{{ $application->religion }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Disability</th>
-                                    <td>{{ $application->disability }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Ethnic group</th>
-                                    <td>{{ $application->ethnic_group }}</td>
                                 </tr>
                                 <tr>
                                     <th>Position title applied for</th>
                                     <td>{{ $application->vacancy->position_title }}</td>
                                 </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>{{ $assessment->getStatus() }}</td>
+                                </tr>
+                                @php 
+                                    $assessment_scores = json_decode($assessment->assessment);
+                                    $assessment_template = json_decode($template->template, true);
+                                @endphp 
+
+                                @foreach($assessment_scores as $key => $value)
+                                    <tr>
+                                        <th>{{ $key }}</th>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="{{ is_numeric($value) ? 'number' : 'text' }}" class="form-control" placeholder="Enter user fullname" 
+                                                    name="{{ $key }}" class="@error('{{ $key }}') is-invalid @enderror"
+                                                    max="{{ $assessment_template[$key] }}"
+                                                    step="{{ is_numeric($value) ? '0.01' : '' }}"
+                                                    {{ $assessment->status > 1 ? 'readonly' :'' }}
+                                                    value="{{ $value }}">
+                                                @error($key)
+                                                    <span class="text-danger"><small>{{ $message }}</small></span>
+                                                @enderror
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>     
                     </div>
 
                     <div class="card-footer p-2">
-                        <a href="{{ route('ou.station.applications.edit', [$station, $cycle, $vacancy, $application]) }}" class="btn btn-primary">Modify</a>
-
+                        <button type="submit" class="btn btn-warning {{ $assessment->status > 1 ? 'disabled' :'' }}">Update</button>
+                        <a href="{{ route('ou.station.applications.assess.markcomplete', [$station, $cycle, $vacancy, $application, $assessment]) }}" 
+                            onclick="return confirm('Please hit the Modify button first before hitting the Mark Complete button. This will mark the assessment as complete and non-modifiable. You can revert this action via Applications. Are you sure?')"
+                            class="btn btn-primary {{ $assessment->status > 1 ? 'disabled' :'' }}">Mark Complete</a>
                         <div class="float-right">
                             <a href="{{ route('ou.station.applications.showvacancy', [$station, $cycle, $vacancy]) }}" 
                             class="btn btn-info"><i class="fas fa-reply"></i> Back</a>

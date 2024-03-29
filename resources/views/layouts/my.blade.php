@@ -15,11 +15,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    @if(strpos(Route::currentRouteName(), 'rms') === false)
-                        <a class="nav-link" href="{{ route('my') }}">My</a>
-                    @else
-                        <a class="nav-link" href="{{ route('rms') }}">RMS</a>
-                    @endif
+                    <a class="nav-link" href="{{ route('my') }}">My</a>
                 </li>
             </ul>
 
@@ -65,20 +61,6 @@
                 <div class="pt-1"></div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item 
-                            @if(Route::currentRouteName() == 'rms' ||
-                            Route::currentRouteName() == 'rms.show' ||
-                            Route::currentRouteName() == 'rms.vacancy' ||
-                            Route::currentRouteName() == 'rms.vacancy.show' ||
-                            Route::currentRouteName() == 'rms.vacancy.show.ranking' ||
-                            Route::currentRouteName() == 'rms.user' ||
-                            Route::currentRouteName() == 'rms.application.apply')
-                                {{ 'menu-open' }} @endif">
-                            <a href="{{ route('rms') }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li> 
                         <li class="nav-item
                             @if(Route::currentRouteName() == 'my' ||
                             Route::currentRouteName() == 'my.tools.password-edit' ||
@@ -95,17 +77,6 @@
                             <a href="{{ route('my') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>My Profile</p>
-                            </a>
-                        </li> 
-
-                        <li class="nav-item 
-                            @if(Route::currentRouteName() == 'rms.application' ||
-                                Route::currentRouteName() == 'rms.application.show' ||
-                                Route::currentRouteName() == 'rms.application.edit-doc')
-                                {{ 'menu-open' }} @endif">
-                            <a href="{{ route('rms.application') }}" class="nav-link">
-                                <i class="nav-icon fas fa-paper-plane"></i>
-                                <p>My Applications</p>
                             </a>
                         </li> 
                         

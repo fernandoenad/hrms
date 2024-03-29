@@ -59,6 +59,8 @@ use App\Http\Controllers\OU\OUController;
 use App\Http\Controllers\OU\StationController as OUStationController;
 use App\Http\Controllers\OU\STEmployeeController ;
 use App\Http\Controllers\OU\STApplicationController;
+use App\Http\Controllers\OU\STApplication2Controller;
+use App\Http\Controllers\OU\STAssessmentController;
 use App\Http\Controllers\OU\STUserController;
 use App\Http\Controllers\OU\STRankingController;
 use App\Http\Controllers\OU\STPBBController;
@@ -66,6 +68,7 @@ use App\Http\Controllers\OU\STPBBController;
 use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\OFUserController;
 use App\Http\Controllers\OU\OFApplicationController;
+use App\Http\Controllers\OU\OFApplication2Controller;
 use App\Http\Controllers\OU\OFStationController;
 
 use App\Http\Controllers\HomeController;
@@ -451,7 +454,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ou/station/{station}/employees', [STEmployeeController::class, 'store'])->name('ou.station.employees.store');
         Route::post('/ou/station/{station}/employees/add', [STEmployeeController::class, 'store2'])->name('ou.station.employees.store2');
         Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
-
+        
+        /*
         Route::get('/ou/station/{station}/applications/needs-confirmation', [STApplicationController::class, 'needsconfirmation'])->name('ou.station.applications.needs-confirmation');
         Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/upload-ranklist', [STApplicationController::class, 'uploadranklist'])->name('ou.station.applications.upload-ranklist');
         Route::post('/ou/station/{station}/applications/{cycle}/{vacancy}/uploaded-ranklist', [STApplicationController::class, 'uploadedranklist'])->name('ou.station.applications.uploaded-ranklist');
@@ -459,8 +463,26 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::patch('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'actiontaken'])->name('ou.station.applications.show.action-taken');
         Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/{application}', [STApplicationController::class, 'show'])->name('ou.station.applications.show');
         Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}', [STApplicationController::class, 'showvacancy'])->name('ou.station.applications.showvacancy');
-        Route::get('/ou/station/{station}/applications/{cycle}', [STApplicationController::class, 'showcycle'])->name('ou.station.applications.showcycle');
-        Route::get('/ou/station/{station}/applications', [STApplicationController::class, 'index'])->name('ou.station.applications');
+        */
+
+        Route::get('/ou/station/{station}/applications/{cycle}', [STApplication2Controller::class, 'showCycle'])->name('ou.station.applications.showcycle');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}', [STApplication2Controller::class, 'showVacancy'])->name('ou.station.applications.showvacancy');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/carview', [STApplication2Controller::class, 'carView'])->name('ou.station.applications.showvacancy.carview');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/pdf', [STApplication2Controller::class, 'pdf'])->name('ou.station.applications.showvacancy.pdf');
+        Route::get('/ou/station/{station}/applications', [STApplication2Controller::class, 'index'])->name('ou.station.applications');
+        Route::get('/ou/station/{station}/applications/{cycle}/takein', [STApplication2Controller::class, 'takeIn'])->name('ou.station.applications.takein');
+        Route::post('/ou/station/{station}/applications/{cycle}/takein', [STApplication2Controller::class, 'showResult'])->name('ou.station.applications.showresult');
+        Route::post('/ou/station/{station}/applications/{cycle}/{application}', [STApplication2Controller::class, 'takeInOk'])->name('ou.station.applications.takeinok');
+
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/withdraw', [STApplication2Controller::class, 'withdraw'])->name('ou.station.applications.withdraw');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}', [STApplication2Controller::class, 'show'])->name('ou.station.applications.show');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/edit', [STApplication2Controller::class, 'edit'])->name('ou.station.applications.edit');
+        Route::put('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}', [STApplication2Controller::class, 'update'])->name('ou.station.applications.update');
+
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/assess', [STAssessmentController::class, 'index'])->name('ou.station.applications.assess.index');
+        Route::put('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/{assessment}', [STAssessmentController::class, 'update'])->name('ou.station.applications.assess.update');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/{assessment}/mark_complete', [STAssessmentController::class, 'markComplete'])->name('ou.station.applications.assess.markcomplete');
+
 
         Route::get('/ou/station/{station}/pbb/{year}', [STPBBController::class, 'index'])->name('ou.station.pbb');
         Route::post('/ou/station/{station}/pbb/{year}/', [STPBBController::class, 'store'])->name('ou.station.pbb.store');
@@ -484,6 +506,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
     Route::get('/ou/station/', [OUController::class, 'station'])->name('ou.station');
     
     Route::middleware(['office.user'])->group(function () {
+        /*
         Route::get('/ou/office/{office}/applications/needs-confirmation', [OFApplicationController::class, 'needsconfirmation'])->name('ou.office.applications.needs-confirmation');
         Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}/upload-ranklist', [OFApplicationController::class, 'uploadranklist'])->name('ou.office.applications.upload-ranklist');
         Route::post('/ou/office/{office}/applications/{cycle}/{vacancy}/uploaded-ranklist', [OFApplicationController::class, 'uploadedranklist'])->name('ou.office.applications.uploaded-ranklist');
@@ -493,6 +516,18 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/office/{office}/applications/{cycle}/{vacancy}', [OFApplicationController::class, 'showvacancy'])->name('ou.office.applications.showvacancy');
         Route::get('/ou/office/{office}/applications/{cycle}', [OFApplicationController::class, 'showcycle'])->name('ou.office.applications.showcycle');
         Route::get('/ou/office/{office}/applications', [OFApplicationController::class, 'index'])->name('ou.office.applications');
+        */ 
+        Route::get('/ou/office/{office}/applications', [OFApplication2Controller::class, 'index'])->name('ou.office.applications.index');
+        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}', [OFApplication2Controller::class, 'show'])->name('ou.office.applications.show');
+        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/carview', [OFApplication2Controller::class, 'carview'])->name('ou.office.applications.carview');
+        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}', [OFApplication2Controller::class, 'assess'])->name('ou.office.applications.assess');
+        Route::put('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}', [OFApplication2Controller::class, 'update'])->name('ou.office.applications.update');
+        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}/mark', [OFApplication2Controller::class, 'mark'])->name('ou.office.applications.mark');
+        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}/unmark', [OFApplication2Controller::class, 'unmark'])->name('ou.office.applications.unmark');
+
+        Route::get('/ou/office/{office}/applications/{cycle}/um', [OFApplication2Controller::class, 'umIndex'])->name('ou.office.applications.umindex');
+        Route::post('/ou/office/{office}/applications/{cycle}/um', [OFApplication2Controller::class, 'umLookup'])->name('ou.office.applications.umlookup');
+        Route::get('/ou/office/{office}/applications/{cycle}/um/{application}', [OFApplication2Controller::class, 'umProcess'])->name('ou.office.applications.umprocess');
 
         Route::any('/ou/office/{office}/stations/{station}/lookup', [OFStationController::class, 'lookup'])->name('ou.office.stations.lookup');
         Route::get('/ou/office/{office}/stations/{station}/edit', [OFStationController::class, 'edit'])->name('ou.office.stations.edit');
@@ -505,6 +540,10 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ou/office/{office}/users', [OFUserController::class, 'store'])->name('ou.office.users.store');
         Route::get('/ou/office/{office}/users', [OFUserController::class, 'index'])->name('ou.office.users');
 
+        Route::get('/ou/office/{office}/pw', [OFUserController::class, 'pwIndex'])->name('ou.office.pw.index');
+        Route::post('/ou/office/{office}/pw', [OFUserController::class, 'pwLookup'])->name('ou.office.pw.lookup');
+        Route::get('/ou/office/{office}/pw/{user}', [OFUserController::class, 'pwReset'])->name('ou.office.pw.reset');
+
         Route::get('/ou/office/{office}', [OUSOfficeController::class, 'index'])->name('ou.office.show');
     });
 
@@ -515,10 +554,11 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 });
 
 
-
+/*
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');
 Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.account.store');
+
 
 Route::get('/rms/vacancy/{vacancy}/ranking/{filter}', [RMSAssignmentController::class, 'showRanking'])->name('rms.vacancy.show.ranking');
 Route::get('/rms/vacancy/{vacancy}/{filter}', [RMSAssignmentController::class, 'show'])->name('rms.vacancy.show');
@@ -528,6 +568,7 @@ Route::get('/rms/vacancy', [RMSAssignmentController::class, 'index'])->name('rms
 Route::get('/rms/p/{page}', [RMSController::class, 'show'])->name('rms.show');
 Route::get('/rms/post/{post}', [RMSController::class, 'display'])->name('rms.display');
 Route::get('/rms', [RMSController::class, 'index'])->name('rms');
+*/ 
 
 Route::get('/help/request', [HomeController::class, 'lookup'])->name('help.track-requests');
 Route::post('/help/request', [HomeController::class, 'track'])->name('help.track-request');

@@ -14,13 +14,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('rms.show', 'vacancies') }}" class="nav-link">
+                <a href="https://rms.depedbohol.org/vacancies" class="nav-link">
                     <i class="fas fa-vote-yea"></i> Vacancies
-                    <span class="badge badge-danger float-right">
-                        <?php $vacancies = App\Models\Vacancy::where('status', '=', 1)
-                            ->orderBy('salarygrade', 'desc')
-                            ->get(); ?>
-                        {{ $vacancies->count() }} Open</span>
                 </a>
             </li>
             @guest

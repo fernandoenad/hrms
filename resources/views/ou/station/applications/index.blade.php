@@ -40,11 +40,13 @@
                             <thead>
                                 <tr>
                                     <th>Cycle</th>
+                                    <!--
                                     <th class="text-right">Positions</th> 
                                     <th class="text-right">Applications</th>
                                     <th class="text-right">New</th>
                                     <th class="text-right">Pending</th>
-                                    <th class="text-right">Confirmed</th>                                     
+                                    <th class="text-right">Confirmed</th>   
+                                    -->                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,29 +54,31 @@
                                     @foreach($cycles as $cycle)
                                         <tr>
                                             <td>
-                                                <a href="{{ route('ou.station.applications.showcycle', [$station->id, $cycle->schoolyear]) }}">
-                                                    <strong>{{ $cycle->schoolyear ?? '' }} Cycle</strong>
+                                                <a href="{{ route('ou.station.applications.showcycle', [$station, $cycle->cycle]) }}">
+                                                    <strong>{{ $cycle->cycle ?? '' }} Cycle</strong>
                                                 </a>
                                             </td>
-                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->schoolyear)
+                                            <!--
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->cycle)
                                                     ->where('station_id', '=', $station->id)
                                                     ->groupBy('vacancy_id')
                                                     ->select('vacancy_id')->get()->count() }}</td>
-                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->schoolyear)
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->cycle)
                                                     ->where('station_id', '=', $station->id)->count() }}</td>
-                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->schoolyear)
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->cycle)
                                                     ->where('station_id', '=', $station->id)
                                                     ->where('status', '=', 1)->get()->count() }}</td>
-                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->schoolyear)
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->cycle)
                                                     ->where('station_id', '=', $station->id)
                                                     ->where('status', '=', 2)->get()->count() }}</td>
-                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->schoolyear)
+                                            <td class="text-right">{{ App\Models\Application::where('schoolyear', '=', $cycle->cycle)
                                                     ->where('station_id', '=', $station->id)
                                                     ->where('status', '=', 3)->get()->count() }}</td>
+                                            -->
                                         </tr>
                                     @endforeach
                                 @else
-                                    <tr><td colspan="6"></td></tr>
+                                    <tr><td colspan="6"><em>0 cycles found.</em></td></tr>
                                 @endif
                             </tbody>
                         </table>

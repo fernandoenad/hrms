@@ -17,6 +17,7 @@ class RMSController extends Controller
     
     public function index()
     {
+        /**
         $page = 'announcements';
         
         if (Auth::check()) {
@@ -24,6 +25,9 @@ class RMSController extends Controller
         } else {
             return view('rms.dashboard.index', compact('page'));
         }      
+        */
+        return redirect('https://rms.depedbohol.org');
+
     }
 
     public function show($page)

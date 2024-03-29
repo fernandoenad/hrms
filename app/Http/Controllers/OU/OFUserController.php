@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Office;
 use App\Models\UserOF;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class OFUserController extends Controller
 {
@@ -132,5 +134,32 @@ class OFUserController extends Controller
         $userof->delete();
 
         return redirect()->route('ou.office.users', compact('office'))->with('status', 'User removed!');
+    }
+
+    public function pwIndex(Office $office)
+    {
+        $users = User::limit(0)->get();
+    
+        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $users]);
+    }
+
+    public function pwLookup(Request $request, Office $office)
+    {
+        $users = User::where('name', 'like', '%'.$request->searchString.'%')
+            ->where('id', '!=', 5268)->get();
+
+
+        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]);
+        
+    }
+
+    public function pwReset(Request $request, Office $office, User $user)
+    {
+        $user->update(['password' => Hash::make('Password@123')]);
+
+        $users = User::where('name', 'like', '%'.$request->searchString.'%')
+            ->where('id', '!=', 5268)->get();
+        
+        return redirect(route('ou.office.pw.lookup', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]))->with('status', 'Password has been reset to Password@123 successfully!');
     }
 }
