@@ -85,7 +85,7 @@
 
                 <div class="card-footer clearfix">
                     <div class="float-right">
-                        {!! $employees->render() !!}
+                        
                     </div>
                 </div>
             </div>

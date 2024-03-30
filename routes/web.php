@@ -554,8 +554,9 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 });
 
 
-/*
+
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
+/*
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');
 Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.account.store');
 

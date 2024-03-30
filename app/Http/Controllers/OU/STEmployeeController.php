@@ -422,9 +422,11 @@ class STEmployeeController extends Controller
                     ->orderBy('firstname', 'asc');
         })
         ->select('employees.id AS empid', 'employees.*', 'people.*')
-        ->paginate(15);
+        ->paginate(10);
 
-        $employees = $employees->appends(['searchString' => $searchString]);
+        $employees = $employees->take(9); 
+
+        $employees = $employees->append(['searchString' => $searchString]);
 
         return view('ou.station.employees.lookup', compact('employees', 'station'));
     } 
@@ -446,9 +448,11 @@ class STEmployeeController extends Controller
         })
         ->orderBy('lastname', 'asc')
         ->orderBy('firstname', 'asc')
-        ->paginate(15);
+        ->paginate(10);
 
-        $employees = $employees->appends(['searchString' => $searchString]);
+        $employees = $employees->take(9); 
+
+        $employees = $employees->append(['searchString' => $searchString]);
 
         return view('ou.station.employees.lookup2', compact('employees', 'station'));
     } 
