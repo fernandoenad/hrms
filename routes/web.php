@@ -106,7 +106,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/my/tools/expired-password', [PasswordSecurityController::class, 'index'])->name('auth.expired-password');
 Route::post('/my/tools/reset-password', [PasswordSecurityController::class, 'resetPassword'])->name('auth.reset-password');
@@ -556,11 +556,10 @@ Route::middleware(['default.password', 'verified'])->group(function () {
 
 
 Route::post('/rms/register/request', [RMSPersonController::class, 'request'])->name('rms.account.request');
-/*
 Route::get('/rms/register', [RMSPersonController::class, 'index'])->name('rms.account.register');
 Route::post('/rms/register', [RMSPersonController::class, 'store'])->name('rms.account.store');
 
-
+/*
 Route::get('/rms/vacancy/{vacancy}/ranking/{filter}', [RMSAssignmentController::class, 'showRanking'])->name('rms.vacancy.show.ranking');
 Route::get('/rms/vacancy/{vacancy}/{filter}', [RMSAssignmentController::class, 'show'])->name('rms.vacancy.show');
 Route::get('/rms/vacancy', [RMSAssignmentController::class, 'index'])->name('rms.vacancy');

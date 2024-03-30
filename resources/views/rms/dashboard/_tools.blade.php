@@ -4,20 +4,11 @@
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-                <a href="{{ route('rms.show', 'announcements') }}" class="nav-link">
-                    <i class="fas fa-th"></i> Dashboard
+                <a href="{{ route('rms.account.register') }}" class="nav-link">
+                    <i class="fas fa-inbox"></i> Register
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('rms.show', 'announcements') }}" class="nav-link">
-                    <i class="fas fa-bullhorn"></i> Announcements
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="https://rms.depedbohol.org/vacancies" class="nav-link">
-                    <i class="fas fa-vote-yea"></i> Vacancies
-                </a>
-            </li>
+
             @guest
             @else
                 @if(Auth::user()->hasRole('ps'))
@@ -28,16 +19,7 @@
                 </li>
                 @endif
             @endguest
-            <li class="nav-item">
-                <a href="{{ route('rms.show', 'faqs') }}" class="nav-link">
-                    <i class="fas fa-question-circle"></i> FAQs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('rms.show', 'about') }}" class="nav-link">
-                    <i class="fas fa-info-circle"></i> About
-                </a>
-            </li>
+
         </ul>
     </div>
 </div>
