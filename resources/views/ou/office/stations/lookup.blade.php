@@ -53,6 +53,7 @@
                             </thead>
                             <tbody>
                                 @if(sizeof($employees) > 0)
+                                    
                                     @foreach($employees as $employee)
                                         <tr>
                                             <td>{{ $employee->empno }}</td>
@@ -83,7 +84,7 @@
 
                 <div class="card-footer clearfix">
                     <div class="float-right">
-                        {!! $employees->render() !!}
+                        
                     </div>
                 </div>
             </div>

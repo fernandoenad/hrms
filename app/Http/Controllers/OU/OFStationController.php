@@ -74,9 +74,11 @@ class OFStationController extends Controller
                     ->orderBy('firstname', 'asc');
         })
         ->select('employees.id AS empid', 'employees.*', 'people.*')
-        ->paginate(15);
+        ->paginate(10);
 
-        $employees = $employees->appends(['searchString' => $searchString]);
+        $employees = $employees->take(9); 
+        
+        $employees = $employees->append(['searchString' => $searchString]);
 
         return view('ou.office.stations.lookup', compact('office', 'station', 'employees'));
     } 
