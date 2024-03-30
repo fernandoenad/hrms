@@ -241,7 +241,7 @@
                                                 <button type="submit" id="rms-reg-submit" class="btn btn-primary float-right" disabled>
                                                     {{ __('Register') }}
                                                 </button>
-                                                <a href="{{ route('rms') }}" class="btn btn-default">
+                                                <a href="{{ route('rms.account.register') }}" class="btn btn-default">
                                                     {{ __('Cancel') }}
                                                 </a>
                                             </div>
