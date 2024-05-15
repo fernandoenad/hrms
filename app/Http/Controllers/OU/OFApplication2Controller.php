@@ -34,10 +34,6 @@ class OFApplication2Controller extends Controller
         
         $vacancies = Vacancy2::where('office_level', '=', -1)
             ->where('cycle', '=', $cycle->cycle)
-            ->where(function ($query) {
-                $query->where('position_title', 'like', '%kinder%')
-                      ->orWhere('position_title', 'like', '%elem%');
-            })
             ->get();
         
         return view('ou.office.applications.index', ['vacancies' => $vacancies, 'cycle' => $cycle->cycle, 'office' => $office]);
