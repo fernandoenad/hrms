@@ -57,13 +57,13 @@
                                             @php 
                                                 $assessment =  App\Models\Assessment::where('application_id', '=', $application->id)->get();
                                             @endphp 
-                                            <td>{{ $assessment->count() == 0 ? 'New' :  ($assessment->first()->status == 1 ? 'Pending' : 'Completed') }}</td>
+                                            <td>{{ $assessment->count() == 0 ? 'New (Station)' :  ($assessment->first()->status == 1 ? 'Pending (Station)' : ($assessment->first()->status == 2 ? 'Pending (District)' : 'Completed (District)')) }}</td>
                                             <td>
                                                 <a href="{{ route('ou.office.applications.umprocess', [$office, $cycle, $application->id]) }}" 
                                                     onclick="return confirm('This will revert completed status to PENDING status, particulary useful when modifying assessment after Mark Complete was executed. Are you sure?')"
-                                                    class="btn btn-sm btn-warning {{ $assessment->first()->status < 2 ? 'disabled' : '' }} " 
+                                                    class="btn btn-sm btn-warning {{ $assessment->first()->status < 2 || $assessment->first()->status == 3 ? 'disabled' : '' }} " 
                                                     title="Revert to Pending">
-                                                    <span class="fas fa-sign-out-alt fa-fw"></span> Revert to Pending
+                                                    <span class="fas fa-sign-out-alt fa-fw"></span> Revert to Pending (Station)
                                                 </a>
                                             </td>
                                         </tr>

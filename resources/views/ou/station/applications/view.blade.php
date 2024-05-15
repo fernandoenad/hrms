@@ -85,15 +85,20 @@
                     @php 
                         $assessment_details = json_decode($assessment->assessment, true); 
                         $application = App\Models\Application2::where('id', '=', $assessment->application_id)->get()->first();
+                        $ctr = 1;
                     @endphp 
                     <tr>
                         <td width="2%">{{ $i }}</td>
                         <td>{{ $application->getFullname() }}</td>
                         <td>{{ $application->application_code }}</td>
                         @foreach($assessment_details as $key => $value)
+                            @php $ctr++; if($ctr > 5) break; @endphp
                                 <td align="right">{{ is_numeric($value) ? $value : '' }}</td>
                         @endforeach
-                        <td align="left">{{ $assessment->status == 2 ? '' : 'Do not print yet. This is not marked yet.'}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="left">{{ $assessment->status < 2 ? 'Do not print yet. This is not marked yet.' : end($assessment_details) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
