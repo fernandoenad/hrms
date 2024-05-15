@@ -81,15 +81,17 @@
                     @php 
                         $assessment_details = json_decode($assessment->assessment, true); 
                         $application = App\Models\Application2::where('id', '=', $assessment->application_id)->get()->first();
+                        $total_points = 0;
                     @endphp 
                     <tr>
                         <td width="2%">{{ $i }}</td>
                         <td>{{ $application->getFullname() }}</td>
                         <td>{{ $application->application_code }}</td>
                         @foreach($assessment_details as $key => $value)
-                                <td align="right">{{ is_numeric($value) ? $value : '' }}</td>
+                                @php $total_points += is_numeric($value) ? $value : 0; @endphp
+                                <td align="right">{{ is_numeric($value) ? $value : $total_points }}</td>
                         @endforeach
-                        <td align="left">{{ $assessment->status == 2 ? '' : 'Do not print yet. This is not marked yet.'}}</td>
+                        <td align="left">{{ $assessment->status == 2 ? 'Do not print yet. This is not marked yet.' :  end($assessment_details) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>

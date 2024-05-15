@@ -93,7 +93,7 @@
                                                 </a>
                                                 <a href="{{ route('ou.office.applications.unmark', [$office, $cycle, $vacancy->id, $application->id])}}" 
                                                     onclick="return confirm('This will revert the application to PENDING. Are you sure?')"
-                                                    class="btn btn-sm btn-danger {{ $assessment->status == 2 ? 'disabled' : '' }}" title="Assess">
+                                                    class="btn btn-sm btn-danger {{ $assessment->status == 2 ? 'disabled' : '' }}" title="Revert">
                                                     <span class="fas fa-reply fa-fw"></span>
                                                 </a>
                                             </td>

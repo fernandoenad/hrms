@@ -78,7 +78,7 @@
                                                     name="{{ $key }}" class="@error('{{ $key }}') is-invalid @enderror"
                                                     max="{{ $assessment_template[$key] }}"
                                                     step="{{ is_numeric($value) ? '0.01' : '' }}"
-                                                    {{ $assessment->status > 2 ? 'readonly' :'' }}
+                                                    {{ $assessment->status > 2 ? 'readonly' : (str_contains($key,'COI') ? '' : 'readonly' ) }}
                                                     value="{{ $value }}">
                                                 @error($key)
                                                     <span class="text-danger"><small>{{ $message }}</small></span>

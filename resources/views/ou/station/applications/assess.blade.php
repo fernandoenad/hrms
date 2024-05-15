@@ -69,11 +69,11 @@
                                         <th>{{ $key }}</th>
                                         <td>
                                             <div class="form-group">
-                                                <input type="{{ is_numeric($value) ? 'number' : 'text' }}" class="form-control" placeholder="Enter user fullname" 
+                                                <input type="{{ is_numeric($value) ? 'number' : 'text' }}" class="form-control" placeholder="Enter significant remarks here (e.g., 4Ps, SPIMS, etc)" 
                                                     name="{{ $key }}" class="@error('{{ $key }}') is-invalid @enderror"
                                                     max="{{ $assessment_template[$key] }}"
                                                     step="{{ is_numeric($value) ? '0.01' : '' }}"
-                                                    {{ $assessment->status > 1 ? 'readonly' :'' }}
+                                                    {{ $assessment->status > 1 || str_contains($key,'COI') ? 'readonly' :'' }}
                                                     value="{{ $value }}">
                                                 @error($key)
                                                     <span class="text-danger"><small>{{ $message }}</small></span>
