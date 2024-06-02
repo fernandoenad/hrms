@@ -64,11 +64,11 @@
                         <table class="table m-0 table-hover ">
                             <thead>
                                 <tr>
-                                    <th>Application code</th>
+                                    <th width="20%">Application code</th>
                                     <th>Applicant</th>
                                     <th>Position applied for</th>
-                                    <th>Station applied for</th>
-                                    <th>Action</th>
+                                    <th width="20%">Station applied for</th>
+                                    <th width="15%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

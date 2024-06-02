@@ -35,12 +35,12 @@
         <small>
         <table>
             <tr>
-                <td width="30%" align="left">Position: <strong>{{ $vacancy->position_title }}</strong></td>
+                <td width="40%" align="left">Position: <strong>{{ $vacancy->position_title }}</strong></td>
                 <td width="40%"></td>
-                <td width="30%">Date of Final Deliberation: <strong>N/A</strong></td>
+                <td width="20%">Date of Final Deliberation: <strong>N/A</strong></td>
             </tr>
             <tr>
-                <td align="left">School: <strong>{{ $office->name}} (DepEd Bohol)</strong></td>
+                <td align="left">District: <strong>{{ $office->name}} (DepEd Bohol)</strong></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -91,7 +91,7 @@
                                 @php $total_points += is_numeric($value) ? $value : 0; @endphp
                                 <td align="right">{{ is_numeric($value) ? $value : $total_points }}</td>
                         @endforeach
-                        <td align="left">{{ $assessment->status == 2 ? 'Do not print yet. This is not marked yet.' :  end($assessment_details) }}</td>
+                        <td align="left">{{ $assessment->status == 2 ? 'Initial results only. / ' . end($assessment_details) :  end($assessment_details) }}</td>
                         <td></td>
                         <td></td>
                         <td></td>

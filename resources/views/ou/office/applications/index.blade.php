@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Vacancies  for the {{ $cycle }} Cycle</h1>
+                <h1 class="m-0 text-dark">Applications  for the {{ $cycle }} Cycle</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">{{ $office->name ?? '' }}</a></li>
-                    <li class="breadcrumb-item active">Vacancies</li>
+                    <li class="breadcrumb-item active">Applications</li>
                 </ol>
             </div>
         </div>
