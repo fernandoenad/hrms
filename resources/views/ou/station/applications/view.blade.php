@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="container-fluid mt-0">
-        <h4 class="text-center mb-3" align="center">COMPARATIVE ASSESSMENT RESULT - REGISTRY OF QUALIFIED APPLICANTS (CAR-RQA)</h4>
+        <h4 class="text-center mb-3" align="center">INITIAL COMPARATIVE ASSESSMENT RESULT (ICAR)</h4>
         <!--
         <div class="d-flex justify-content-end mb-4">
             <a class="btn btn-primary" href="{{ route('ou.station.applications.showvacancy.pdf', [$station, $cycle, $vacancy])}}">Export to PDF</a>
@@ -39,9 +39,9 @@
         <small>
         <table>
             <tr>
-                <td width="30%" align="left">Position: <strong>{{ $vacancy->position_title }}</strong></td>
+                <td width="40%" align="left">Position: <strong>{{ $vacancy->position_title }}</strong></td>
                 <td width="40%"></td>
-                <td width="30%">Date of Final Deliberation: <strong>N/A</strong></td>
+                <td width="20%">Date of Final Deliberation: <strong>N/A</strong></td>
             </tr>
             <tr>
                 <td align="left">School: <strong>{{ $station->code}}- {{ $station->name}} ({{ $station->office->name}})</strong></td>
@@ -91,10 +91,16 @@
                         <td width="2%">{{ $i }}</td>
                         <td>{{ $application->getFullname() }}</td>
                         <td>{{ $application->application_code }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <!--
                         @foreach($assessment_details as $key => $value)
                             @php $ctr++; if($ctr > 5) break; @endphp
                                 <td align="right">{{ is_numeric($value) ? $value : '' }}</td>
                         @endforeach
+                        -->
                         <td></td>
                         <td></td>
                         <td></td>
@@ -126,9 +132,9 @@
                 <td width="25%"></td>
             </tr>
             <tr align="center">
-                <td>_______________________________<br>Name and Position<br>Member</td>
-                <td>_______________________________<br>Name and Position<br>Member</td>
-                <td>_______________________________<br>Name and Position<br>Member</td>
+                <td><!--_______________________________<br>Name and Position<br>Member --></td>
+                <td><!--_______________________________<br>Name and Position<br>Member --></td>
+                <td><!--_______________________________<br>Name and Position<br>Member --></td>
                 <td>_______________________________<br>Name and Position<br>Chairperson</td>
             </tr>
         </table>

@@ -8,6 +8,17 @@
                     <i class="fas fa-inbox"></i> Applications
                 </a>
             </li>
+            @if(Route::currentRouteName() == 'ou.station.applications.assess.index' ||
+                Route::currentRouteName() == 'ou.station.applications.assess.update' || 
+                Route::currentRouteName() == 'ou.station.applications.edit' ||
+                Route::currentRouteName() == 'ou.station.applications.show')
+            <li class="nav-item">
+                <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}" 
+                    class="nav-link">
+                    <i class="fas fa-reply"></i> Back to position
+                </a>
+            </li>
+            @endif
             @if(Route::currentRouteName() == 'ou.station.applications.showcycle' ||
                 Route::currentRouteName() == 'ou.station.applications.takein' ||
                 Route::currentRouteName() == 'ou.station.applications.showvacancy' ||

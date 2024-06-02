@@ -40,7 +40,7 @@ class STAssessmentController extends Controller
             $newAssessment = Assessment::create(['application_id' => $application->id,
                 'template_id' => $vacancy->template_id,
                 'assessment' => json_encode($asessment_details),
-                'status' => 1,
+                'status' => 2,
             ]);
             $assessment = $newAssessment;
         } else {
