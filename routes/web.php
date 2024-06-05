@@ -106,7 +106,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 Route::get('/my/tools/expired-password', [PasswordSecurityController::class, 'index'])->name('auth.expired-password');
 Route::post('/my/tools/reset-password', [PasswordSecurityController::class, 'resetPassword'])->name('auth.reset-password');
