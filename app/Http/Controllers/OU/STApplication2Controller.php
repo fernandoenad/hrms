@@ -61,7 +61,7 @@ class STApplication2Controller extends Controller
             ->where('station_id', '=', -1)
             ->where('cycle', '=', $cycle)
             ->select('*', 'applications.id AS id')
-            ->limit(5)->get();
+            ->limit(0)->get();
 
         return view('ou.station.applications.takein', ['applications' => $applications,'cycle' => $cycle, 'station' => $station]);
     }
