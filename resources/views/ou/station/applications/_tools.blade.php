@@ -34,7 +34,7 @@
             <li class="nav-item">
                 <a href="{{ route('ou.station.applications.showvacancy.carview' , [$station, $cycle, $vacancy]) }}" 
                     target="_blank" class="nav-link">
-                    <i class="fas fa-inbox"></i> View CAR Sheet
+                    <i class="fas fa-inbox"></i> View ICAR Sheet
                 </a>
             </li>
             @endif
@@ -48,22 +48,7 @@
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
-            <li class="nav-item"><a href="#" class="nav-link"><strong>New Applications</strong></a></li>
-            <li class="nav-item"><a href="#" class="nav-link">1. Take in applications.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">2. Only assess ETE.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">3. Input the ETE scores to the IER sheet.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">4. Have applicant sign the IER sheet.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><strong>Old Applications</strong></a></li>
-            <li class="nav-item"><a href="#" class="nav-link">1. Take-in applications.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">2. Only assess the ETE.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">4. Input scores to the IER sheet.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">3. Input Teach-Demo and Teacher-Reflection scores based on the RQA of the previous School Year to the EIR sheet. </a></li>
-            <li class="nav-item"><a href="#" class="nav-link">4. Have applicant sign the IER sheet.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><strong>Next Steps</strong></a></li>
-            <li class="nav-item"><a href="#" class="nav-link">1. Plugin the scores to the HRMS System.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">2. Print the CAR sheet and have it signed by the members of the school ranking committee.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">3. Place the CAR sheet together with the signed IER files in a single folder per position.</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">4. Submit to SDO-HR unit.</a></li>
+            <li class="nav-item"><a href="https://docs.google.com/presentation/d/1OPwapDlPVi0Z4lAVeF4f2eIYS-CHywICnWrus4vxN3w/edit?usp=sharing" class="nav-link" target="_blank"><strong>Detailed steps</strong></a></li>
         </ul>
     </div>
 </div>
