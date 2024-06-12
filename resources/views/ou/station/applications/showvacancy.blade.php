@@ -69,7 +69,9 @@
                                     @foreach($applications as $application)
                                         <tr>
                                             <td>{{ $i }}</td>
-                                            <td>{{ $application->getFullname()}}</td>
+                                            <td>{{ $application->getFullname()}}<br>
+                                                Code: {{ $application->application_code }}
+                                            </td>
                                             <td>{{ $application->phone }}</td>
                                             <td>{{ $application->barangay }}, {{ $application->municipality }}</td>
                                             <td title="Submitted on {{ $application->updated_at->format('M d, Y H:ia') }}">
