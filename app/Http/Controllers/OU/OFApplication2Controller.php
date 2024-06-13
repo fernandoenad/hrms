@@ -113,6 +113,7 @@ class OFApplication2Controller extends Controller
             ->join('hrms.stations', 'applications.station_id', '=', 'stations.id')
             ->select('applications.*', 'stations.name')
             ->where('stations.office_id', '=', $office->id)
+            ->orderBy('applications.station_id', 'ASC')
             ->get();
 
         return view('ou.office.applications.umindex', ['applications' => $applications, 'cycle' => $cycle, 'office' => $office]);
