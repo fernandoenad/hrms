@@ -85,6 +85,11 @@
                                                         ->get();
                                                 @endphp
                                                 {{ $assessment->count() == 0 ? 'New' :  ($assessment->first()->status == 1 ? 'Pending' : 'Completed') }}
+                                                <a href="{{ route('ou.station.applications.revert', [$station, $cycle, $vacancy, $application]) }}" 
+                                                    onclick="return confirm('This sends a request to SDO-HR to revert status to New. Are you sure?')"
+                                                    class="btn btn-sm btn-info float-right {{ $assessment->count() > 0 ? '' : 'disabled'}}" title="Revert to New">
+                                                    <span class="fas fa-reply fa-fw"></span>
+                                                </a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('ou.station.applications.assess.index', [$station, $cycle, $vacancy, $application]) }}" 

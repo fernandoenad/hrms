@@ -8,6 +8,7 @@ use App\Models\Station;
 use App\Models\Application2;
 use App\Models\Assessment;
 use App\Models\Vacancy2;
+use App\Models\Inquiry2;
 use App\Models\Town;
 use App\Models\Dropdown;
 use Illuminate\Validation\Rule;
@@ -160,5 +161,17 @@ class STApplication2Controller extends Controller
         $pdf = PDF::loadView('ou.station.applications.view', ['assessments' => $assessments]);
 
         return $pdf->download('pdf_file.pdf');
+    }
+
+    public function revert(Station $station, $cycle, Vacancy2 $vacancy, Application2 $application)
+    {
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'Revert application status to New';
+        $data['status'] = 1;
+
+        $inquiry = Inquiry2::create($data);
+
+        return redirect(route('ou.station.applications.showvacancy', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]))->with('status', 'Request to revert to know has been sent.');
     }
 }
