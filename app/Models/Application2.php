@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Application2 extends Model
 {
@@ -43,7 +44,7 @@ class Application2 extends Model
 
     public function assessment(): HasOne
     {
-        return $this->hasOne(Assessment::class);
+        return $this->hasOne(Assessment::class, 'application_id');
     }
 
     public function getFullname()

@@ -478,6 +478,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}', [STApplication2Controller::class, 'show'])->name('ou.station.applications.show');
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/edit', [STApplication2Controller::class, 'edit'])->name('ou.station.applications.edit');
         Route::put('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}', [STApplication2Controller::class, 'update'])->name('ou.station.applications.update');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/revert', [STApplication2Controller::class, 'revert'])->name('ou.station.applications.revert');
 
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/assess', [STAssessmentController::class, 'index'])->name('ou.station.applications.assess.index');
         Route::put('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/{assessment}', [STAssessmentController::class, 'update'])->name('ou.station.applications.assess.update');
