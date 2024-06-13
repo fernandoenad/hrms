@@ -59,12 +59,15 @@
                                             @endphp 
                                             <td>{{ $assessment->count() == 0 ? 'New (Station)' :  ($assessment->first()->status == 1 ? 'Pending (Station)' : ($assessment->first()->status == 2 ? 'Pending (District)' : 'Completed (District)')) }}</td>
                                             <td>
+                                                {{ $assessment->count() == 0 ? 'Call up school' : '' }}
+                                                <!--
                                                 <a href="{{ route('ou.office.applications.umprocess', [$office, $cycle, $application->id]) }}" 
                                                     onclick="return confirm('This will revert completed status to PENDING status, particulary useful when modifying assessment after Mark Complete was executed. Are you sure?')"
                                                     class="btn btn-sm btn-warning {{ $assessment->first() != null ? ($assessment->first()->status < 2 || $assessment->first()->status == 3 ? 'disabled' : '') : 'disabled' }} " 
                                                     title="Revert to Pending">
                                                     <span class="fas fa-sign-out-alt fa-fw"></span> Revert to Pending (Station)
                                                 </a>
+                                                -->
                                             </td>
                                         </tr>
                                     @endforeach
