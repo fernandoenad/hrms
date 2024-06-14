@@ -523,7 +523,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/carview', [OFApplication2Controller::class, 'carview'])->name('ou.office.applications.carview');
         Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}', [OFApplication2Controller::class, 'assess'])->name('ou.office.applications.assess');
         Route::put('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}', [OFApplication2Controller::class, 'update'])->name('ou.office.applications.update');
-        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}/mark', [OFApplication2Controller::class, 'mark'])->name('ou.office.applications.mark');
+        Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}/mark/{score}', [OFApplication2Controller::class, 'mark'])->name('ou.office.applications.mark');
         Route::get('/ou/office/{office}/applications/{cycle}/list/{vacancy}/{application}/unmark', [OFApplication2Controller::class, 'unmark'])->name('ou.office.applications.unmark');
 
         Route::get('/ou/office/{office}/applications/{cycle}/um', [OFApplication2Controller::class, 'umIndex'])->name('ou.office.applications.umindex');

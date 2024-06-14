@@ -67,14 +67,16 @@
                                     $assessment_scores = json_decode($assessment->assessment);
                                     $template = App\Models\Template::find($vacancy->template_id);
                                     $assessment_template = json_decode($template->template, true);
+                                    $total_points = 0;
                                 @endphp 
 
                                 @foreach($assessment_scores as $key => $value)
+                                    @php $total_points += is_numeric($value) ? $value : 0; @endphp
                                     <tr>
                                         <th>{{ $key }}</th>
                                         <td>
                                             <div class="form-group">
-                                                <input type="{{ is_numeric($value) ? 'number' : 'text' }}" class="form-control" placeholder="Enter user fullname" 
+                                                <input type="{{ is_numeric($value) ? 'number' : 'text' }}" class="form-control" placeholder="Enter {{$key}} points" 
                                                     name="{{ $key }}" class="@error('{{ $key }}') is-invalid @enderror"
                                                     max="{{ $assessment_template[$key] }}"
                                                     step="{{ is_numeric($value) ? '0.001' : '' }}"
@@ -93,7 +95,7 @@
 
                     <div class="card-footer p-2">
                         <button type="submit" class="btn btn-warning {{ $assessment->status == 3 ? 'disabled' :'' }}">Update</button>
-                        <a href="{{ route('ou.office.applications.mark', [$office, $cycle, $vacancy, $application]) }}" 
+                        <a href="{{ route('ou.office.applications.mark', [$office, $cycle, $vacancy, $application, $total_points]) }}" 
                             onclick="return confirm('Please hit the Modify button first before hitting the Mark Complete button. This will mark the assessment as complete and non-modifiable. You can revert this action via the Applications page. Are you sure?')"
                             class="btn btn-primary {{ $assessment->status == 3 ? 'disabled' :'' }}">Mark Complete</a>
                         <div class="float-right">
