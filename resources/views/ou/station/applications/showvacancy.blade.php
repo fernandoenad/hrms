@@ -25,6 +25,30 @@
     <div class="row">
         <div class="col-md-9">
 
+            <div class="alert alert-warning">
+                <p>
+                Re: T1 Ranking Procedures<br>
+                Dear School Heads,<br>
+                Your tasks in the school level only include the following:<br>
+                1) Preliminary assessment<br>
+                - compare if original documents match with photocopies<br>
+                - check if mandatory requirements are complied with to determine whether or not the applicant is qualified<br>
+                2) Take in application<br>
+                - take in the application using the application code via the school’s hrms portal<br>
+                - mark completed by clicking the blue button<br>
+                3) Pre-CAR<br>
+                - print ICAR and sign<br>
+                - prepare IES for each application<br>
+                - bind folders of similar position<br>
+                - submit to district for the CAR phase<br>
+                <br>
+                Please do not burden yourselves with the following:<br>
+                - whether of nor the document is scorable (it is the job of the district ranking committee)<br>
+                - the application is already completed and you can no longer input scores (it is the job of the district ranking committee)<br>
+                And please do not abuse the use of the revert button, it is only used for incorrect take in. The goal is to only mark the application as “completed”
+                Please review the T1 Ranking Guidelines for guidance. Thank you.
+                </p>
+            </div>
         @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
