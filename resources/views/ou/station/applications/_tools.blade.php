@@ -38,6 +38,7 @@
                 </a>
             </li>
             @endif
+           
 
         </ul>
     </div>
@@ -48,7 +49,18 @@
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
-            <li class="nav-item"><a href="https://docs.google.com/presentation/d/1OPwapDlPVi0Z4lAVeF4f2eIYS-CHywICnWrus4vxN3w/edit?usp=sharing" class="nav-link" target="_blank"><strong>Detailed steps</strong></a></li>
+            <li class="nav-item"><a href="https://docs.google.com/presentation/d/1OPwapDlPVi0Z4lAVeF4f2eIYS-CHywICnWrus4vxN3w/edit?usp=sharing" class="nav-link" target="_blank"><strong>Click here for detailed steps</strong></a></li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    Remember, there is no inputting of scores in the school level.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    The goal is to mark all applications as COMPLETED with no scores.
+                </a>
+            </li>
         </ul>
     </div>
+    
 </div>

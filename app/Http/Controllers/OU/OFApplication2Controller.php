@@ -89,11 +89,11 @@ class OFApplication2Controller extends Controller
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully updated.');
     }
 
-    public function mark(Request $request, Office $office, $cycle, Vacancy2 $vacancy, Application2 $application)
+    public function mark(Request $request, Office $office, $cycle, Vacancy2 $vacancy, Application2 $application, $score)
     {
         $assessment = Assessment::where('application_id', '=', $application->id)->first();
 
-        $assessment->update(['status' => 3]); 
+        $assessment->update(['status' => 3, 'score' => $score]); 
 
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully marked completed.');
     }

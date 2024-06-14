@@ -86,7 +86,7 @@
                                                 @endphp
                                                 {{ $assessment->count() == 0 ? 'New' :  ($assessment->first()->status == 1 ? 'Pending' : 'Completed') }}
                                                 <a href="{{ route('ou.station.applications.revert', [$station, $cycle, $vacancy, $application]) }}" 
-                                                    onclick="return confirm('This sends a request to SDO-HR to revert status to New. Are you sure?')"
+                                                    onclick="return confirm('This should only be used for valid reasons such as incorrect Take In. If the application is tagged as COMPLETED, that is by design as there is no inputting of scores in the school level. This sends a request to SDO-HR to revert status to New. Are you sure?')"
                                                     class="btn btn-sm btn-info float-right {{ $assessment->count() > 0 ? '' : 'disabled'}}" title="Revert to New">
                                                     <span class="fas fa-reply fa-fw"></span>
                                                 </a>
