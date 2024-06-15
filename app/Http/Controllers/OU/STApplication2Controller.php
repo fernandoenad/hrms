@@ -106,7 +106,7 @@ class STApplication2Controller extends Controller
         $towns = Town::all();
         $sexes = Dropdown::where('type', '=', 'sex')->get();
         $civilstatuses = Dropdown::where('type', '=', 'civilstatus')->get();
-        $vacancies = Vacancy2::where('status', '=', 1)->get();
+        $vacancies = Vacancy2::all();
 
         return view('ou.station.applications.edit', ['vacancies' => $vacancies, 'towns' => $towns, 'sexes' => $sexes, 'civilstatuses' => $civilstatuses, 'application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]);
     }
@@ -133,7 +133,6 @@ class STApplication2Controller extends Controller
                     ->where('vacancy_id', $vacancy->id);
             })->ignore($application->id)],
             'phone' => 'required|min:11|max:12|regex:(^(09)\\d{9})',
-            'vacancy_id' => 'required',
         ], [
             'email.unique' => 'See error above!'
         ]);

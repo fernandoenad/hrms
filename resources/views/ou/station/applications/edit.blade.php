@@ -234,6 +234,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -242,8 +243,8 @@
                                         name="vacancy_id" class="@error('vacancy_id') is-invalid @enderror"
                                         value="{{ $application->vacancy_id }}">
                                         <option value="">---please select---</option>
-                                        @foreach($vacancies as $vacancy)
-                                            <option value="{{$vacancy->id}}" {{ $application->vacancy_id == $vacancy->id ? "selected":"" }}>{{$vacancy->position_title}}</option>
+                                        @foreach($vacancies as $vacancy_id)
+                                            <option value="{{$vacancy_id->id}}" {{ $application->vacancy_id == $vacancy_id->id ? "selected":"" }}>{{$vacancy_id->position_title}}</option>
                                         @endforeach
                                     </select>
                                     @error('vacancy_id')
@@ -252,13 +253,14 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                     </div>
 
                     <div class="card-footer p-2">
                         <button href="" class="btn btn-primary">Update</button>
 
                         <div class="float-right">
-                            <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}" 
+                            <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy]) }}" 
                             class="btn btn-default"><i class="fas fa-reply"></i> Back</a>
                         </div>
                     </div>

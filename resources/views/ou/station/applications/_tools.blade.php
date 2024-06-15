@@ -13,7 +13,7 @@
                 Route::currentRouteName() == 'ou.station.applications.edit' ||
                 Route::currentRouteName() == 'ou.station.applications.show')
             <li class="nav-item">
-                <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}" 
+                <a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy]) }}" 
                     class="nav-link">
                     <i class="fas fa-reply"></i> Back to position
                 </a>
