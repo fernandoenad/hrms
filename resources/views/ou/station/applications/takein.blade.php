@@ -80,19 +80,24 @@
                                             <td>{{ $application->position_title }}</td>
                                             @php 
                                                 $school_info = App\Models\Station::find($application->station_id);
+                                                $vacancy = App\Models\Vacancy2::find($application->vacancy_id);
                                             @endphp
                                             <td>{{ $school_info == null ? 'Not yet assigned' : $school_info->code . '-' . $school_info->name; }}</td>
                                             <td>
-                                                <form method="post" action="{{ route('ou.station.applications.takeinok', [$station, $cycle, $application]) }}">
-                                                    @csrf
-                                                    @method('post')
-                                                    <button href="" 
-                                                        class="btn btn-sm btn-primary" title="Take in"
-                                                        onclick="return confirm('This will take in the selected application. Are you sure?')"
-                                                        {{ $school_info != null ? 'disabled' : '' }}>
-                                                        <span class="fas primary fa-fw fa-inbox"></span> Take In
-                                                    </button>
-                                                </form>
+                                                @if($vacancy->level2_status == 1)
+                                                    <span class="badge bg-danger">The take in period has ended.</span>
+                                                @else
+                                                    <form method="post" action="{{ route('ou.station.applications.takeinok', [$station, $cycle, $application]) }}">
+                                                        @csrf
+                                                        @method('post')
+                                                        <button href="" 
+                                                            class="btn btn-sm btn-primary" title="Take in"
+                                                            onclick="return confirm('This will take in the selected application. Are you sure?')"
+                                                            {{ $school_info != null ? 'disabled' : '' }}>
+                                                            <span class="fas primary fa-fw fa-inbox"></span> Take In
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach 

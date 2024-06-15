@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vacancy2 extends Model
 {
@@ -31,6 +33,7 @@ class Vacancy2 extends Model
     {
         return $this->hasMany(Application2::class);
     }
+
 
     public function getOffice(){
         if($this->office_level == 0){
