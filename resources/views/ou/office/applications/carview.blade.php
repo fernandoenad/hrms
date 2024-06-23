@@ -91,7 +91,15 @@
                                 @php $total_points += is_numeric($value) ? $value : 0; @endphp
                                 <td align="right">{{ is_numeric($value) ? $value : $total_points }}</td>
                         @endforeach
-                        <td align="left">{{ $assessment->status == 2 ? 'Initial results only. / ' . end($assessment_details) :  end($assessment_details) }}</td>
+                        <td align="left">
+                            @if($assessment->status == 2)
+                                {{ 'Initial results only. / ' . end($assessment_details) }}
+                            @elseif($assessment->status == 3)
+                                {{ end($assessment_details) }}
+                            @elseif($assessment->status == 4)
+                                {{ 'Disqualified' }}
+                            @endif 
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>

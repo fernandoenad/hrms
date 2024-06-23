@@ -138,4 +138,14 @@ class OFApplication2Controller extends Controller
 
         return redirect(route('ou.office.applications.umindex', ['cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the Pending status.');
     }
+
+
+    public function disqualify(Office $office, $cycle, Vacancy2 $vacancy, Application2 $application)
+    {
+        $assessment = Assessment::where('application_id', '=', $application->id)->first();
+
+        $assessment->update(['status' => 4]); 
+
+        return redirect(route('ou.office.applications.show', ['vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application has been tagged disqualified.');
+    }
 }
