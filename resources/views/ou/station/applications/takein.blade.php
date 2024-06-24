@@ -76,7 +76,14 @@
                                     @foreach($applications as $application)
                                         <tr>
                                             <td>{{ $application->application_code }}</td>
-                                            <td>{{ $application->getFullname() }}</td>
+                                            <td>
+                                                <strong>{{ $application->getFullname() }}</strong><br>
+                                                <small><small>
+                                                    {{ $application->getAddress() }}<br>
+                                                    {{ $application->phone }}
+                                                </small></small>  
+
+                                            </td>
                                             <td>{{ $application->position_title }}</td>
                                             @php 
                                                 $school_info = App\Models\Station::find($application->station_id);
