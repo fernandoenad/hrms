@@ -87,20 +87,24 @@
                                                 {{ $assessment->status == 2 ? 'Pending' : ($assessment->status == 3 ? 'Completed' : 'Disqualified') }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('ou.office.applications.assess', [$office, $cycle, $vacancy->id, $application->id])}}" 
-                                                    class="btn btn-sm btn-primary" title="Assess">
-                                                    <span class="fas fa-tasks fa-fw"></span>
-                                                </a>
-                                                <a href="{{ route('ou.office.applications.disqualify', [$office, $cycle, $vacancy->id, $application->id])}}" 
-                                                    onclick="return confirm('This will tagged this application as DISQUALIFIED. Are you sure?')"
-                                                    class="btn btn-sm btn-warning {{ $assessment->status == 3 || $assessment->status == 4 ? 'disabled' : '' }}" title="Disqualify">
-                                                    <span class="fas fa-user-slash fa-fw"></span>
-                                                </a>
-                                                <a href="{{ route('ou.office.applications.unmark', [$office, $cycle, $vacancy->id, $application->id])}}" 
-                                                    onclick="return confirm('This will revert the application to PENDING. Are you sure?')"
-                                                    class="btn btn-sm btn-danger {{ $assessment->status == 2 ? 'disabled' : '' }}" title="Revert">
-                                                    <span class="fas fa-reply fa-fw"></span>
-                                                </a>
+                                                @if($vacancy->level2_status == 1)
+                                                    <a href="{{ route('ou.office.applications.assess', [$office, $cycle, $vacancy->id, $application->id])}}" 
+                                                        class="btn btn-sm btn-primary" title="Assess">
+                                                        <span class="fas fa-tasks fa-fw"></span>
+                                                    </a>
+                                                    <a href="{{ route('ou.office.applications.disqualify', [$office, $cycle, $vacancy->id, $application->id])}}" 
+                                                        onclick="return confirm('This will tagged this application as DISQUALIFIED. Are you sure?')"
+                                                        class="btn btn-sm btn-warning {{ $assessment->status == 3 || $assessment->status == 4 ? 'disabled' : '' }}" title="Disqualify">
+                                                        <span class="fas fa-user-slash fa-fw"></span>
+                                                    </a>
+                                                    <a href="{{ route('ou.office.applications.unmark', [$office, $cycle, $vacancy->id, $application->id])}}" 
+                                                        onclick="return confirm('This will revert the application to PENDING. Are you sure?')"
+                                                        class="btn btn-sm btn-danger {{ $assessment->status == 2 ? 'disabled' : '' }}" title="Revert">
+                                                        <span class="fas fa-reply fa-fw"></span>
+                                                    </a>
+                                                @else 
+                                                    <span class="badge bg-danger">Closed</span>
+                                                @endif
                                             </td>
                                         </tr>
                                         @php $i++; @endphp

@@ -34,8 +34,9 @@
                             <thead>
                                 <tr>
                                     <th>Positions</th>
-                                    <th class="text-right">Pending Assessment</th>
-                                    <th class="text-right">Completed Assessment</th>
+                                    <th class="text-right">Pending </th>
+                                    <th class="text-right">Completed </th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                                 
@@ -73,6 +74,13 @@
                                                         ->get();
                                                 @endphp
                                                 {{ $assessments->count() }}
+                                            </td>
+                                            <td>
+                                                @if($vacancy->level2_status == 1)
+                                                    <span class="badge bg-success">Open</span>
+                                                @else 
+                                                    <span class="badge bg-danger">Closed</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
