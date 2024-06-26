@@ -47,6 +47,8 @@ class OFApplication2Controller extends Controller
             ->where('stations.office_id', '=', $office->id)
             ->where('applications.vacancy_id', '=', $vacancy->id)
             ->where('assessments.status', '>=', 2)
+            ->orderBy('applications.last_name', 'ASC')
+            ->orderBy('applications.first_name', 'ASC')
             ->select('stations.name', 'stations.code', 'assessments.*', 'applications.*')
             ->get();
 
@@ -61,6 +63,8 @@ class OFApplication2Controller extends Controller
             ->where('stations.office_id', '=', $office->id)
             ->where('applications.vacancy_id', '=', $vacancy->id)
             ->where('assessments.status', '>=', 2)
+            ->orderBy('applications.last_name', 'ASC')
+            ->orderBy('applications.first_name', 'ASC')
             ->select('stations.name', 'stations.code', 'assessments.*', 'applications.*')
             ->get();
 
