@@ -119,19 +119,21 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('ou.station.applications.assess.index', [$station, $cycle, $vacancy, $application]) }}" 
-                                                    class="btn btn-sm btn-primary" title="Assess">
-                                                    <span class="fas fa-tasks fa-fw"></span>
-                                                </a>
                                                 <a href="{{ route('ou.station.applications.show', [$station, $cycle, $vacancy, $application]) }}"
-                                                    class="btn btn-sm btn-warning" title="View">
+                                                    class="btn btn-sm btn-warning" title="View/Edit Application">
                                                     <span class="fas fa-eye fa-fw"></span>
                                                 </a>
+                                                @if($vacancy->level1_status == 1)
+                                                    <a href="{{ route('ou.station.applications.assess.index', [$station, $cycle, $vacancy, $application]) }}" 
+                                                        class="btn btn-sm btn-primary" title="Assess">
+                                                        <span class="fas fa-tasks fa-fw"></span>
+                                                    </a>
                                                 <a href="{{ route('ou.station.applications.withdraw', [$station, $cycle, $vacancy, $application])}}" 
                                                 class="btn btn-sm btn-danger {{ $assessment->count() > 0 ? 'disabled' : '' }}" title="Withdraw"
                                                     onclick="return confirm('This will withraw the application. Are you sure?')">
                                                     <span class="fas fa-sign-out-alt fa-fw"></span>
                                                 </a>
+                                                @endif
                                             </td>
                                         </tr>
                                         <?php $i++;?>
