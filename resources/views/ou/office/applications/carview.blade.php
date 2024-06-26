@@ -85,7 +85,7 @@
                     @endphp 
                     <tr>
                         <td width="2%">{{ $i }}</td>
-                        <td>{{ $application->getFullname() }}</td>
+                        <td>{{ strtoupper($application->getFullname()) }}</td>
                         <td>{{ $application->application_code }}</td>
                         @foreach($assessment_details as $key => $value)
                                 @php $total_points += is_numeric($value) ? $value : 0; @endphp
