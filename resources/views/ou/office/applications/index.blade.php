@@ -78,8 +78,10 @@
                                             <td>
                                                 @if($vacancy->level2_status == 1)
                                                     <span class="badge bg-success">Open</span>
+                                                @elseif($vacancy->level2_status == 2)
+                                                    <span class="badge bg-primary">Completed</span>
                                                 @else 
-                                                    <span class="badge bg-danger">Closed</span>
+                                                 <span class="badge bg-danger">Closed</span>
                                                 @endif
                                             </td>
                                         </tr>

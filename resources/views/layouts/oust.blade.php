@@ -80,9 +80,9 @@
                             @if(strpos(Route::currentRouteName(), 'ou.station.leaves') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('ou.station.leaves',$station)}}" class="nav-link">
                                 <i class="nav-icon fas fa-inbox"></i>
-                                <p>Leave Applications</p>
+                                <p>Leave Management</p>
                             </a>
                         </li>
 

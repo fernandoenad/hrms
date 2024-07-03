@@ -25,7 +25,12 @@
                 Route::currentRouteName() == 'ou.station.applications.showresult')
             <li class="nav-item">
                 <a href="{{ route('ou.station.applications.takein' , [$station, $cycle]) }}" class="nav-link">
-                    <i class="fas fa-inbox"></i> Take In Applications
+                    <i class="fas fa-search"></i> Search application
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('ou.station.applications.takein' , [$station, $cycle]) }}" class="nav-link">
+                    <i class="fas fa-share"></i> Take-in application
                 </a>
             </li>
             @endif

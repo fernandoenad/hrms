@@ -57,13 +57,15 @@ use App\Http\Controllers\RMS\RMSAssignmentController;
 
 use App\Http\Controllers\OU\OUController;
 use App\Http\Controllers\OU\StationController as OUStationController;
-use App\Http\Controllers\OU\STEmployeeController ;
+use App\Http\Controllers\OU\STEmployeeController;
+use App\Http\Controllers\OU\STLeaveController;
 use App\Http\Controllers\OU\STApplicationController;
 use App\Http\Controllers\OU\STApplication2Controller;
 use App\Http\Controllers\OU\STAssessmentController;
 use App\Http\Controllers\OU\STUserController;
 use App\Http\Controllers\OU\STRankingController;
 use App\Http\Controllers\OU\STPBBController;
+
 
 use App\Http\Controllers\OU\OfficeController as OUSOfficeController;
 use App\Http\Controllers\OU\OFUserController;
@@ -455,6 +457,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ou/station/{station}/employees/add', [STEmployeeController::class, 'store2'])->name('ou.station.employees.store2');
         Route::get('/ou/station/{station}/employees', [STEmployeeController::class, 'index'])->name('ou.station.employees');
         
+        Route::get('/ou/station/{station}/leaves', [STLeaveController::class, 'index'])->name('ou.station.leaves');
+
         /*
         Route::get('/ou/station/{station}/applications/needs-confirmation', [STApplicationController::class, 'needsconfirmation'])->name('ou.station.applications.needs-confirmation');
         Route::get('/ou/station/{station}/applications/{cycle}/{vacancy}/upload-ranklist', [STApplicationController::class, 'uploadranklist'])->name('ou.station.applications.upload-ranklist');

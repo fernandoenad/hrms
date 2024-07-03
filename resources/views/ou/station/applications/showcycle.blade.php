@@ -12,7 +12,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->code ?? '' }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.applications', $station->id) }}">Cycles</a></li>
-                    <li class="breadcrumb-item active">{{ $cycle }} Vacancies</li>
+                    <li class="breadcrumb-item active">{{ $cycle }}</li>
                 </ol>
             </div>
         </div>
@@ -45,6 +45,7 @@
                                     <th class="text-right">Applications</th>
                                     <th class="text-right">Pending Assessment</th>
                                     <th class="text-right">Completed Assessment</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,12 +83,21 @@
                                                         ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
                                                         ->where('applications.vacancy_id', '=', $application->vacancy_id)
                                                         ->where('applications.station_id', '=', $station->id)
-                                                        ->where('assessments.status', '=', 2)
+                                                        ->where('assessments.status', '>=', 2)
                                                         ->select('assessments.id')
                                                         ->count();
                                                 @endphp
                                                 {{ $application_count }}
 
+                                            </td>
+                                            <td>
+                                                @if($application->vacancy->level1_status == 1)
+                                                    <span class="badge bg-success">Open</span>
+                                                @elseif($application->vacancy->level1_status == 2)
+                                                    <span class="badge bg-primary">Completed</span>
+                                                @else 
+                                                    <span class="badge bg-danger">Closed</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach 
