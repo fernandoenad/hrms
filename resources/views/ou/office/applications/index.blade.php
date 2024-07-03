@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Applications  for the {{ $cycle }} Cycle</h1>
+                <h1 class="m-0 text-dark">Positions for the {{ $cycle }} Cycle</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office->id) }}">{{ $office->name ?? '' }}</a></li>
-                    <li class="breadcrumb-item active">Applications</li>
+                    <li class="breadcrumb-item active">Positions</li>
                 </ol>
             </div>
         </div>
@@ -33,7 +33,7 @@
                         <table class="table m-0 table-hover">
                             <thead>
                                 <tr>
-                                    <th>Positions</th>
+                                    <th>List</th>
                                     <th class="text-right">Pending </th>
                                     <th class="text-right">Completed </th>
                                     <th>Status</th>
@@ -80,6 +80,8 @@
                                                     <span class="badge bg-success">Open</span>
                                                 @elseif($vacancy->level2_status == 2)
                                                     <span class="badge bg-primary">Completed</span>
+                                                @elseif($vacancy->level2_status == 3)
+                                                    <span class="badge bg-info">Posted</span>
                                                 @else 
                                                  <span class="badge bg-danger">Closed</span>
                                                 @endif

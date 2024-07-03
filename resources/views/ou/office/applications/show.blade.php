@@ -11,7 +11,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office) }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.office.show', $office) }}">{{ $office->name }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('ou.office.applications.index', [$office, $cycle]) }}">Vacancies</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('ou.office.applications.index', [$office, $cycle]) }}">Positions</a></li>
                     <li class="breadcrumb-item active">Applications</li>
                     
                 </ol>
@@ -102,6 +102,10 @@
                                                         class="btn btn-sm btn-danger {{ $assessment->status == 2 ? 'disabled' : '' }}" title="Revert">
                                                         <span class="fas fa-reply fa-fw"></span>
                                                     </a>
+                                                @elseif($vacancy->level2_status == 2)
+                                                    <span class="badge bg-primary">Completed</span>
+                                                @elseif($vacancy->level2_status == 3)
+                                                    <span class="badge bg-info">Posted</span>
                                                 @else 
                                                     <span class="badge bg-danger">Closed</span>
                                                 @endif
