@@ -31,9 +31,9 @@ class OFApplication2Controller extends Controller
             ->select('cycle')
             ->where('office_level', '=', -1)
             ->first();
-        
+
         $vacancies = Vacancy2::where('office_level', '=', -1)
-            ->where('cycle', '=', $cycle->cycle)
+            ->latest()
             ->get();
         
         return view('ou.office.applications.index', ['vacancies' => $vacancies, 'cycle' => $cycle->cycle, 'office' => $office]);

@@ -80,7 +80,7 @@
                                                     name="{{ $key }}" class="@error('{{ $key }}') is-invalid @enderror"
                                                     max="{{ $assessment_template[$key] }}"
                                                     step="{{ is_numeric($value) ? '0.001' : '' }}"
-                                                    {{ $assessment->status > 2 ? 'readonly' : (str_contains($key,'COI') ? '' : '' ) }}
+                                                    {{ $assessment->status > 2 ? 'readonly' : (str_contains($key,'*') ? 'readonly' : '' ) }}
                                                     value="{{ $value }}">
                                                 @error($key)
                                                     <span class="text-danger"><small>{{ $message }}</small></span>
@@ -88,7 +88,11 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    
                                 @endforeach
+                                <tr>
+                                    <td colspan="2" class="text-right text-danger">* is to be inputted by the SDO.</td>
+                                </tr>
                             </tbody>
                         </table>                    
                     </div>
