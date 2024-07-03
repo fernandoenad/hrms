@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Take In Application for {{ $cycle }} Cycle</h1>
+                <h1 class="m-0 text-dark">Take-in/Search Application for {{ $cycle }} Cycle</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -39,7 +39,7 @@
 
             <div class="card card-primary p-0">
                 <div class="card-header">
-                    Take In Application
+                    Take-in/Search Application
                 </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('ou.station.applications.showresult', [$station, $cycle]) }} ">
@@ -91,9 +91,7 @@
                                             @endphp
                                             <td>{{ $school_info == null ? 'Not yet assigned' : $school_info->code . '-' . $school_info->name; }}</td>
                                             <td>
-                                                @if($vacancy->level2_status == 1)
-                                                    <span class="badge bg-danger">The take in period has ended.</span>
-                                                @else
+                                                @if($vacancy->level1_status == 1)
                                                     <form method="post" action="{{ route('ou.station.applications.takeinok', [$station, $cycle, $application]) }}">
                                                         @csrf
                                                         @method('post')
@@ -104,6 +102,10 @@
                                                             <span class="fas primary fa-fw fa-inbox"></span> Take In
                                                         </button>
                                                     </form>
+                                                @elseif($vacancy->level1_status == 0)
+                                                    <span class="badge bg-warning">The take in period has not started yet.</span>
+                                                @else
+                                                    <span class="badge bg-danger">The take in period has ended.</span>
                                                 @endif
                                             </td>
                                         </tr>
