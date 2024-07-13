@@ -52,24 +52,23 @@
         <table border="1">
             <thead>
                 <tr class="table-danger" align="center">
-                    <td scope="col" colspan="2" rowspan="2"><strong>Name of Application<strong></td>
-                    <td scope="col" rowspan="2" width="10%"><strong>Application Code<strong></td>
-                    <td scope="col" colspan="7" width="8%"><strong>COMPARATIVE ASSESSMENT RESULTS<strong></td>
+                    <td scope="col" colspan="2" rowspan="2" width="20%"><strong>Name of Application<strong></td>
+                    <td scope="col" rowspan="2" width="8%"><strong>Application Code<strong></td>
+                    <td scope="col" colspan="11" width="8%"><strong>COMPARATIVE ASSESSMENT RESULTS<strong></td>
                     <td scope="col" rowspan="2" width="8%"><strong>Remarks<strong></td>
                     <td scope="col" colspan="2" width="5%"><strong><small>For Background Investigation (Y/N)</small><strong></td>
-                    <td scope="col" rowspan="2" width="8%">
+                    <td scope="col" rowspan="2" width="7%">
                         <strong><small><small>For Appointment</strong><br>To filed-out by the Appointing Officer/ Authority; Please sign opposite the name of the applicant)</small></small></td>
-                    <td scope="col" rowspan="2" width="8%">
+                    <td scope="col" rowspan="2" width="7%">
                         <strong><small>Status of Appointment</strong><br>(Based on availability of PBET/ LET/LEPT)</small></td>
                 </tr>
                 <tr class="table-danger" align="center">
-                    <th scope="col" width="5%">Education</th>
-                    <th scope="col" width="5%">Training</th>
-                    <th scope="col" width="5%">Experience</th>
-                    <th scope="col" width="5%">Rating</th>
-                    <th scope="col" width="5%">COI</th>
-                    <th scope="col" width="5%">NCOI</th>
-                    <th scope="col" width="5%">Total</th>
+                    @php $template = json_decode($vacancy->template->template, true); array_pop($template); @endphp 
+                    @foreach($template as $key => $value)
+                        <th scope="col" width="4%"><small><small>{{str_replace('_', ' ', $key)}} <br>({{$value}} pts)</small></small></th>
+
+                    @endforeach
+                    <th scope="col" width="4%">Total <small>(100 pts)</small></th>
                     <th scope="col" width="3%">Yes</th>
                     <th scope="col" width="3%">No</th>
                 </tr>
