@@ -34,6 +34,11 @@ class Vacancy2 extends Model
         return $this->hasMany(Application2::class);
     }
 
+    public function template(): BelongsTo
+    {
+        return $this->belongsTo(Template::class);
+    }
+
 
     public function getOffice(){
         if($this->office_level == 0){
