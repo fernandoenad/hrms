@@ -54,9 +54,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Contact</th> 
-                                    <th>Address</th>  
+                                    <th width="22%">Name</th>
+                                    <th width="25%">Contact</th> 
                                     <th>School applied for</th>                                    
                                     <th>Status</th>
                                     <th width="17%">Action</th>
@@ -69,9 +68,13 @@
                                         
                                         <tr>
                                             <td>{{ $i }}</td>
-                                            <td>{{ $application->last_name}}, {{ $application->first_name}}</td>
-                                            <td>{{ $application->phone }}</td>
-                                            <td>{{ $application->barangay }}, {{ $application->municipality }}</td>
+                                            <td>{{ $application->last_name}}, {{ $application->first_name}}
+                                                <br>
+                                                <small>Code: {{ $application->application_code }}</small>
+                                            </td>
+                                            <td>{{ $application->barangay }}, {{ $application->municipality }}
+                                                <br>{{ $application->phone }}
+                                            </td>
                                             <td>{{ $application->code }}- {{ $application->name }}</td>
                                             <td>
                                                 @php 

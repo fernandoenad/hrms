@@ -38,7 +38,7 @@
 
                 <div class="card bg-light">
                     <div class="card-header text-muted border-bottom-0">
-                        Application #<strong>{{ $application->id  }}</strong>
+                        Modify Application Code: <strong>{{ $application->application_code  }}</strong>
                     </div>
                     <form method="post" action="{{ route('ou.station.applications.update', [$station, $cycle, $vacancy, $application]) }}">
                         @csrf 

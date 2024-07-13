@@ -38,7 +38,7 @@
 
                 <div class="card bg-light">
                     <div class="card-header text-muted border-bottom-0">
-                        Application #<strong>{{ $application->id  }}</strong>
+                        Application Code: <strong>{{ $application->application_code  }}</strong>
                     </div>
                 
                     <div class="card-body p-0">

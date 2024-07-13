@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Application Details</h1>
+                <h1 class="m-0 text-dark">Assess Application</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.applications', $station->id) }}">Cycles</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.applications.showcycle', [$station->id, $cycle]) }}">{{ $cycle }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('ou.station.applications.showvacancy', [$station->id, $cycle, $vacancy->id]) }}">Applications</a></li>
-                    <li class="breadcrumb-item active">Application Details</li>
+                    <li class="breadcrumb-item active">Assess Application</li>
                 </ol>
             </div>
         </div>
@@ -38,7 +38,7 @@
 
                 <div class="card bg-light">
                     <div class="card-header text-muted border-bottom-0">
-                        Application #<strong>{{ $application->id  }}</strong>
+                        Assess for Application Code: <strong>{{ $application->application_code  }}</strong>
                     </div>
 
                     <form method="post" action="{{ route('ou.station.applications.assess.update', [$station, $cycle, $vacancy, $application, $assessment]) }}">

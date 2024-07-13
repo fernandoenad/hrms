@@ -157,6 +157,7 @@
                                             <td>
                                                 <a href="{{ route('ou.office.applications.show', [$office->id, $application->schoolyear, $application->vacancy->id,  $application->id]) }}">
                                                     <strong>{{ $application->person->getFullnameBox() ?? '' }}</strong>
+                                                    
                                                 </a>
                                             </td>
                                             <td>

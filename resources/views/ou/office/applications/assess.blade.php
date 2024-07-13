@@ -38,7 +38,7 @@
 
                 <div class="card bg-light">
                     <div class="card-header text-muted border-bottom-0">
-                        Application #<strong>{{ $application->id  }}</strong>
+                        Assess for Application Code: <strong>{{ $application->application_code  }}</strong>
                     </div>
 
                     <form method="post" action="{{ route('ou.office.applications.update', [$office, $cycle, $vacancy, $application]) }}">

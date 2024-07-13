@@ -12,6 +12,7 @@ use App\Models\Town;
 use App\Models\Dropdown;
 use App\Models\Office;
 use App\Models\Template;
+use App\Models\Inquiry2;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
@@ -90,6 +91,13 @@ class OFApplication2Controller extends Controller
 
         $assessment->update(['assessment' => json_encode($filteredFormData)]); 
 
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment scores were updated.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
+
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully updated.');
     }
 
@@ -99,6 +107,13 @@ class OFApplication2Controller extends Controller
 
         $assessment->update(['status' => 3, 'score' => $score]); 
 
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment was marked as completed. You may now check your scores via the Scores tab.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
+
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully marked completed.');
     }
 
@@ -107,6 +122,13 @@ class OFApplication2Controller extends Controller
         $assessment = Assessment::where('application_id', '=', $application->id)->first();
 
         $assessment->update(['status' => 2]); 
+
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment was reverted to Pending status.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
 
         return redirect(route('ou.office.applications.show', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the PENDING status.');
     }
@@ -140,6 +162,13 @@ class OFApplication2Controller extends Controller
         $assessment = Assessment::where('application_id', '=', $application->id)->first();
         $assessment->update(['status' => 1]);
 
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment was returned to the lower-level CAC as requested.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
+
         return redirect(route('ou.office.applications.umindex', ['cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the Pending status.');
     }
 
@@ -149,6 +178,13 @@ class OFApplication2Controller extends Controller
         $assessment = Assessment::where('application_id', '=', $application->id)->first();
 
         $assessment->update(['status' => 4]); 
+
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment was marked as DISQUALIFIED.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
 
         return redirect(route('ou.office.applications.show', ['vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application has been tagged disqualified.');
     }
