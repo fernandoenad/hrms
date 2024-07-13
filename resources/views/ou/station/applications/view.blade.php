@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="container-fluid mt-0">
-        <h4 class="text-center mb-3" align="center">INITIAL COMPARATIVE ASSESSMENT RESULT (ICAR)</h4>
+        <h4 class="text-center mb-3" align="center">INITIAL COMPARATIVE ASSESSMENT RESULT (I-CAR)</h4>
         <!--
         <div class="d-flex justify-content-end mb-4">
             <a class="btn btn-primary" href="{{ route('ou.station.applications.showvacancy.pdf', [$station, $cycle, $vacancy])}}">Export to PDF</a>

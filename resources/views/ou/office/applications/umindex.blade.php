@@ -33,7 +33,7 @@
                         <table id="list" class="table m-0 table-hover">
                             <thead>
                                 <tr>
-                                    <th>Applicant</th>
+                                    <th width="30%">Applicant</th>
                                     <th>Position applied for</th>                                  
                                     <th>Station</th>
                                     <th>Status</th>
@@ -45,7 +45,10 @@
                                 @if(sizeof($applications) > 0)
                                     @foreach($applications as $application)
                                         <tr>
-                                            <td>{{ $application->last_name }}, {{ $application->first_name }}</td>
+                                            <td>{{ $application->last_name }}, {{ $application->first_name }}
+                                                <br>
+                                                Code: {{ $application->application_code }}
+                                            </td>
                                             @php 
                                                 $vacancy =  App\Models\Vacancy2::find($application->vacancy_id);
                                             @endphp 

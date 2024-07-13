@@ -9,6 +9,7 @@ use App\Models\Station;
 use App\Models\Application2;
 use App\Models\Vacancy2;
 use App\Models\Template;
+use App\Models\Inquiry2;
 use PDF;
 
 class STAssessmentController extends Controller
@@ -42,7 +43,15 @@ class STAssessmentController extends Controller
                 'assessment' => json_encode($asessment_details),
                 'status' => 2,
             ]);
+
             $assessment = $newAssessment;
+
+            $data['application_id'] = $application->id;
+            $data['author'] =  auth()->user()->name;
+            $data['message'] = 'The application was assessed (initially/preliminary) and has been forwarded to the upper-Level CAC.';
+            $data['status'] = 0;
+
+            $inquiry = Inquiry2::create($data);
         } else {
             $assessment = $assessment->first();
         }
@@ -61,6 +70,13 @@ class STAssessmentController extends Controller
         $filteredFormData = array_intersect_key($formData, array_flip($keys));
 
         $assessment->update(['assessment' => json_encode($filteredFormData)]); 
+
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment was updated.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
         
         return redirect(route('ou.station.applications.assess.index', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application]))->with('status', 'Assessment was successfully updated.');
 
@@ -69,6 +85,13 @@ class STAssessmentController extends Controller
     public function markComplete(Request $request, Station $station, $cycle, Vacancy2 $vacancy, Application2 $application, Assessment $assessment)
     {
         $assessment->update(['status' => 2]); 
+
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The assessment was marked as completed and has been forwarded to the upper-Level CAC.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
         
         return redirect(route('ou.station.applications.assess.index', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application]))->with('status', 'Assessment was successfully marked completed.');
 

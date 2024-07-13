@@ -39,6 +39,7 @@ class STApplication2Controller extends Controller
             ->where('cycle', '=', $cycle)
             ->groupBy('vacancy_id')
             ->select('vacancy_id')
+            ->orderBy('vacancy_id', 'DESC')
             ->get();
         
         return view('ou.station.applications.showcycle', ['applications' => $applications, 'cycle' => $cycle, 'station' => $station]);
@@ -83,8 +84,21 @@ class STApplication2Controller extends Controller
 
     public function takeInOk(Request $request, Station $station, $cycle, Application2 $application)
     {
-        $application->update(['station_id' => $station->id]);
+        $user = auth()->user();
+
+        $application->update([
+            'station_id' => $station->id,
+            'last_user' => $user->name,
+        ]);
+
         $vacancy = Vacancy2::find($application->vacancy_id);
+
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The application was taken-in.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
 
         return redirect(route('ou.station.applications.showvacancy', ['vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully taken in.');
     }
@@ -92,6 +106,13 @@ class STApplication2Controller extends Controller
     public function withdraw(Request $request, Station $station, $cycle, Vacancy2 $vacancy, Application2 $application)
     {
         $application->update(['station_id' => -1]);
+
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The application was withdrawn from ' . $station->name . '.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
 
         return redirect(route('ou.station.applications.showvacancy', ['vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully withdrawn.');
     }
@@ -139,6 +160,13 @@ class STApplication2Controller extends Controller
 
         $application->update($data);
 
+        $data['application_id'] = $application->id;
+        $data['author'] =  auth()->user()->name;
+        $data['message'] = 'The application details was updated.';
+        $data['status'] = 0;
+
+        $inquiry = Inquiry2::create($data);
+
         return redirect(route('ou.station.applications.show', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully updated.');
     }
 
@@ -166,7 +194,7 @@ class STApplication2Controller extends Controller
     {
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'Revert application status to New';
+        $data['message'] = 'The application was reverted to New status.';
         $data['status'] = 1;
 
         $inquiry = Inquiry2::create($data);

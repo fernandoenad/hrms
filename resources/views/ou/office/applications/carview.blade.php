@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="container-fluid mt-0">
-        <h4 class="text-center mb-3" align="center">COMPARATIVE ASSESSMENT RESULT - REGISTRY OF QUALIFIED APPLICANTS (CAR-RQA)</h4>
+        <h4 class="text-center mb-3" align="center">COMPARATIVE ASSESSMENT RESULT (CAR)</h4>
 
         <small>
         <table>
