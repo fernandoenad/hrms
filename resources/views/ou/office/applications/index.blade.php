@@ -81,7 +81,7 @@
                                                 @elseif($vacancy->level2_status == 2)
                                                     <span class="badge bg-primary">Completed</span>
                                                 @elseif($vacancy->level2_status == 3)
-                                                    <span class="badge bg-info">Posted</span>
+                                                    <span class="badge bg-info">Completed/Posted</span>
                                                 @else 
                                                  <span class="badge bg-danger">Closed</span>
                                                 @endif
