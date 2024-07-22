@@ -195,7 +195,7 @@ class STApplication2Controller extends Controller
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
         $data['message'] = 'The application was reverted to New status.';
-        $data['status'] = 1;
+        $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
 
