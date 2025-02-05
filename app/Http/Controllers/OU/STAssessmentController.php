@@ -54,9 +54,69 @@ class STAssessmentController extends Controller
             $inquiry = Inquiry2::create($data);
         } else {
             $assessment = $assessment->first();
+            $assessment->update(['status' => 2]);
+
+            $data['application_id'] = $application->id;
+            $data['author'] =  auth()->user()->name;
+            $data['message'] = 'The application was assessed (initially/preliminary) and has been forwarded to the upper-Level CAC.';
+            $data['status'] = 0;
+
+            $inquiry = Inquiry2::create($data);
         }
 
-        return view('ou.station.applications.assess', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application, 'assessment' => $assessment, 'template' => $template]);
+        //return view('ou.station.applications.assess', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application, 'assessment' => $assessment, 'template' => $template]);
+        return redirect(route('ou.station.applications.showvacancy', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]));
+
+    }
+
+
+    public function index2(Station $station, $cycle, Vacancy2 $vacancy, Application2 $application)
+    {
+        $template = Template::find($vacancy->template_id);
+        $assessment = Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
+            ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
+            ->where('applications.vacancy_id', '=', $application->vacancy_id)
+            ->where('applications.station_id', '=', $station->id)
+            ->where('applications.id', '=', $application->id)
+            ->select('assessments.*')
+            ->get();
+
+        if($assessment->count() == 0){
+            $criteria = json_decode($template->template, true);
+            $asessment_details = $criteria;
+
+            foreach ($asessment_details as $key => $value) {
+                $asessment_details[$key] = is_numeric($asessment_details[$key]) ? 0 : '-';
+            }
+
+            $newAssessment = Assessment::create(['application_id' => $application->id,
+                'template_id' => $vacancy->template_id,
+                'assessment' => json_encode($asessment_details),
+                'status' => -1,
+            ]);
+
+            $assessment = $newAssessment;
+
+            $data['application_id'] = $application->id;
+            $data['author'] =  auth()->user()->name;
+            $data['message'] = 'The application was tagged as DISQUALIFIED due to lacking MANDATORY REQUIREMENTS.';
+            $data['status'] = 0;
+
+            $inquiry = Inquiry2::create($data);
+        } else {
+            $assessment = $assessment->first();
+            $assessment->update(['status' => -1]);
+            
+            $data['application_id'] = $application->id;
+            $data['author'] =  auth()->user()->name;
+            $data['message'] = 'The application was tagged as DISQUALIFIED due to lacking MANDATORY REQUIREMENTS.';
+            $data['status'] = 0;
+            $inquiry = Inquiry2::create($data);
+        }
+
+        //return view('ou.station.applications.assess', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application, 'assessment' => $assessment, 'template' => $template]);
+        return redirect(route('ou.station.applications.showvacancy', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]));
+
     }
 
     public function update(Request $request, Station $station, $cycle, Vacancy2 $vacancy, Application2 $application, Assessment $assessment)

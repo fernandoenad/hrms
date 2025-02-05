@@ -37,9 +37,21 @@
 
             @if(Route::currentRouteName() == 'ou.station.applications.showvacancy')
             <li class="nav-item">
-                <a href="{{ route('ou.station.applications.showvacancy.carview' , [$station, $cycle, $vacancy]) }}" 
+                <a href="{{ route('ou.station.applications.showvacancy.ieraview' , [$station, $cycle, $vacancy]) }}" 
                     target="_blank" class="nav-link">
-                    <i class="fas fa-inbox"></i> View ICAR Sheet
+                    <i class="fas fa-inbox"></i> Print IER-A Sheet
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('ou.station.applications.showvacancy.iesview' , [$station, $cycle, $vacancy]) }}" 
+                    target="_blank" class="nav-link">
+                    <i class="fas fa-inbox"></i> Print IES
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('ou.station.applications.showvacancy.ierbview' , [$station, $cycle, $vacancy]) }}" 
+                    target="_blank" class="nav-link">
+                    <i class="fas fa-inbox"></i> Print IER-B Sheet
                 </a>
             </li>
             @endif
@@ -54,15 +66,29 @@
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
-            <li class="nav-item"><a href="https://docs.google.com/presentation/d/1OPwapDlPVi0Z4lAVeF4f2eIYS-CHywICnWrus4vxN3w/edit?usp=sharing" class="nav-link" target="_blank"><strong>Click here for detailed steps</strong></a></li>
             <li class="nav-item">
                 <a href="#" target="_blank" class="nav-link">
-                    Remember, there is no inputting of scores in the school level.
+                    1) Initial Evaluation
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" target="_blank" class="nav-link">
-                    The goal is to mark all applications as COMPLETED with no scores.
+                    2) Tag application status with either Qualified (star) or Disqualified (bin). 
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    3) Print the EIR Sheet B and post to the School's communication channels.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    4) Face-to-Face Pertinent Document Appreciation
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    5) Print the EIR Sheet A and together all IES and applicant folders, submit to the District Office for the next phase.
                 </a>
             </li>
         </ul>

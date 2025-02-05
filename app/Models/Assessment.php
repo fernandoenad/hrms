@@ -24,12 +24,14 @@ class Assessment extends Model
 
     public function getStatus()
     {
-        if($this->status == 0){
+        if($this->status == -1){
+            $status_name = "Disqualified";
+        } else if($this->status == 0){
             $status_name = "New";
         } else if($this->status == 1){
             $status_name = "Pending";
         } else {
-            $status_name = "Completed";
+            $status_name = "Qualified";
         }
 
         return $status_name;

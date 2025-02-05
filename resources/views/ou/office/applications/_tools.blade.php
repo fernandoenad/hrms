@@ -49,9 +49,10 @@
             <li class="nav-item">
                 <a href="{{ route('ou.office.applications.carview' , [$office, $cycle, $vacancy]) }}" 
                     target="_blank" class="nav-link">
-                    <i class="fas fa-inbox"></i> View CAR Sheet
+                    <i class="fas fa-inbox"></i> Print CAR Sheet
                 </a>
             </li>
+            
             @endif
         </ul>
     </div>

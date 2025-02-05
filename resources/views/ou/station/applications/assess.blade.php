@@ -73,7 +73,7 @@
                                                     name="{{ $key }}" class="@error('{{ $key }}') is-invalid @enderror"
                                                     max="{{ $assessment_template[$key] }}"
                                                     step="{{ is_numeric($value) ? '0.001' : '' }}"
-                                                    {{ $assessment->status > 1 || str_contains($key,'COI') ? 'readonly' :'' }}
+                                                    {{ $assessment->status > 1 || $assessment->status == -1 || str_contains($key,'COI') ? 'readonly' :'' }}
                                                     value="{{ $value }}">
                                                 @error($key)
                                                     <span class="text-danger"><small>{{ $message }}</small></span>
@@ -87,10 +87,10 @@
                     </div>
 
                     <div class="card-footer p-2">
-                        <button type="submit" class="btn btn-warning {{ $assessment->status > 1 ? 'disabled' :'' }}">Update</button>
+                        <button type="submit" class="btn btn-warning {{ $assessment->status > 1 || $assessment->status == -1  ? 'disabled' :'' }}">Update</button>
                         <a href="{{ route('ou.station.applications.assess.markcomplete', [$station, $cycle, $vacancy, $application, $assessment]) }}" 
                             onclick="return confirm('Please hit the Modify button first before hitting the Mark Complete button. This will mark the assessment as complete and non-modifiable. You can revert this action via Applications. Are you sure?')"
-                            class="btn btn-primary {{ $assessment->status > 1 ? 'disabled' :'' }}">Mark Complete</a>
+                            class="btn btn-primary {{ $assessment->status > 1 || $assessment->status == -1 ? 'disabled' :'' }}">Mark Complete</a>
                         <div class="float-right">
                             <a href="{{ route('ou.station.applications.showvacancy', [$station, $cycle, $vacancy]) }}" 
                             class="btn btn-info"><i class="fas fa-reply"></i> Back</a>

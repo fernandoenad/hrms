@@ -181,6 +181,46 @@ class STApplication2Controller extends Controller
         return view('ou.station.applications.view', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
     }
 
+    public function ierAView(Station $station, $cycle, Vacancy2 $vacancy)
+    {
+        $assessments = Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
+            ->where('applications.vacancy_id', '=', $vacancy->id)
+            ->where('applications.station_id', '=', $station->id)
+            ->orderBy('applications.application_code', 'ASC')
+            ->select('assessments.*')
+            ->get();
+
+        return view('ou.station.applications.iera', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
+    }
+
+    public function iesView(Station $station, $cycle, Vacancy2 $vacancy)
+    {
+        $assessments = Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
+            ->where('applications.vacancy_id', '=', $vacancy->id)
+            ->where('applications.station_id', '=', $station->id)
+            ->where('assessments.status', '=', 2)
+            ->orderBy('applications.application_code', 'ASC')
+            ->select('assessments.*')
+            ->get();
+
+        return view('ou.station.applications.ies', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
+    }
+
+
+    public function ierBView(Station $station, $cycle, Vacancy2 $vacancy)
+    {
+        $assessments = Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
+            ->where('applications.vacancy_id', '=', $vacancy->id)
+            ->where('applications.station_id', '=', $station->id)
+            ->where('assessments.status', '=', 2)
+            ->orderBy('applications.last_name', 'ASC')
+            ->orderBy('applications.first_name', 'ASC')
+            ->select('assessments.*')
+            ->get();
+
+        return view('ou.station.applications.ierb', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
+    }
+
     public function pdf(Station $station, $cycle, Vacancy2 $vacancy)
     {
         $assessments = Assessment::all();
@@ -192,6 +232,8 @@ class STApplication2Controller extends Controller
 
     public function revert(Station $station, $cycle, Vacancy2 $vacancy, Application2 $application)
     {
+        $application->assessment->delete();
+
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
         $data['message'] = 'The application was reverted to New status.';
