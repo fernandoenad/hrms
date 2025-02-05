@@ -472,6 +472,9 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/applications/{cycle}', [STApplication2Controller::class, 'showCycle'])->name('ou.station.applications.showcycle');
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}', [STApplication2Controller::class, 'showVacancy'])->name('ou.station.applications.showvacancy');
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/carview', [STApplication2Controller::class, 'carView'])->name('ou.station.applications.showvacancy.carview');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/ieraview', [STApplication2Controller::class, 'ierAView'])->name('ou.station.applications.showvacancy.ieraview');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/ierbview', [STApplication2Controller::class, 'ierBView'])->name('ou.station.applications.showvacancy.ierbview');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/ies', [STApplication2Controller::class, 'iesView'])->name('ou.station.applications.showvacancy.iesview');
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/pdf', [STApplication2Controller::class, 'pdf'])->name('ou.station.applications.showvacancy.pdf');
         Route::get('/ou/station/{station}/applications', [STApplication2Controller::class, 'index'])->name('ou.station.applications');
         Route::get('/ou/station/{station}/applications/{cycle}/takein', [STApplication2Controller::class, 'takeIn'])->name('ou.station.applications.takein');
@@ -485,6 +488,7 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/revert', [STApplication2Controller::class, 'revert'])->name('ou.station.applications.revert');
 
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/assess', [STAssessmentController::class, 'index'])->name('ou.station.applications.assess.index');
+        Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/assess2', [STAssessmentController::class, 'index2'])->name('ou.station.applications.assess.index2');
         Route::put('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/{assessment}', [STAssessmentController::class, 'update'])->name('ou.station.applications.assess.update');
         Route::get('/ou/station/{station}/applications/{cycle}/list/{vacancy}/{application}/{assessment}/mark_complete', [STAssessmentController::class, 'markComplete'])->name('ou.station.applications.assess.markcomplete');
 

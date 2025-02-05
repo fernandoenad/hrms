@@ -24,18 +24,18 @@
 
     <div class="row">
         <div class="col-md-9">
-
+            <!--
             <div class="alert alert-warning">
                 <p>
                 Re: T1 Ranking Procedures<br>
-                Dear School Heads,<br>
+                Dear School Heads,<br><br>
                 Your tasks in the school level only include the following:<br>
-                1) Preliminary assessment<br>
-                - compare if original documents match with photocopies<br>
-                - check if mandatory requirements are complied with to determine whether or not the applicant is qualified<br>
-                2) Take in application<br>
+                Step 2.1) Take in application<br>
                 - take in the application using the application code via the school’s hrms portal<br>
-                - mark completed by clicking the blue button<br>
+                Step 2.2) Initial Evaluation<br>
+                - Check<br>
+                - check if mandatory requirements are complied with to determine whether or not the applicant is qualified<br>
+                
                 3) Pre-CAR<br>
                 - print ICAR and sign<br>
                 - prepare IES for each application<br>
@@ -49,6 +49,7 @@
                 Please review the T1 Ranking Guidelines for guidance. Thank you.
                 </p>
             </div>
+            -->
         @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
@@ -108,11 +109,22 @@
                                                         ->select('assessments.*')
                                                         ->get();
                                                 @endphp
-                                                {{ $assessment->count() == 0 ? 'New' :  ($assessment->first()->status == 1 ? 'Pending' : 'Completed') }}
+
+                                                @if($assessment->count() > 0 && $assessment->first()->status == -1)
+                                                    Disqualified
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status == 0)
+                                                    New 
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status == 1)
+                                                    Pending 
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status > 1)
+                                                    Qualified 
+                                                @else 
+                                                    New
+                                                @endif
                                                 
                                                 @if($vacancy->level1_status == 1)
                                                 <a href="{{ route('ou.station.applications.revert', [$station, $cycle, $vacancy, $application]) }}" 
-                                                    onclick="return confirm('This should only be used for valid reasons such as incorrect Take In. If the application is tagged as COMPLETED, that is by design as there is no inputting of scores in the school level. This sends a request to SDO-HR to revert status to New. Are you sure?')"
+                                                    onclick="return confirm('This will revert the status to NEW! Are you sure?')"
                                                     class="btn btn-sm btn-info float-right {{ $assessment->count() > 0 ? '' : 'disabled'}}" title="Revert to New">
                                                     <span class="fas fa-reply fa-fw"></span>
                                                 </a>
@@ -125,14 +137,18 @@
                                                 </a>
                                                 @if($vacancy->level1_status == 1)
                                                     <a href="{{ route('ou.station.applications.assess.index', [$station, $cycle, $vacancy, $application]) }}" 
-                                                        class="btn btn-sm btn-primary" title="Assess">
-                                                        <span class="fas fa-tasks fa-fw"></span>
+                                                        class="btn btn-sm btn-success" title="Qualified" onclick="return confirm('This will tag the application as QUALIFIED! Are you sure?')">
+                                                        <span class="fas fa-star fa-fw"></span>
                                                     </a>
-                                                <a href="{{ route('ou.station.applications.withdraw', [$station, $cycle, $vacancy, $application])}}" 
-                                                class="btn btn-sm btn-danger {{ $assessment->count() > 0 ? 'disabled' : '' }}" title="Withdraw"
-                                                    onclick="return confirm('This will withraw the application. Are you sure?')">
-                                                    <span class="fas fa-sign-out-alt fa-fw"></span>
-                                                </a>
+                                                    <a href="{{ route('ou.station.applications.assess.index2', [$station, $cycle, $vacancy, $application]) }}" 
+                                                        class="btn btn-sm btn-primary" title="Disqualified"  onclick="return confirm('This will tag the application as DISQUALIFIED! Are you sure?')">
+                                                        <span class="fas fa-trash fa-fw"></span>
+                                                    </a>
+                                                    <a href="{{ route('ou.station.applications.withdraw', [$station, $cycle, $vacancy, $application])}}" 
+                                                    class="btn btn-sm btn-danger {{ $assessment->count() > 0 ? 'disabled' : '' }}" title="Withdraw"
+                                                        onclick="return confirm('This will withraw the application. Are you sure?')">
+                                                        <span class="fas fa-sign-out-alt fa-fw"></span>
+                                                    </a>
                                                 @endif
                                             </td>
                                         </tr>
