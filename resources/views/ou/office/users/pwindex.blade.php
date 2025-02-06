@@ -43,18 +43,21 @@
                             <tbody>
                                 @if(sizeof($users) > 0)
                                     @foreach($users as $user)
-                                        <tr>
-                                            <td><img src="{{ asset('storage/avatars') }}/{{ $user->person->image }}" width="40" class="img-circle"></td>
-                                            <td>{{ $user->person->getFullnameSorted() }}</td>
-                                            <td>{{ $user->person->user->email }}</td>
-                                            <td>
-                                                <a href="{{ route('ou.office.pw.reset', [$office, $user]) }}" 
-                                                    onclick="return confirm('This will reset the password of {{ $user->name }} to Password@123. Are you sure?')"
-                                                    class="btn btn-sm btn-primary" title="Reset password">
-                                                    <span class="fas fa-fw fa-key"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        <!-- $user is actually an employee instance -->
+                                        @if($user->item->station->office->id == $office->id)
+                                            <tr>
+                                                <td><img src="{{ asset('storage/avatars') }}/{{ $user->person->image }}" width="40" class="img-circle"></td>
+                                                <td>{{ $user->person->getFullnameSorted() }}</td>
+                                                <td>{{ $user->person->user->email }}</td>
+                                                <td>
+                                                    <a href="{{ route('ou.office.pw.reset', [$office, $user]) }}" 
+                                                        onclick="return confirm('This will reset the password of {{ $user->name }} to Password@123. Are you sure?')"
+                                                        class="btn btn-sm btn-primary {{ $user->person->user->isSuperAdmin() == 1 ? 'disabled' : '' }}" title="Reset password">
+                                                        <span class="fas fa-fw fa-key"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 @else
                                     <tr>
