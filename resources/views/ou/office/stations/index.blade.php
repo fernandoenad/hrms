@@ -151,7 +151,7 @@
                                     @foreach($stations as $station)
                                         <tr>
                                             <td>
-                                                <strong>{{ $station->name }} ({{ $station->code }})</strong>                                                                                        
+                                                <strong><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->name }} ({{ $station->code }})</a></strong>                                                                                        
                                             </td>
                                             <td>@if($station->person != null) {{ $station->person->user->name }} @endif </td>
                                             <td>{{ $station->services }} </td>

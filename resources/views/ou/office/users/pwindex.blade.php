@@ -45,8 +45,8 @@
                                     @foreach($users as $user)
                                         <tr>
                                             <td><img src="{{ asset('storage/avatars') }}/{{ $user->person->image }}" width="40" class="img-circle"></td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->person->getFullnameSorted() }}</td>
+                                            <td>{{ $user->person->user->email }}</td>
                                             <td>
                                                 <a href="{{ route('ou.office.pw.reset', [$office, $user]) }}" 
                                                     onclick="return confirm('This will reset the password of {{ $user->name }} to Password@123. Are you sure?')"

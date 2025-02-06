@@ -145,11 +145,31 @@ class OFUserController extends Controller
 
     public function pwLookup(Request $request, Office $office)
     {
+        /*
         $users = User::where('name', 'like', '%'.$request->searchString.'%')
             ->where('id', '!=', 5268)->get();
+        */
+        $searchString = $request->searchString;
 
+        $employees = Employee::join('people', 'people.id', '=', 'person_id')
+            ->orderBy('lastname', 'asc')
+            ->orderBy('firstname', 'asc')
+            ->select('employees.id AS empid', 'employees.*', 'people.*');
 
-        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]);
+        $employees = $employees->where(function ($query) use ($searchString){
+            $query->where('empno', 'like', $searchString)
+                ->orWhere('lastname', 'like' , $searchString . '%')
+                ->orWhere('firstname', 'like', $searchString . '%')
+                ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
+                ->orderBy('lastname', 'asc')
+                ->orderBy('firstname', 'asc');
+        })
+        ->select('employees.id AS empid', 'employees.*', 'people.*')
+        ->paginate(15);
+
+        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $employees, 'searchString' => $request->searchString]);
         
     }
 
