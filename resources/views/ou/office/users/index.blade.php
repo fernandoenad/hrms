@@ -35,7 +35,7 @@
                                 <tr>
                                     <th width="8%">&nbsp;</th>
                                     <th>Fullname</th>
-                                    <th>Username</th>                                    
+                                    <th>Email</th>                                    
                                     <th>Role</th>
                                     <th></th>
                                 </tr>
@@ -46,15 +46,15 @@
                                     @foreach($usersofs as $usersof)
                                         <tr>
                                             <td><img src="{{ asset('storage/avatars') }}/{{ $usersof->user->person->image }}" width="40" class="img-circle"></td>
-                                            <td>{{ $usersof->user->name }}</td>
-                                            <td>{{ $usersof->user->username }}</td>
+                                            <td>{{ $usersof->user->person->getFullnameSorted() }}</td>
+                                            <td>{{ $usersof->user->email }}</td>
                                             <td>User</td>
                                             <td class="text-right">
                                                 <form method="POST" action="{{ route('ou.office.users.destroy', [$office->id, $usersof->id]) }}">
                                                     @csrf
                                                     @method('DELETE')
 
-                                                    <button class="btn btn-sm btn-danger" @if(!Auth::user()->getOffices()->first()) {{ 'disabled' }} @endif
+                                                    <button class="btn btn-sm btn-danger @if(!Auth::user()->getOffices()->first()) {{ 'disabled' }} @endif"
                                                         onClick="return confirm('This will remove the user access which is IRREVERSIBLE. \nAre you sure wish to proceed?')">
                                                         <i class="fas fa-trash-alt"></i> Delete
                                                     </button>
@@ -62,6 +62,14 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    <tr><td colspan="6"></td></tr>
+                                    <tr>
+                                        <td><img src="{{ asset('storage/avatars') }}/{{ $office->person->image }}" width="40" class="img-circle"></td>
+                                        <td><strong>{{ $office->person->getFullnameSorted() }}</strong></td>
+                                        <td>{{ $office->person->user->email }}</td>
+                                        <td>PSDS</td>
+                                        <td class="text-right"><a href="{{ route('ou.office.users.modify_psds', $office) }}" class="btn btn-sm btn-primary"><i class="fas fa-trash-alt"></i> Modify</td>
+                                    </tr>
                                 @else
                                     <tr>
                                         <td colspan="5">No record was found.</td>
