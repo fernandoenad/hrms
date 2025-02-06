@@ -37,33 +37,49 @@
                                     <th>Fullname</th>
                                     <th>Email</th>                                  
                                     <th>Action</th>
+                                    <th width="15%">Remarks</th>
                                 </tr>
                             </thead>
                                 
                             <tbody>
-                                @if(sizeof($users) > 0)
-                                    @foreach($users as $user)
-                                        <!-- $user is actually an employee instance -->
-                                        @if($user->item->station->office->id == $office->id)
-                                            <tr>
-                                                <td><img src="{{ asset('storage/avatars') }}/{{ $user->person->image }}" width="40" class="img-circle"></td>
-                                                <td>{{ $user->person->getFullnameSorted() }}</td>
-                                                <td>{{ $user->person->user->email }}</td>
-                                                <td>
-                                                    <a href="{{ route('ou.office.pw.reset', [$office, $user]) }}" 
-                                                        onclick="return confirm('This will reset the password of {{ $user->name }} to Password@123. Are you sure?')"
-                                                        class="btn btn-sm btn-primary {{ $user->person->user->isSuperAdmin() == 1 ? 'disabled' : '' }}" title="Reset password">
-                                                        <span class="fas fa-fw fa-key"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                @else
+
+                                @forelse($users as $user)
+                                    <!-- $user is actually an employee instance -->
+                                    <tr>
+                                        <td><img src="{{ asset('storage/avatars') }}/{{ $user->person->image }}" width="40" class="img-circle"></td>
+                                        <td>{{ $user->person->getFullnameSorted() }}</td>
+                                        <td>{{ $user->person->user->email }}</td>
+                                        <td>
+                                            <a href="{{ route('ou.office.pw.reset', [$office, $user]) }}" 
+                                                onclick="return confirm('This will reset the password of {{ $user->name }} to Password@123. Are you sure?')"
+                                                class="btn btn-sm btn-primary 
+                                                    @if($user->person->user->isSuperAdmin() == 1)
+                                                        disabled
+                                                    @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
+                                                    @elseif($user->item->station->office_id == $office->id)
+                                                    @else
+                                                        disabled
+                                                    @endif" title="Reset password">
+                                                <span class="fas fa-fw fa-key"></span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if($user->person->user->isSuperAdmin() == 1)
+                                                <small class="text-danger">Not enough privilege to perform action. </small>
+                                            @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
+                                                <small class="text-success">Reset is allowed.</small>
+                                            @elseif($user->item->station->office_id == $office->id)
+                                                <small class="text-success">Reset is allowed.</small>
+                                            @else
+                                                <small class="text-danger">User is outside of your District. Move in to any station/unit in your District/Offie first.</small>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
                                     <tr>
                                         <td colspan="5">No record was found.</td>
                                     </tr>
-                                @endif
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

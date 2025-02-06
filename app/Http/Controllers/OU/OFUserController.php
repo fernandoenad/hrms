@@ -149,7 +149,7 @@ class OFUserController extends Controller
         $users = User::where('name', 'like', '%'.$request->searchString.'%')
             ->where('id', '!=', 5268)->get();
         */
-        $searchString = $request->searchString;
+        $searchString = request()->get('searchString');
 
         $employees = Employee::join('people', 'people.id', '=', 'person_id')
             ->orderBy('lastname', 'asc')
@@ -167,7 +167,7 @@ class OFUserController extends Controller
                 ->orderBy('firstname', 'asc');
         })
         ->select('employees.id AS empid', 'employees.*', 'people.*')
-        ->paginate(15);
+        ->get();
 
         return view('ou.office.users.pwindex', ['office' => $office, 'users' => $employees, 'searchString' => $request->searchString]);
         
