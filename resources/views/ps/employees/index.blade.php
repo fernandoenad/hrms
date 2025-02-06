@@ -118,7 +118,7 @@
                                                 {{ $employee->person->getFullnameSorted() ?? __('') }}
                                             </a>
                                         </td>
-                                        <td class="item_no">{{ $employee->item->itemno ?? __('') }}</td>
+                                        <td class="item_no"><a href="{{ route('ps.items.show', $employee->item_id) }}">{{ $employee->item->itemno ?? __('') }}</a></td>
                                         <td class="position">{{ $employee->item->position ?? __('') }}</td>
                                         <td class="station">{{ $employee->item->deployment->station->name ?? __('') }}</td>
                                         <td class="district">{{ $employee->item->deployment->station->office->name ?? __('') }}</td>
