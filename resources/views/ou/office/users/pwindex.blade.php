@@ -77,7 +77,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('ou.office.users._tools')
+            @include('ou.office.users._tools2')
         </div>        
     </div>
 </div>
