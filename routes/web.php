@@ -550,6 +550,10 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::post('/ou/office/{office}/users', [OFUserController::class, 'store'])->name('ou.office.users.store');
         Route::get('/ou/office/{office}/users', [OFUserController::class, 'index'])->name('ou.office.users');
 
+        Route::get('/ou/office/{office}/users/modify_psds', [OFUserController::class, 'modify_psds'])->name('ou.office.users.modify_psds');
+        Route::any('/ou/office/{office}/users/modify_psds/lookup2', [OFUserController::class, 'lookup2'])->name('ou.office.users.lookup2');
+        Route::post('/ou/office/{office}/users/modify_psds', [OFUserController::class, 'update_psds'])->name('ou.office.users.update_psds');
+
         Route::get('/ou/office/{office}/pw', [OFUserController::class, 'pwIndex'])->name('ou.office.pw.index');
         Route::post('/ou/office/{office}/pw', [OFUserController::class, 'pwLookup'])->name('ou.office.pw.lookup');
         Route::get('/ou/office/{office}/pw/{user}', [OFUserController::class, 'pwReset'])->name('ou.office.pw.reset');

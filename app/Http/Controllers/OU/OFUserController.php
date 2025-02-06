@@ -182,4 +182,43 @@ class OFUserController extends Controller
         
         return redirect(route('ou.office.pw.lookup', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]))->with('status', 'Password has been reset to Password@123 successfully!');
     }
+
+    public function modify_psds(Request $request, Office $office, User $user)
+    {
+        return view('ou.office.users.psds_modify', ['office' => $office]);
+    }
+
+    public function lookup2(Office $office)
+    {
+        $searchString = request()->get('searchString');
+
+        $employees = Employee::join('people', 'employees.person_id', '=', 'people.id')
+            ->where(function ($query) use ($searchString){
+                $query->where('lastname', 'like' , $searchString . '%')
+                    ->orWhere('firstname', 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, lastname)'), 'like', $searchString . '%')
+                    ->orWhere(DB::raw('CONCAT_WS(" ", firstname, middlename, lastname)'), 'like', $searchString . '%')
+                    ->orderBy('lastname', 'asc')
+                    ->orderBy('firstname', 'asc');
+        })
+        ->select('employees.id AS empid', 'employees.*', 'people.*')
+        ->paginate(15);
+
+        $employees = $employees->appends(['searchString' => $searchString]);
+
+        return view('ou.office.users.lookup2', compact('office', 'employees'));
+    }
+
+    public function update_psds(Request $request, Office $office)
+    {
+        $data = $request->validate([
+            'user_id' => 'required',
+            'name' => 'required'
+        ]);
+
+        $office->update(['person_id' => $data['user_id']]);
+
+        return redirect(route('ou.office.users', ['office' => $office]))->with('status', 'PSDS updated!');
+    }
 }
