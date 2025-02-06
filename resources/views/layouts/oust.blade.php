@@ -15,7 +15,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('ou.station') }}">Station / Unit</a>
+                    <a class="nav-link" href="#">Station / Unit</a>
                 </li>
                 <li class="dropdown">
                     <a type="button" class="nav-link dropdown-toggle" data-toggle="dropdown">
@@ -29,6 +29,9 @@
                             <a href="{{ route('ou.station.show', $station_a->id) }}" class="dropdown-item">{{ $station_a->code }}- {{ $station_a->name }}</a>
                         @endforeach
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('ou.office') }}">Access District / Office</a>
                 </li>
             </ul>
 
