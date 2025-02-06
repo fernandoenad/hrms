@@ -60,7 +60,22 @@
                                             @php 
                                                 $assessment =  App\Models\Assessment::where('application_id', '=', $application->id)->get();
                                             @endphp 
-                                            <td>{{ $assessment->count() == 0 ? 'New (Station)' :  ($assessment->first()->status == 1 ? 'Pending (Station)' : ($assessment->first()->status == 2 ? 'Pending (District)' : 'Completed (District)')) }}</td>
+                                            <td>
+                                                @if($assessment->count() > 0 && $assessment->first()->status == -1)
+                                                    Disqualified
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status == 0)
+                                                    New (School)
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status == 1)
+                                                    Pending (School)
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status == 2)
+                                                    Pending (District) 
+                                                @elseif ($assessment->count() > 0 && $assessment->first()->status > 2)
+                                                    Completed (District)
+                                                @else 
+                                                    New
+                                                @endif
+
+                                            </td>
                                             <td>
                                                 {{ $assessment->count() == 0 ? 'Call up school' : '' }}
                                                 <!--

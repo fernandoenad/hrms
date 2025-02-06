@@ -140,8 +140,10 @@ class OFApplication2Controller extends Controller
     public function umIndex(Office $office, $cycle)
     {
         $applications = DB::connection('mysql_2')->table('applications')
+            ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
             ->join('hrms.stations', 'applications.station_id', '=', 'stations.id')
             ->select('applications.*', 'stations.name')
+            ->where('vacancies.cycle', '=', $cycle)
             ->where('stations.office_id', '=', $office->id)
             ->orderBy('applications.station_id', 'ASC')
             ->get();
@@ -152,8 +154,10 @@ class OFApplication2Controller extends Controller
     public function umLookup(Request $request, Office $office, $cycle)
     {
         $applications = DB::connection('mysql_2')->table('applications')
+            ->join('vacancies', 'applications.vacancy_id', '=', 'vacancies.id')
             ->join('hrms.stations', 'applications.station_id', '=', 'stations.id')
             ->select('applications.*', 'stations.name')
+            ->where('vacancies.cycle', '=', $cycle)
             ->where('stations.office_id', '=', $office->id)
             ->where('last_name', 'like', '%'.$request->searchString.'%')
             ->get();
