@@ -57,3 +57,43 @@
         </ul>
     </div>
 </div>
+
+<div class="card card-info">
+    <div class="card-header">Tasks</div>
+
+    <div class="card-body p-0">
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    1) Receive bundled submissions (IES, IER-B, Applicants' Folders) from schools. The bundle is per position.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    2) Schedule Teaching-Reflection Assessment.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    3) Schedule Teaching-Demonstration Assessment.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    4) Plugin the scores for each applicant.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    5) Print the CAR sheets. Have it signed. Post one copy on the District's communication channels.
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" target="_blank" class="nav-link">
+                    6) Submit the signed CAR sheets to SDO-HR.
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+</div>
