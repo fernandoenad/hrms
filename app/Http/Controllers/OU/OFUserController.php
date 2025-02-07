@@ -136,7 +136,7 @@ class OFUserController extends Controller
         return redirect()->route('ou.office.users', compact('office'))->with('status', 'User removed!');
     }
 
-    public function pwIndex(Office $office)
+    public function pwIndex(Request $request, Office $office)
     {
         $users = User::limit(0)->get();
     
@@ -177,7 +177,7 @@ class OFUserController extends Controller
     {
         $user->update(['password' => Hash::make('password')]);
         
-        return redirect(route('ou.office.pw.index', ['office' => $office, 'searchString' => $request->searchString]))->with('status', 'Password was reset!');
+        return redirect(route('ou.office.pw.index', ['office' => $office, 'searchString' => $user->searchString]))->with('status', 'Password for '.$user->name.' was reset password!');
     }
 
     public function modify_psds(Request $request, Office $office, User $user)
