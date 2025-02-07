@@ -139,16 +139,15 @@ class OFUserController extends Controller
     public function pwIndex(Request $request, Office $office)
     {
         // $users = User::limit(0)->get();
-        $users = User::join('people', 'people.id', '=', 'users.person_id')
-            ->join('employees', 'employees.person_id', '=', 'people.id')
+        $users = Employee::join('people', 'people.id', '=', 'employees.person_id')
             ->join('items', 'items.id', '=', 'employees.item_id')
             ->join('deployments', 'deployments.item_id', '=', 'items.id')
             ->join('stations', 'stations.id', '=', 'deployments.station_id')
             ->join('offices', 'offices.id', '=', 'stations.office_id')
             ->where('stations.office_id', $office->id)
+            ->orderBy('lastname', 'ASC')
+            ->orderBy('firstname', 'ASC')
             ->select('employees.id AS empid', 'employees.*')
-            ->orderBy('people.lastname', 'ASC')
-            ->orderBy('people.firstname', 'ASC')
             ->paginate(15);
     
     
@@ -157,11 +156,7 @@ class OFUserController extends Controller
 
     public function pwLookup(Request $request, Office $office)
     {
-        /*
-        $users = User::where('name', 'like', '%'.$request->searchString.'%')
-            ->where('id', '!=', 5268)->get();
-        */
-        $searchString = request()->get('searchString');
+        $searchString = request()->get('searchString') ?? request()->post('searchString');
 
         $employees = Employee::join('people', 'people.id', '=', 'person_id')
             ->orderBy('lastname', 'asc')
@@ -169,7 +164,8 @@ class OFUserController extends Controller
             ->select('employees.id AS empid', 'employees.*', 'people.*');
 
         $employees = $employees->where(function ($query) use ($searchString){
-            $query->where('empno', 'like', $searchString)
+            $query->where('person_id', 'like', $searchString)
+                ->orWhere('empno', 'like', $searchString)
                 ->orWhere('lastname', 'like' , $searchString . '%')
                 ->orWhere('firstname', 'like', $searchString . '%')
                 ->orWhere(DB::raw('CONCAT_WS(", ", lastname, firstname)'), 'like', $searchString . '%')
@@ -181,7 +177,7 @@ class OFUserController extends Controller
         ->select('employees.id AS empid', 'employees.*', 'people.*')
         ->paginate(15);
 
-        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $employees, 'searchString' => $request->searchString]);
+        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $employees, 'searchString' => $searchString]);
         
     }
 
@@ -189,7 +185,7 @@ class OFUserController extends Controller
     {
         $user->update(['password' => Hash::make('password')]);
         
-        return redirect(route('ou.office.pw.index', ['office' => $office, 'searchString' => $user->searchString]))->with('status', 'Password for '.$user->name.' was reset password!');
+        return redirect(route('ou.office.pw.lookup', ['office' => $office, 'searchString' => $user->person_id]))->with('status', 'User reset! New password is password!');
     }
 
     public function modify_psds(Request $request, Office $office, User $user)
