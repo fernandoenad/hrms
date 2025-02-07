@@ -56,8 +56,8 @@
                                                     @if($user->person->user->isSuperAdmin() == 1)
                                                         disabled
                                                     @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
-                                                    @else
-                                                        disabled
+                                                    @elseif($user->item->station->office_id == $office->id)
+                                                    
                                                     @endif" title="Reset password">
                                                 <span class="fas fa-fw fa-key"></span>
                                             </a>
