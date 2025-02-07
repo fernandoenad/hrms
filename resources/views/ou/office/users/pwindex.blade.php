@@ -37,12 +37,11 @@
                                     <th>Fullname</th>
                                     <th>Email</th>                                  
                                     <th>Action</th>
-                                    <th width="15%">Remarks</th>
+                                    <th width="30%">Remarks</th>
                                 </tr>
                             </thead>
                                 
                             <tbody>
-
                                 @forelse($users as $user)
                                     <!-- $user is actually an employee instance -->
                                     <tr>
@@ -57,7 +56,7 @@
 
                                                     @elseif($user->person->user->isSuperAdmin() == 1)
                                                         disabled
-                                                    @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
+                                                    @elseif(isset($user->item->deployment->station_id) && $user->item->deployment->station_id == 0)
 
                                                     @elseif(isset($user->item->deployment->station->office_id) &&  $user->item->deployment->station->office_id == $office->id)
 
@@ -93,6 +92,7 @@
 
                 <div class="card-footer clearfix">
                     <div class="float-right">
+                        {!! $users->render() !!}
                     </div>
                 </div>
             </div>
