@@ -52,7 +52,9 @@
                                             <a href="{{ route('ou.office.pw.reset', [$office, $user->person->user]) }}" 
                                                 onclick="return confirm('This will reset the password of {{ $user->person->getFullnameSorted() }} to password. Are you sure?')"
                                                 class="btn btn-sm btn-primary 
-                                                    @if(Auth::user()->isSuperAdmin() == 1)    
+                                                    @if(Auth::user()->id == $user->person->user->id)
+                                                        disabled
+                                                    @elseif(Auth::user()->isSuperAdmin() == 1)    
 
                                                     @elseif($user->person->user->isSuperAdmin() == 1)
                                                         disabled
@@ -67,8 +69,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            
-                                            @if(Auth::user()->isSuperAdmin() == 1)    
+                                            @if(Auth::user()->id == $user->person->user->id)
+                                            <small class="text-danger">Can't reset yourself here. </small>
+                                            @elseif(Auth::user()->isSuperAdmin() == 1)    
                                                 <small class="text-success">Reset allowed.</small>
                                             @elseif($user->person->user->isSuperAdmin() == 1)
                                                 <small class="text-danger">Low level privilege to perform action.</small>
