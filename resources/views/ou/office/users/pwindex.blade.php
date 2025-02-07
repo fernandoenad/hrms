@@ -70,7 +70,6 @@
                                             @elseif($user->item->station->office_id == $office->id)
                                                 <small class="text-success">Reset is allowed.</small>
                                             @else
-                                                <small class="text-danger">User is outside of your District. Move in to any station/unit in your District/Offie first.</small>
                                             @endif
                                         </td>
                                     </tr>
