@@ -56,7 +56,6 @@
                                                     @if($user->person->user->isSuperAdmin() == 1)
                                                         disabled
                                                     @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
-                                                    @elseif($user->item->station->office_id == $office->id)
                                                     @else
                                                         disabled
                                                     @endif" title="Reset password">
