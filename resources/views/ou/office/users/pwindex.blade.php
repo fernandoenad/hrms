@@ -50,8 +50,8 @@
                                         <td>{{ $user->person->getFullnameSorted() }}</td>
                                         <td>{{ $user->person->user->email }}</td>
                                         <td>
-                                            <a href="{{ route('ou.office.pw.reset', [$office, $user]) }}" 
-                                                onclick="return confirm('This will reset the password of {{ $user->name }} to Password@123. Are you sure?')"
+                                            <a href="{{ route('ou.office.pw.reset', [$office, $user->person->user]) }}" 
+                                                onclick="return confirm('This will reset the password of {{ $user->person->user->name }} to password. Are you sure?')"
                                                 class="btn btn-sm btn-primary 
                                                     @if($user->person->user->isSuperAdmin() == 1)
                                                         disabled
