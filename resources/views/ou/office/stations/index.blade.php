@@ -138,7 +138,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>School Head</th>
+                                    <th>School Head/Email</th>
                                     <th width="8%" class="text-left">District</th>
                                     <th width="8%" class="text-right">Tchr</th>
                                     <th width="8%" class="text-right">Non-Tchr</th>
@@ -153,7 +153,10 @@
                                             <td>
                                                 <strong><a href="{{ route('ou.station.show', $station->id) }}">{{ $station->name }} ({{ $station->code }})</a></strong>                                                                                        
                                             </td>
-                                            <td>@if($station->person != null) {{ $station->person->user->name }} @endif </td>
+                                            <td>
+                                                <strong>@if($station->person != null) {{ $station->person->getFullnameSorted() }} @endif </strong><br>
+                                                @if($station->person != null) {{ $station->person->user->email }} @endif
+                                            </td>
                                             <td>{{ $station->services }} </td>
                                             <td class="text-right">{{ \App\Http\Controllers\PU\StationController::getEmployees($station->id, 'Teaching')->count() }}</td>
                                             <td class="text-right">{{ \App\Http\Controllers\PU\StationController::getEmployees($station->id, 'Non-Teaching')->count() }}</td>
