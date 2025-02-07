@@ -177,7 +177,7 @@ class OFUserController extends Controller
     {
         $user->update(['password' => Hash::make('Password@123')]);
         
-        return redirect(route('ou.office.pw.index', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]))->with('status', 'Password has been reset to Password@123 successfully!');
+        return view('ou.office.users.pwindex', ['office' => $office, 'users' => $employees, 'searchString' => $request->searchString]);
     }
 
     public function modify_psds(Request $request, Office $office, User $user)
