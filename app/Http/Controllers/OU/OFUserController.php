@@ -138,7 +138,19 @@ class OFUserController extends Controller
 
     public function pwIndex(Request $request, Office $office)
     {
-        $users = User::limit(0)->get();
+        // $users = User::limit(0)->get();
+        $users = User::join('people', 'people.id', '=', 'users.person_id')
+            ->join('employees', 'employees.person_id', '=', 'people.id')
+            ->join('items', 'items.id', '=', 'employees.item_id')
+            ->join('deployments', 'deployments.item_id', '=', 'items.id')
+            ->join('stations', 'stations.id', '=', 'deployments.station_id')
+            ->join('offices', 'offices.id', '=', 'stations.office_id')
+            ->where('stations.office_id', $office->id)
+            ->select('employees.id AS empid', 'employees.*')
+            ->orderBy('people.lastname', 'ASC')
+            ->orderBy('people.firstname', 'ASC')
+            ->paginate(15);
+    
     
         return view('ou.office.users.pwindex', ['office' => $office, 'users' => $users]);
     }
@@ -167,7 +179,7 @@ class OFUserController extends Controller
                 ->orderBy('firstname', 'asc');
         })
         ->select('employees.id AS empid', 'employees.*', 'people.*')
-        ->get();
+        ->paginate(15);
 
         return view('ou.office.users.pwindex', ['office' => $office, 'users' => $employees, 'searchString' => $request->searchString]);
         
