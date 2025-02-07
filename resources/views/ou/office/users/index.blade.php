@@ -54,7 +54,7 @@
                                                     @csrf
                                                     @method('DELETE')
 
-                                                    <button class="btn btn-sm btn-danger @if(!Auth::user()->getOffices()->first()) {{ 'disabled' }} @endif"
+                                                    <button class="btn btn-sm btn-danger"
                                                         onClick="return confirm('This will remove the user access which is IRREVERSIBLE. \nAre you sure wish to proceed?')">
                                                         <i class="fas fa-trash-alt"></i> Delete
                                                     </button>

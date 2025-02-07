@@ -51,22 +51,33 @@
                                         <td>{{ $user->person->user->email }}</td>
                                         <td>
                                             <a href="{{ route('ou.office.pw.reset', [$office, $user->person->user]) }}" 
-                                                onclick="return confirm('This will reset the password of {{ $user->person->user->name }} to password. Are you sure?')"
+                                                onclick="return confirm('This will reset the password of {{ $user->person->getFullnameSorted() }} to password. Are you sure?')"
                                                 class="btn btn-sm btn-primary 
-                                                    @if($user->person->user->isSuperAdmin() == 1)
+                                                    @if(Auth::user()->isSuperAdmin() == 1)    
+
+                                                    @elseif($user->person->user->isSuperAdmin() == 1)
                                                         disabled
                                                     @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
-                                                    @elseif(isset($user->item->station->office_id) &&  $user->item->station->office_id == $office->id)
+
+                                                    @elseif(isset($user->item->deployment->station->office_id) &&  $user->item->deployment->station->office_id == $office->id)
+
+                                                    @else
+                                                        disabled
                                                     @endif" title="Reset password">
                                                 <span class="fas fa-fw fa-key"></span>
                                             </a>
                                         </td>
                                         <td>
-                                            @if($user->person->user->isSuperAdmin() == 1)
-                                                <small class="text-danger">Not enough privilege to perform action. </small>
-                                                @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
-                                                @elseif(isset($user->item->station->office_id) &&  $user->item->station->office_id == $office->id)
+                                            @if(Auth::user()->isSuperAdmin() == 1)    
+                                                <small class="text-success">Reset allowed.</small>
+                                            @elseif($user->person->user->isSuperAdmin() == 1)
+                                                <small class="text-danger">Low level privilege to perform action.</small>
+                                            @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
+                                                <small class="text-success">Reset allowed.</small>
+                                            @elseif(isset($user->item->deployment->station->office_id) &&  $user->item->deployment->station->office_id == $office->id)
+                                                <small class="text-success">Reset allowed.</small>
                                             @else
+                                                <small class="text-danger">Action not allowed to users outside of District. Deploy/Move-in user to any school within the District. </small>
                                             @endif
                                         </td>
                                     </tr>
