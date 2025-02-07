@@ -180,7 +180,7 @@ class OFUserController extends Controller
         $users = User::where('name', 'like', '%'.$request->searchString.'%')
             ->where('id', '!=', 5268)->get();
         
-        return redirect(route('ou.office.pw.lookup', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]))->with('status', 'Password has been reset to Password@123 successfully!');
+        return redirect(route('ou.office.user.pwindex', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]))->with('status', 'Password has been reset to Password@123 successfully!');
     }
 
     public function modify_psds(Request $request, Office $office, User $user)
