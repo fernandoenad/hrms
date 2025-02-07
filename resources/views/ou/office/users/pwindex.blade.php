@@ -67,11 +67,12 @@
                                             </a>
                                         </td>
                                         <td>
+                                            
                                             @if(Auth::user()->isSuperAdmin() == 1)    
                                                 <small class="text-success">Reset allowed.</small>
                                             @elseif($user->person->user->isSuperAdmin() == 1)
                                                 <small class="text-danger">Low level privilege to perform action.</small>
-                                            @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
+                                            @elseif(isset($user->item->deployment->station_id) && $user->item->deployment->station_id == 0)
                                                 <small class="text-success">Reset allowed.</small>
                                             @elseif(isset($user->item->deployment->station->office_id) &&  $user->item->deployment->station->office_id == $office->id)
                                                 <small class="text-success">Reset allowed.</small>

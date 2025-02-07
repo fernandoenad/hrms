@@ -7,7 +7,7 @@
         <div class="card-body p-0">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item active p-3">
-                    <form class="form-inline" method="post" action="{{ route('ou.office.pw.index', $office) }}">
+                    <form class="form-inline" method="post" action="{{ route('ou.office.pw.lookup', $office) }}">
                         @csrf
                         @method('post')
                         <div class="input-group input-group-md">
