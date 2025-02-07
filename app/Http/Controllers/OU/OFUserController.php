@@ -176,9 +176,6 @@ class OFUserController extends Controller
     public function pwReset(Request $request, Office $office, User $user)
     {
         $user->update(['password' => Hash::make('Password@123')]);
-
-        $users = User::where('name', 'like', '%'.$request->searchString.'%')
-            ->where('id', '!=', 5268)->get();
         
         return redirect(route('ou.office.pw.index', ['office' => $office, 'users' => $users, 'searchString' => $request->searchString]))->with('status', 'Password has been reset to Password@123 successfully!');
     }
