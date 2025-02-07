@@ -46,8 +46,8 @@
                                     @foreach($usersts as $userst)
                                         <tr>
                                             <td><img src="{{ asset('storage/avatars') }}/{{ $userst->user->person->image }}" width="40" class="img-circle"></td>
-                                            <td>{{ $userst->user->name }}</td>
-                                            <td>{{ $userst->user->username }}</td>
+                                            <td>{{ $userst->user->person->getFullnameSorted() }}</td>
+                                            <td>{{ $userst->user->email }}</td>
                                             <td>User</td>
                                             <td class="text-right">
                                                 <form method="POST" action="{{ route('ou.station.users.destroy', [$station->id, $userst->id]) }}">

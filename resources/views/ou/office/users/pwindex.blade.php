@@ -56,8 +56,7 @@
                                                     @if($user->person->user->isSuperAdmin() == 1)
                                                         disabled
                                                     @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
-                                                    @elseif($user->item->station->office_id == $office->id)
-                                                    
+                                                    @elseif(isset($user->item->station->office_id) &&  $user->item->station->office_id == $office->id)
                                                     @endif" title="Reset password">
                                                 <span class="fas fa-fw fa-key"></span>
                                             </a>
@@ -65,10 +64,8 @@
                                         <td>
                                             @if($user->person->user->isSuperAdmin() == 1)
                                                 <small class="text-danger">Not enough privilege to perform action. </small>
-                                            @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
-                                                <small class="text-success">Reset is allowed.</small>
-                                            @elseif($user->item->station->office_id == $office->id)
-                                                <small class="text-success">Reset is allowed.</small>
+                                                @elseif(isset($user->item->station_id) && $user->item->station_id == 0)
+                                                @elseif(isset($user->item->station->office_id) &&  $user->item->station->office_id == $office->id)
                                             @else
                                             @endif
                                         </td>
