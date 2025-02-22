@@ -71,7 +71,7 @@ class OFApplication2Controller extends Controller
             ->select('stations.name', 'stations.code', 'assessments.*', 'applications.*')
             ->get();
 
-        if(str_contains($vacancy->template->type,'Non-Teaching')){
+        if(str_contains($vacancy->template->type,'Non-Teaching') || str_contains($vacancy->template->type,'Teaching-Related')){
             return view('ou.office.applications.carviewnt', ['assessments' => $assessments,'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]);
         } else {
             return view('ou.office.applications.carview', ['assessments' => $assessments,'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]);
