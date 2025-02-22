@@ -113,7 +113,10 @@ class STApplication2Controller extends Controller
 
     public function withdraw(Request $request, Station $station, $cycle, Vacancy2 $vacancy, Application2 $application)
     {
-        $application->update(['station_id' => -1]);
+        $application->update(['station_id' => $vacancy->office_level]);
+
+        if(isset($application->assessment))
+            $application->assessment->delete();
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
