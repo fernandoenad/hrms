@@ -15,6 +15,8 @@ use App\Models\Template;
 use App\Models\Inquiry2;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Mail;
+use App\Mail\UpdateMail;
 
 //use PDF;
 
@@ -33,10 +35,10 @@ class OFApplication2Controller extends Controller
             ->where('office_level', '=', -1)
             ->first();
 
-        $vacancies = Vacancy2::where('office_level', '=', -1)
+        $vacancies = Vacancy2::where('level2_status', '<', 2)
             ->latest()
             ->get();
-        
+
         return view('ou.office.applications.index', ['vacancies' => $vacancies, 'cycle' => $cycle->cycle, 'office' => $office]);
     }
 
@@ -102,6 +104,12 @@ class OFApplication2Controller extends Controller
 
         $inquiry = Inquiry2::create($data);
 
+         // email 
+         $data['name'] =  $application->first_name;                
+         $data['subject'] =  $application->application_code;
+         $data['application'] = $application->application_code;
+         Mail::to($application->email)->queue(new UpdateMail($data));
+
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully updated.');
     }
 
@@ -118,6 +126,12 @@ class OFApplication2Controller extends Controller
 
         $inquiry = Inquiry2::create($data);
 
+         // email 
+         $data['name'] =  $application->first_name;                
+         $data['subject'] =  $application->application_code;
+         $data['application'] = $application->application_code;
+         Mail::to($application->email)->queue(new UpdateMail($data));
+
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully marked completed.');
     }
 
@@ -133,6 +147,12 @@ class OFApplication2Controller extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+         // email 
+         $data['name'] =  $application->first_name;                
+         $data['subject'] =  $application->application_code;
+         $data['application'] = $application->application_code;
+         Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.show', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the PENDING status.');
     }
@@ -177,6 +197,12 @@ class OFApplication2Controller extends Controller
 
         $inquiry = Inquiry2::create($data);
 
+         // email 
+         $data['name'] =  $application->first_name;                
+         $data['subject'] =  $application->application_code;
+         $data['application'] = $application->application_code;
+         Mail::to($application->email)->queue(new UpdateMail($data));
+
         return redirect(route('ou.office.applications.umindex', ['cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the Pending status.');
     }
 
@@ -193,6 +219,12 @@ class OFApplication2Controller extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+         // email 
+         $data['name'] =  $application->first_name;                
+         $data['subject'] =  $application->application_code;
+         $data['application'] = $application->application_code;
+         Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.show', ['vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application has been tagged disqualified.');
     }
