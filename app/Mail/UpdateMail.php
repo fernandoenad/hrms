@@ -22,9 +22,7 @@ class UpdateMail extends Mailable
 
     public function build()
     {
-        return $this->from('no-reply-rms@deped.gov.ph')
-            ->subject('Message from RMS')
-            ->view('emails.application_update')
+        return $this->view('emails.application_update')
             ->with('data', $this->data);
     }
 
