@@ -12,6 +12,8 @@ use App\Models\Inquiry2;
 use App\Models\Town;
 use App\Models\Dropdown;
 use Illuminate\Validation\Rule;
+use Mail;
+use App\Mail\UpdateMail;
 //use PDF;
 
 class STApplication2Controller extends Controller
@@ -95,10 +97,15 @@ class STApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The application was taken-in.';
+        $data['message'] = 'The application was taken-in at ' . $station->name . '.' ;
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+        // email 
+        $data['name'] =  $application->first_name;                
+        $data['subject'] =  $application->application_code;
+        Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.station.applications.showvacancy', ['vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully taken in.');
     }
@@ -113,6 +120,11 @@ class STApplication2Controller extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+        // email 
+        $data['name'] =  $application->first_name;                
+        $data['subject'] =  $application->application_code;
+        Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.station.applications.showvacancy', ['vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully withdrawn.');
     }
@@ -166,6 +178,11 @@ class STApplication2Controller extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+        // email 
+        $data['name'] =  $application->first_name;                
+        $data['subject'] =  $application->application_code;
+        Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.station.applications.show', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully updated.');
     }
@@ -240,6 +257,11 @@ class STApplication2Controller extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+        // email 
+        $data['name'] =  $application->first_name;                
+        $data['subject'] =  $application->application_code;
+        Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.station.applications.showvacancy', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]))->with('status', 'Request to revert to know has been sent.');
     }

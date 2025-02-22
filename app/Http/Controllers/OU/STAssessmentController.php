@@ -11,6 +11,8 @@ use App\Models\Vacancy2;
 use App\Models\Template;
 use App\Models\Inquiry2;
 use PDF;
+use Mail;
+use App\Mail\UpdateMail;
 
 class STAssessmentController extends Controller
 {
@@ -52,6 +54,12 @@ class STAssessmentController extends Controller
             $data['status'] = 0;
 
             $inquiry = Inquiry2::create($data);
+
+            // email 
+            $data['name'] =  $application->first_name;                
+            $data['subject'] =  $application->application_code;
+            Mail::to($application->email)->queue(new UpdateMail($data));
+
         } else {
             $assessment = $assessment->first();
             $assessment->update(['status' => 2]);
@@ -62,6 +70,11 @@ class STAssessmentController extends Controller
             $data['status'] = 0;
 
             $inquiry = Inquiry2::create($data);
+
+            // email 
+            $data['name'] =  $application->first_name;                
+            $data['subject'] =  $application->application_code;
+            Mail::to($application->email)->queue(new UpdateMail($data));
         }
 
         //return view('ou.station.applications.assess', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application, 'assessment' => $assessment, 'template' => $template]);
@@ -103,6 +116,12 @@ class STAssessmentController extends Controller
             $data['status'] = 0;
 
             $inquiry = Inquiry2::create($data);
+
+            // email 
+            $data['name'] =  $application->first_name;                
+            $data['subject'] =  $application->application_code;
+            Mail::to($application->email)->queue(new UpdateMail($data));
+
         } else {
             $assessment = $assessment->first();
             $assessment->update(['status' => -1]);
@@ -112,6 +131,11 @@ class STAssessmentController extends Controller
             $data['message'] = 'The application was tagged as DISQUALIFIED due to lacking MANDATORY REQUIREMENTS.';
             $data['status'] = 0;
             $inquiry = Inquiry2::create($data);
+
+            // email 
+            $data['name'] =  $application->first_name;                
+            $data['subject'] =  $application->application_code;
+            Mail::to($application->email)->queue(new UpdateMail($data));
         }
 
         //return view('ou.station.applications.assess', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application, 'assessment' => $assessment, 'template' => $template]);
@@ -137,6 +161,11 @@ class STAssessmentController extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+        // email 
+        $data['name'] =  $application->first_name;                
+        $data['subject'] =  $application->application_code;
+        Mail::to($application->email)->queue(new UpdateMail($data));
         
         return redirect(route('ou.station.applications.assess.index', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application]))->with('status', 'Assessment was successfully updated.');
 
@@ -152,6 +181,11 @@ class STAssessmentController extends Controller
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
+
+        // email 
+        $data['name'] =  $application->first_name;                
+        $data['subject'] =  $application->application_code;
+        Mail::to($application->email)->queue(new UpdateMail($data));
         
         return redirect(route('ou.station.applications.assess.index', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application]))->with('status', 'Assessment was successfully marked completed.');
 
