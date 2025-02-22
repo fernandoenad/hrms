@@ -37,7 +37,6 @@ class OFApplication2Controller extends Controller
 
         $vacancies = Vacancy2::where('level2_status', '<', 2)
             ->latest()
-            ->take(100)
             ->get();
 
         return view('ou.office.applications.index', ['vacancies' => $vacancies, 'cycle' => $cycle->cycle, 'office' => $office]);
