@@ -4,6 +4,7 @@
     <title>Message from RMS (for Applcation ID: {{ $data['subject'] }})</title>
 </head>
 <body>
+    <p>Re: <strong>Application ID# {{ $data['application'] }}<strong></p>
     <p>Hello, <strong>{{ $data['name'] }}</strong>!</p>
     <p>{{ $data['message'] }}</p>
     <p>

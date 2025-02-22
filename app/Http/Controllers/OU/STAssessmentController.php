@@ -58,6 +58,7 @@ class STAssessmentController extends Controller
             // email 
             $data['name'] =  $application->first_name;                
             $data['subject'] =  $application->application_code;
+            $data['application'] = $application->application_code;
             Mail::to($application->email)->queue(new UpdateMail($data));
 
         } else {
@@ -74,6 +75,7 @@ class STAssessmentController extends Controller
             // email 
             $data['name'] =  $application->first_name;                
             $data['subject'] =  $application->application_code;
+            $data['application'] = $application->application_code;
             Mail::to($application->email)->queue(new UpdateMail($data));
         }
 
@@ -120,6 +122,7 @@ class STAssessmentController extends Controller
             // email 
             $data['name'] =  $application->first_name;                
             $data['subject'] =  $application->application_code;
+            $data['application'] = $application->application_code;
             Mail::to($application->email)->queue(new UpdateMail($data));
 
         } else {
@@ -135,6 +138,7 @@ class STAssessmentController extends Controller
             // email 
             $data['name'] =  $application->first_name;                
             $data['subject'] =  $application->application_code;
+            $data['application'] = $application->application_code;
             Mail::to($application->email)->queue(new UpdateMail($data));
         }
 
@@ -165,6 +169,7 @@ class STAssessmentController extends Controller
         // email 
         $data['name'] =  $application->first_name;                
         $data['subject'] =  $application->application_code;
+        $data['application'] = $application->application_code;
         Mail::to($application->email)->queue(new UpdateMail($data));
         
         return redirect(route('ou.station.applications.assess.index', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application]))->with('status', 'Assessment was successfully updated.');
@@ -185,6 +190,7 @@ class STAssessmentController extends Controller
         // email 
         $data['name'] =  $application->first_name;                
         $data['subject'] =  $application->application_code;
+        $data['application'] = $application->application_code;
         Mail::to($application->email)->queue(new UpdateMail($data));
         
         return redirect(route('ou.station.applications.assess.index', ['station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy, 'application' => $application]))->with('status', 'Assessment was successfully marked completed.');
