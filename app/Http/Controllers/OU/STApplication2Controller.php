@@ -223,7 +223,10 @@ class STApplication2Controller extends Controller
             ->select('assessments.*')
             ->get();
 
-        return view('ou.station.applications.ies', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
+        if($vacancy->office_level == -1)
+            return view('ou.station.applications.ies', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
+        else 
+            return view('ou.station.applications.iesnt', ['assessments' => $assessments, 'station' => $station, 'cycle' => $cycle, 'vacancy' => $vacancy]);
     }
 
 

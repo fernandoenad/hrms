@@ -76,7 +76,7 @@
                     </table>
 
                     <br>
-                    <table border="1" height="500">
+                    <table border="1" height="300">
                         <tr bgcolor="lightgray">
                             <th rowspan="2">Criteria</th>
                             <th rowspan="2">Weight Allocation</th>
@@ -89,42 +89,56 @@
                         </tr>
                         <tr>
                             <td>Education</td>
-                            <td align="center">10</td>
+                            <td align="center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Training</td>
-                            <td align="center">10</td>
+                            <td align="center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Experience</td>
-                            <td align="center">10</td>
+                            <td align="center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>Rating</td>
-                            <td align="center">10</td>
+                            <td>Performance</td>
+                            <td align="center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>PPST COIs (Teaching-Demonstration)</td>
-                            <td align="center">35</td>
+                            <td>Outstanding Accomplishment</td>
+                            <td align="center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>PPST NCOIs (Teaching-Reflection)</td>
-                            <td align="center">25</td>
+                            <td>Application for Education</td>
+                            <td align="center"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Application for Learning and Development</td>
+                            <td align="center"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Potential (Written Test, BEI, Work Sample Test)</td>
+                            <td align="center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -150,8 +164,6 @@
                     conduct of the HRMPSB evaluation through Open Ranking System.
                     <br>
                     <br>
-                    <br>
-                    <br>
 
                     <table>
                         <tr>
@@ -167,45 +179,29 @@
                             <td colspan="3">
                                 <table>
                                     <tr>
-                                        <td colspan="2" width="25%" align="left">Prepared by the School Ranking Committee
+                                        <td colspan="2" width="25%" align="left">Prepared by the Comparative Assessment Committee
                                             <br><em>(All members should affix signature)</em>
                                             <br>
                                             <br>
-
                                         </td>
-                                        <td width="25%"></td>
                                         <td width="25%"></td>
                                     </tr>
                                     <tr align="center">
                                         <td>_______________________________<br>Name and Position<br>Member<br>Date: _______________</td>
                                         <td>_______________________________<br>Name and Position<br>Member<br>Date: _______________</td>
                                         <td>_______________________________<br>Name and Position<br>Member<br>Date: _______________</td>
-                                        <td>_______________________________<br>Name<br>Chairperson<br>Date: _______________</td>
                                     </tr>
-                                </table>
-                                <br><br><br>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <table>
                                     <tr>
-                                        <td colspan="2" width="25%" align="left">Prepared by the District Ranking Committee
-                                            <br><em>(All members should affix signature)</em>
+                                        <td>
                                             <br>
                                             <br>
-                                        </td>
-                                        <td width="25%"></td>
-                                        <td width="25%"></td>
-                                    </tr>
-                                    <tr align="center">
-                                        <td>_______________________________<br>Name and Position<br>Member<br>Date: _______________</td>
-                                        <td>_______________________________<br>Name and Position<br>Member<br>Date: _______________</td>
-                                        <td>_______________________________<br>Name and Position<br>Member<br>Date: _______________</td>
-                                        <td>_______________________________<br>Name<br>Chairperson<br>Date: _______________</td>
+                                            Attested: <br>
+                                            _______________________________<br>Chair, HRMPSB<br>Date: _______________</td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </table>
-                                <br><br><br>
+                                <br>
                             </td>
                         </tr>
                     </table>

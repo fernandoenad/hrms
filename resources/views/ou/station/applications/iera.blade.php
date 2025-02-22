@@ -58,7 +58,7 @@
                 <tr class="table-danger" align="center">
                     <td scope="col" colspan="2" rowspan="2"><strong>Name of Application<strong></td>
                     <td scope="col" rowspan="2" width="10%"><strong>Application Code<strong></td>
-                    <td scope="col" colspan="7" width="8%"><strong>COMPARATIVE ASSESSMENT RESULTS<strong></td>
+                    <td scope="col" rowspan="2" width="30%"><strong>Face-to-Face Appreciation of Documents Schedule<strong></td>
                     <td scope="col" rowspan="2" width="8%"><strong>Remarks<strong></td>
                     <td scope="col" colspan="2" width="5%"><strong><small>For Background Investigation (Y/N)</small><strong></td>
                     <td scope="col" rowspan="2" width="8%">
@@ -66,17 +66,7 @@
                     <td scope="col" rowspan="2" width="8%">
                         <strong><small>Status of Appointment</strong><br>(Based on availability of PBET/ LET/LEPT)</small></td>
                 </tr>
-                <tr class="table-danger" align="center">
-                    <th scope="col" width="5%">Education</th>
-                    <th scope="col" width="5%">Training</th>
-                    <th scope="col" width="5%">Experience</th>
-                    <th scope="col" width="5%">Rating</th>
-                    <th scope="col" width="5%">COI</th>
-                    <th scope="col" width="5%">NCOI</th>
-                    <th scope="col" width="5%">Total</th>
-                    <th scope="col" width="3%">Yes</th>
-                    <th scope="col" width="3%">No</th>
-                </tr>
+
             </thead>
             <tbody>
                 @php $i=1; @endphp 
@@ -91,18 +81,12 @@
                         <td width="2%">{{ $i }}</td>
                         <td>**************************</td>
                         <td>{{ $application->application_code }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <!--
                         @foreach($assessment_details as $key => $value)
                             @php $ctr++; if($ctr > 5) break; @endphp
                                 <td align="right">{{ is_numeric($value) ? $value : '' }}</td>
                         @endforeach
                         -->
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td align="left">
                             @if($assessment->status == -1)

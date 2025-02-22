@@ -58,7 +58,7 @@
                 <tr class="table-danger" align="center">
                     <td scope="col" colspan="2" rowspan="2"><strong>Name of Application<strong></td>
                     <td scope="col" rowspan="2" width="10%"><strong>Application Code<strong></td>
-                    <td scope="col" colspan="7" width="8%"><strong>COMPARATIVE ASSESSMENT RESULTS<strong></td>
+                    <td scope="col" colspan="7" width="8%"><strong>INITIAL EVALUATION RESULT<strong></td>
                     <td scope="col" rowspan="2" width="8%"><strong>Remarks<strong></td>
                     <td scope="col" colspan="2" width="5%"><strong><small>For Background Investigation (Y/N)</small><strong></td>
                     <td scope="col" rowspan="2" width="8%">
@@ -112,7 +112,7 @@
                             @elseif ($assessment->status == 1)
                                 <font color="yellow">Do not print yet.</font> 
                             @elseif ($assessment->status > 1)
-                                Qualified
+                                Endorsed to DRC.
                             @else 
                                 New
                             @endif
