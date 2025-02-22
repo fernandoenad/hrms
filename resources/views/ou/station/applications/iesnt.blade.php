@@ -89,56 +89,56 @@
                         </tr>
                         <tr>
                             <td>Education</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Training</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Experience</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Performance</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Outstanding Accomplishment</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Application for Education</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Application for Learning and Development</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Potential (Written Test, BEI, Work Sample Test)</td>
-                            <td align="center"></td>
+                            <td align="center">__</td>
                             <td></td>
                             <td></td>
                             <td></td>
