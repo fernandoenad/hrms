@@ -74,7 +74,8 @@
                             <td></td>
                         </tr>
                     </table>
-
+                    
+                    @php $template = json_decode($vacancy->template->template, true); array_pop($template); @endphp 
                     <br>
                     <table border="1" height="300">
                         <tr bgcolor="lightgray">
@@ -89,56 +90,56 @@
                         </tr>
                         <tr>
                             <td>Education</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Education'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Training</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Training'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Experience</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Experience'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Performance</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Performance'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Outstanding Accomplishment</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Outstanding_Accomplishments'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Application for Education</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Application_of_Education'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Application for Learning and Development</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Application_of_L&D'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Potential (Written Test, BEI, Work Sample Test)</td>
-                            <td align="center">__</td>
+                            <td align="center">{{ $template['Potential_Written_Test*'] ?? '' }}, {{ $template['Potential_BEI*'] ?? '' }}, {{ $template['Potential_Sample_Work'] ?? '' }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
