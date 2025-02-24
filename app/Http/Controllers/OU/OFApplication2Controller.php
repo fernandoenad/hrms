@@ -108,7 +108,7 @@ class OFApplication2Controller extends Controller
          $data['name'] =  $application->first_name;                
          $data['subject'] =  $application->application_code;
          $data['application'] = $application->application_code;
-         Mail::to($application->email)->queue(new UpdateMail($data));
+         //Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully updated.');
     }
@@ -130,7 +130,7 @@ class OFApplication2Controller extends Controller
          $data['name'] =  $application->first_name;                
          $data['subject'] =  $application->application_code;
          $data['application'] = $application->application_code;
-         Mail::to($application->email)->queue(new UpdateMail($data));
+         //Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.assess', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully marked completed.');
     }
@@ -152,7 +152,7 @@ class OFApplication2Controller extends Controller
          $data['name'] =  $application->first_name;                
          $data['subject'] =  $application->application_code;
          $data['application'] = $application->application_code;
-         Mail::to($application->email)->queue(new UpdateMail($data));
+         //Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.show', ['application' => $application, 'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the PENDING status.');
     }
@@ -201,7 +201,7 @@ class OFApplication2Controller extends Controller
          $data['name'] =  $application->first_name;                
          $data['subject'] =  $application->application_code;
          $data['application'] = $application->application_code;
-         Mail::to($application->email)->queue(new UpdateMail($data));
+         //Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.umindex', ['cycle' => $cycle, 'office' => $office]))->with('status', 'Application was successfully reverted to the Pending status.');
     }
@@ -224,7 +224,7 @@ class OFApplication2Controller extends Controller
          $data['name'] =  $application->first_name;                
          $data['subject'] =  $application->application_code;
          $data['application'] = $application->application_code;
-         Mail::to($application->email)->queue(new UpdateMail($data));
+         //Mail::to($application->email)->queue(new UpdateMail($data));
 
         return redirect(route('ou.office.applications.show', ['vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]))->with('status', 'Application has been tagged disqualified.');
     }
