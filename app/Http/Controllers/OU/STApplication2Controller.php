@@ -106,7 +106,9 @@ class STApplication2Controller extends Controller
         $data['name'] =  $application->first_name;                
         $data['subject'] =  $application->application_code;
         $data['application'] = $application->application_code;
-        Mail::to($application->email)->queue(new UpdateMail($data));
+        try{
+            Mail::to($application->email)->queue(new UpdateMail($data));
+        } catch (Exception $e){}
 
         return redirect(route('ou.station.applications.showvacancy', ['vacancy' => $vacancy, 'cycle' => $cycle, 'station' => $station]))->with('status', 'Application was successfully taken in.');
     }
