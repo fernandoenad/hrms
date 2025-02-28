@@ -24,7 +24,7 @@ class Assessment extends Model
 
     public function getStatus()
     {
-        if($this->status == -4){
+        if($this->status == 4){
             $status_name = "Disqualified";
         } else if($this->status == 0){
             $status_name = "New";

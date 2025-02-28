@@ -110,7 +110,7 @@
                                                         ->get();
                                                 @endphp
 
-                                                @if($assessment->count() > 0 && $assessment->first()->status == -1)
+                                                @if($assessment->count() > 0 && $assessment->first()->status == 4)
                                                     Disqualified
                                                 @elseif ($assessment->count() > 0 && $assessment->first()->status == 0)
                                                     New 
