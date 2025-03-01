@@ -124,6 +124,7 @@
                                     </div>
                                 </div>
 
+                                <!--
                                 <div class="form-group row">
                                     <label for="title" class="col-md-3 col-form-label text-md-right">Action Options</label>
 
@@ -131,8 +132,8 @@
                                         <small>
                                         @if(isset($accountrequest->person)) 
                                             <a href="{{ route('ictu.people.edit-credentials', $accountrequest->person->id) }}" target="_blank">Modify Credentials / Reset Password</a>
-                                            <!--/ <a href="{{ route('ictu.requests.reset-password', $accountrequest->id) }}">Reset Password</a>
-                                            / <a href="{{ route('ictu.requests.verify-email', $accountrequest->id) }}">Verify Manually</a>-->
+                                            / <a href="{{ route('ictu.requests.reset-password', $accountrequest->id) }}">Reset Password</a>
+                                            / <a href="{{ route('ictu.requests.verify-email', $accountrequest->id) }}">Verify Manually</a>
                                         @else
                                             <?php $remarks_arr = explode('/', $accountrequest->remarks);  ?>
                                             <a href="{{ route('ictu.people.search') }}?searchString={{ $remarks_arr[0] }}" target="_blank">Modify Email</a>  
@@ -141,6 +142,7 @@
                                         </small>
                                     </div>
                                 </div>
+                                -->
 
                                 <div class="form-group row">
                                     <label for="status" class="col-md-3 col-form-label text-md-right">{{ __('Action') }}</label>

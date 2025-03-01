@@ -620,6 +620,8 @@ Route::post('/help/request', [HomeController::class, 'track'])->name('help.track
 
 Route::any('/help/search', [HomeController::class, 'search'])->name('help.search');
 
+Route::get('/help/reset', [HomeController::class, 'reset'])->name('help.reset');
+Route::post('/help/reset', [HomeController::class, 'reset_save'])->name('help.reset_save');
 Route::get('/help', [HomeController::class, 'help'])->name('help');
 
 });

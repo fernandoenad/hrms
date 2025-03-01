@@ -141,6 +141,10 @@
 											<strong>{{ session('not_deped') }}</strong>
 										</div>
 									@endif
+
+									Forgot your DepEd GMail/Microsoft password? <br>
+									Request for reset
+									<a href="{{ route('help.reset') }}" class="google-btn">here</a>.
 								</div>
 							</div>
 						</form>

@@ -102,7 +102,7 @@
                                 <p>User-Roles Management</p>
                             </a>
                         </li>
-
+                        <!--
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ictu.userranking') !== false) 
                                 {{ __('menu-open')}}
@@ -112,6 +112,7 @@
                                 <p>User-Ranking Management</p>
                             </a>
                         </li>
+                        -->
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ictu.users') !== false) 

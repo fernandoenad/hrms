@@ -21,6 +21,46 @@ class HomeController extends Controller
         return view('home.help', compact('posts'));
     }
 
+    public function reset()
+    {
+        return view('home.requests.reset');
+    }
+
+    public function reset_save(Request $request)
+    {
+        $data = request()->validate([
+            'employee_number' => ['required', 'string', 'min:4', 'max:7'],
+            'firstname' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'middlename' => ['nullable', 'string', 'min:1', 'max:255'],
+            'lastname' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[a-zA-Z\s.Ññ-]*$/'],
+            'dob' => ['required', 'date', 'before:-15 years'],
+            'email' => ['required', 'email', 'max:255', 'regex:/^[a-zA-Z0-9._%+-]+@deped\.gov\.ph$/'],
+            'account' => ['required', 'string'],
+            ],
+            [
+            'dob.required' => 'The date of birth is required.',
+            'dob.before' => 'The date of birth field should take place before :date.',
+            'email.regex' => 'Only DepEd emails are accepted.',
+            'email.required' => 'DepEd email is required.',
+        ]);
+
+        $remarks = 'Employee Number: '.$data['employee_number'].'<br>' .
+            'Fullname: '.$data['lastname'].', '.$data['firstname'].', '.$data['middlename'].'<br>'.
+            'Date of Birth: '.$data['dob'].'<br>'.
+            'DepEd Email: '.$data['email'].'<br>'.
+            'Account: '.$data['account'].'<br>';
+
+        $account_request_data['action'] = 'Email Password Reset Request'; 
+        $account_request_data['remarks'] = $remarks; 
+        $account_request_data['status'] = 1; 
+        $account_request_data['person_id'] = 0; 
+        $account_request_data['user_id'] = null; 
+
+        $account_request = AccountRequest::create($account_request_data);
+        
+        return redirect(route('help.reset', ['id' => $account_request->id]))->with('status', 'Request has been queued for processing.');
+    }
+
     public function track()
     {
         $accountrequest = AccountRequest::find(request()->id);
