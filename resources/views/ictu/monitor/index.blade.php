@@ -102,8 +102,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Email</th>
-                                    <th width="45%">Name</th>
-                                    <th width="20%">Online Since</th>
+                                    <th width="40%">Name</th>
+                                    <th width="30%">Online Since</th>
                                 </tr>
                             </thead>
                             <tbody>
