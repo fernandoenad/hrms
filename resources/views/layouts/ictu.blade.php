@@ -77,7 +77,7 @@
                             @if(strpos(Route::currentRouteName(), 'ictu.requests') !== false) 
                                 {{ __('menu-open')}}
                             @endif">
-                            <a href="{{ route('ictu.requests') }}" class="nav-link">
+                            <a href="{{ route('ictu.requests.display-new') }}" class="nav-link">
                                 <i class="nav-icon fas fa-inbox"></i>
                                 <p>Requests Mgmt</p>
                                 <span class="badge badge-danger float-right">
