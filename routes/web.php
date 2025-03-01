@@ -49,6 +49,8 @@ use App\Http\Controllers\ICTU\UserRankingController;
 use App\Http\Controllers\ICTU\UserController as ICTUUserController;
 use App\Http\Controllers\ICTU\SupportController;
 use App\Http\Controllers\ICTU\RequestController;
+use App\Http\Controllers\ICTU\MonitorController;
+
 
 use App\Http\Controllers\RMS\RMSController;
 use App\Http\Controllers\RMS\PersonController as RMSPersonController;
@@ -429,6 +431,8 @@ Route::middleware(['default.password', 'verified'])->group(function () {
         Route::get('/ictu/requests/{accountrequest}/reset-password', [RequestController::class, 'resetpassword'])->name('ictu.requests.reset-password');
 
         Route::get('/ictu/requests', [RequestController::class, 'index'])->name('ictu.requests');
+
+        Route::get('/ictu/monitor', [MonitorController::class, 'index'])->name('ictu.monitor');
 
         Route::get('/ictu/roles/create', [UserRoleController::class, 'create'])->name('ictu.roles.create');
         Route::any('/ictu/roles/search', [UserRoleController::class, 'search'])->name('ictu.roles.search');

@@ -123,6 +123,16 @@
                                 <p>User Management</p>
                             </a>
                         </li>
+
+                        <li class="nav-item 
+                            @if(strpos(Route::currentRouteName(), 'ictu.monitor') !== false) 
+                                {{ __('menu-open')}}
+                            @endif">
+                            <a href="{{ route('ictu.monitor') }}" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>Monitor Users</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
