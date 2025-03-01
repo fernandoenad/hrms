@@ -54,10 +54,11 @@ class PersonController extends Controller
             'image' => 'string',
             'primaryno' => ['required', 'string', 'min:11', 'max:11', 'regex:/(0)[0-9]{10}/', 'unique:contacts'],
             'username' => ['required', 'string', 'min:5', 'max:255', 'regex:/^[0-9a-zA-Z.-]*$/', 'unique:users'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'email', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9._%+-]+@deped\.gov\.ph$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             ],
             [
+            'email.regex' => 'Only DepEd emails are accepted.',
             'firstname.unique' => 'Duplicate record alert! Try logging in by following instructions above.',
             'dob.required' => 'The date of birth field is required.',
             'dob.before' => 'The date of birth field should take place before :date.',
