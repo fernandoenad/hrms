@@ -35,7 +35,7 @@
                             </p>
                         </li>
                         <li class="user-footer">
-                            <a href="{{ route('my.tools') }}" class="btn btn-default btn-flat">{{ __('Tools') }}</a>
+                            <a href="./my" class="btn btn-default btn-flat">{{ __('Profile') }}</a>
                             <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">

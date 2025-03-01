@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -24,7 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
-        'google_id'
+        'google_id',
+        'email_verified_at'
     ];
 
     /**
@@ -119,7 +120,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getUserType()
     {
-        return isset(Auth::user()->person->employee->item_id) ? 'Employee' : 'Applicant';
+        return isset(Auth::user()->person->employee->item_id) ? 'Employee' : 'Non-Employee';
     }
 
     public function getCreatedatAttribute($value){
