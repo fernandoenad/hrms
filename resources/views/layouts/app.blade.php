@@ -22,6 +22,9 @@
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="../rms/register">Register</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('help') }}">Help</a>
                     </li>
                 @else
