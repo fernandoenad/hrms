@@ -14,6 +14,7 @@ use App\Models\AccountRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon; 
 
 class PersonController extends Controller
 {
@@ -91,12 +92,13 @@ class PersonController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'email_verified_at' => Carbon::now(),
         ]); 
 
         $address = $person->address()->create();
 
-        $user->sendEmailVerificationNotification();
-        Auth::loginUsingId($user->id);
+        //$user->sendEmailVerificationNotification();
+        //Auth::loginUsingId($user->id);
 
         $person->personlog()->create([
             'action' => 'Create',
@@ -111,7 +113,9 @@ class PersonController extends Controller
             'user_id' => $user->id,
         ]);
         
-        return redirect()->route('verification.notice')->with('status', 'Account created! Please check your email for a verification link.'); 
+        //return redirect()->route('verification.notice')->with('status', 'Account created! Please check your email for a verification link.');
+        return redirect()->route('login')->with('status', 'Account created! Please login.');
+
     }
 
     public function request()
