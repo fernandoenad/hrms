@@ -89,8 +89,9 @@
                                         <td>{{ $user['email'] }}</td>
                                         <td>
                                             @php $person = App\Models\Person::find($user['person_id']); @endphp
-                                            {{ $person->getFullnameSorted() }} <br>
-                                            {{ $person->employee->item->station->name }} ({{ $person->employee->item->station->code }})
+                                            {{ isset($person) ? $person->getFullnameSorted() : '' }} <br>
+                                            {{ isset($person) ? $person->employee->item->station->name : '' }} 
+                                            ({{ isset($person) ? $person->employee->item->station->code : '' }})
 
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($user['online_since'])->diffForHumans() }}</td>
