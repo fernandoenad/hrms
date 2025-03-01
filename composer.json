@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.83",
+        "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.1",
         "tinymce/tinymce": "^5.7"

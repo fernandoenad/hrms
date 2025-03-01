@@ -3,6 +3,7 @@
 
 <head>
     @include('layouts.sections.head')
+    <link rel="icon" type="image/x-icon" href="{{ url('/') }}/favicon.ico">
 </head>
 
 <body class="hold-transition sidebar-collapse layout-fixed layout-footer-fixed layout-navbar-fixed">
