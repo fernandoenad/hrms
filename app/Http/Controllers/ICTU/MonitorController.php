@@ -21,6 +21,7 @@ class MonitorController extends Controller
         })->map(function ($user) {
             return [
                 'id' => $user->id,
+                'person_id' => $user->person_id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'online_since' => Cache::get('user-online-since-' . $user->id, now())->toDateTimeString(),

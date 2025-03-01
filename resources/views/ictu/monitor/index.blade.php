@@ -20,62 +20,36 @@
     <div class="row">
         <div class="col-md-9">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="info-box">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-inbox"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">All</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ictu.requests') }}">
-                                    {{ number_format(App\Models\AccountRequest::count(), 0) }}
+                                <a href="#">
+                                    {{ number_format(App\Models\User::count(), 0) }}
                                 </a>
                             </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inbox"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">New</span>
-                            <span class="info-box-number">
-                                <a href="{{ route('ictu.requests.display-new') }}">
-                                    {{ number_format(App\Models\AccountRequest::where('status', '=', 1)->count(), 0) }}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
+                
+                <div class="col-md-6">
                     <div class="info-box">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-inbox"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Pending</span>
+                            <span class="info-box-text">Online</span>
                             <span class="info-box-number">
-                                <a href="{{ route('ictu.requests.display-pending') }}">
-                                    {{ number_format(App\Models\AccountRequest::where('status', '=', 2)->count(), 0) }}
+                                <a href="#">
+                                    {{ number_format($users->count(), 0) }}
                                 </a>
                             </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-inbox"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Resolved</span>
-                            <span class="info-box-number">
-                                <a href="{{ route('ictu.requests.display-resolved') }}">
-                                    {{ number_format(App\Models\AccountRequest::where('status', '=', 3)->count(), 0) }}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
 
             @if (session('status'))
@@ -102,8 +76,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Email</th>
-                                    <th width="40%">Name</th>
-                                    <th width="30%">Online Since</th>
+                                    <th width="45%">Name</th>
+                                    <th width="25%">Online Since</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,7 +88,10 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $user['email'] }}</td>
                                         <td>
-                                            {{ $user['name'] }}
+                                            @php $person = App\Models\Person::find($user['person_id']); @endphp
+                                            {{ $person->getFullnameSorted() }} <br>
+                                            {{ $person->employee->item->station->name }} ({{ $person->employee->item->station->code }})
+
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($user['online_since'])->diffForHumans() }}</td>
                                     </tr>
@@ -137,7 +114,7 @@
         </div>
 
         <div class="col-md-3">
-            @include('ictu.requests._tools')
+            @include('ictu.monitor._tools')
         </div>
     </div>
 </div>
