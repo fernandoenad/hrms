@@ -107,7 +107,7 @@ class STAssessmentController extends Controller
             $newAssessment = Assessment::create(['application_id' => $application->id,
                 'template_id' => $vacancy->template_id,
                 'assessment' => json_encode($asessment_details),
-                'status' => -1,
+                'status' => 4,
             ]);
 
             $assessment = $newAssessment;
@@ -127,7 +127,7 @@ class STAssessmentController extends Controller
 
         } else {
             $assessment = $assessment->first();
-            $assessment->update(['status' => -1]);
+            $assessment->update(['status' => 4]);
             
             $data['application_id'] = $application->id;
             $data['author'] =  auth()->user()->name;
