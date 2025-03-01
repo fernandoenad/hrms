@@ -5,7 +5,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>@guest @else {{ Auth::user()->person->getFullname()}} {{ __('-') }} @endguest {{ config('app.name', 'Laravel') }}</title>
-<link rel="icon" type="image/x-icon" href="{{ url('/') }}/favicon.ico">
+
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>

@@ -27,11 +27,12 @@
 									{{ session('status') }}
 								</div>
 							@endif
+							
 						</div>
 
 						<form method="POST" action="{{ route('login') }}">
 							@csrf
-
+							<!--
 							<div class="input-group mb-3">
 								<input 
 									type="text" 
@@ -47,7 +48,7 @@
 										<span class="fas fa-user"></span>
 									</div>
 								</div>
-								 @error('email')
+								@error('email')
 									<span class="invalid-feedback" role="alert">
 										<strong>{{ $message }}</strong>
 									</span>
@@ -86,6 +87,7 @@
 									</div>
 								</div>
 							</div>
+							
 
 							<div class="row d-flex justify-content-center">
 								<p></p>
@@ -102,6 +104,43 @@
 									<button type="submit" class="btn btn-primary float-right">
 										{{ __('Login') }}
 									</button>
+									<hr>
+									<center>
+										<a href="{{ url('/auth/google') }}" class="google-btn">
+											<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="10%">
+											Sign in with DepEd GMail
+										</a>
+										<br>
+										@if (session('error'))
+											<div class="alert alert-danger">
+												{{ session('error') }}
+											</div>
+										@endif
+									</center>
+								</div>
+							</div>
+							-->
+							<div class="form-group row mb-0">
+								<div class="col-md-12 text-center">                               
+									<a href="{{ url('/auth/google') }}" class="google-btn">
+										<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="10%">
+										Sign in with DepEd GMail
+									</a>
+									<br>
+									<br>
+
+									@if (session('not_reg'))
+										<div class="alert alert-danger">
+											<strong>{{ session('not_reg') }}</strong>
+											<a href="./rms/register">Register?</a>
+										</div>
+										
+									@endif
+									@if (session('not_deped'))
+										<div class="alert alert-danger">
+											<strong>{{ session('not_deped') }}</strong>
+										</div>
+									@endif
 								</div>
 							</div>
 						</form>
