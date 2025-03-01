@@ -99,7 +99,7 @@ class OFApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The assessment scores were updated.';
+        $data['message'] = 'The assessment scores were updated by the top-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -121,7 +121,7 @@ class OFApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The assessment was marked as completed. You may now check your scores via the Scores tab.';
+        $data['message'] = 'The assessment was marked as completed by the top-level committee. You may now check your scores via the Scores tab.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -143,7 +143,7 @@ class OFApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The assessment was reverted to Pending status.';
+        $data['message'] = 'The assessment was reverted to Pending status by the top-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -192,7 +192,7 @@ class OFApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The assessment was returned to the lower-level CAC as requested.';
+        $data['message'] = 'The assessment was returned by the top-level committee to the first-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -215,7 +215,7 @@ class OFApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The assessment was marked as DISQUALIFIED.';
+        $data['message'] = 'The assessment was marked as DISQUALIFIED by the top-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);

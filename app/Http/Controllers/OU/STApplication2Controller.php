@@ -97,7 +97,7 @@ class STApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The application was taken-in at ' . $station->name . '.' ;
+        $data['message'] = 'The application was taken-in at ' . $station->name . ' by the first-level committee.' ;
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -121,7 +121,7 @@ class STApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The application was withdrawn from ' . $station->name . '.';
+        $data['message'] = 'The application was withdrawn from ' . $station->name . ' by the first-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -180,7 +180,7 @@ class STApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The application details were updated.';
+        $data['message'] = 'The application details were updated by the first-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
@@ -263,7 +263,7 @@ class STApplication2Controller extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The application was reverted to New status.';
+        $data['message'] = 'The application was reverted to New status by the first-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);

@@ -50,7 +50,7 @@ class STAssessmentController extends Controller
 
             $data['application_id'] = $application->id;
             $data['author'] =  auth()->user()->name;
-            $data['message'] = 'The application was assessed (initially/preliminary) and has been forwarded to the upper-Level CAC.';
+            $data['message'] = 'The application was assessed by the first-level committee. Moreover, it has been forwarded to the top-level committee.';
             $data['status'] = 0;
 
             $inquiry = Inquiry2::create($data);
@@ -67,7 +67,7 @@ class STAssessmentController extends Controller
 
             $data['application_id'] = $application->id;
             $data['author'] =  auth()->user()->name;
-            $data['message'] = 'The application was assessed (initially/preliminary) and has been forwarded to the upper-Level CAC.';
+            $data['message'] = 'The application was assessed by the first-level committee. Moreover, it has been forwarded to the top-level committee.';
             $data['status'] = 0;
 
             $inquiry = Inquiry2::create($data);
@@ -114,7 +114,7 @@ class STAssessmentController extends Controller
 
             $data['application_id'] = $application->id;
             $data['author'] =  auth()->user()->name;
-            $data['message'] = 'The application was tagged as DISQUALIFIED due to lacking MANDATORY REQUIREMENTS.';
+            $data['message'] = 'The application was tagged as DISQUALIFIED by the first-level committee due to lacking MANDATORY REQUIREMENTS.';
             $data['status'] = 0;
 
             $inquiry = Inquiry2::create($data);
@@ -131,7 +131,7 @@ class STAssessmentController extends Controller
             
             $data['application_id'] = $application->id;
             $data['author'] =  auth()->user()->name;
-            $data['message'] = 'The application was tagged as DISQUALIFIED due to lacking MANDATORY REQUIREMENTS.';
+            $data['message'] = 'The application was tagged as DISQUALIFIED by the first-level committee due to lacking MANDATORY REQUIREMENTS.';
             $data['status'] = 0;
             $inquiry = Inquiry2::create($data);
 
@@ -182,7 +182,7 @@ class STAssessmentController extends Controller
 
         $data['application_id'] = $application->id;
         $data['author'] =  auth()->user()->name;
-        $data['message'] = 'The assessment was marked as completed and has been forwarded to the upper-Level CAC.';
+        $data['message'] = 'The assessment was marked as completed and has been forwarded to the top-level committee.';
         $data['status'] = 0;
 
         $inquiry = Inquiry2::create($data);
