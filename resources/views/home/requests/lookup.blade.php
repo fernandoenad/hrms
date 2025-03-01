@@ -28,6 +28,7 @@
                         @else
                             {{ 'Request Lookup' }}
                         @endif
+                        <a href="{{ route('help.reset') }}" class="btn btn-primary btn-sm float-right">New Password Reset Request</a>
                     </div>
                 
                     <div class="card-body pt-3">
