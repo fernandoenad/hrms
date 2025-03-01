@@ -24,7 +24,7 @@
                 </li>
             </ul>
         @else
-            <p class="text-muted text-center">{{ __('Applicant') }}</p>
+            <p class="text-muted text-center">{{ __('Non-Employee') }}</p>
         @endif
     </div>
 </div>
