@@ -31,3 +31,24 @@
         </ul>
     </div>
 </div>
+
+<div class="card card-info">
+    <div class="card-header">Send Emails</div>
+
+    <div class="card-body p-0">
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item active p-3">
+                <form class="form" method="post" action="">
+                    @csrf
+                    <input name="email" class="form-control form-control-navbar @error('email') is-invalid @enderror" value="{{ old('email') ?? request()->get('email') }}"  placeholder="Email">
+                    <br>
+                    <textarea  rows="7" class="form-control"></textarea>
+                    <br>
+                    <button class="btn btn-primary" type="submit">
+                        Send
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>

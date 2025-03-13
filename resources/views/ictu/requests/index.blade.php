@@ -241,7 +241,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5">{{ __('No record was found.') }}</td>
+                                        <td colspan="6">{{ __('No record was found.') }}</td>
                                     </tr>
                                 @endif
                             </tbody>

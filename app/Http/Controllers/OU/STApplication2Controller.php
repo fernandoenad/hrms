@@ -222,7 +222,7 @@ class STApplication2Controller extends Controller
         $assessments = Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
             ->where('applications.vacancy_id', '=', $vacancy->id)
             ->where('applications.station_id', '=', $station->id)
-            ->where('assessments.status', '=', 2)
+            ->where('assessments.status', '>=', 2)
             ->orderBy('applications.application_code', 'ASC')
             ->select('assessments.*')
             ->get();
@@ -239,7 +239,7 @@ class STApplication2Controller extends Controller
         $assessments = Assessment::join('applications', 'applications.id', '=', 'assessments.application_id')
             ->where('applications.vacancy_id', '=', $vacancy->id)
             ->where('applications.station_id', '=', $station->id)
-            ->where('assessments.status', '=', 2)
+            ->where('assessments.status', '>=', 2)
             ->orderBy('applications.last_name', 'ASC')
             ->orderBy('applications.first_name', 'ASC')
             ->select('assessments.*')

@@ -87,11 +87,13 @@
                                 </span>
                             </a>
                         </li>
+                        <!--
                         <script>
                             setInterval(function(){ 
                                 $('#request-new-counter').load('{{ route('ictu.requests.new-counter') }}');
                                     }, 1000);
                         </script>
+                        -->
 
                         <li class="nav-item 
                             @if(strpos(Route::currentRouteName(), 'ictu.roles') !== false) 
