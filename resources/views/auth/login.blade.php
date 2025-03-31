@@ -32,7 +32,6 @@
 
 						<form method="POST" action="{{ route('login') }}">
 							@csrf
-							<!--
 							<div class="input-group mb-3">
 								<input 
 									type="text" 
@@ -119,8 +118,7 @@
 									</center>
 								</div>
 							</div>
-							-->
-							<div class="form-group row mb-0">
+							{{-- <div class="form-group row mb-0">
 								<div class="col-md-12 text-center">                               
 									<a href="{{ url('/auth/google') }}" class="google-btn">
 										<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="10%">
@@ -146,7 +144,7 @@
 									Request for reset
 									<a href="{{ route('help.reset') }}" class="google-btn">here</a>.
 								</div>
-							</div>
+							</div> --}}
 						</form>
                     </div>
                 </div>
