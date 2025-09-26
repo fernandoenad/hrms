@@ -89,7 +89,7 @@
                         -->
                         <td></td>
                         <td align="left">
-                            @if($assessment->status == -1)
+                            @if($assessment->status == 4)
                                 <font color="red">Disqualified</font>
                             @elseif ($assessment->status == 0)
                                 <font color="yellow">Do not print yet.</font> 
@@ -127,13 +127,23 @@
                 <td width="25%"></td>
                 <td width="25%"></td>
                 <td width="25%"></td>
+                <td>_______________________________<br>Name and Position<br>HRMO</td>
             </tr>
             <tr align="center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>                <td>_______________________________<br>Name and Position<br>HRMO</td>
+</td>
+            </tr>
+            <!-- 
+                <tr align="center">
                 <td>_______________________________<br>Name and Position<br>Member</td>
                 <td>_______________________________<br>Name and Position<br>Member</td>
                 <td>_______________________________<br>Name and Position<br>Member</td>
                 <td>_______________________________<br>Name and Position<br>Chairperson</td>
             </tr>
+            -->
         </table>
     </small>
     </div>
