@@ -116,34 +116,41 @@
         <small>
         
         <table>
+            <!-- for regilar
             <tr>
                 <td width="25%" align="left">Prepared by the School Ranking Committee
                     <br><em>(All members should affix signature)</em>
                     <br>
                     <br>
                     <br>
-
                 </td>
                 <td width="25%"></td>
                 <td width="25%"></td>
                 <td width="25%"></td>
-                <td>_______________________________<br>Name and Position<br>HRMO</td>
             </tr>
             <tr align="center">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>                <td>_______________________________<br>Name and Position<br>HRMO</td>
-</td>
-            </tr>
-            <!-- 
-                <tr align="center">
                 <td>_______________________________<br>Name and Position<br>Member</td>
                 <td>_______________________________<br>Name and Position<br>Member</td>
                 <td>_______________________________<br>Name and Position<br>Member</td>
                 <td>_______________________________<br>Name and Position<br>Chairperson</td>
             </tr>
             -->
+            <tr>
+                <td width="25%"></td>
+                <td width="25%"></td>
+                <td width="25%"></td>
+                <td width="25%">
+                    <br>
+                    <br>
+                    <br>
+                </td>
+            </tr>
+            <tr align="center">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>_______________________________<br>Name and Position<br>HRMO</td>
+            </tr>
         </table>
     </small>
     </div>
