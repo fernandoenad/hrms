@@ -73,6 +73,8 @@ class OFApplication2Controller extends Controller
 
         if(str_contains($vacancy->template->type,'Non-Teaching') || str_contains($vacancy->template->type,'Teaching-Related')){
             return view('ou.office.applications.carviewnt', ['assessments' => $assessments,'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]);
+        } else if(str_contains($vacancy->template->type,'Teaching Reclassification')){
+            return view('ou.office.applications.carviewecp', ['assessments' => $assessments,'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]);
         } else {
             return view('ou.office.applications.carview', ['assessments' => $assessments,'vacancy' => $vacancy, 'cycle' => $cycle, 'office' => $office]);
         }
