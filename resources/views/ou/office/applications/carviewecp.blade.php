@@ -104,7 +104,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td>{{ $application->age >=55 ? "RETIRABLE" : "" }}</td>
                     </tr>
                     @php $i++; @endphp 
                 @endforeach
