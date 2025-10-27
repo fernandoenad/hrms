@@ -20,10 +20,8 @@
 <div class="container">
     <div class="row">
         <div class="error-page">
-            <h2 class="headline text-danger">The Site Has Moved</h2>
-
             <div class="error-content">
-                <h3><i class="fas fa-exclamation-triangle text-danger"></i>We’ve Upgraded!</h3>
+                <h3><i class="fas fa-exclamation-triangle text-warning"></i>We’ve Upgraded!</h3>
 
                 <p>
                     Our platform has migrated to a new address to serve you better.<br>
