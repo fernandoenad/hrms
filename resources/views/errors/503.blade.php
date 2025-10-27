@@ -23,10 +23,10 @@
             <h2 class="headline text-warning">503</h2>
 
             <div class="error-content">
-                <h3><i class="fas fa-exclamation-triangle text-warning"></i>We’ve Upgraded!</h3>
+                <h3><i class="fas fa-exclamation-triangle text-warning"></i>The Site Has Moved</h3>
 
                 <p>
-                    Our platform has migrated to a new address to serve you better.<br>
+                    Our platform has migrated to a new address to serve you better.
                     Please update your bookmarks and visit us at:<br>
                     <br>
                     👉 <a href="https://hrmis.depedbohol.org">https://hrmis.depedbohol.org</a>.<br>
